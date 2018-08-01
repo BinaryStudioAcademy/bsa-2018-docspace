@@ -1,4 +1,4 @@
-# Binary Wiki
+# DocSpace
 
 Install all dependecies for server and client
 ```sh
