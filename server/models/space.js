@@ -2,14 +2,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const spaceSchema = mongoose.Schema({
-    //TODO: are key and createdAt needed?
     name: {
         type: String,
         required: true,
     },
-    isDeleted: { 
+    isDeleted: {
         type: Boolean,
-        //TODO: is default needed?
         default: false,
     },
     ownerId: {
@@ -20,8 +18,6 @@ const spaceSchema = mongoose.Schema({
     categories: [Schema.Types.ObjectId],
     homePageId: {
         type: Schema.Types.ObjectId,
-        // TODO: ask what is this. is required?
-        // required: true,
     },
     blogId: Schema.Types.ObjectId,
     pages: [Schema.Types.ObjectId],
@@ -31,7 +27,6 @@ const spaceSchema = mongoose.Schema({
         groups: [Schema.Types.ObjectId],
         anonymous: {
             type: Schema.Types.ObjectId,
-            //TODO: is default needed?
             default: null,
         },
     },

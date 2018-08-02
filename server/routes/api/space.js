@@ -1,17 +1,6 @@
 const router = require('express').Router();
 const spaceService = require('../../services/spaceService');
 
-// router.get('/', (req, res) => {
-//     spacesService.findAll((err, data) => {
-//         if (err) {
-//             res.status(400);
-//             return res.end();
-//         }
-
-//         res.json(data);
-//     });
-// });
-
 router.get('/', (req, res) => {
     spaceService.getAll()
         .then(data => res.json(data))
@@ -59,7 +48,6 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    //TODO: returns old values after update. to fix
     const id = req.params.id;
 
     if (id.length === 0) {
