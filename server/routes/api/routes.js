@@ -1,5 +1,5 @@
-module.exports = (app) => {
-  app.get('/api/hello', (req, res) => {
-    res.send({ text: 'Hello World!' })
-  })
+const user = require('./user')
+
+module.exports = function (app) {
+  app.use('/api/user', user)
 }
