@@ -1,0 +1,11 @@
+.auth_footer {
+  padding-bottom: 32px;
+  margin-top: 365px;
+  p {
+    color: white;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
