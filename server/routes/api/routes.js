@@ -1,5 +1,5 @@
+const space = require('./space');
+
 module.exports = (app) => {
-  app.get('/api/hello', (req, res) => {
-    res.send({ text: 'Hello World!' })
-  })
-}
+  app.use('/api/spaces', space);
+};
