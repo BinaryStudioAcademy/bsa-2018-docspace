@@ -43,8 +43,13 @@ module.exports = {
     }
 
     const User = new scheme.User({
-      name: req.body.name || 'Anon',
-      email: req.body.email
+      avatar: req.body.avatar,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      spaces: req.body.spaces,
+      email: req.body.email,
+      login: req.body.login,
+      password: req.body.password
     })
 
     // Save User in the database
@@ -68,8 +73,13 @@ module.exports = {
 
     userRepository.update(req.params.id,
       {
-        name: req.body.name || 'Untitled User',
-        email: req.body.email
+        avatar: req.body.avatar,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        spaces: req.body.spaces,
+        email: req.body.email,
+        login: req.body.login,
+        password: req.body.password
       })
       .then(user => {
         if (!user) {
@@ -110,10 +120,4 @@ module.exports = {
         })
       })
   }
-
-  /* (id, callback) => {
-    userRepository.deleteOne(id, (err, data) => {
-        callback(err);
-    })
-  }, */
 }
