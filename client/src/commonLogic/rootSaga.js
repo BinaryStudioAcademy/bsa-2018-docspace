@@ -1,11 +1,10 @@
-import { fork } from 'redux-saga/effects';
-import greetingSaga from '../components/greeting/logic/greetingSaga';
+import { fork } from 'redux-saga/effects'
+import greetingSaga from '../components/greeting/logic/greetingSaga'
 
-function* rootSaga() {
+function * rootSaga () {
   yield [
-    fork(greetingSaga),
-  ];
+    fork(greetingSaga)
+  ]
 }
 
-
-export default rootSaga;
+export default rootSaga
