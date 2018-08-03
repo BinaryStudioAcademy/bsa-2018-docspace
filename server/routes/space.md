@@ -3,7 +3,7 @@
 ```
 GET /api/spaces
 ```
-result:
+Result:
 ```js
 {
     "name": String,
@@ -33,7 +33,7 @@ GET /api/spaces/:id
 ```
 POST /api/spaces/
 ```
-Required params
+Required params:
 ```js
 {
     "name": String,
