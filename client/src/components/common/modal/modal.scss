@@ -1,4 +1,4 @@
-@import "../../globalStyles/variables.scss";
+@import "../../../globalStyles/variables.scss";
 
 .modal-backdrop{
     position: fixed;
@@ -36,11 +36,11 @@
         font-weight: normal;
         height: 2.14285714em;
         line-height: 1.42857143;
-        margin: 0;
         padding: 4px 10px;
         text-decoration: none;
         vertical-align: baseline;
         white-space: nowrap;
+        margin-left: 10px;
 
         &.accept-button{
             background: $primaryColor;

@@ -32,11 +32,11 @@
     font-weight: normal;
     height: 2.14285714em;
     line-height: 1.42857143;
-    margin: 0;
     padding: 4px 10px;
     text-decoration: none;
     vertical-align: baseline;
-    white-space: nowrap; }
+    white-space: nowrap;
+    margin-left: 10px; }
     .modal-window button.accept-button {
       background: #3572b0;
       border-color: transparent;

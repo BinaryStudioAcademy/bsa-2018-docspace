@@ -21,6 +21,10 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none; }
+  .template.selected {
+    background-color: #EBF2F9;
+    border: 1px solid #CDDCEC;
+    border-radius: 3px; }
 
 .template-preview {
   float: left;
