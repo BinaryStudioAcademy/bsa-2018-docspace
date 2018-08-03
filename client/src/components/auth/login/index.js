@@ -1,18 +1,21 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Input from '../input/index'
-import Password from '../input/password/index'
-import Button from '../button/index'
-import { login } from './logic/loginActions'
 
 import './login.css'
 
 class Login extends Component {
-  state = {
-    redirectToSignup: false
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      redirectToSignup: false,
+      email: props.initialValues.email,
+      password: props.initialValues.password
+    }
   }
 
   handleRedirectToSignUp = () => {
@@ -22,8 +25,7 @@ class Login extends Component {
   }
 
   render () {
-    const { login } = this.props.actions
-    const { redirectToSignup } = this.state
+    const { redirectToSignup, email, password } = this.state
 
     if (redirectToSignup) {
       return <Redirect to='/signup' />
@@ -37,9 +39,28 @@ class Login extends Component {
               <h2>Log in to your account</h2>
             </div>
             <form className='auth__login'>
-              <Input inputType='email' label='Enter email adress' />
-              <Password label='Create password' />
-              <Button buttonType='login' disabled buttonText='Login' onSubmit={login} />
+              <Input
+                inputType='email'
+                name='email'
+                label='Enter email adress'
+                value={email}
+                onChange={this.handleFieldChange}
+                autoComplete
+              />
+              <Input
+                inputType='password'
+                name='password'
+                label='Create password'
+                value={password}
+                onChange={this.handleFieldChange}
+                autoComplete={false}
+              />
+              <Input
+                inputType='submit'
+                disabled={!this.isSubmitAllowed()}
+                name='button'
+                value='Login'
+              />
               <p className='auth__footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
             </form>
           </div>
@@ -50,11 +71,21 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  actions: PropTypes.object
+
+  initialValues: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string
+  })
+}
+Login.defaultProps = {
+  initialValues: {
+    email: '',
+    password: ''
+  }
 }
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(login, dispatch)
-})
+// const mapDispatchToProps = dispatch => ({
+//   actions: bindActionCreators(login, dispatch)
+// })
 
-export default connect(mapDispatchToProps)(Login)
+export default connect()(Login)
