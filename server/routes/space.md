@@ -1,6 +1,4 @@
-# Spaces
-
-All spaces:
+## All spaces:
 
 ```
 GET /api/spaces
@@ -13,9 +11,7 @@ result:
     "ownerId": ObjectId,
     "description": String,
     "categories": [ObjectId],
-    "homePageId": {
-        "type": ObjectId,
-    },
+    "homePageId": ObjectId,
     "blogId": ObjectId,
     "pages": [ObjectId],
     "history":[ObjectId],
@@ -26,30 +22,32 @@ result:
     }
 }
 ```
-One space:
+## One space:
 
 ```
-GET /api/spaces/:space
+GET /api/spaces/:id
 ```
 
-Create space:
+## Create space:
 
 ```
 POST /api/spaces/
 ```
 Required params
 ```js
-"name": String,
-"ownerId": ObjectId
+{
+    "name": String,
+    "ownerId": ObjectId
+}
 ```
 
-Change space:
+## Change space:
 
 ```
 PUT /api/spaces/:id
 ```
 
-Delete space:
+## Delete space:
 
 ```
 DELETE /api/spaces/:id
