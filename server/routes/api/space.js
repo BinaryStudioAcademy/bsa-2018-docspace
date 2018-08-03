@@ -1,84 +1,84 @@
-const router = require('express').Router();
-const spaceService = require('../../services/spaceService');
+const router = require('express').Router()
+const spaceService = require('../../services/spaceService')
 
 router.get('/', (req, res) => {
-    spaceService.getAll()
-        .then(data => res.json(data))
-        .catch(() => {
-            res.status(400);
-            res.end();
-        });
-});
+  spaceService.getAll()
+    .then(data => res.json(data))
+    .catch(() => {
+      res.status(400)
+      res.end()
+    })
+})
 
 router.get('/:id', (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id
 
-    if (id.length === 0) {
-        res.status(400);
-        return res.end('Invalid id');
-    }
+  if (id.length === 0) {
+    res.status(400)
+    return res.end('Invalid id')
+  }
 
-    spaceService.get(id)
-        .then(data => res.json(data))
-        .catch(() => {
-            res.status(400);
-            res.end();
-        });
-});
+  spaceService.get(id)
+    .then(data => res.json(data))
+    .catch(() => {
+      res.status(400)
+      res.end()
+    })
+})
 
 router.post('/', (req, res) => {
-    if (typeof req.body !== 'object') {
-        res.status(400);
+  if (typeof req.body !== 'object') {
+    res.status(400)
 
-        return res.end('Invalid data');
-    }
+    return res.end('Invalid data')
+  }
 
-    if (!req.body.name || !req.body.ownerId) {
-        res.status(400);
+  if (!req.body.name || !req.body.ownerId) {
+    res.status(400)
 
-        return res.end('Missing required param');
-    }
+    return res.end('Missing required param')
+  }
 
-    spaceService.create(req.body)
-        .then(data => res.json(data))
-        .catch(() => {
-            res.status(400);
-            res.end();
-        });
-});
+  spaceService.create(req.body)
+    .then(data => res.json(data))
+    .catch(() => {
+      res.status(400)
+      res.end()
+    })
+})
 
 router.put('/:id', (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id
 
-    if (id.length === 0) {
-        res.status(400);
+  if (id.length === 0) {
+    res.status(400)
 
-        return res.end('Invalid id');
-    }
+    return res.end('Invalid id')
+  }
 
-    spaceService.update(id, req.body)
-        .then(data => res.json(data))
-        .catch(() => {
-            res.status(400);
-            res.end();
-        });
-});
+  spaceService.update(id, req.body)
+    .then(data => res.json(data))
+    .catch(() => {
+      res.status(400)
+      res.end()
+    })
+})
 
 router.delete('/:id', (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id
 
-    if (id.length === 0) {
-        res.status(400);
+  if (id.length === 0) {
+    res.status(400)
 
-        return res.end('Invalid id');
-    }
+    return res.end('Invalid id')
+  }
 
-    spaceService.delete(id)
-        .then(data => res.json(data))
-        .catch(() => {
-            res.status(400);
-            res.end();
-        });
-});
+  spaceService.delete(id)
+    .then(data => res.json(data))
+    .catch(() => {
+      res.status(400)
+      res.end()
+    })
+})
 
-module.exports = router;
+module.exports = router

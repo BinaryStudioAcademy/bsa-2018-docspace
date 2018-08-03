@@ -1,5 +1,5 @@
-const space = require('./space');
+const space = require('./space')
 
 module.exports = (app) => {
-  app.use('/api/spaces', space);
-};
+  app.use('/api/spaces', space)
+}
