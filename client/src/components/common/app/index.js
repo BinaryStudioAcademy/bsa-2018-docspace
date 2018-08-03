@@ -5,6 +5,56 @@ import Greeting from '../../greeting'
 import './app.css'
 
 import Modal from '../../modal'
+import TemplateList from '../../templateList'
+
+const items = [
+  {
+    name: 'Empty space',
+    description: 'Start from empty list',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Start from empty list',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Start from empty list',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Start from empty list',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
+    img: logo
+  },
+  {
+    name: 'Empty space',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
+    img: logo
+  }
+
+]
 
 class App extends Component {
   constructor () {
@@ -32,7 +82,9 @@ class App extends Component {
           show={this.state.showModal}
           toggleModal={this.toggleModal}
         >
-             modal body
+          <TemplateList
+            items={items}
+          />
         </Modal>
         <button onClick={this.toggleModal}>Open Modal</button>
         <Greeting />

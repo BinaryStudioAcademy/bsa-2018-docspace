@@ -44,7 +44,7 @@ Modal.propTypes = {
   show: PropTypes.bool,
   acceptText: PropTypes.string,
   headerText: PropTypes.string,
-  choldren: PropTypes.node
+  children: PropTypes.node
 }
 
 Modal.defaultProps = {
