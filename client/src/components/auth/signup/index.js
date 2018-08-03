@@ -4,17 +4,18 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Input from '../input/index'
-import Password from '../input/password/index'
-import Button from '../button/index'
 import signupRequest from './logic/signupActions'
 
 import './signup.css'
 
 class Signup extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
-      redirectToLogin: false
+      redirectToLogin: false,
+      email: props.initialValues.email,
+      fullName: props.initialValues.fullName,
+      password: props.initialValues.password
     }
   }
 
@@ -24,10 +25,21 @@ class Signup extends Component {
     })
   }
 
-  render () {
-    const { redirectToLogin } = this.state
+  handleFieldChange = ({ target }) => {
+    console.log(target.name, 'is changed', this.state.email)
+    this.setState(state => ({ state, [target.name]: target.value }))
+  }
 
-    const { signupRequest } = this.props.actions
+  handleSubmit = (event) => {
+    event.preventDefault()
+    console.log('Submit enter with', this.state.email, this.state.fullName, this.state.password)
+    this.props.signupRequest(this.state.email, this.state.fullName, this.state.password)
+  }
+
+  isSubmitAllowed = () => this.state.email && this.state.fullName && this.state.password;
+
+  render () {
+    const { redirectToLogin, email, fullName, password } = this.state
 
     if (redirectToLogin) {
       return <Redirect to='/login' />
@@ -39,12 +51,40 @@ class Signup extends Component {
             <img className='header__logo' src='' alt='logo' />
             <h2>Sign up for your account</h2>
           </div>
-          <form className='auth__signup'>
-            <Input inputType='email' label='Enter email adress' />
-            <Input inputType='fullName' label='Enter full name' />
-            <Password label='Create password' />
-            <Button buttonType='signUp' disabled buttonText='Sign up' onSubmit={signupRequest} />
-            <p className='auth__footer' onClick={this.handleRedirectToLogin}>Already have an Atlassian account? Log in</p>
+          <form className='auth__signup' onSubmit={this.handleSubmit}>
+            <Input
+              inputType='email'
+              name='email'
+              label='Enter email adress'
+              value={email}
+              onChange={this.handleFieldChange}
+              autoComplete
+            />
+            <Input
+              inputType='text'
+              name='fullName'
+              label='Enter full name'
+              value={fullName}
+              onChange={this.handleFieldChange}
+              autoComplete
+            />
+            <Input
+              inputType='password'
+              name='password'
+              label='Create password'
+              value={password}
+              onChange={this.handleFieldChange}
+              autoComplete={false}
+            />
+            <Input
+              inputType='submit'
+              disabled={!this.isSubmitAllowed()}
+              name='button'
+              value='Sign up'
+            />
+            <p className='auth__footer' onClick={this.handleRedirectToLogin}>
+              Already have an Atlassian account? Log in
+            </p>
           </form>
         </div>
       </div>
@@ -53,11 +93,29 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  actions: PropTypes.object
+  signupRequest: PropTypes.func,
+  initialValues: PropTypes.shape({
+    email: PropTypes.string,
+    fullName: PropTypes.string,
+    password: PropTypes.string
+  })
+}
+Signup.defaultProps = {
+  initialValues: {
+    email: '',
+    fullName: '',
+    password: ''
+  }
 }
 
+// const mapStateToProps = state => ({
+//   email: state.initialValues.email,
+//   fullName: state.initialValues.fullName,
+//   password: state.initialValues.password
+// })
+
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(signupRequest, dispatch)
+  signupRequest: bindActionCreators(signupRequest, dispatch)
 })
 
-export default connect(mapDispatchToProps)(Signup)
+export default connect(null, mapDispatchToProps)(Signup)
