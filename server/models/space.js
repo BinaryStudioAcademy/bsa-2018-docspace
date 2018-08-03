@@ -6,10 +6,7 @@ const spaceSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
+    isDeleted: Boolean,
     ownerId: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -25,10 +22,7 @@ const spaceSchema = mongoose.Schema({
     rights: {
         users: [Schema.Types.ObjectId],
         groups: [Schema.Types.ObjectId],
-        anonymous: {
-            type: Schema.Types.ObjectId,
-            default: null,
-        },
+        anonymous: Schema.Types.ObjectId,
     },
 });
 const SpaceModel = mongoose.model('Space', spaceSchema);
