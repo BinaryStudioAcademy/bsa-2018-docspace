@@ -16,7 +16,7 @@
   flex-direction: column;
 }
 
-.auth__login {
+.auth__signup {
   background-color: $white;
   border-radius: 5px;
   padding: 48px;
@@ -30,7 +30,7 @@
   &:hover {
     text-decoration: underline;
     }
-}
+  }
 
 .auth__header h2 {
   color: white;
