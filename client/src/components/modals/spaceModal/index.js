@@ -119,8 +119,8 @@ export default class SpaceModal extends Component {
   }
 
   renderModalContent = () => (
-    <TemplateList 
-      items={this.state.spaceTemplates} 
+    <TemplateList
+      items={this.state.spaceTemplates}
       selectedItem={this.state.selectedTemplate}
       handleSelectItem={this.handleSelectTemplate}
     />
