@@ -5,3 +5,10 @@
   border-color: #f4f5f7;
   padding: 7px;
   margin-top: 24px; }
+
+.auth__input.button {
+  border: 0;
+  height: 39px;
+  margin-top: 24px;
+  background-color: #f4f5f7;
+  cursor: pointer; }
