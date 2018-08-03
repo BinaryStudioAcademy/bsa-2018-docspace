@@ -1,32 +1,27 @@
-class Repository {
+class GeneralRepository {
+  constructor (model) {
+    this.model = model
+  }
+
   getAll () {
-    var model = this.model
-    var query = model.find()
-    return query
+    return this.model.find()
   }
 
-  getById (id) {
-    var model = this.model
-    var query = model.find({
-      _id: id
-    })
-    return query
+  get (id) {
+    return this.model.findOne({ _id: id })
   }
 
-  add (data) {
-    var model = this.model
-    model.create(data)
+  create (data) {
+    return this.model.create(data)
   }
 
   update (id, data) {
-    var model = this.model
-    var query = model.update({_id: id}, data)
-    return query
+    return this.model.findOneAndUpdate({ _id: id }, data, {new: true})
   }
-  deleteOne (id) {
-    var model = this.model
-    var query = model.findOneAndDelete({_id: id})
-    return query
+
+  delete (id) {
+    return this.model.deleteOne({ _id: id })
   }
 }
-module.exports = Repository
+
+module.exports = GeneralRepository
