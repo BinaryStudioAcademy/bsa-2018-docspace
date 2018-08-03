@@ -4,7 +4,22 @@ import Greeting from '../../greeting'
 
 import './app.css'
 
+import Modal from '../../modal'
+
 class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      showModal: true
+    }
+  }
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
   render () {
     return (
       <div className='app__root'>
@@ -12,6 +27,14 @@ class App extends Component {
           <img src={logo} className={'app__logo'} alt='logo' />
           <h1 className='app__title'>Binary docspace</h1>
         </header>
+
+        <Modal
+          show={this.state.showModal}
+          toggleModal={this.toggleModal}
+        >
+             modal body
+        </Modal>
+        <button onClick={this.toggleModal}>Open Modal</button>
         <Greeting />
       </div>
     )
