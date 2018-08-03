@@ -1,4 +1,4 @@
-import * as actionTypes from './signupActions'
+import * as actionTypes from './signupActionTypes'
 
 const initialState = {
   requesting: false,
@@ -7,7 +7,7 @@ const initialState = {
   errors: []
 }
 
-const signupReducer = (state = initialState, action) => {
+export const signupReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SIGNUP_REQUESTING:
       return {
@@ -40,5 +40,3 @@ const signupReducer = (state = initialState, action) => {
       return state
   }
 }
-
-export default signupReducer
