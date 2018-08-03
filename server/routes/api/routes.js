@@ -1,7 +1,7 @@
-const user = require('./user')
 const space = require('./space')
+const user = require('./user')
 
-module.exports = function (app) {
+module.exports = (app) => {
   app.use('/api/user', user)
   app.use('/api/spaces', space)
 }
