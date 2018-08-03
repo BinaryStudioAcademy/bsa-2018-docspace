@@ -36,12 +36,6 @@ module.exports = {
   },
 
   add: (req, res) => {
-    if (!req.body.email) {
-      return res.status(400).send({
-        message: 'User email can not be empty'
-      })
-    }
-
     const User = new scheme.User({
       avatar: req.body.avatar,
       firstName: req.body.firstName,
@@ -65,22 +59,17 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    if (!req.body.email) {
-      return res.status(400).send({
-        message: 'User email can not be empty'
-      })
-    }
+    const User = new scheme.User({
+      avatar: req.body.avatar,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      spaces: req.body.spaces,
+      email: req.body.email,
+      login: req.body.login,
+      password: req.body.password
+    })
 
-    userRepository.update(req.params.id,
-      {
-        avatar: req.body.avatar,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        spaces: req.body.spaces,
-        email: req.body.email,
-        login: req.body.login,
-        password: req.body.password
-      })
+    userRepository.update(req.params.id, User)
       .then(user => {
         if (!user) {
           return res.status(404).send({
