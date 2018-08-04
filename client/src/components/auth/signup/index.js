@@ -36,7 +36,7 @@ class Signup extends Component {
     this.props.signupRequest(this.state.email, this.state.fullName, this.state.password)
   }
 
-  isSubmitAllowed = () => this.state.email && this.state.fullName && this.state.password;
+  isSubmitAllowed = () => this.state.email && this.state.fullName && this.state.password.length > 6;
 
   render () {
     const { redirectToLogin, email, fullName, password } = this.state
