@@ -15,7 +15,13 @@ class Signup extends Component {
       redirectToLogin: false,
       email: props.initialValues.email,
       fullName: props.initialValues.fullName,
-      password: props.initialValues.password
+      password: props.initialValues.password,
+      login: props.initialValues.login
+    }
+  }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.signup.successful) {
+      this.handleRedirectToLogin()
     }
   }
 
@@ -26,20 +32,24 @@ class Signup extends Component {
   }
 
   handleFieldChange = ({ target }) => {
-    console.log(target.name, 'is changed', this.state.email)
     this.setState(state => ({ state, [target.name]: target.value }))
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('Submit enter with', this.state.email, this.state.fullName, this.state.password)
-    this.props.signupRequest(this.state.email, this.state.fullName, this.state.password)
+    this.props.signupRequest({
+      email: this.state.email,
+      fullName: this.state.fullName,
+      password: this.state.password,
+      login: this.state.login}
+    )
   }
 
-  isSubmitAllowed = () => this.state.email && this.state.fullName && this.state.password.length > 6;
+  isSubmitAllowed = () => this.state.email && this.state.fullName &&
+   this.state.login && this.state.password.length > 6;
 
   render () {
-    const { redirectToLogin, email, fullName, password } = this.state
+    const { redirectToLogin, email, fullName, password, login } = this.state
 
     if (redirectToLogin) {
       return <Redirect to='/login' />
@@ -65,6 +75,14 @@ class Signup extends Component {
               name='fullName'
               label='Enter full name'
               value={fullName}
+              onChange={this.handleFieldChange}
+              autoComplete
+            />
+            <Input
+              inputType='text'
+              name='login'
+              label='Enter nickname'
+              value={login}
               onChange={this.handleFieldChange}
               autoComplete
             />
@@ -97,25 +115,31 @@ Signup.propTypes = {
   initialValues: PropTypes.shape({
     email: PropTypes.string,
     fullName: PropTypes.string,
-    password: PropTypes.string
+    password: PropTypes.string,
+    login: PropTypes.string
+  }),
+  signup: PropTypes.shape({
+    requesting: PropTypes.bool,
+    successful: PropTypes.bool,
+    messages: PropTypes.array,
+    errors: PropTypes.array
   })
 }
 Signup.defaultProps = {
   initialValues: {
     email: '',
     fullName: '',
-    password: ''
+    password: '',
+    login: ''
   }
 }
 
-// const mapStateToProps = state => ({
-//   email: state.initialValues.email,
-//   fullName: state.initialValues.fullName,
-//   password: state.initialValues.password
-// })
+const mapStateToProps = state => ({
+  signup: state.signup
+})
 
 const mapDispatchToProps = dispatch => ({
   signupRequest: bindActionCreators(signupRequest, dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(Signup)
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
