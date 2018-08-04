@@ -1,10 +1,8 @@
 import * as actionTypes from './signupActionTypes'
 
-const signupRequest = ({ email, fullName, password }) => ({
+const signupRequest = (userData) => ({
   type: actionTypes.SIGNUP_REQUESTING,
-  email,
-  fullName,
-  password
+  ...userData
 })
 
 export default signupRequest
