@@ -24,6 +24,19 @@ class Login extends Component {
     })
   }
 
+  handleFieldChange = ({ target }) => {
+    console.log(target.name, 'is changed', this.state.email)
+    this.setState(state => ({ state, [target.name]: target.value }))
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    console.log('Submit enter with', this.state.email, this.state.password)
+    // this.props.loginRequest(this.state.email, this.state.password)
+  }
+
+  isSubmitAllowed = () => this.state.email && this.state.password;
+
   render () {
     const { redirectToSignup, email, password } = this.state
 
