@@ -90,7 +90,7 @@ module.exports = {
   },
 
   findOneAndDelete: (req, res) => {
-    userRepository.deleteOne(req.params.id)
+    userRepository.delete(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -106,6 +106,31 @@ module.exports = {
         }
         return res.status(500).send({
           message: 'Could not delete note with id ' + req.params.id
+        })
+      })
+  },
+
+  signUp: (req, res) => {
+    console.log(req.body)
+    const [firstName, lastName] = req.body.fullName.split(' ')
+    const User = new scheme.User({
+      firstName: firstName,
+      lastName: lastName,
+      email: req.body.email,
+      password: req.body.password,
+      login: req.body.login
+    })
+    User.save()
+      .then(user => {
+        res.send(user)
+      })
+      .catch(err => {
+        let msg = ''
+        if (err.code === 11000) {
+          msg = err.message.includes('login') ? 'Such login already exist try another one' : 'Such email already exist try another one'
+        }
+        res.status(500).send({
+          message: msg || err.message
         })
       })
   }
