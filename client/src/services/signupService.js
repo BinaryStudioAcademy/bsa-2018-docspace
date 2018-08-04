@@ -1,11 +1,12 @@
 class SignupService {
-  signup (email, fullName, password) {
-    return fetch('/api/user', {
+  signup (data) {
+    console.log(JSON.stringify(data), 'LOGING')
+    return fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email, fullName, password})
+      body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(user => user)
