@@ -14,7 +14,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    userRepository.getById(req.params.id)
+    userRepository.get(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -49,7 +49,6 @@ module.exports = {
     // Save User in the database
     User.save()
       .then(user => {
-        userRepository.add(user)
         res.send(user)
       }).catch(err => {
         res.status(500).send({
@@ -59,17 +58,7 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    const User = new scheme.User({
-      avatar: req.body.avatar,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      spaces: req.body.spaces,
-      email: req.body.email,
-      login: req.body.login,
-      password: req.body.password
-    })
-
-    userRepository.update(req.params.id, User)
+    userRepository.update(req.params.id, req.body)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -90,22 +79,22 @@ module.exports = {
   },
 
   findOneAndDelete: (req, res) => {
-    userRepository.deleteOne(req.params.id)
+    userRepository.delete(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
             message: 'User not found with id ' + req.params.id
           })
         }
-        res.send({message: 'Note deleted successfully!'})
+        res.send({message: 'User deleted successfully!'})
       }).catch(err => {
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {
           return res.status(404).send({
-            message: 'Note not found with id ' + req.params.id
+            message: 'User not found with id ' + req.params.id
           })
         }
         return res.status(500).send({
-          message: 'Could not delete note with id ' + req.params.id
+          message: 'Could not delete user with id ' + req.params.id
         })
       })
   }
