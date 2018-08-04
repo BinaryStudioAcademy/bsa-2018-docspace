@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "license": "ISC",
     "scripts": {
-        "client": "cd client && yarn start",
+        "client": "cd client && NODE_PATH=./ yarn start",
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "pretest": "eslint --ignore-path .gitignore .",
