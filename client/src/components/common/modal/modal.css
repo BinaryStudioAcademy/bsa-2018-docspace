@@ -38,14 +38,14 @@
     white-space: nowrap;
     margin-left: 10px; }
     .modal-window button.accept-button {
-      background: #3572b0;
+      background: #0044a9;
       border-color: transparent;
       color: white;
       font-weight: bold; }
 
 .modal-header {
   line-height: 25px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #f4f5f7;
   box-sizing: border-box;
   height: 56px;
   color: #333;
@@ -65,7 +65,7 @@
   font-size: 14px;
   float: right; }
   .modal-help-link a {
-    color: #3572b0;
+    color: #0044a9;
     text-decoration: none; }
 
 .modal-filter-form {
@@ -74,12 +74,12 @@
   position: relative;
   margin-right: 10px; }
   .modal-filter-form input {
-    color: #707070;
+    color: #6c788f;
     height: 2.14285714em;
     line-height: 1.4285714285714;
     padding: 4px 5px;
     font-size: 14px;
-    border: 1px solid #ccc;
+    border: 1px solid #f4f5f7;
     border-radius: 3px;
     box-sizing: border-box;
     margin: 0;
@@ -89,7 +89,7 @@
     font-size: 14px; }
 
 .modal-footer {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #f4f5f7;
   box-sizing: border-box;
   clear: both;
   height: 51px;
