@@ -4,8 +4,7 @@ const { Schema } = mongoose
 const spaceSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   key: {
     type: String,
@@ -30,6 +29,9 @@ const spaceSchema = mongoose.Schema({
     groups: [Schema.Types.ObjectId],
     anonymous: Schema.Types.ObjectId
   }
+},
+{
+  versionKey: false
 })
 const SpaceModel = mongoose.model('Space', spaceSchema)
 
