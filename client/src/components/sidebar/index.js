@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './sidebar.css'
+import PagesList from '../pagesList'
 
-const Sidebar = ({ spaceName }) => {
+const Sidebar = ({ spaceName, pages }) => {
   return (
     <div className='sidebar'>
       <div className='sidebar__header'>
@@ -16,16 +17,19 @@ const Sidebar = ({ spaceName }) => {
         <NavLink to={`/spaces/${'TS'}/blog`} activeClassName='current'>Blog</NavLink>
         <NavLink to={`/spaces/${'TS'}/settings`} activeClassName='current'>Space Settings</NavLink>
       </div>
+      <PagesList pages={pages} />
     </div>
   )
 }
 
 Sidebar.propTypes = {
-  spaceName: PropTypes.string
+  spaceName: PropTypes.string,
+  pages: PropTypes.array
 }
 
 Sidebar.defaultProps = {
-  spaceName: ''
+  spaceName: '',
+  pages: []
 }
 
 export default Sidebar

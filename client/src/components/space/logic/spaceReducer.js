@@ -1,7 +1,21 @@
 import * as actionTypes from './spaceActionTypes'
 
 const initialState = {
-  space: {}
+  space: {},
+  pages: [
+    {
+      name: 'First Test Page'
+    },
+    {
+      name: 'Second Test Page'
+    },
+    {
+      name: 'Third Test Page'
+    },
+    {
+      name: 'Fourth Test Page'
+    }
+  ]
 }
 
 export const spaceReducer = (state = initialState, action) => {
