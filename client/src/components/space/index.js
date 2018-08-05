@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 
-import Header from '../common/header'
+import Header from '../header'
 import Content from '../common/content'
 import Sidebar from '../sidebar'
 import Page from '../page'
@@ -22,9 +22,9 @@ class Space extends Component {
   render () {
     return (
       <div>
-        <Sidebar spaceName={this.props.space.name} />
+        <Sidebar spaceName={this.props.space.name} pages={this.props.pages} />
         <Content>
-          <Header name={this.props.space.name} />
+          <Header />
           <Route path='/spaces/:key' render={() => <Redirect to='/spaces/TS/overview' />} exact />
           <Route path='/spaces' render={() => <Redirect to='/spaces/TS/overview' />} exact />
           <Route path='/spaces/:key/overview' component={Page} />
@@ -38,16 +38,19 @@ class Space extends Component {
 
 Space.propTypes = {
   getSpace: PropTypes.func.isRequired,
-  space: PropTypes.object
+  space: PropTypes.object,
+  pages: PropTypes.array
 }
 
 Space.defaultProps = {
-  space: {}
+  space: {},
+  pages: []
 }
 
 const mapStateToProps = (state) => {
   return {
-    space: state.space.space
+    space: state.space.space,
+    pages: state.space.pages
   }
 }
 
