@@ -111,7 +111,6 @@ module.exports = {
   },
 
   signUp: (req, res) => {
-    console.log(req.body)
     const [firstName, lastName] = req.body.fullName.split(' ')
     const User = new scheme.User({
       firstName: firstName,
@@ -122,16 +121,14 @@ module.exports = {
     })
     User.save()
       .then(user => {
-        res.send(user)
+        res.status(200).send(user)
       })
       .catch(err => {
         let msg = ''
         if (err.code === 11000) {
           msg = err.message.includes('login') ? 'Such login already exist try another one' : 'Such email already exist try another one'
         }
-        res.status(500).send({
-          message: msg || err.message
-        })
+        res.status(500).send({error: msg || err.message})
       })
   }
 }
