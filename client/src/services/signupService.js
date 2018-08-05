@@ -1,6 +1,5 @@
 class SignupService {
   signup (data) {
-    console.log(JSON.stringify(data), 'LOGING')
     return fetch('/api/signup', {
       method: 'POST',
       headers: {
