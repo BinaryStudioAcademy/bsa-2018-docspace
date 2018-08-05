@@ -5,8 +5,10 @@ import { signupService } from '../../../../services/signupService'
 function * signupFlow (action) {
   try {
     const { email, fullName, password, login } = action
-    console.log('SignUP SAGA', email, fullName, password, login)
     const response = yield call(signupService.signup, {email, fullName, password, login})
+    if (response.hasOwnProperty('error')) {
+      throw new Error(response.error)
+    }
     yield put({ type: actionTypes.SIGNUP_SUCCESS, response })
   } catch (error) {
     yield put({ type: actionTypes.SIGNUP_ERROR, error })
