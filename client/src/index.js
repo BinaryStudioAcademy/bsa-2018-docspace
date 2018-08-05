@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/common/app'
 import About from './components/about'
+import Space from './components/space'
 import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path='/' component={App} />
         <Route path='/about' component={About} />
+        <Route path='/spaces' component={Space} />
       </Switch>
     </BrowserRouter>
   </Provider>,
