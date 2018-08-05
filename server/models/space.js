@@ -4,7 +4,13 @@ const { Schema } = mongoose
 const spaceSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
+  },
+  key: {
+    type: String,
+    required: true,
+    unique: true
   },
   isDeleted: Boolean,
   ownerId: {
