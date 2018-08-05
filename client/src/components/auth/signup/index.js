@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Input from '../input/index'
 import signupRequest from './logic/signupActions'
+import Errors from '../error'
 
 import './signup.css'
 
@@ -13,10 +14,10 @@ class Signup extends Component {
     super(props)
     this.state = {
       redirectToLogin: false,
-      email: props.initialValues.email,
-      fullName: props.initialValues.fullName,
-      password: props.initialValues.password,
-      login: props.initialValues.login
+      email: '',
+      fullName: '',
+      password: '',
+      login: ''
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -49,7 +50,14 @@ class Signup extends Component {
    this.state.login && this.state.password.length > 6;
 
   render () {
-    const { redirectToLogin, email, fullName, password, login } = this.state
+    const {
+      redirectToLogin,
+      email,
+      fullName,
+      password,
+      login
+    } = this.state
+    const { requesting, errors } = this.props.signup
 
     if (redirectToLogin) {
       return <Redirect to='/login' />
@@ -100,6 +108,12 @@ class Signup extends Component {
               name='button'
               value='Sign up'
             />
+            <div className='auth__notifications'>
+              {!requesting && !!errors.length && (
+                <Errors message='Failure to signup due to:' errors={errors} />
+
+              )}
+            </div>
             <p className='auth__footer' onClick={this.handleRedirectToLogin}>
               Already have an Atlassian account? Log in
             </p>
@@ -112,12 +126,6 @@ class Signup extends Component {
 
 Signup.propTypes = {
   signupRequest: PropTypes.func,
-  initialValues: PropTypes.shape({
-    email: PropTypes.string,
-    fullName: PropTypes.string,
-    password: PropTypes.string,
-    login: PropTypes.string
-  }),
   signup: PropTypes.shape({
     requesting: PropTypes.bool,
     successful: PropTypes.bool,
@@ -126,11 +134,11 @@ Signup.propTypes = {
   })
 }
 Signup.defaultProps = {
-  initialValues: {
-    email: '',
-    fullName: '',
-    password: '',
-    login: ''
+  signup: {
+    requesting: false,
+    successful: false,
+    messages: [],
+    errors: []
   }
 }
 
