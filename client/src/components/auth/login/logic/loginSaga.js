@@ -7,7 +7,10 @@ function * loginFlow (action) {
     const { email, password } = action
 
     let response = yield call(loginService.login, {email, password})
-    yield put({ type: actionTypes.LOGIN_SUCCESS, response })
+    console.log(response.success)
+    if (!response.success) {
+      throw new Error(response.message)
+    }
   } catch (error) {
     yield put({ type: actionTypes.LOGIN_ERROR, error })
   }
