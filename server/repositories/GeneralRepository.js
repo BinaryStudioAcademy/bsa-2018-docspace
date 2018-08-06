@@ -7,12 +7,12 @@ class GeneralRepository {
     return this.model.find()
   }
 
-  getById (id) {
-    return this.model.findById(id)
+  getById (id, callback) {
+    return this.model.findById(id, (err, user) => callback(err, user))
   }
 
-  get (criteria) {
-    return this.model.findOne(criteria)
+  get (criteria, callback) {
+    return this.model.findOne(criteria, (err, user) => callback(err, user))
   }
 
   create (data) {
