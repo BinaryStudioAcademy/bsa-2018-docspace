@@ -1,20 +1,21 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
-// import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Input from '../input/index'
+import loginRequest from './logic/loginActions'
+import Input from '../input/'
+import Errors from '../error'
 
 import './login.css'
 
 class Login extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
       redirectToSignup: false,
-      email: props.initialValues.email,
-      password: props.initialValues.password
+      email: '',
+      password: ''
     }
   }
 
@@ -25,20 +26,22 @@ class Login extends Component {
   }
 
   handleFieldChange = ({ target }) => {
-    console.log(target.name, 'is changed', this.state.email)
     this.setState(state => ({ state, [target.name]: target.value }))
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('Submit enter with', this.state.email, this.state.password)
-    // this.props.loginRequest(this.state.email, this.state.password)
+    this.props.loginRequest({
+      email: this.state.email,
+      password: this.state.password
+    })
   }
 
   isSubmitAllowed = () => this.state.email && this.state.password;
 
   render () {
     const { redirectToSignup, email, password } = this.state
+    const { requesting, errors } = this.props.login
 
     if (redirectToSignup) {
       return <Redirect to='/signup' />
@@ -51,7 +54,7 @@ class Login extends Component {
               <img className='header__logo' src='' alt='logo' />
               <h2>Log in to your account</h2>
             </div>
-            <form className='auth__login'>
+            <form className='auth__login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'
                 name='email'
@@ -74,6 +77,12 @@ class Login extends Component {
                 name='button'
                 value='Login'
               />
+              <div className='auth__notifications'>
+                {!requesting && !!errors.length && (
+                  <Errors message='Failure to login due to:' errors={errors} />
+
+                )}
+              </div>
               <p className='auth__footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
             </form>
           </div>
@@ -84,21 +93,29 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-
-  initialValues: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string
+  loginRequest: PropTypes.func,
+  login: PropTypes.shape({
+    requesting: PropTypes.bool,
+    successful: PropTypes.bool,
+    messages: PropTypes.array,
+    errors: PropTypes.array
   })
 }
 Login.defaultProps = {
-  initialValues: {
-    email: '',
-    password: ''
+  login: {
+    requesting: false,
+    successful: false,
+    messages: [],
+    errors: []
   }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   actions: bindActionCreators(login, dispatch)
-// })
+const mapStateToProps = state => ({
+  login: state.login
+})
 
-export default connect()(Login)
+const mapDispatchToProps = dispatch => ({
+  loginRequest: bindActionCreators(loginRequest, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
