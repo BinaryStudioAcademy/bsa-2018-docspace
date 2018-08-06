@@ -1,9 +1,8 @@
 import { fork } from 'redux-saga/effects'
-import greetingSaga from '../components/greeting/logic/greetingSaga'
-
+import spacesSaga from '../components/dashboard/spaces__content/logic/spacesSaga'
 function * rootSaga () {
   yield [
-    fork(greetingSaga)
+    fork(spacesSaga)
   ]
 }
 
