@@ -1,0 +1,19 @@
+class LoginService {
+  login (data) {
+    return fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => {
+        console.log(res)
+        return res.json()
+      })
+      .then(user => user)
+      .catch(err => console.log(`Can't get text: ${err}`))
+  }
+}
+
+export const loginService = new LoginService()
