@@ -1,10 +1,10 @@
 import * as actionTypes from './loginActionTypes'
 
-export const login = (user) => ({
-  type: actionTypes.LOGIN,
-  payload: {
-    email: user.email,
-    fullName: user.fullName,
-    password: user.password
-  }
-})
+const loginRequest = (userData) => {
+  return ({
+    type: actionTypes.LOGIN_REQUESTING,
+    ...userData
+  })
+}
+
+export default loginRequest
