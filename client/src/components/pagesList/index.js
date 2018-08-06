@@ -13,9 +13,9 @@ const PagesList = ({ pages }) => {
         {
           pages.map((page, i) => {
             return (
-              <div className='pages-list__item'>
+              <div className='pages-list__item' key={i}>
                 <div className='pages-list__item--icon'>•</div>
-                <div className='pages-list__item--name' key={i}>{page.name}</div>
+                <div className='pages-list__item--name'>{page.name}</div>
               </div>
             )
           })
