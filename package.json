@@ -22,6 +22,7 @@
         "passport-local-token": "^1.0.1"
     },
     "devDependencies": {
+        "babel-eslint": "^8.2.6",
         "concurrently": "^3.5.0",
         "eslint": "^5.2.0",
         "eslint-config-standard": "^11.0.0",
