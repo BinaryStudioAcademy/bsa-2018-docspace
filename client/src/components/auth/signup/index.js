@@ -63,8 +63,8 @@ class Signup extends Component {
       return <Redirect to='/login' />
     }
     return (
-      <div className='auth_main'>
-        <div className='auth_content'>
+      <div className='auth__main'>
+        <div className='auth__content'>
           <div className='auth__header'>
             <img className='header__logo' src='' alt='logo' />
             <h2>Sign up for your account</h2>

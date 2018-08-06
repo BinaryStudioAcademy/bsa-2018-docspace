@@ -7,6 +7,7 @@
   border-color: #f4f5f7;
   padding: 7px;
   margin-top:24px;
+  height: 24px;
 }
 .auth__input.button {
   border: 0;
@@ -15,6 +16,7 @@
   color: $white;
   background-color: #0052CC;
   cursor: pointer;
+  transition: background-color 200ms;
   &:hover {
     background-color: #0065FF;
   }

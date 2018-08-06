@@ -48,8 +48,8 @@ class Login extends Component {
     }
     return (
       <Fragment>
-        <div className='auth_main'>
-          <div className='auth_content'>
+        <div className='auth__main'>
+          <div className='auth__content'>
             <div className='auth__header'>
               <img className='header__logo' src='' alt='logo' />
               <h2>Log in to your account</h2>
@@ -58,7 +58,7 @@ class Login extends Component {
               <Input
                 inputType='email'
                 name='email'
-                label='Enter email adress'
+                label='Enter email'
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete
@@ -66,7 +66,7 @@ class Login extends Component {
               <Input
                 inputType='password'
                 name='password'
-                label='Create password'
+                label='Enter password'
                 value={password}
                 onChange={this.handleFieldChange}
                 autoComplete={false}

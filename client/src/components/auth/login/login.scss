@@ -1,13 +1,13 @@
 @import '../../../globalStyles/variables.scss';
 
-.auth_main {
+.auth__main {
   background-color: $primaryColor;
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-.auth_content {
+.auth__content {
   min-height: 500px;
   height: 100vh;
   width: 400px;
