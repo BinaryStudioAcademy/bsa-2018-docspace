@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './headerButtons.css'
+import './spaceHeaderButtons.css'
 
-const HeaderButtons = ({ onEdit, onWatch, onShare, onMenu, children }) => {
+const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, children }) => {
   return (
     <div className='buttons__container'>
       <div className='buttons__item' title='Edit' onClick={onEdit}>
@@ -23,7 +23,7 @@ const HeaderButtons = ({ onEdit, onWatch, onShare, onMenu, children }) => {
   )
 }
 
-HeaderButtons.propTypes = {
+SpaceHeaderButtons.propTypes = {
   onEdit: PropTypes.func,
   onWatch: PropTypes.func,
   onShare: PropTypes.func,
@@ -31,7 +31,7 @@ HeaderButtons.propTypes = {
   children: PropTypes.element
 }
 
-HeaderButtons.defaultProps = {
+SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
   onWatch: () => false,
   onShare: () => false,
@@ -39,4 +39,4 @@ HeaderButtons.defaultProps = {
   children: null
 }
 
-export default HeaderButtons
+export default SpaceHeaderButtons
