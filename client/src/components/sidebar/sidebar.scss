@@ -1,0 +1,57 @@
+@import 'globalStyles/variables.scss';
+
+.sidebar {
+  background: $grayLight;
+  width: 250px;
+  color: $grayDark;
+}
+
+.sidebar__header {
+  margin-top: 15px;
+  margin-left: 7px;
+  padding: 10px;
+  display: flex;
+}
+
+.sidebar__header--icon {
+  color: $white;
+  background:$blue;
+  padding: 7px;
+  border: 2px solid $white;
+  border-radius: 6px;
+}
+
+.sidebar__header--name {
+  line-height: 2.3;
+  margin-left: 7px;
+  font-weight: 600;
+}
+
+.sidebar__main {
+  margin: 15px;
+}
+
+.sidebar__main__navbar {
+  margin-bottom: 15px;
+}
+
+.sidebar__main__navbar__section {
+  display: flex;
+  text-decoration: none;
+  color: $grayDark;
+  padding: 10px;
+}
+
+.sidebar__main__navbar__section:hover {
+  background: #eaecef;
+}
+
+.sidebar__main__navbar__section--name {
+  margin-left: 20px;
+}
+
+.current {
+  background: #eaecef;
+  color: $primaryColor;
+}
+

@@ -9,15 +9,35 @@ const Sidebar = ({ spaceName, pages }) => {
   return (
     <div className='sidebar'>
       <div className='sidebar__header'>
-        <div className=''>icon</div>
-        <div className='sidebar__header-name'>{spaceName}</div>
+        <div className='sidebar__header--icon'>
+          <i className='fas fa-folder' />
+        </div>
+        <span className='sidebar__header--name'>{spaceName}</span>
       </div>
       <div className='sidebar__main'>
-        <NavLink to={`/spaces/${'TS'}/overview`} activeClassName='current'>Overview</NavLink>
-        <NavLink to={`/spaces/${'TS'}/blog`} activeClassName='current'>Blog</NavLink>
-        <NavLink to={`/spaces/${'TS'}/settings`} activeClassName='current'>Space Settings</NavLink>
+        <div className='sidebar__main__navbar'>
+          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/overview`} activeClassName='current' >
+            <div className='sidebar__main__navbar__section--icon'>
+              <i className='fas fa-stream' />
+            </div>
+            <div className='sidebar__main__navbar__section--name'>Overview</div>
+          </NavLink>
+          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/blog`} activeClassName='current'>
+            <div className='sidebar__main__navbar__section--icon'>
+              <i className='fas fa-quote-right' />
+            </div>
+            <div className='sidebar__main__navbar__section--name'>Blog</div>
+          </NavLink>
+          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/settings`} activeClassName='current'>
+            <div className='sidebar__main__navbar__section--icon'>
+              <i className='fas fa-cog' />
+            </div>
+            <div className='sidebar__main__navbar__section--name'>Space Settings</div>
+          </NavLink>
+        </div>
+        <PagesList pages={pages} />
       </div>
-      <PagesList pages={pages} />
+
     </div>
   )
 }

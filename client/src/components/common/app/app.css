@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .app__root {
   text-align: center; }
 

@@ -5,15 +5,18 @@ import './pagesList.css'
 
 const PagesList = ({ pages }) => {
   return (
-    <div>
-      <div className='pages-list__title'>
+    <div className='pages-list'>
+      <div className='pages-list--title'>
         Pages
       </div>
       <div>
         {
           pages.map((page, i) => {
             return (
-              <div key={i}>{page.name}</div>
+              <div className='pages-list__item'>
+                <div className='pages-list__item--icon'>•</div>
+                <div className='pages-list__item--name' key={i}>{page.name}</div>
+              </div>
             )
           })
         }

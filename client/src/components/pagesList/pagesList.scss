@@ -1,0 +1,18 @@
+@import 'globalStyles/variables.scss';
+
+.pages-list--title {
+  text-transform: uppercase;
+}
+
+.pages-list__item {
+  display: flex;
+  padding: 10px 25px
+}
+
+.pages-list__item:hover {
+  background: #eaecef;
+}
+
+.pages-list__item--name {
+  margin-left: 20px;
+}

@@ -21,7 +21,7 @@ class Space extends Component {
 
   render () {
     return (
-      <div>
+      <div className='space'>
         <Sidebar spaceName={this.props.space.name} pages={this.props.pages} />
         <Content>
           <Header />
