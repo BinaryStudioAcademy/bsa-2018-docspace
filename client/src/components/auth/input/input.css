@@ -10,5 +10,8 @@
   border: 0;
   height: 39px;
   margin-top: 24px;
-  background-color: #f4f5f7;
+  color: #ffffff;
+  background-color: #0052CC;
   cursor: pointer; }
+  .auth__input.button:hover {
+    background-color: #0065FF; }

@@ -12,6 +12,10 @@
   border: 0;
   height: 39px;
   margin-top: 24px;
-  background-color: $grayLight;
+  color: $white;
+  background-color: #0052CC;
   cursor: pointer;
+  &:hover {
+    background-color: #0065FF;
+  }
 }
