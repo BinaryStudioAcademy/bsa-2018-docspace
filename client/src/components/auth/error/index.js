@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './error.css'
+
 const Errors = (props) => {
   const { errors } = props
   return (
-    <div>
+    <div className='auth__error'>
       <ul>
         {errors.map(errors => (
           <li key={errors.time}>{errors.body}</li>
