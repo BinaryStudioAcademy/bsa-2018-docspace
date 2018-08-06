@@ -3,14 +3,15 @@
     "version": "1.0.0",
     "license": "ISC",
     "scripts": {
-        "client": "cd client && yarn start",
-        "server": "nodemon ./server/server.js",
+        "client": "cd client && NODE_PATH=./ yarn start",
+        "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
     },
     "dependencies": {
+        "babel-eslint": "^8.2.6",
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
         "express": "^4.16.2",

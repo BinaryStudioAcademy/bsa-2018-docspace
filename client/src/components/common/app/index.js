@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import logo from '../../../resources/logo.svg'
 import Greeting from '../../greeting'
-
+import SpaceModal from '../../modals/spaceModal'
 import './app.css'
 
 class App extends Component {
@@ -13,6 +13,7 @@ class App extends Component {
           <h1 className='app__title'>Binary docspace</h1>
         </header>
         <Greeting />
+        <SpaceModal />
       </div>
     )
   }
