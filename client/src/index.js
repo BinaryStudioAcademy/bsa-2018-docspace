@@ -8,20 +8,22 @@ import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
 import rootSaga from './commonLogic/rootSaga'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { ConnectedRouter } from 'connected-react-router'
+import history from './commonLogic/history'
 
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <Switch>
         <Route exact path='/' component={App} />
         <Route path='/signup' component={Signup} />
         <Route path='/login' component={Login} />
         <Route path='/about' component={About} />
       </Switch>
-    </BrowserRouter>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 )
