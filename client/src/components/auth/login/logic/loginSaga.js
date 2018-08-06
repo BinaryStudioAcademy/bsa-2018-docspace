@@ -1,6 +1,7 @@
 import { take, fork, call, put } from 'redux-saga/effects'
 import { loginService } from '../../../../services/loginService'
 import * as actionTypes from './loginActionTypes'
+import { push } from 'connected-react-router'
 
 function * loginFlow (action) {
   try {
@@ -12,6 +13,7 @@ function * loginFlow (action) {
       throw new Error(response.message)
     }
     yield put({ type: actionTypes.LOGIN_SUCCESS, response })
+    yield put(push('/'))
   } catch (error) {
     yield put({ type: actionTypes.LOGIN_ERROR, error })
   }
