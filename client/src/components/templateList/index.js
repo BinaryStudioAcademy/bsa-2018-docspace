@@ -4,7 +4,6 @@ import './templateList.css'
 
 class TemplateList extends React.Component {
   render () {
-    console.log('render')
     const items = this.props.items
     return (
       <ul className='template-list'>
