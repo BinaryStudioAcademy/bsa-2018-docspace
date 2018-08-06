@@ -21,6 +21,7 @@
 
 .auth__footer {
   color: #333333;
+  text-align: center;
   cursor: pointer; }
   .auth__footer:hover {
     text-decoration: underline; }
