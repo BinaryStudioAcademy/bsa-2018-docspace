@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import './button.css'
-
+import PropTypes from 'prop-types'
 class Button extends Component {
-
   render () {
     return (
       <button className={'button'} >
@@ -12,5 +11,7 @@ class Button extends Component {
   }
 }
 
-
-export default Button;
+Button.propTypes = {
+  content: PropTypes.string
+}
+export default Button

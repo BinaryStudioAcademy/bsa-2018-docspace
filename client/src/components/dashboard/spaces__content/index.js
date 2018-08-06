@@ -5,36 +5,29 @@ import { connect } from 'react-redux'
 
 import './spaces__content.css'
 
-
-
-  
 class SpacesContent extends Component {
-  
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
-        active: "",
-        search: ""
-    };
-}
-componentWillMount () {
-  this.props.getGreetingText()
-  console.log(this.props.getGreetingText())
-}
+      active: '',
+      search: ''
+    }
+  }
+  componentWillMount () {
+    this.props.getGreetingText()
+    console.log(this.props.getGreetingText())
+  }
 
-
-  
   render () {
-    const {text}  = this.props
+    const {text} = this.props
     return (
       <div className={'spaces__content__body'} >
-      <span>{text}</span>
-        
+        <span>{text}</span>
+
       </div>
     )
   }
-
 }
 
 SpacesContent.propTypes = {
