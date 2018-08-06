@@ -1,0 +1,38 @@
+@import 'globalStyles/variables.scss';
+
+.blog-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-blog-message {
+  text-align: center;
+  width: 400px;
+}
+
+.empty-blog-message__title {
+  text-transform: uppercase;
+  color: $gray;
+  font-weight: 600;
+  font-size: 15px;
+  margin: 15px;
+}
+
+.empty-blog-message__text {
+  color: $black;
+  margin: 15px;
+}
+
+.empty-blog-message__button {
+  background: $primaryColor;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+}
+
+.empty-blog-message__button:hover {
+  cursor: pointer;
+  background: $blue;
+}
