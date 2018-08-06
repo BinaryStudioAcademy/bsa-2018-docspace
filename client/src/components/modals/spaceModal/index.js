@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import Modal from '../../common/modal'
+import Modal from 'src/components/common/modal'
+import TemplateList from 'src/components/templateList'
+import './spaceModal.css'
 
-import logo from '../../../resources/logo.svg'
+// dummy
+import logo from 'src/resources/logo.svg'
 
-import TemplateList from '../../templateList'
-
-// зашлушка
+// dummy
 const items = [
   {
     name: 'Empty space',
@@ -70,7 +71,7 @@ export default class SpaceModal extends Component {
     })
   }
 
-  // зашлушка
+  // dummy
   handleFilter = (input) => {
     let filtered = items.filter(template => {
       return new RegExp(input.value, 'i').test(template.name)
