@@ -115,7 +115,7 @@ class Signup extends Component {
               )}
             </div>
             <p className='auth__footer' onClick={this.handleRedirectToLogin}>
-              Already have an Atlassian account? Log in
+              Already have an Docspace account? Log in
             </p>
           </form>
         </div>
