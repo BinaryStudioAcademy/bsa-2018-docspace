@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
+import DeleteSpaceDialog from './deleteSpaceDialog'
 import './spaceOverviewTab.css'
 
 export default class SpaceOverviewTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeSubTab: 'details',
+      // activeSubTab: 'details',
+      activeSubTab: 'delete space',
       renderBySubTab: {
         'details': this.renderSpaceDetails,
         'edit details': this.renderEditDetailsForm,
@@ -29,7 +31,9 @@ export default class SpaceOverviewTab extends Component {
   )
 
   renderDeleteSpaceDialog = () => (
-    <div> delete </div>
+    <DeleteSpaceDialog
+      goBackToDetails={() => this.openSubTab('details')}
+    />
   )
 
   openSubTab = (name) => {

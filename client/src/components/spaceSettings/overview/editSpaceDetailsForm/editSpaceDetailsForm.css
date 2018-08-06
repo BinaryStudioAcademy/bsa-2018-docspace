@@ -1,0 +1,61 @@
+.edit-space-details-form {
+  font-size: 16px; }
+  .edit-space-details-form label {
+    color: #707070;
+    margin-top: 0.4rem;
+    max-width: 130px;
+    min-width: 75px;
+    width: 20%;
+    text-align: right; }
+  .edit-space-details-form input, .edit-space-details-form select, .edit-space-details-form textarea {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin: 0;
+    max-width: 250px;
+    margin-left: 1rem;
+    width: 100%;
+    padding: 4px 5px;
+    color: #333;
+    line-height: 1.4285714285714;
+    vertical-align: baseline; }
+  .edit-space-details-form input, .edit-space-details-form select {
+    height: 2.14285714em; }
+  .edit-space-details-form textarea {
+    overflow-y: auto;
+    height: 90px; }
+  .edit-space-details-form .field-group {
+    display: flex;
+    margin-top: 0.7rem; }
+  .edit-space-details-form .btn-group {
+    display: flex;
+    margin-top: 0.7rem;
+    padding-left: 1rem; }
+    .edit-space-details-form .btn-group button {
+      box-sizing: border-box;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 3.01px;
+      color: #2a67a5;
+      cursor: pointer;
+      display: inline-block;
+      height: 2.14285714em;
+      line-height: 1.42857143;
+      margin: 0;
+      padding: 4px 10px;
+      text-decoration: none;
+      vertical-align: baseline;
+      white-space: nowrap; }
+    .edit-space-details-form .btn-group button[type=submit] {
+      background: #2a67a5;
+      border-color: transparent;
+      color: #fff;
+      font-weight: bold; }
+  .edit-space-details-form h2 {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.25;
+    text-transform: none;
+    margin: 0; }
