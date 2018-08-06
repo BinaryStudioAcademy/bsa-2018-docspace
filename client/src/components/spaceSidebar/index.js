@@ -8,31 +8,31 @@ import PagesList from '../pagesList'
 const SpaceSidebar = ({ spaceName, pages }) => {
   return (
     <div className='sidebar'>
-      <div className='sidebar__header'>
-        <div className='sidebar__header--icon'>
+      <div className='sidebar-header'>
+        <div className='sidebar-header-icon'>
           <i className='fas fa-folder' />
         </div>
-        <span className='sidebar__header--name'>{spaceName}</span>
+        <span className='sidebar-header-name'>{spaceName}</span>
       </div>
-      <div className='sidebar__main'>
-        <div className='sidebar__main__navbar'>
-          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/overview`} activeClassName='current' >
-            <div className='sidebar__main__navbar__section--icon'>
+      <div className='sidebar-main'>
+        <div className='sidebar-main-navbar'>
+          <NavLink className='sidebar-main-navbar-section' to={`/spaces/${'TS'}/overview`} activeClassName='current' >
+            <div className='sidebar-main-navbar-section--icon'>
               <i className='fas fa-stream' />
             </div>
-            <div className='sidebar__main__navbar__section--name'>Overview</div>
+            <div className='sidebar-main-navbar-section-name'>Overview</div>
           </NavLink>
-          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/blog`} activeClassName='current'>
-            <div className='sidebar__main__navbar__section--icon'>
+          <NavLink className='sidebar-main-navbar-section' to={`/spaces/${'TS'}/blog`} activeClassName='current'>
+            <div className='sidebar-main-navbar-section-icon'>
               <i className='fas fa-quote-right' />
             </div>
-            <div className='sidebar__main__navbar__section--name'>Blog</div>
+            <div className='sidebar-main-navbar-section-name'>Blog</div>
           </NavLink>
-          <NavLink className='sidebar__main__navbar__section' to={`/spaces/${'TS'}/settings`} activeClassName='current'>
-            <div className='sidebar__main__navbar__section--icon'>
+          <NavLink className='sidebar-main-navbar-section' to={`/spaces/${'TS'}/settings`} activeClassName='current'>
+            <div className='sidebar-main-navbar-section-icon'>
               <i className='fas fa-cog' />
             </div>
-            <div className='sidebar__main__navbar__section--name'>Space Settings</div>
+            <div className='sidebar-main-navbar-section-name'>Space Settings</div>
           </NavLink>
         </div>
         <PagesList pages={pages} />

@@ -5,7 +5,7 @@ import './page.css'
 class Page extends Component {
   render () {
     return (
-      <div>It's page!</div>
+      <div>Hello from page!</div>
     )
   }
 }

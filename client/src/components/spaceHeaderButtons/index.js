@@ -5,17 +5,17 @@ import './spaceHeaderButtons.css'
 
 const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, children }) => {
   return (
-    <div className='buttons__container'>
-      <div className='buttons__item' title='Edit' onClick={onEdit}>
+    <div className='buttons-container'>
+      <div className='buttons-item' title='Edit' onClick={onEdit}>
         <i className='fas fa-pen' />
       </div>
-      <div className='buttons__item' title='Watch' onClick={onWatch}>
+      <div className='buttons-item' title='Watch' onClick={onWatch}>
         <i className='fas fa-eye' />
       </div>
-      <div className='buttons__item' title='Share this page with others' onClick={onShare}>
+      <div className='buttons-item' title='Share this page with others' onClick={onShare}>
         <i className='fas fa-share-square' />
       </div>
-      <div className='buttons__item' onClick={onMenu}>
+      <div className='buttons-item' onClick={onMenu}>
         <i className='fas fa-ellipsis-h' />
       </div>
       {children}

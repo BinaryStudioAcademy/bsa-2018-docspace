@@ -1,14 +1,12 @@
-.pages-list--title {
+.pages-list-title {
   text-transform: uppercase; }
 
-.pages-list__item {
+.pages-list-item {
   display: flex;
   padding: 10px 25px; }
-
-.pages-list__item:hover {
-  background: #eaecef;
-  color: #0044a9;
-  cursor: pointer; }
-
-.pages-list__item--name {
-  margin-left: 20px; }
+  .pages-list-item:hover {
+    background: #eaecef;
+    color: #0044a9;
+    cursor: pointer; }
+  .pages-list-item-name {
+    margin-left: 20px; }

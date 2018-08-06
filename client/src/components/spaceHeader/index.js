@@ -14,7 +14,7 @@ class SpaceHeader extends Component {
 
     return (
       <div className='header'>
-        <div className='header--name'>{this.props.space.name}</div>
+        <div className='header-name'>{this.props.space.name}</div>
         {
           hideButtons
             ? null

@@ -7,9 +7,9 @@ class Blog extends Component {
     return (
       <div className='blog-container'>
         <div className='empty-blog-message'>
-          <div className='empty-blog-message__title'>Got something to share?</div>
-          <div className='empty-blog-message__text'>Blog posts are a great way to share announcements, status reports or other important news with your team.</div>
-          <button className='empty-blog-message__button'>Create Blog Post</button>
+          <div className='empty-blog-message-title'>Got something to share?</div>
+          <div className='empty-blog-message-text'>Blog posts are a great way to share announcements, status reports or other important news with your team.</div>
+          <button className='empty-blog-message-button'>Create Blog Post</button>
         </div>
       </div>
     )
