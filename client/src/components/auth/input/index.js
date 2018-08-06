@@ -18,7 +18,7 @@ const Input = (props) => (
 
 Input.propTypes = {
   inputType: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   onChange: PropTypes.func,
   autoComplete: PropTypes.bool,
   disabled: PropTypes.bool,
