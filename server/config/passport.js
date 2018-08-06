@@ -3,9 +3,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
 module.exports = () => {
-  console.log('PASSPORT EXECUTED')
   passport.serializeUser(function (user, done) {
-    console.log('SERIAL')
     done(null, user.id)
   })
 
@@ -26,7 +24,7 @@ module.exports = () => {
       if (!user) {
         return done(null, false, { message: 'Incorrect email.' })
       }
-      if (!user.password === password) {
+      if (user.password !== password) {
         return done(null, false, { message: 'Incorrect password.' })
       }
       return done(null, user)

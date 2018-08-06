@@ -7,10 +7,7 @@ class LoginService {
       },
       body: JSON.stringify(data)
     })
-      .then(res => {
-        console.log(res)
-        return res.json()
-      })
+      .then(res => res.json())
       .then(user => user)
       .catch(err => console.log(`Can't get text: ${err}`))
   }
