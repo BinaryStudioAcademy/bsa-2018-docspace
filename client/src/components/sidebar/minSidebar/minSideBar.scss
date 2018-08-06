@@ -1,0 +1,39 @@
+@import '../../../globalStyles/variables.scss';
+
+.minimize-dashboard-wrapper {
+  .icon-navigation-wrapper {
+    height: 50%;
+  }
+  .top-icons{
+    height: 20%;
+  }
+  .bottom-icons{
+    height: 30%;
+  }
+}
+.sidebar-wrapper{
+  .top-icons, .bottom-icons{
+    height: 50%;
+  }
+}
+.bottom-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.icon-buttons-wrapper {
+  button{
+    background-color: $primaryColor;
+    border: none;
+    color: white;
+    font-size: 20px;
+    height: 40px;
+    width: 40px;
+  }
+  button:hover{
+    background-color: rgb(8,54,124);
+  }
+
+}

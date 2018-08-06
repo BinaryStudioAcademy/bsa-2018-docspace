@@ -1,0 +1,61 @@
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  border: 1px solid black;
+  text-align: left;
+  padding: 15px 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0044a9; }
+  .sidebar-wrapper ul {
+    padding-left: 0;
+    list-style: none;
+    width: 90%; }
+  .sidebar-wrapper .tabs-wrapper ul {
+    margin-top: 35px; }
+  .sidebar-wrapper .icon-buttons-wrapper {
+    padding: 0 5px;
+    background-color: #0044a9; }
+  .sidebar-wrapper h1 {
+    color: white;
+    padding-left: 10px; }
+
+.tabs-wrapper {
+  width: 80%; }
+
+.minimize-dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-direction: row;
+  box-sizing: border-box;
+  border: 1px solid black;
+  text-align: left;
+  padding: 15px 0;
+  margin: 0;
+  height: 100%;
+  width: 70px; }
+
+.Resizer {
+  z-index: 9999;
+  border: 2px solid #0044a9;
+  cursor: w-resize; }
+
+.sidebar-container {
+  height: 100%; }
+
+.icon-buttons-wrapper {
+  height: 100%; }
+
+.sidebar-wrapper button {
+  border: none;
+  background-color: inherit;
+  color: white; }
+  .sidebar-wrapper button a {
+    display: block;
+    height: 100%;
+    width: 100%; }
+
+.sidebar-wrapper .icon-buttons-wrapper li:hover {
+  background-color: #08367c; }
