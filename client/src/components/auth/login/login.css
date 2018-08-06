@@ -27,5 +27,6 @@
     text-decoration: underline; }
 
 .auth__header h2 {
+  text-align: center;
   color: white;
   margin-top: 48px; }
