@@ -2,21 +2,25 @@
 
 .sidebar {
   background: $grayLight;
-  width: 250px;
+  width: 20%;
   color: $grayDark;
 }
 
 .sidebar__header {
-  margin-top: 15px;
-  margin-left: 7px;
-  padding: 10px;
+  margin: 15px;
+  padding: 10px 10px 10px 3px;
   display: flex;
+}
+
+.sidebar__header:hover {
+  background: $grayBackground;
+  cursor: pointer;
 }
 
 .sidebar__header--icon {
   color: $white;
   background:$blue;
-  padding: 7px;
+  padding: 7px 10px;
   border: 2px solid $white;
   border-radius: 6px;
 }
@@ -43,7 +47,8 @@
 }
 
 .sidebar__main__navbar__section:hover {
-  background: #eaecef;
+  background: $grayBackground;
+  cursor: pointer;
 }
 
 .sidebar__main__navbar__section--name {

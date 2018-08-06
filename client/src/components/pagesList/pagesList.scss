@@ -10,9 +10,12 @@
 }
 
 .pages-list__item:hover {
-  background: #eaecef;
+  background: $grayBackground;
+  color: $primaryColor;
+  cursor: pointer;
 }
 
 .pages-list__item--name {
   margin-left: 20px;
 }
+

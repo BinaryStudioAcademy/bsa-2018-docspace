@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
+import HeaderButtons from '../headerButtons'
+
 import './header.css'
 
 class Header extends Component {
@@ -11,22 +13,20 @@ class Header extends Component {
     const showSpaceButton = this.props.location.pathname === '/spaces/TS/overview'
 
     return (
-      <div>
-        <div>{this.props.space.name}</div>
+      <div className='header'>
+        <div className='header--name'>{this.props.space.name}</div>
         {
           hideButtons
             ? null
             : (
               <div>
-                <div>Edit</div>
-                <div>Watch</div>
-                <div>Share</div>
-                <div>Menu</div>
-                {
-                  showSpaceButton
-                    ? <div>Remove from spaces</div>
-                    : null
-                }
+                <HeaderButtons>
+                  {
+                    showSpaceButton
+                      ? <div className='space-button'>Remove From My Spaces</div>
+                      : null
+                  }
+                </HeaderButtons>
               </div>
             )
         }

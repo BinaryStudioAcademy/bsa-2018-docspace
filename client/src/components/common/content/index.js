@@ -5,7 +5,7 @@ import './content.css'
 
 const Content = ({ children }) => {
   return (
-    <div>{children}</div>
+    <div className='content'>{children}</div>
   )
 }
 

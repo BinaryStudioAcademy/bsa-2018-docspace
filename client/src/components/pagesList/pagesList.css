@@ -6,7 +6,9 @@
   padding: 10px 25px; }
 
 .pages-list__item:hover {
-  background: #eaecef; }
+  background: #eaecef;
+  color: #0044a9;
+  cursor: pointer; }
 
 .pages-list__item--name {
   margin-left: 20px; }
