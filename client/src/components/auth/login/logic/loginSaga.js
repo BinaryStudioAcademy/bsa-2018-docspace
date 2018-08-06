@@ -1,24 +1,23 @@
-import { takeLatest, put, call } from 'redux-saga/effects'
+import { take, fork, call, put } from 'redux-saga/effects'
+import { loginService } from '../../../../services/loginService'
 import * as actionTypes from './loginActionTypes'
-import { userService } from '../../../services/userService'
 
-function * loginUser (action) {
+function * loginFlow (action) {
   try {
-    const request = yield call(userService.login, [...action.payload])
+    const { email, password } = action
 
-    yield put({
-      type: actionTypes.LOGIN_SUCCESS,
-      payload: {
-        ...request.data
-      }
-    })
+    let response = yield call(loginService.login, {email, password})
+    yield put({ type: actionTypes.LOGIN_SUCCESS, response })
   } catch (error) {
-    yield put({
-      type: actionTypes.LOGIN_FAILED
-    })
+    yield put({ type: actionTypes.LOGIN_ERROR, error })
   }
 }
 
-export default function * loginSaga () {
-  yield takeLatest(actionTypes.LOGIN, loginUser)
+function * loginWatcher () {
+  while (true) {
+    const action = yield take(actionTypes.LOGIN_REQUESTING)
+    yield fork(loginFlow, action)
+  }
 }
+
+export default loginWatcher
