@@ -11,6 +11,7 @@ function * loginFlow (action) {
     if (!response.success) {
       throw new Error(response.message)
     }
+    yield put({ type: actionTypes.LOGIN_SUCCESS, response })
   } catch (error) {
     yield put({ type: actionTypes.LOGIN_ERROR, error })
   }
