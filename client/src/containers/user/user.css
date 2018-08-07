@@ -293,31 +293,34 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 .profile-edit-buttons {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex: 1; }
 
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
   margin: 0px -2px; }
 
-.edit-manage-btn .edit-btn,
+.profile-fields-wrapper .edit-btn,
 .edit-manage-btn .manage-btn {
   flex: 1 0 auto;
   margin: 0px 2px; }
 
-.edit-manage-btn .edit-btn button,
-.edit-manage-btn .manage-btn a button {
-  -webkit-box-align: baseline;
+.profile-fields-wrapper .edit-btn {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 400px; }
+
+.current-new-passwords .edit-btn button,
+.profile-fields-wrapper .edit-btn button,
+.edit-manage-btn .manage-btn button {
   align-items: baseline;
   box-sizing: border-box;
   cursor: default;
-  display: inline-flex;
   font-size: inherit;
   font-style: normal;
   height: 32px;
   line-height: 32px;
   max-width: 100%;
-  text-align: center;
   vertical-align: middle;
   white-space: nowrap;
   width: auto;
@@ -328,23 +331,25 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   text-decoration: none;
   transition: background 0.1s ease-out; }
 
-.edit-manage-btn .edit-btn button {
-  background: #0052cc;
-  color: #fff; }
+.edit-manage-btn .manage-btn button {
+  color: #505f79;
+  background: rgba(9, 30, 66, 0.08); }
 
-.edit-manage-btn .edit-btn button:hover {
+.edit-manage-btn .manage-btn button:hover {
+  background: rgba(9, 30, 66, 0.12); }
+
+.current-new-passwords .edit-btn button,
+.profile-fields-wrapper .edit-btn button {
+  color: white;
+  background: #0052cc; }
+
+.current-new-passwords .edit-btn button:hover,
+.profile-fields-wrapper .edit-btn button:hover {
   cursor: pointer;
   background: #0065ff; }
 
-.edit-manage-btn .manage-btn a {
-  text-decoration: none; }
-
-.edit-manage-btn .manage-btn a button {
-  color: #505f79;
-  background: rgba(9, 30, 66, 0.04); }
-
-.edit-manage-btn .manage-btn a button:hover {
-  background: rgba(9, 30, 66, 0.08); }
+.current-new-passwords .edit-btn button {
+  margin-top: 20px; }
 
 .profile-fields-items {
   max-width: 575px;
@@ -481,3 +486,61 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   flex: 0 0 auto;
   padding: 8px 12px 7px;
   text-decoration: none; }
+
+.change-password-header {
+  font-size: 1.14em;
+  font-style: inherit;
+  line-height: 1.25;
+  color: #172b4d;
+  font-weight: 600;
+  letter-spacing: -0.006em;
+  margin-top: 24px; }
+
+.current-new-passwords {
+  max-width: 400px; }
+
+.password-label {
+  display: block;
+  color: #6b778c;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.33333;
+  padding: 20px 0px 4px; }
+
+.password-wrapper {
+  display: flex;
+  max-width: 100%;
+  flex: 0 0 100%;
+  min-height: 40px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafbfc;
+  box-sizing: border-box;
+  color: #091e42;
+  font-size: 14px;
+  justify-content: space-between;
+  line-height: 1.42857;
+  max-width: 100%;
+  word-wrap: break-word;
+  border-color: #dfe1e6;
+  border-radius: 3px;
+  border-style: solid;
+  flex: 1 0 auto;
+  overflow: hidden;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  border-width: 2px;
+  padding: 6px; }
+
+.password-input {
+  box-sizing: border-box;
+  color: inherit;
+  cursor: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  background: transparent;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  outline: none; }

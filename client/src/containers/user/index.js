@@ -5,6 +5,8 @@ import { getUserData, updateUser } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from '../../components/managePhotos/managePhotos'
+import { ProfileFields } from '../../components/userTabs/general'
+import { PrivateFields } from '../../components/userTabs/private'
 
 import './user.css'
 
@@ -17,8 +19,12 @@ class User extends Component {
       login: '',
       firstName: '',
       lastName: '',
+      currentPassword: '',
+      newPassword: '',
       date: new Date(),
-      isShowManagePhoto: false
+      isShowManagePhoto: false,
+      isShowGeneral: true,
+      isShowPrivate: false
     }
 
     this.editMode = this.editMode.bind(this)
@@ -32,6 +38,29 @@ class User extends Component {
     this.handleLastName = this.handleLastName.bind(this)
     this.managePhoto = this.managePhoto.bind(this)
     this.handleManagePhoto = this.handleManagePhoto.bind(this)
+    this.switchGeneral = this.switchGeneral.bind(this)
+    this.switchPrivate = this.switchPrivate.bind(this)
+    this.handleCurrentPassword = this.handleCurrentPassword.bind(this)
+    this.handleNewPassword = this.handleNewPassword.bind(this)
+    this.sendPassword = this.sendPassword.bind(this)
+  }
+
+  handleCurrentPassword (e) {
+    this.setState({currentPassword: e.target.value})
+  }
+
+  handleNewPassword (e) {
+    this.setState({newPassword: e.target.value})
+  }
+
+  switchGeneral (e) {
+    this.setState({isShowGeneral: true, isShowPrivate: false})
+  }
+
+  switchPrivate (e) {
+    if (!this.state.isEditMode) {
+      this.setState({isShowGeneral: false, isShowPrivate: true})
+    }
   }
 
   handleEmail (e) {
@@ -59,9 +88,15 @@ class User extends Component {
   }
 
   editMode (e) {
+    let buttonHTML = e.target
+
+    while (buttonHTML.tagName !== 'BUTTON') {
+      buttonHTML = buttonHTML.parentNode
+    }
+
     const user = this.props.user
 
-    if (e.target.innerText === 'Edit profile') {
+    if (e.target.innerText.trim() === 'Edit') {
       this.setState({
         isEditMode: true,
         email: user.email,
@@ -85,7 +120,55 @@ class User extends Component {
       })
     }
 
-    e.target.innerText = e.target.innerText === 'Edit profile' ? 'Save Changes' : 'Edit profile'
+    buttonHTML.innerHTML = buttonHTML.innerText.trim() === 'Edit' ? `<i class='fa fa-check' aria-hidden='true' /> Save` : `<i class='fa fa-cog' aria-hidden='true' /> Edit`
+  }
+
+  sendPassword (e) {
+    let buttonHTML = e.target
+    console.log(this.state.currentPassword)
+    console.log(this.state.newPassword)
+    while (buttonHTML.tagName !== 'BUTTON') {
+      buttonHTML = buttonHTML.parentNode
+    }
+
+    const user = this.props.user
+
+    if (this.state.currentPassword !== user.password) {
+      buttonHTML.innerHTML = `Error current password <i class='fa fa-times' aria-hidden='true' />`
+      setTimeout(() => {
+        buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+      }, 1500)
+      return null
+    }
+
+    if (this.state.newPassword === '') {
+      setTimeout(() => {
+        buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+      }, 1500)
+      buttonHTML.innerHTML = `Password Empty <i class='fa fa-times' aria-hidden='true' />`
+      return null
+    }
+
+    this.props.actions.updateUser({
+      id: this.props.match.params.id,
+      avatar: user.avatar,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      spaces: user.spaces,
+      email: user.email,
+      login: user.login,
+      password: this.state.newPassword
+    })
+
+    setTimeout(() => {
+      buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+    }, 1500)
+    buttonHTML.innerHTML = `Password was saved <i class='fa fa-check' aria-hidden='true' />`
+    this.setState({
+      newPassword: '',
+      currentPassword: ''
+    })
+    return null
   }
 
   renderEmail (email) {
@@ -164,57 +247,40 @@ class User extends Component {
                           <i className='fa fa-clock-o label-clock' aria-hidden='true' />
                           <span>{this.state.date.toLocaleTimeString().replace(/:\d+ /, ' ')}</span>
                         </div>
-                        <div className='profile-edit-buttons'>
-                          <div className='edit-manage-btn'>
-                            <div className='edit-btn'>
-                              <button onClick={this.editMode}>Edit profile</button>
-                            </div>
-                            <div className='manage-btn'>
-                              <a href='#'>
-                                <button>Manage Account</button>
-                              </a>
-                            </div>
-                          </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <div className='profile-edit-buttons'>
+                      <div className='edit-manage-btn'>
+                        <div className='manage-btn'>
+                          <button onClick={this.switchGeneral}>General</button>
+                        </div>
+                        <div className='manage-btn'>
+                          <button onClick={this.switchPrivate}>Private</button>
                         </div>
                       </div>
                     </div>
 
-                    <div className='profile-fields-wrapper'>
-                      <ul className='profile-fields-items'>
-                        <li className='profile-fields-item'>
-                          <div>
-                            <label htmlFor='email' className='profile-fields-item-labels'>Email</label>
-                            <div id='email' className='profile-fields-item-contents'>
-                              {this.renderEmail.call(null, email)}
-                            </div>
-                          </div>
-                        </li>
-                        <li className='profile-fields-item'>
-                          <div>
-                            <label htmlFor='nickname' className='profile-fields-item-labels'>Nickname</label>
-                            <div id='nickname' className='profile-fields-item-contents'>
-                              {this.renderLogin.call(null, login)}
-                            </div>
-                          </div>
-                        </li>
-                        <li className='profile-fields-item'>
-                          <div>
-                            <label htmlFor='firstName' className='profile-fields-item-labels'>First Name</label>
-                            <div id='firstName' className='profile-fields-item-contents'>
-                              {this.renderFirstName.call(null, firstName)}
-                            </div>
-                          </div>
-                        </li>
-                        <li className='profile-fields-item'>
-                          <div>
-                            <label htmlFor='lastName' className='profile-fields-item-labels'>Last Name</label>
-                            <div id='lastName' className='profile-fields-item-contents'>
-                              {this.renderLastName.call(null, lastName)}
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                    <PrivateFields
+                      handleCurrentPassword={this.handleCurrentPassword}
+                      handleNewPassword={this.handleNewPassword}
+                      sendPassword={this.sendPassword}
+                      isShowPrivate={this.state.isShowPrivate}
+                      newPassword={this.state.newPassword}
+                      currentPassword={this.state.currentPassword}
+                    />
+                    <ProfileFields
+                      renderEmail={this.renderEmail}
+                      renderLogin={this.renderLogin}
+                      renderFirstName={this.renderFirstName}
+                      renderLastName={this.renderLastName}
+                      editMode={this.editMode}
+                      isShowGeneral={this.state.isShowGeneral}
+                      email={email}
+                      login={login}
+                      firstName={firstName}
+                      lastName={lastName}
+                    />
 
                     <div className='recent-work-list-wrapper'>
                       <h2 className='recent-work-list-wrapper-header'><span>Work</span></h2>
