@@ -10,15 +10,15 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
-  const id = req.params.id
+router.get('/:key', (req, res) => {
+  const key = req.params.key
 
-  if (id.length === 0) {
+  if (key.length === 0) {
     res.status(400)
-    return res.end('Invalid id')
+    return res.end('Invalid key')
   }
 
-  spaceService.get(id)
+  spaceService.get(key)
     .then(data => res.json(data))
     .catch(() => {
       res.status(400)
@@ -47,16 +47,16 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/:id', (req, res) => {
-  const id = req.params.id
+router.put('/:key', (req, res) => {
+  const key = req.params.key
 
-  if (id.length === 0) {
+  if (key.length === 0) {
     res.status(400)
 
-    return res.end('Invalid id')
+    return res.end('Invalid key')
   }
 
-  spaceService.update(id, req.body)
+  spaceService.update(key, req.body)
     .then(data => res.json(data))
     .catch(() => {
       res.status(400)
@@ -64,16 +64,16 @@ router.put('/:id', (req, res) => {
     })
 })
 
-router.delete('/:id', (req, res) => {
-  const id = req.params.id
+router.delete('/:key', (req, res) => {
+  const key = req.params.key
 
-  if (id.length === 0) {
+  if (key.length === 0) {
     res.status(400)
 
-    return res.end('Invalid id')
+    return res.end('Invalid key')
   }
 
-  spaceService.delete(id)
+  spaceService.delete(key)
     .then(data => res.json(data))
     .catch(() => {
       res.status(400)
