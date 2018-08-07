@@ -24,10 +24,14 @@ module.exports = () => {
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' })
         }
-        if (user.password !== password) {
-          return done(null, false, { message: 'Incorrect password.' })
-        }
-        return done(null, user)
+        user.comparePassword(password)
+          .then((isMatch) => {
+            if (!isMatch) {
+              return done(null, false, { message: 'Incorrect password.' })
+            }
+            return done(null, user)
+          })
+          .catch(err => done(err))
       })
       .catch(err => done(err))
   }
