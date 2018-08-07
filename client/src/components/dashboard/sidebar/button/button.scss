@@ -1,0 +1,57 @@
+@import "../../../../globalStyles/variables.scss";
+
+.nav-button{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  list-style: none;
+  i{
+    padding: 10px;
+    font-size: 20px;
+  }
+}
+.active{
+  background-color: rgb(7,61,141);
+}
+.round-button{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius:100%;
+  padding:0;
+  margin:0 10px 5px 10px;
+  height: 50px;
+  width: 50px;
+  a{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+  }
+}
+.minimize-button{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-align: center;
+  padding:0;
+  margin:0 10px 5px 10px;
+  height: 50px;
+  width: 50px;
+  a{
+    height: 40px;
+    width: 40px;
+  }
+}
+.full-button{
+  width: 98%;
+  p, i{
+    float:left;
+  }
+  a{
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+}
