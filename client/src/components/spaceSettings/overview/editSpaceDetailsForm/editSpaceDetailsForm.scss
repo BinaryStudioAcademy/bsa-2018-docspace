@@ -20,7 +20,7 @@
     font-size: 14px;
     margin: 0;
     max-width: 250px;
-    margin-left: 1rem;
+    margin-left: 1.2rem;
     width: 100%;
     padding: 4px 5px;
     color: #333;
@@ -43,8 +43,19 @@
 
   .field-group{
     display: flex;
-    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+    margin-top: 7px;
     // align-items: center;
+  }
+
+  .avatar-field{
+    align-items: center;
+    label{
+      margin-top: 0;
+    }
+    img{
+      margin-left: 1.2rem;
+    }
   }
 
   .btn-group{
@@ -84,5 +95,4 @@
     text-transform: none;
     margin:0;
   }
-
 }

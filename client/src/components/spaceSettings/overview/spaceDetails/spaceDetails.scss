@@ -2,6 +2,10 @@
 .link{
   color: #3572b0;
   cursor: pointer; 
+
+  i{
+    margin-right: 0.3rem;
+  }
 }
 
 
@@ -12,7 +16,7 @@
 
 
 .space-details-table{
-  padding-top: 20px;
+  // padding-top: 20px;
   padding-right: 20px;
   width: 100%;
   min-width:200px;

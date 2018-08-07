@@ -1,6 +1,22 @@
 .space-overview-body {
   padding: 20px; }
 
+.space-details-header {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1.25;
+  text-transform: none;
+  margin-bottom: 0;
+  margin-left: 10px; }
+  .space-details-header .edit-icons {
+    margin-left: 2rem;
+    font-size: 19px; }
+    .space-details-header .edit-icons i {
+      padding: 0.5rem;
+      cursor: pointer; }
+      .space-details-header .edit-icons i:hover, .space-details-header .edit-icons i.active {
+        color: #f6c342; }
+
 .sub-tab-menu {
   display: flex;
   padding-top: 30px;

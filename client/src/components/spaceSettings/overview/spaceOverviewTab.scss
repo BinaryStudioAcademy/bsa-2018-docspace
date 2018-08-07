@@ -4,6 +4,29 @@
   padding: 20px;
 }
 
+
+.space-details-header{
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.25;
+    text-transform: none;
+    margin-bottom:0;
+    margin-left: 10px;
+
+    .edit-icons{
+      margin-left: 2rem;
+      font-size: 19px;
+
+      i{
+        padding:0.5rem;
+        cursor: pointer;
+        &:hover, &.active{
+          color:#f6c342
+        }
+      }
+    }
+}
+
 .sub-tab-menu{
   display: flex;
   padding-top: 30px;

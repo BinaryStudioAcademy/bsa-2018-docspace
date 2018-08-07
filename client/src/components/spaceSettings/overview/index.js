@@ -1,68 +1,54 @@
 import React, {Component} from 'react'
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
-import DeleteSpaceDialog from './deleteSpaceDialog'
 import './spaceOverviewTab.css'
 
 export default class SpaceOverviewTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      // activeSubTab: 'details',
-      activeSubTab: 'delete space',
-      renderBySubTab: {
-        'details': this.renderSpaceDetails,
-        'edit details': this.renderEditDetailsForm,
-        'delete space': this.renderDeleteSpaceDialog
-      }
+      isAditing: false,
+      showDeleteSpaceModal: false // for the future
     }
   }
 
-  renderSpaceDetails = () => (
-    <SpaceDetails
-      goToEditDetails={() => this.openSubTab('edit details')}
-    />
-  )
-
-  renderEditDetailsForm = () => (
-    <EditSpaceDetailsForm
-      goBackToDetails={() => this.openSubTab('details')}
-    />
-  )
-
-  renderDeleteSpaceDialog = () => (
-    <DeleteSpaceDialog
-      goBackToDetails={() => this.openSubTab('details')}
-    />
-  )
-
-  openSubTab = (name) => {
+  goToEditDetails =() => {
     this.setState({
-      activeSubTab: name
+      isEditing: true
+    })
+  }
+
+  backToSpaceDetails = () => {
+    this.setState({
+      isEditing: false
     })
   }
 
   render () {
-    const {activeSubTab, renderBySubTab} = this.state
-    const onDeleteSpaceTab = activeSubTab === 'delete space'
+    const {isEditing} = this.state
     return (
       <React.Fragment>
-        <div className='sub-tab-menu'>
-          <div
-            className={`overview-tab-btn left ${!onDeleteSpaceTab ? 'active' : ''}`}
-            onClick={() => this.openSubTab('details')}
-          >
-            Space details
-          </div>
-          <div
-            className={`overview-tab-btn right ${onDeleteSpaceTab ? 'active' : ''}`}
-            onClick={() => this.openSubTab('delete space')}
-          >
-            Delete space
-          </div>
-        </div>
+        <h3 className='space-details-header'> Space Details
+          <span className='edit-icons'>
+            <i
+              className={`fas fa-pencil-alt ${isEditing ? 'active' : ''}`}
+              onClick={this.goToEditDetails}
+            />
+            <i
+              className='fas fa-trash-alt'
+              onClick={this.handleDeleteSpace}
+            />
+          </span>
+        </h3>
+
         <div className='space-overview-body'>
-          { renderBySubTab[activeSubTab]() }
+          {
+            !isEditing
+              ? <SpaceDetails />
+              : <EditSpaceDetailsForm
+                goBackToDetails={this.backToSpaceDetails}
+              />
+          }
         </div>
       </React.Fragment>
     )

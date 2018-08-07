@@ -1,13 +1,14 @@
 .link {
   color: #3572b0;
   cursor: pointer; }
+  .link i {
+    margin-right: 0.3rem; }
 
 #space-logo {
   max-height: 48px;
   max-width: 48px; }
 
 .space-details-table {
-  padding-top: 20px;
   padding-right: 20px;
   width: 100%;
   min-width: 200px; }

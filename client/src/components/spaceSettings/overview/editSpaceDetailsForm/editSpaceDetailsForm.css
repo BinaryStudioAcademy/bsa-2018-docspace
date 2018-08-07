@@ -15,7 +15,7 @@
     font-size: 14px;
     margin: 0;
     max-width: 250px;
-    margin-left: 1rem;
+    margin-left: 1.2rem;
     width: 100%;
     padding: 4px 5px;
     color: #333;
@@ -28,7 +28,14 @@
     height: 90px; }
   .edit-space-details-form .field-group {
     display: flex;
-    margin-top: 0.7rem; }
+    margin-bottom: 0.7rem;
+    margin-top: 7px; }
+  .edit-space-details-form .avatar-field {
+    align-items: center; }
+    .edit-space-details-form .avatar-field label {
+      margin-top: 0; }
+    .edit-space-details-form .avatar-field img {
+      margin-left: 1.2rem; }
   .edit-space-details-form .btn-group {
     display: flex;
     margin-top: 0.7rem;
