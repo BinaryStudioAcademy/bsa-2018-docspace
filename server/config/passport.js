@@ -10,8 +10,8 @@ module.exports = () => {
   // used to deserialize the user
   passport.deserializeUser(function (id, done) {
     userRep.getById({_id: id})
-      .then(user => user)
-      .catch(err => err)
+      .then(user => done(null, user))
+      .catch(err => done(err))
   })
 
   passport.use(new LocalStrategy({
