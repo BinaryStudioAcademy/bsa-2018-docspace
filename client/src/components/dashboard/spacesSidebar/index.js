@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './spaces__sidebar.css'
+import './spacesSidebar.css'
 import PropTypes from 'prop-types'
 class SpacesSideBar extends Component {
   state = {

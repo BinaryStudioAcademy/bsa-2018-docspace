@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Button from '../button'
-import './content__side.css'
+import './contentSide.css'
 import welcome from './welcome.png'
 import PropTypes from 'prop-types'
 class ContentSide extends Component {

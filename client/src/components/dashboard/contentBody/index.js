@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './content__body.css'
+import './contentBody.css'
 
 class MenuList extends Component {
   state = {
     active: ''
   }
-  handleClick = (number) => {
-    this.setState({active: number})
+  handleClick = (menuTab) => {
+    this.setState({active: menuTab})
   }
 
   render () {
     const menuTabs = this.props.menuTabs
-    const listItems = menuTabs.map((number) => {
-      const className = number === this.state.active ? 'active' : ''
-      return <li className={'menuTab'} onClick={() => this.handleClick(number)} key={number}>
-        <a className={className} >{number}</a>
+    const listItems = menuTabs.map((menuTab) => {
+      const className = menuTab === this.state.active ? 'active' : ''
+      return <li className={'menuTab'} onClick={() => this.handleClick(menuTab)} key={menuTab}>
+        <a className={className} >{menuTab}</a>
       </li>
     }
     )

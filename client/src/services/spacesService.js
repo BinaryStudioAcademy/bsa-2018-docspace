@@ -1,8 +1,8 @@
 class GreetingService {
-  getGreetingText () {
+  getSpaces () {
     return fetch('/api/spaces')
       .then(res => res.json())
-      .then(greeting => greeting)
+      .then(spaces => spaces)
       .catch(err => console.log(`Can't get text: ${err}`))
   }
 }

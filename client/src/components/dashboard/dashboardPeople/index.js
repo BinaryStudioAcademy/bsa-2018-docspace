@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import './dashboard__people.css'
-import SpacesSideBar from '../spaces__sidebar'
+import './dashboardPeople.css'
+import SpacesSideBar from '../spacesSidebar'
 const sideBarTabs = ['All People', 'People with Personal Spaces']
 class DashboardPeople extends Component {
   render () {

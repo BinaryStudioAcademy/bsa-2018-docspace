@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import './dashboard__spaces.css'
+import './dashboardSpaces.css'
 import Button from '../button'
-import SpacesSideBar from '../spaces__sidebar'
-import SpacesContent from '../spaces__content'
+import SpacesSideBar from '../spacesSidebar'
+import SpacesContent from '../spacesContent'
 const sideBarTabs = ['All Spaces', 'Site Spaces', 'Personal Spaces', 'My Spaces', 'Achived Spaces']
 class DashboardSpaces extends Component {
   render () {

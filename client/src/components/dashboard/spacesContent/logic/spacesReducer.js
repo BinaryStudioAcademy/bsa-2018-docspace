@@ -1,7 +1,7 @@
 import * as actionTypes from './spacesActionTypes'
 
 const initialState = {
-  text: ''
+  spaces: []
 }
 
 export const greetingReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ export const greetingReducer = (state = initialState, action) => {
     case actionTypes.SET_GREETING_TEXT: {
       return {
         ...state,
-        text: action.payload
+        spaces: action.payload
       }
     }
     default: return state

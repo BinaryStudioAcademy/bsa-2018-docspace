@@ -3,7 +3,7 @@ import * as actions from './logic/spacesActions'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import './spaces__content.css'
+import './spacesContent.css'
 
 class SpacesContent extends Component {
   constructor (props) {

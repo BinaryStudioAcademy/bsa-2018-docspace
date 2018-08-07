@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './dashboard__activity.css'
-import ContentBody from '../content__body'
-import ContentSide from '../content__side'
+import './dashboardActivity.css'
+import ContentBody from '../contentBody'
+import ContentSide from '../contentSide'
 const menuList = ['All Updates', 'Popular']
 class DashboardActivity extends Component {
   render () {

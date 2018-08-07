@@ -3,15 +3,15 @@ import React, { Component } from 'react'
 // import Greeting from '../../greeting'
 // import SpaceModal from '../../modals/spaceModal'
 import './app.css'
-import DashboardSpaces from '../../dashboard/dashboard__spaces'
-// import DashboardWork from '../../dashboard/dashboard__work'
-// import DashboardActivity from '../../dashboard/dashboard__activity'
-// import DashboardPeople from '../../dashboard/dashboard__people'
+// import DashboardSpaces from '../../dashboard/dashboardSpaces'
+import DashboardWork from '../../dashboard/dashboardWork'
+// import DashboardActivity from '../../dashboard/dashboardActivity'
+// import DashboardPeople from '../../dashboard/dashboarPeople'
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <DashboardSpaces />
+        <DashboardWork />
       </div>
     )
   }

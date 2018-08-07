@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
-import './dashboard__work.css'
-import ContentBody from '../content__body'
+import './dashboardWork.css'
+import ContentBody from '../contentBody'
 import Input from '../input'
 
 class DashboardWork extends Component {
