@@ -13,7 +13,6 @@ import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import history from './commonLogic/history'
 
-
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
