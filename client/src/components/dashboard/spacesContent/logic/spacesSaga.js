@@ -1,15 +1,15 @@
 import { takeEvery, put } from 'redux-saga/effects'
 import * as actionTypes from './spacesActionTypes'
-import { greetingService } from '../../../../services/spacesService'
+import { spacesService } from '../../../../services/spacesService'
 
 function * getSpaces () {
-  const result = yield greetingService.getSpaces()
+  const result = yield spacesService.getSpaces()
   yield put({
-    type: actionTypes.SET_GREETING_TEXT,
-    payload: result.space
+    type: actionTypes.SET_SPACES,
+    payload: result.spaces
   })
 }
 
 export default function * selectionsSaga () {
-  yield takeEvery(actionTypes.GET_GREETING_TEXT, getSpaces)
+  yield takeEvery(actionTypes.GET_SPACES, getSpaces)
 }

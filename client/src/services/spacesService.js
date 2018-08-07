@@ -1,4 +1,4 @@
-class GreetingService {
+class SpacesService {
   getSpaces () {
     return fetch('/api/spaces')
       .then(res => res.json())
@@ -7,4 +7,4 @@ class GreetingService {
   }
 }
 
-export const greetingService = new GreetingService()
+export const spacesService = new SpacesService()

@@ -15,8 +15,8 @@ class SpacesContent extends Component {
     }
   }
   componentWillMount () {
-    this.props.getGreetingText()
-    console.log(this.props.getGreetingText())
+    this.props.getSpaces()
+    console.log(this.props.getSpaces())
   }
 
   render () {
@@ -32,18 +32,18 @@ class SpacesContent extends Component {
 
 SpacesContent.propTypes = {
   text: PropTypes.string,
-  getGreetingText: PropTypes.func
+  getSpaces: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
   return {
-    text: state.greeting.text
+    text: state.spaces.text
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getGreetingText: () => dispatch(actions.getGreetingText())
+    getSpaces: () => dispatch(actions.getSpaces())
   }
 }
 
