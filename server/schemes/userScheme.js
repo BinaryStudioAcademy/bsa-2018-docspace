@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
 
 const validateEmail = (email) => {
   var re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/
@@ -23,6 +24,21 @@ const userSchema = new mongoose.Schema({
 }, {
   versionKey: false
 })
+
+userSchema.pre('save', async function () {
+  let user = this
+  console.log('IN MIDL')
+  const saltRounds = 10
+  user.password = await bcrypt.hash(user.password, saltRounds)
+    .then(hashPassword => hashPassword)
+    .catch(err => err)
+})
+
+userSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password)
+    .then(isMatch => isMatch)
+    .catch(err => err)
+}
 
 const User = mongoose.model('User', userSchema)
 
