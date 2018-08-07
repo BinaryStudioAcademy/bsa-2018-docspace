@@ -28,7 +28,7 @@
         text-decoration: none;
         color: #475774;
         padding: 10px; }
-        .sidebar-main-navbar-section .current {
+        .sidebar-main-navbar-section.current {
           background: #eaecef;
           color: #0044a9; }
         .sidebar-main-navbar-section:hover {

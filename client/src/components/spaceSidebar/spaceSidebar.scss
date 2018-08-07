@@ -42,7 +42,7 @@
         color: $grayDark;
         padding: 10px;
 
-        & .current {
+        &.current {
           background: #eaecef;
           color: $primaryColor;
         }
