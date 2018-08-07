@@ -1,0 +1,106 @@
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0747A6; }
+  .sidebar-wrapper ul {
+    padding-left: 0;
+    list-style: none;
+    width: 90%; }
+  .sidebar-wrapper .tabs-wrapper ul {
+    margin-top: 35px;
+    margin-left: 10px; }
+  .sidebar-wrapper .icon-buttons-wrapper {
+    padding: 0 5px;
+    background-color: #0747A6; }
+  .sidebar-wrapper h1 {
+    padding-left: 10px; }
+
+.tabs-wrapper {
+  width: 80%; }
+
+.minimize-dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 70px; }
+
+.Resizer {
+  z-index: 9999;
+  width: 2px;
+  cursor: w-resize; }
+
+.sidebar-container {
+  height: 100%; }
+
+.icon-buttons-wrapper {
+  height: 100%; }
+
+.sidebar-wrapper button {
+  border: none;
+  background-color: inherit;
+  color: white; }
+  .sidebar-wrapper button a {
+    display: block;
+    height: 100%;
+    width: 100%; }
+
+.blue-schema .sidebar-wrapper, .blue-schema .minimize-dashboard-wrapper {
+  background-color: #0747A6; }
+
+.blue-schema button:hover {
+  background-color: #08367c; }
+
+.blue-schema .tabs-wrapper ul > li {
+  color: white; }
+
+.blue-schema .tabs-wrapper a, .blue-schema .tabs-wrapper a:visited, .blue-schema .tabs-wrapper a:active, .blue-schema .tabs-wrapper a:hover {
+  text-decoration: none;
+  color: white; }
+
+.blue-schema .tabs-wrapper ul > li:hover {
+  background-color: #08367c; }
+
+.blue-schema h1 {
+  color: white; }
+
+.blue-schema .Resizer {
+  color: #0747A6; }
+
+.blue-schema .icon-buttons-wrapper a, .blue-schema .icon-buttons-wrapper a:visited, .blue-schema .icon-buttons-wrapper a:active, .blue-schema .icon-buttons-wrapper a:hover {
+  text-decoration: none;
+  color: white; }
+
+.grey-schema .sidebar-wrapper, .grey-schema .minimize-dashboard-wrapper {
+  background-color: #F4F5F7; }
+
+.grey-schema .tabs-wrapper a, .grey-schema .tabs-wrapper a:visited, .grey-schema .tabs-wrapper a:active, .grey-schema .tabs-wrapper a:hover {
+  text-decoration: none;
+  color: #42526E; }
+
+.grey-schema .tabs-wrapper ul > li:hover {
+  background-color: #EAECF0; }
+
+.grey-schema h1 {
+  color: #42526E; }
+
+.grey-schema .Resizer {
+  color: #F4F5F7; }
+
+.grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper button:hover {
+  background-color: #EAECF0; }
+
+.grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:visited, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:active, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:hover {
+  text-decoration: none;
+  color: #42526E; }
+
+.grey-schema .icon-buttons-wrapper a, .grey-schema .icon-buttons-wrapper a:visited, .grey-schema .icon-buttons-wrapper a:active, .grey-schema .icon-buttons-wrapper a:hover {
+  text-decoration: none;
+  color: white; }

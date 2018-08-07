@@ -1,0 +1,137 @@
+@import "../../../globalStyles/variables.scss";
+
+.sidebar-wrapper{
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $primaryColor;
+  ul{
+    padding-left: 0;
+    list-style: none;
+    width: 90%;
+  }
+  .tabs-wrapper{
+    ul{
+      margin-top: 35px;
+      margin-left: 10px;
+    }
+  }
+  .icon-buttons-wrapper{
+    padding: 0 5px;
+    background-color: $primaryColor;
+  }
+  h1{
+    padding-left: 10px;
+  }
+}
+.tabs-wrapper{
+  width: 80%;
+}
+.minimize-dashboard-wrapper{
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 70px;
+}
+.Resizer{
+  z-index: 9999;
+  width: 2px;
+  cursor: w-resize
+}
+.sidebar-container{
+  height: 100%;
+}
+.icon-buttons-wrapper{
+  height: 100%;
+}
+.sidebar-wrapper{
+ button{
+   border: none;
+   background-color: inherit;
+   color: $white;
+   a{
+     display: block;
+     height: 100%;;
+     width: 100%;
+   }
+ }
+}
+
+.blue-schema{
+  .sidebar-wrapper, .minimize-dashboard-wrapper{
+  background-color: $primaryColor;
+  }
+  button:hover{
+    background-color: $blueHover;
+  }
+  .tabs-wrapper{
+    ul>li{
+      color: $white;
+    }
+    a, a:visited, a:active, a:hover{
+      text-decoration: none;
+      color: $white;
+    }
+    ul>li:hover{
+      background-color: $blueHover;
+    }
+  }
+  h1{
+    color: $white;
+  }
+  .Resizer{
+    color: $primaryColor
+  }
+  .icon-buttons-wrapper{
+    a, a:visited, a:active, a:hover {
+      text-decoration: none;
+      color: $white;
+    }
+  }
+}
+
+.grey-schema{
+  .sidebar-wrapper, .minimize-dashboard-wrapper {
+    background-color: $grayLight;
+  }
+    .tabs-wrapper {
+      a, a:visited, a:active, a:hover{
+        text-decoration: none;
+        color: $blueText;
+      }
+      ul > li:hover {
+        background-color: $grayBackground;
+      }
+    }
+
+  h1{
+    color: $blueText;
+  }
+  .Resizer{
+    color: $grayLight
+  }
+  .minimize-dashboard-wrapper{
+    .icon-buttons-wrapper{
+      button:hover{
+        background-color: $grayBackground;
+      }
+      a, a:visited, a:active, a:hover {
+        text-decoration: none;
+        color: $blueText;
+      }
+    }
+  }
+  .icon-buttons-wrapper{
+    a, a:visited, a:active, a:hover {
+      text-decoration: none;
+      color: $white;
+    }
+  }
+}

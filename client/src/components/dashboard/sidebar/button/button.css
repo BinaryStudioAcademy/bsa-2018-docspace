@@ -1,0 +1,49 @@
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  list-style: none; }
+  .nav-button i {
+    padding: 10px;
+    font-size: 20px; }
+
+.active {
+  background-color: #073d8d; }
+
+.round-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 100%;
+  padding: 0;
+  margin: 0 10px 5px 10px;
+  height: 50px;
+  width: 50px; }
+  .round-button a {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px; }
+
+.minimize-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-align: center;
+  padding: 0;
+  margin: 0 10px 5px 10px;
+  height: 50px;
+  width: 50px; }
+  .minimize-button a {
+    height: 40px;
+    width: 40px; }
+
+.full-button {
+  width: 98%; }
+  .full-button p, .full-button i {
+    float: left; }
+  .full-button a {
+    display: flex;
+    align-content: center;
+    align-items: center; }

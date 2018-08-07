@@ -7,12 +7,8 @@ class GeneralRepository {
     return this.model.find()
   }
 
-  getById (id) {
-    return this.model.findById(id)
-  }
-
-  get (criteria) {
-    return this.model.findOne(criteria)
+  get (id) {
+    return this.model.findOne({ _id: id })
   }
 
   create (data) {
