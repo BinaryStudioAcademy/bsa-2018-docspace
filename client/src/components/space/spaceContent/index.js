@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './content.css'
+import 'src/components/space/spaceContent/spaceContent.css'
 
-const Content = ({ children }) => {
+const SpaceContent = ({ children }) => {
   return (
     <div className='content'>{children}</div>
   )
 }
 
-Content.propTypes = {
+SpaceContent.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired
 }
 
-export default Content
+export default SpaceContent

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './pagesList.css'
+import 'src/components/space/spacePagesList/spacePagesList.css'
 
-const PagesList = ({ pages }) => {
+const SpacePagesList = ({ pages }) => {
   return (
     <div className='pages-list'>
       <div className='pages-list-title'>
@@ -25,12 +25,12 @@ const PagesList = ({ pages }) => {
   )
 }
 
-PagesList.propTypes = {
+SpacePagesList.propTypes = {
   pages: PropTypes.array
 }
 
-PagesList.defaultProps = {
+SpacePagesList.defaultProps = {
   pages: []
 }
 
-export default PagesList
+export default SpacePagesList
