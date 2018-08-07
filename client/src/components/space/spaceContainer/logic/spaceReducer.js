@@ -2,18 +2,11 @@ import * as actionTypes from 'src/components/space/spaceContainer/logic/spaceAct
 
 const initialState = {
   space: {},
+  // dummy
   pages: [
     {
-      name: 'First Test Page'
-    },
-    {
-      name: 'Second Test Page'
-    },
-    {
-      name: 'Third Test Page'
-    },
-    {
-      name: 'Fourth Test Page'
+      name: 'First Test Page',
+      id: '666'
     }
   ]
 }

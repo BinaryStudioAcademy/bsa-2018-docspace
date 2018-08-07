@@ -1,8 +1,9 @@
 import * as actionTypes from 'src/components/page/logic/pageActionTypes'
 
 const initialState = {
+  // dummy
   page: {
-    id: '111',
+    id: '666',
     title: 'Test Page',
     content: 'This is content',
     created: {

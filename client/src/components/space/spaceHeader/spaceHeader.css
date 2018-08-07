@@ -10,7 +10,10 @@
     color: #333333; }
     .header-name.page {
       color: #6c788f;
-      font-size: 17px; }
+      font-size: 17px;
+      text-decoration: none; }
+      .header-name.page:hover {
+        color: #949eb3; }
 
 .space-button {
   background: #f4f5f7;

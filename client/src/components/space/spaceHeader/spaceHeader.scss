@@ -17,7 +17,11 @@
     &.page {
       color: $gray;
       font-size: 17px;
+      text-decoration: none;
 
+      &:hover {
+        color: #949eb3;
+      }
     }
   }
 }

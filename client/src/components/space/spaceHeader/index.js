@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 
 import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 
@@ -12,7 +12,7 @@ class SpaceHeader extends Component {
     switch (this.props.location.pathname) {
       case '/spaces/TS/overview':
         return 'space'
-      case '/spaces/TS/pages/1':
+      case '/spaces/TS/pages/666': // TODO: reblace by real id
         return 'page'
       default:
         return 'clear'
@@ -20,16 +20,16 @@ class SpaceHeader extends Component {
   }
 
   render () {
-    const buttonsType = this.getType()
+    const type = this.getType()
 
     return (
       <div className='header'>
         {
-          buttonsType === 'clear' || buttonsType === 'space'
+          type === 'clear' || type === 'space'
             ? <div className='header-name'>{this.props.space.name}</div>
             : (
               <div className='header-page'>
-                <div className='header-name page'>{this.props.space.name}</div>
+                <NavLink className='header-name page' to={`/spaces/${'TS'}/overview`}>{this.props.space.name}</NavLink>
                 <div className='buttons-item restrictions' title='Unrestricted'>
                   <i className='fas fa-lock-open' />
                 </div>
@@ -37,12 +37,12 @@ class SpaceHeader extends Component {
             )
         }
         {
-          buttonsType === 'clear'
+          type === 'clear'
             ? null
             : (
-              <SpaceHeaderButtons type={buttonsType}>
+              <SpaceHeaderButtons type={type}>
                 {
-                  buttonsType === 'space'
+                  type === 'space'
                     ? <div className='space-button'>Remove From My Spaces</div>
                     : null
                 }
