@@ -7,6 +7,7 @@ Result:
 ```js
 {
     "name": String,
+    "key": String,
     "isDeleted": Boolean,
     "ownerId": ObjectId,
     "description": String,
@@ -37,6 +38,7 @@ Required params:
 ```js
 {
     "name": String,
+    "key": String,
     "ownerId": ObjectId
 }
 ```

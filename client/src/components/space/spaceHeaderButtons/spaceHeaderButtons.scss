@@ -1,0 +1,24 @@
+@import 'globalStyles/variables.scss';
+
+.buttons {
+  &-container {
+    display: flex;
+    color: $grayButtons;
+  }
+
+  &-item{
+    height: 28px;
+    width: 38px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 2.3;
+    border: 1px solid $white;
+
+    &:hover {
+      cursor: pointer;
+      background: $grayBackground;
+      border: 1px solid $grayButtons;
+      border-radius: 3px;
+    }
+  }
+}

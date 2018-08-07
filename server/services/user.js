@@ -97,5 +97,27 @@ module.exports = {
           message: 'Could not delete user with id ' + req.params.id
         })
       })
+  },
+
+  signUp: (req, res) => {
+    const [firstName, lastName] = req.body.fullName.split(' ')
+    const User = new scheme.User({
+      firstName: firstName,
+      lastName: lastName,
+      email: req.body.email,
+      password: req.body.password,
+      login: req.body.login
+    })
+    User.save()
+      .then(user => {
+        res.status(200).send(user)
+      })
+      .catch(err => {
+        let msg = ''
+        if (err.code === 11000) {
+          msg = err.message.includes('login') ? 'Such login already exist try another one' : 'Such email already exist try another one'
+        }
+        res.status(500).send({error: msg || err.message})
+      })
   }
 }
