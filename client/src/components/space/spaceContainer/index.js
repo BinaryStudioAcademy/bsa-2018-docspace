@@ -30,6 +30,8 @@ class SpaceContainer extends Component {
           <Route path='/spaces/:key/overview' component={Page} />
           <Route path='/spaces/:key/blog' component={Blog} />
           <Route path='/spaces/:key/settings' component={SpaceSettings} />
+          <Route path='/spaces/:key/pages/:id' component={Page} />
+          <Route path='/spaces/:key/pages' render={() => <Redirect to='/spaces/TS/overview' />} exact />
         </SpaceContent>
       </div>
     )
