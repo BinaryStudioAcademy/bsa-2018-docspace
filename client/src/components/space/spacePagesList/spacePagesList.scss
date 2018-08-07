@@ -1,0 +1,22 @@
+@import 'globalStyles/variables.scss';
+
+.pages-list {
+  &-title {
+    text-transform: uppercase;
+  }
+
+  &-item {
+    display: flex;
+    padding: 10px 25px;
+
+    &:hover {
+      background: $grayBackground;
+      color: $primaryColor;
+      cursor: pointer;
+    }
+
+    &-name {
+      margin-left: 20px;
+    }
+  }
+}

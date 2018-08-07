@@ -1,6 +1,6 @@
 {
     "GUID": "da265ce0-8f6b-11e8-8243-b33dbf614cac",
-    "lastModifTS": "2018-08-03T12:26:19.029Z",
+    "lastModifTS": "2018-08-05T11:25:35.025Z",
     "persistenceSchemaVersion": "2",
     "description": "",
     "comments": "",
@@ -1704,7 +1704,7 @@
                     "description": "",
                     "comments": "",
                     "dependencies": [],
-                    "required": false,
+                    "required": true,
                     "id": "",
                     "name": "name",
                     "type": "string",
@@ -1768,7 +1768,7 @@
                     "parentRelationship": "06290400-9043-11e8-a2d8-89f3e83474ba",
                     "primaryKey": false,
                     "relationshipType": "Foreign Key",
-                    "required": false,
+                    "required": true,
                     "sample": "",
                     "id": "",
                     "type": "objectId"
@@ -2118,6 +2118,32 @@
                     "maxProperties": "",
                     "additionalProperties": false,
                     "enum": [],
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "GUID": "d5c82360-98a1-11e8-9058-036a18869cea",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": true,
+                    "id": "",
+                    "name": "key",
+                    "type": "string",
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "format": "",
+                    "default": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "enum": [],
+                    "sample": "",
                     "error": {
                         "name": false
                     }
@@ -3047,7 +3073,8 @@
         "0e2b4580-9261-11e8-a0a3-096896638605": "_id",
         "1325fda0-9261-11e8-a0a3-096896638605": "content",
         "26156720-9261-11e8-a0a3-096896638605": "modified_versions_id",
-        "4962e0e0-9261-11e8-a0a3-096896638605": "fk History.modified_versions_id to Page.modified_versions.[0]._id"
+        "4962e0e0-9261-11e8-a0a3-096896638605": "fk History.modified_versions_id to Page.modified_versions.[0]._id",
+        "d5c82360-98a1-11e8-9058-036a18869cea": "key"
     },
     "definitions": {
         "type": "definitions",
