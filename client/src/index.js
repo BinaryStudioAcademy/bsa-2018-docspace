@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/common/app/index'
 import About from './components/about'
+import Space from './components/space'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
 import registerServiceWorker from './registerServiceWorker'
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Route path='/signup' component={Signup} />
         <Route path='/login' component={Login} />
         <Route path='/about' component={About} />
+        <Route path='/spaces' component={Space} />
       </Switch>
     </ConnectedRouter>
   </Provider>,
