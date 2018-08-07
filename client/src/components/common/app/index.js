@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-import logo from '../../../resources/logo.svg'
-import Greeting from '../../greeting'
-import SpaceModal from '../../modals/spaceModal'
+// import logo from '../../../resources/logo.svg'
+// import Greeting from '../../greeting'
+// import SpaceModal from '../../modals/spaceModal'
 import './app.css'
-
+// import DashboardSpaces from '../../dashboard/dashboardSpaces'
+import DashboardWork from '../../dashboard/dashboardWork'
+// import DashboardActivity from '../../dashboard/dashboardActivity'
+// import DashboardPeople from '../../dashboard/dashboarPeople'
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <header className='app__header'>
-          <img src={logo} className={'app__logo'} alt='logo' />
-          <h1 className='app__title'>Binary docspace</h1>
-        </header>
-        <Greeting />
-        <SpaceModal />
+        <DashboardWork />
       </div>
     )
   }
