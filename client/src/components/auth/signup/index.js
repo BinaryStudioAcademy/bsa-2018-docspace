@@ -7,7 +7,6 @@ import signupRequest from './logic/signupActions'
 import Input from 'src/components/common/input'
 import Errors from 'src/components/common/error'
 
-
 import './signup.css'
 
 class Signup extends Component {
