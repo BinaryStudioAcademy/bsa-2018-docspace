@@ -55,7 +55,7 @@
  button{
    border: none;
    background-color: inherit;
-   color: white;
+   color: $white;
    a{
      display: block;
      height: 100%;;
@@ -69,22 +69,22 @@
   background-color: $primaryColor;
   }
   button:hover{
-    background-color: $primalHover;
+    background-color: $blueHover;
   }
   .tabs-wrapper{
     ul>li{
-      color: white;
+      color: $white;
     }
     a, a:visited, a:active, a:hover{
       text-decoration: none;
-      color: white;
+      color: $white;
     }
     ul>li:hover{
-      background-color: $primalHover;
+      background-color: $blueHover;
     }
   }
   h1{
-    color: white;
+    color: $white;
   }
   .Resizer{
     color: $primaryColor
@@ -92,14 +92,14 @@
   .icon-buttons-wrapper{
     a, a:visited, a:active, a:hover {
       text-decoration: none;
-      color: white;
+      color: $white;
     }
   }
 }
 
 .grey-schema{
   .sidebar-wrapper, .minimize-dashboard-wrapper {
-    background-color: $greyBlog;
+    background-color: $grayLight;
   }
     .tabs-wrapper {
       a, a:visited, a:active, a:hover{
@@ -107,7 +107,7 @@
         color: $blueText;
       }
       ul > li:hover {
-        background-color: $greyHover;
+        background-color: $grayBackground;
       }
     }
 
@@ -115,12 +115,12 @@
     color: $blueText;
   }
   .Resizer{
-    color: $greyBlog
+    color: $grayLight
   }
   .minimize-dashboard-wrapper{
     .icon-buttons-wrapper{
       button:hover{
-        background-color:$greyHover;
+        background-color: $grayBackground;
       }
       a, a:visited, a:active, a:hover {
         text-decoration: none;
@@ -131,7 +131,7 @@
   .icon-buttons-wrapper{
     a, a:visited, a:active, a:hover {
       text-decoration: none;
-      color: white;
+      color: $white;
     }
   }
 }
