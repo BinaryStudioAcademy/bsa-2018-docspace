@@ -8,26 +8,45 @@ import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 import 'src/components/space/spaceHeader/spaceHeader.css'
 
 class SpaceHeader extends Component {
+  getType () {
+    switch (this.props.location.pathname) {
+      case '/spaces/TS/overview':
+        return 'space'
+      case '/spaces/TS/pages/1':
+        return 'page'
+      default:
+        return 'clear'
+    }
+  }
+
   render () {
-    const hideButtons = this.props.location.pathname === '/spaces/TS/settings' || this.props.location.pathname === '/spaces/TS/blog'
-    const showSpaceButton = this.props.location.pathname === '/spaces/TS/overview'
+    const buttonsType = this.getType()
 
     return (
       <div className='header'>
-        <div className='header-name'>{this.props.space.name}</div>
         {
-          hideButtons
+          buttonsType === 'clear' || buttonsType === 'space'
+            ? <div className='header-name'>{this.props.space.name}</div>
+            : (
+              <div className='header-page'>
+                <div className='header-name page'>{this.props.space.name}</div>
+                <div className='buttons-item restrictions' title='Unrestricted'>
+                  <i className='fas fa-lock-open' />
+                </div>
+              </div>
+            )
+        }
+        {
+          buttonsType === 'clear'
             ? null
             : (
-              <div>
-                <SpaceHeaderButtons>
-                  {
-                    showSpaceButton
-                      ? <div className='space-button'>Remove From My Spaces</div>
-                      : null
-                  }
-                </SpaceHeaderButtons>
-              </div>
+              <SpaceHeaderButtons type={buttonsType}>
+                {
+                  buttonsType === 'space'
+                    ? <div className='space-button'>Remove From My Spaces</div>
+                    : null
+                }
+              </SpaceHeaderButtons>
             )
         }
       </div>

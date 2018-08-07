@@ -2,9 +2,15 @@
   display: flex;
   padding: 25px 30px 30px 50px;
   justify-content: space-between; }
+  .header-page {
+    display: flex;
+    align-items: baseline; }
   .header-name {
     font-size: 28px;
     color: #333333; }
+    .header-name.page {
+      color: #6c788f;
+      font-size: 17px; }
 
 .space-button {
   background: #f4f5f7;
