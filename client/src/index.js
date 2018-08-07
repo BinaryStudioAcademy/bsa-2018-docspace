@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/common/app'
-import About from './components/about'
+import User from './containers/user'
 import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
@@ -14,8 +13,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path='/' component={App} />
-        <Route path='/about' component={About} />
+        <Route path='/userSettings/:id' component={User} />
       </Switch>
     </BrowserRouter>
   </Provider>,

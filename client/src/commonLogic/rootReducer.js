@@ -1,9 +1,9 @@
 import { routerReducer as routing } from 'react-router-redux'
 import { combineReducers } from 'redux'
-import { greetingReducer } from '../components/greeting/logic/greetingReducer'
+import { userReducer } from '../containers/user/logic/userReducer'
 
 const baseReducer = combineReducers({
-  greeting: greetingReducer,
+  user: userReducer,
   routing
 })
 
