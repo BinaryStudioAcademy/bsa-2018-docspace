@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './spaceSettings.css'
+import 'src/components/space/spaceSettings/spaceSettings.css'
 
 class SpaceSettings extends Component {
   render () {

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import SpaceHeaderButtons from '../spaceHeaderButtons'
+import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 
-import './spaceHeader.css'
+import 'src/components/space/spaceHeader/spaceHeader.css'
 
 class SpaceHeader extends Component {
   render () {

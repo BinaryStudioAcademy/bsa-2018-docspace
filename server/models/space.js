@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const spaceSchema = mongoose.Schema({
+const spaceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true

@@ -1,4 +1,4 @@
-import * as actionTypes from './spaceActionTypes'
+import * as actionTypes from 'src/components/space/spaceContainer/logic/spaceActionTypes'
 
 const initialState = {
   space: {},
