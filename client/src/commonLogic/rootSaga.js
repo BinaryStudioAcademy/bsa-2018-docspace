@@ -1,11 +1,13 @@
 import { fork } from 'redux-saga/effects'
-import greetingSaga from '../components/greeting/logic/greetingSaga'
+import signupWatcher from '../components/auth/signup/logic/signupSaga'
+import loginWatcher from '../components/auth/login/logic/loginSaga'
 import spaceSaga from '../components/space/logic/spaceSaga'
 
 function * rootSaga () {
   yield [
-    fork(greetingSaga),
-    fork(spaceSaga)
+    fork(spaceSaga),
+    signupWatcher(),
+    loginWatcher()
   ]
 }
 

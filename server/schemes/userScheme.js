@@ -6,7 +6,7 @@ const validateEmail = (email) => {
   return re.test(email)
 }
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   avatar: String,
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
