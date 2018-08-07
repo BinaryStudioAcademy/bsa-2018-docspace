@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import loginRequest from './logic/loginActions'
-import Input from '../input/'
-import Errors from '../error'
+import Input from 'src/components/common/input'
+import Errors from 'src/components/common/error'
 
 import './login.css'
 

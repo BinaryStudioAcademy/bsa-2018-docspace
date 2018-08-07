@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import Input from '../input/index'
 import signupRequest from './logic/signupActions'
-import Errors from '../error'
+import Input from 'src/components/common/input'
+import Errors from 'src/components/common/error'
+
 
 import './signup.css'
 
