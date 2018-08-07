@@ -7,8 +7,8 @@ class GeneralRepository {
     return this.model.find()
   }
 
-  getById (id, callback) {
-    return this.model.findById(id, (err, user) => callback(err, user))
+  getById (id) {
+    return this.model.findById(id)
   }
 
   get (criteria) {
