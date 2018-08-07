@@ -6,7 +6,7 @@ const initialState = {
 
 export const greetingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_SPACES: {
+    case actionTypes.SET_GREETING_TEXT: {
       return {
         ...state,
         spaces: action.payload

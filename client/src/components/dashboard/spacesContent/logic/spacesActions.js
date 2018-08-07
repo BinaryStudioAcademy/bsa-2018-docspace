@@ -1,7 +1,7 @@
 import * as actionTypes from './spacesActionTypes'
 
-export const getSpaces = () => {
+export const getGreetingText = () => {
   return {
-    type: actionTypes.GET_SPACES
+    type: actionTypes.GET_GREETING_TEXT
   }
 }
