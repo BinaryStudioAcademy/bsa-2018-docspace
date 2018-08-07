@@ -3,9 +3,6 @@
   flex-direction: column;
   padding: 10px 0;
   list-style: none; }
-  .nav-button a, .nav-button a:visited, .nav-button a:active, .nav-button a:hover {
-    text-decoration: none;
-    color: white; }
   .nav-button i {
     padding: 10px;
     font-size: 20px; }
@@ -29,8 +26,11 @@
     width: 40px; }
 
 .minimize-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  border-radius: 100%;
+  text-align: center;
   padding: 0;
   margin: 0 10px 5px 10px;
   height: 50px;
@@ -47,5 +47,3 @@
     display: flex;
     align-content: center;
     align-items: center; }
-  .full-button li:hover {
-    background-color: #08367c; }

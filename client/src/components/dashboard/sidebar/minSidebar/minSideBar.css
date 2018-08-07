@@ -1,0 +1,40 @@
+.minimize-dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 70px; }
+  .minimize-dashboard-wrapper .icon-buttons-wrapper {
+    width: 100%; }
+  .minimize-dashboard-wrapper .icon-navigation-wrapper {
+    height: 45%;
+    width: 100%; }
+  .minimize-dashboard-wrapper .top-icons {
+    height: 20%; }
+  .minimize-dashboard-wrapper .bottom-icons {
+    height: 30%; }
+
+.sidebar-wrapper .top-icons {
+  height: 40%;
+  margin-top: 10px; }
+
+.sidebar-wrapper .bottom-icons {
+  height: 55%; }
+
+.bottom-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column; }
+
+.icon-buttons-wrapper button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  height: 40px;
+  width: 40px; }
+
+.icon-buttons-wrapper button:hover {
+  background-color: #08367c; }

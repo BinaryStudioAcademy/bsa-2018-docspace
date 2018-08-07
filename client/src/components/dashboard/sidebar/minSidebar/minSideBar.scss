@@ -1,8 +1,17 @@
-@import '../../../globalStyles/variables.scss';
-
 .minimize-dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 70px;
+  .icon-buttons-wrapper{
+    width: 100%;
+  }
   .icon-navigation-wrapper {
-    height: 50%;
+    height: 45%;
+    width: 100%;
   }
   .top-icons{
     height: 20%;
@@ -12,22 +21,25 @@
   }
 }
 .sidebar-wrapper{
-  .top-icons, .bottom-icons{
-    height: 50%;
+  .top-icons{
+    height: 40%;
+    margin-top: 10px;
+  }
+  .bottom-icons{
+    height: 55%;
   }
 }
 .bottom-icons {
   display: flex;
   justify-content: flex-end;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: column;
 }
 
 .icon-buttons-wrapper {
   button{
-    background-color: $primaryColor;
+    background-color: transparent;
     border: none;
-    color: white;
     font-size: 20px;
     height: 40px;
     width: 40px;
@@ -35,5 +47,4 @@
   button:hover{
     background-color: rgb(8,54,124);
   }
-
 }
