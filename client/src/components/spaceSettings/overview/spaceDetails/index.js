@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
 import './spaceDetails.css'
 
 import img from 'src/resources/logo.svg'
