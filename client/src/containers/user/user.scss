@@ -302,7 +302,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   display: inline-flex;
   margin: 0px -2px; }
 
-.profile-fields-wrapper .edit-btn, 
+.profile-fields-wrapper .edit-btn,
 .edit-manage-btn .manage-btn {
   flex: 1 0 auto;
   margin: 0px 2px; }
@@ -310,8 +310,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 .profile-fields-wrapper .edit-btn {
   display: flex;
   justify-content: flex-end;
-  max-width: 400px;
-}
+  max-width: 400px; }
 
 .current-new-passwords .edit-btn button,
 .profile-fields-wrapper .edit-btn button,
@@ -341,21 +340,18 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 .edit-manage-btn .manage-btn button:hover {
   background: rgba(9, 30, 66, 0.12); }
 
-.current-new-passwords  .edit-btn button,
+.current-new-passwords .edit-btn button,
 .profile-fields-wrapper .edit-btn button {
-  color: rgb(255, 255, 255);
-  background: rgb(0, 82, 204);
-}
+  color: white;
+  background: #0052cc; }
 
-.current-new-passwords  .edit-btn button:hover,
-.profile-fields-wrapper .edit-btn button:hover {
+.current-new-passwords .edit-btn button:hover,
+.profile-fields-wrapper .edit-btn button {
   cursor: pointer;
-  background: rgb(0, 101, 255);
-}
+  background: #0065ff; }
 
 .current-new-passwords .edit-btn button {
-  margin-top: 20px;
-}
+  margin-top: 20px; }
 
 .profile-fields-items {
   max-width: 575px;
@@ -497,24 +493,21 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   font-size: 1.14em;
   font-style: inherit;
   line-height: 1.25;
-  color: rgb(23, 43, 77);
+  color: #172b4d;
   font-weight: 600;
   letter-spacing: -0.006em;
-  margin-top: 24px;
-}
+  margin-top: 24px; }
 
 .current-new-passwords {
-  max-width: 400px;
-}
+  max-width: 400px; }
 
 .password-label {
   display: block;
-  color: rgb(107, 119, 140);
+  color: #6b778c;
   font-size: 12px;
   font-weight: 600;
   line-height: 1.33333;
-  padding: 20px 0px 4px;
-}
+  padding: 20px 0px 4px; }
 
 .password-wrapper {
   display: flex;
@@ -523,23 +516,22 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   min-height: 40px;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(250, 251, 252);
+  background-color: #fafbfc;
   box-sizing: border-box;
-  color: rgb(9, 30, 66);
+  color: #091e42;
   font-size: 14px;
   justify-content: space-between;
   line-height: 1.42857;
   max-width: 100%;
   word-wrap: break-word;
-  border-color: rgb(223, 225, 230);
+  border-color: #dfe1e6;
   border-radius: 3px;
   border-style: solid;
   flex: 1 0 auto;
   overflow: hidden;
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
   border-width: 2px;
-  padding: 6px;
-}
+  padding: 6px; }
 
 .password-input {
   box-sizing: border-box;
@@ -553,5 +545,8 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   border-style: initial;
   border-color: initial;
   border-image: initial;
-  outline: none;
-}
+  outline: none; 
+  margin: 0; }
+
+.profile-fields-items .user-input-change-data {
+  margin: 0; }

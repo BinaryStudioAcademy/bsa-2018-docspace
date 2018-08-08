@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '../../components/common/button'
 
 export function ProfileFields ({ renderEmail, renderLogin, renderFirstName, renderLastName, editMode, isShowGeneral, email, login, firstName, lastName }) {
   return (
@@ -39,7 +40,7 @@ export function ProfileFields ({ renderEmail, renderLogin, renderFirstName, rend
         </li>
       </ul>
       <div className='edit-btn'>
-        <button onClick={editMode}><i className='fa fa-cog' aria-hidden='true' /> Edit</button>
+        <Button icon={<i className='fa fa-cog' aria-hidden='true' />} value={`Edit`} onClick={editMode} />
       </div>
     </div> : null
   )

@@ -7,9 +7,11 @@ import { bindActionCreators } from 'redux'
 import { ManagePhoto } from '../../components/managePhotos/managePhotos'
 import { ProfileFields } from '../../components/userTabs/general'
 import { PrivateFields } from '../../components/userTabs/private'
+import Input from '../../components/common/input'
+import autobind from '../'
 
 import './user.css'
-
+@autobind
 class User extends Component {
   constructor (props) {
     super(props)
@@ -26,23 +28,6 @@ class User extends Component {
       isShowGeneral: true,
       isShowPrivate: false
     }
-
-    this.editMode = this.editMode.bind(this)
-    this.renderEmail = this.renderEmail.bind(this)
-    this.renderLogin = this.renderLogin.bind(this)
-    this.renderFirstName = this.renderFirstName.bind(this)
-    this.renderLastName = this.renderLastName.bind(this)
-    this.handleEmail = this.handleEmail.bind(this)
-    this.handleLogin = this.handleLogin.bind(this)
-    this.handleFirstName = this.handleFirstName.bind(this)
-    this.handleLastName = this.handleLastName.bind(this)
-    this.managePhoto = this.managePhoto.bind(this)
-    this.handleManagePhoto = this.handleManagePhoto.bind(this)
-    this.switchGeneral = this.switchGeneral.bind(this)
-    this.switchPrivate = this.switchPrivate.bind(this)
-    this.handleCurrentPassword = this.handleCurrentPassword.bind(this)
-    this.handleNewPassword = this.handleNewPassword.bind(this)
-    this.sendPassword = this.sendPassword.bind(this)
   }
 
   handleCurrentPassword (e) {
@@ -125,8 +110,6 @@ class User extends Component {
 
   sendPassword (e) {
     let buttonHTML = e.target
-    console.log(this.state.currentPassword)
-    console.log(this.state.newPassword)
     while (buttonHTML.tagName !== 'BUTTON') {
       buttonHTML = buttonHTML.parentNode
     }
@@ -134,18 +117,18 @@ class User extends Component {
     const user = this.props.user
 
     if (this.state.currentPassword !== user.password) {
-      buttonHTML.innerHTML = `Error current password <i class='fa fa-times' aria-hidden='true' />`
+      buttonHTML.innerHTML = `<i class='fa fa-times' aria-hidden='true' /> Error current password`
       setTimeout(() => {
-        buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+        buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
       }, 1500)
       return null
     }
 
     if (this.state.newPassword === '') {
       setTimeout(() => {
-        buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+        buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
       }, 1500)
-      buttonHTML.innerHTML = `Password Empty <i class='fa fa-times' aria-hidden='true' />`
+      buttonHTML.innerHTML = `<i class='fa fa-times' aria-hidden='true' /> Password Empty`
       return null
     }
 
@@ -161,9 +144,9 @@ class User extends Component {
     })
 
     setTimeout(() => {
-      buttonHTML.innerHTML = `Save password <i class='fa fa-check' aria-hidden='true' />`
+      buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
     }, 1500)
-    buttonHTML.innerHTML = `Password was saved <i class='fa fa-check' aria-hidden='true' />`
+    buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Password was saved`
     this.setState({
       newPassword: '',
       currentPassword: ''
@@ -172,19 +155,19 @@ class User extends Component {
   }
 
   renderEmail (email) {
-    return this.state.isEditMode ? <input type='text' value={this.state.email} onChange={this.handleEmail} /> : <a href='#'>{!this.state.email ? email : this.state.email}</a>
+    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.email} onChange={this.handleEmail} /> : <a href='#'>{!this.state.email ? email : this.state.email}</a>
   }
 
   renderLogin (login) {
-    return this.state.isEditMode ? <input type='text' value={this.state.login} onChange={this.handleLogin} /> : <span className='profile-field-nickname' href='#'>@{!this.state.login ? login : this.state.login}</span>
+    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.login} onChange={this.handleLogin} /> : <span className='profile-field-nickname' href='#'>@{!this.state.login ? login : this.state.login}</span>
   }
 
   renderFirstName (firstName) {
-    return this.state.isEditMode ? <input type='text' value={this.state.firstName} onChange={this.handleFirstName} /> : <span>{!this.state.firstName ? firstName : this.state.firstName}</span>
+    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.firstName} onChange={this.handleFirstName} /> : <span>{!this.state.firstName ? firstName : this.state.firstName}</span>
   }
 
   renderLastName (lastName) {
-    return this.state.isEditMode ? <input type='text' value={this.state.lastName} onChange={this.handleLastName} /> : <span>{!this.state.lastName ? lastName : this.state.lastName}</span>
+    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.lastName} onChange={this.handleLastName} /> : <span>{!this.state.lastName ? lastName : this.state.lastName}</span>
   }
 
   componentWillMount () {

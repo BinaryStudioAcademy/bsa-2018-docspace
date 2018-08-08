@@ -1,4 +1,4 @@
-import { takeEvery, put, all } from 'redux-saga/effects'
+import { takeEvery, put, all } from 'redux-saga/effectss'
 import * as actionTypes from './userActionTypes'
 import { userService } from '../../../services/userService'
 

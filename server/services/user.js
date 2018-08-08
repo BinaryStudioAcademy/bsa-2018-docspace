@@ -14,7 +14,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    userRepository.get(req.params.id)
+    userRepository.getById(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
