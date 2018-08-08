@@ -1,29 +1,2 @@
 .page-container {
   margin: 10px 70px; }
-
-.page-main-title {
-  color: #333333;
-  font-size: 28px; }
-
-.page-main-info {
-  margin-left: 5px; }
-  .page-main-info-container {
-    display: flex;
-    margin-top: 20px;
-    align-items: center; }
-  .page-main-info-image {
-    width: 45px;
-    height: 45px; }
-    .page-main-info-image img {
-      width: 100%;
-      border-radius: 50%; }
-  .page-main-info-author {
-    font-weight: 600;
-    padding: 2px; }
-  .page-main-info-time {
-    color: #6c788f;
-    font-size: 13px;
-    padding: 2px; }
-
-.page-main-content {
-  margin: 25px auto; }

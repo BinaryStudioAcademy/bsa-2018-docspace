@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import PageTitle from 'src/components/common/pageTitle'
+import PageInfo from 'src/components/common/pageInfo'
+import PageContent from 'src/components/common/pageContent'
 import 'src/components/page/page.css'
 
 class Page extends Component {
@@ -9,17 +12,14 @@ class Page extends Component {
     return (
       <div className='page-container'>
         <div className='page-main'>
-          <div className='page-main-title'>{this.props.page.title}</div>
-          <div className='page-main-info-container'>
-            <div className='page-main-info-image'>
-              <img src={this.props.page.created.user.avatar} alt='UserAvatar' />
-            </div>
-            <div className='page-main-info'>
-              <div className='page-main-info-author'>{this.props.page.created.user.firstName + ' ' + this.props.page.created.user.lastName}</div>
-              <div className='page-main-info-time'>{this.props.page.created.date}</div>
-            </div>
-          </div>
-          <div className='page-main-content'>{this.props.page.content}</div>
+          <PageTitle text={this.props.page.title} />
+          <PageInfo
+            src={this.props.page.created.user.avatar}
+            firstName={this.props.page.created.user.firstName}
+            lastName={this.props.page.created.user.lastName}
+            date={this.props.page.created.date}
+          />
+          <PageContent content={this.props.page.content} />
         </div>
         <div className='page-extra'>
           <div className='likes'>Likes</div>

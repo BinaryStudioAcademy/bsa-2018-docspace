@@ -1,0 +1,19 @@
+.page-info {
+  margin-left: 5px; }
+  .page-info-container {
+    display: flex;
+    margin-top: 20px;
+    align-items: center; }
+  .page-info-image {
+    width: 45px;
+    height: 45px; }
+    .page-info-image img {
+      width: 100%;
+      border-radius: 50%; }
+  .page-info-author {
+    font-weight: 600;
+    padding: 2px; }
+  .page-info-time {
+    color: #6c788f;
+    font-size: 13px;
+    padding: 2px; }
