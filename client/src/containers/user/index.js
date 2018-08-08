@@ -5,9 +5,8 @@ import { getUserData, updateUser } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
-import { ProfileFields } from 'src/components/userTabs/general'
+import ProfileFields from 'src/components/userTabs/general'
 import { PrivateFields } from 'src/components/userTabs/private'
-import Input from 'src/components/common/input'
 
 import './user.css'
 
@@ -16,10 +15,6 @@ class User extends Component {
     super(props)
     this.state = {
       isEditMode: false,
-      email: '',
-      login: '',
-      firstName: '',
-      lastName: '',
       currentPassword: '',
       newPassword: '',
       date: new Date(),
@@ -28,14 +23,8 @@ class User extends Component {
       isShowPrivate: false
     }
 
-    this.renderEmail = this.renderEmail.bind(this)
-    this.renderLogin = this.renderLogin.bind(this)
-    this.renderFirstName = this.renderFirstName.bind(this)
-    this.renderLastName = this.renderLastName.bind(this)
-    this.handleEmail = this.handleEmail.bind(this)
-    this.handleLogin = this.handleLogin.bind(this)
-    this.handleFirstName = this.handleFirstName.bind(this)
-    this.handleLastName = this.handleLastName.bind(this)
+    this.changeIsEditMode = this.changeIsEditMode.bind(this)
+    this.editMode = this.editMode.bind(this)
     this.managePhoto = this.managePhoto.bind(this)
     this.handleManagePhoto = this.handleManagePhoto.bind(this)
     this.switchGeneral = this.switchGeneral.bind(this)
@@ -53,30 +42,14 @@ class User extends Component {
     this.setState({newPassword: e.target.value})
   }
 
-  switchGeneral (e) {
+  switchGeneral () {
     this.setState({isShowGeneral: true, isShowPrivate: false})
   }
 
-  switchPrivate (e) {
+  switchPrivate () {
     if (!this.state.isEditMode) {
       this.setState({isShowGeneral: false, isShowPrivate: true})
     }
-  }
-
-  handleEmail (e) {
-    this.setState({email: e.target.value})
-  }
-
-  handleLogin (e) {
-    this.setState({login: e.target.value})
-  }
-
-  handleFirstName (e) {
-    this.setState({firstName: e.target.value})
-  }
-
-  handleLastName (e) {
-    this.setState({lastName: e.target.value})
   }
 
   managePhoto (e) {
@@ -86,40 +59,38 @@ class User extends Component {
   handleManagePhoto () {
     return this.state.isShowManagePhoto
   }
-  editMode (e) {
-    let buttonHTML = e.target
-
-    while (buttonHTML.tagName !== 'BUTTON') {
-      buttonHTML = buttonHTML.parentNode
-    }
-
+  editMode (userProfile) {
+    console.log(userProfile)
     const user = this.props.user
 
-    if (e.target.innerText.trim() === 'Edit') {
-      this.setState({
-        isEditMode: true,
-        email: user.email,
-        login: user.login,
-        firstName: user.firstName,
-        lastName: user.lastName
-      })
-    } else {
+    if (this.state.isEditMode) {
       this.setState({
         isEditMode: false
       })
       this.props.actions.updateUser({
         id: this.props.match.params.id,
         avatar: user.avatar,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
+        firstName: userProfile.firstName,
+        lastName: userProfile.lastName,
         spaces: user.spaces,
-        email: this.state.email,
-        login: this.state.login,
+        email: userProfile.email,
+        login: userProfile.login,
         password: user.password
       })
     }
+    this.changeIsEditMode()
+  }
 
-    buttonHTML.innerHTML = buttonHTML.innerText.trim() === 'Edit' ? `<i class='fa fa-check' aria-hidden='true' /> Save` : `<i class='fa fa-cog' aria-hidden='true' /> Edit`
+  changeIsEditMode () {
+    if (this.state.isEditMode) {
+      this.setState({
+        isEditMode: false
+      })
+    } else {
+      this.setState({
+        isEditMode: true
+      })
+    }
   }
 
   sendPassword (e) {
@@ -168,28 +139,12 @@ class User extends Component {
     return null
   }
 
-  renderEmail (email) {
-    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.email} onChange={this.handleEmail} /> : <a href='#'>{!this.state.email ? email : this.state.email}</a>
-  }
-
-  renderLogin (login) {
-    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.login} onChange={this.handleLogin} /> : <span className='profile-field-nickname' href='#'>@{!this.state.login ? login : this.state.login}</span>
-  }
-
-  renderFirstName (firstName) {
-    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.firstName} onChange={this.handleFirstName} /> : <span>{!this.state.firstName ? firstName : this.state.firstName}</span>
-  }
-
-  renderLastName (lastName) {
-    return this.state.isEditMode ? <Input name='user-input-change-data' type='text' value={this.state.lastName} onChange={this.handleLastName} /> : <span>{!this.state.lastName ? lastName : this.state.lastName}</span>
-  }
-
   componentWillMount () {
     this.props.actions.getUserData(this.props.match.params.id)
   }
 
   render () {
-    const { email, login, firstName, lastName } = this.props.user
+    const { firstName, lastName } = this.props.user
     return (
       <React.Fragment>
         <div className='main-wrapper'>
@@ -257,27 +212,24 @@ class User extends Component {
                         </div>
                       </div>
                     </div>
-
-                    <PrivateFields
-                      handleCurrentPassword={this.handleCurrentPassword}
-                      handleNewPassword={this.handleNewPassword}
-                      sendPassword={this.sendPassword}
-                      isShowPrivate={this.state.isShowPrivate}
-                      newPassword={this.state.newPassword}
-                      currentPassword={this.state.currentPassword}
-                    />
-                    <ProfileFields
-                      renderEmail={this.renderEmail}
-                      renderLogin={this.renderLogin}
-                      renderFirstName={this.renderFirstName}
-                      renderLastName={this.renderLastName}
-                      editMode={this.editMode}
-                      isShowGeneral={this.state.isShowGeneral}
-                      email={email}
-                      login={login}
-                      firstName={firstName}
-                      lastName={lastName}
-                    />
+                    {
+                      this.state.isShowPrivate &&
+                        <PrivateFields
+                          handleCurrentPassword={this.handleCurrentPassword}
+                          handleNewPassword={this.handleNewPassword}
+                          sendPassword={this.sendPassword}
+                          newPassword={this.state.newPassword}
+                          currentPassword={this.state.currentPassword}
+                        />
+                    }
+                    {
+                      this.state.isShowGeneral &&
+                      <ProfileFields
+                        isEditMode={this.state.isEditMode}
+                        editMode={this.editMode}
+                        user={this.props.user}
+                      />
+                    }
 
                     <div className='recent-work-list-wrapper'>
                       <h2 className='recent-work-list-wrapper-header'><span>Work</span></h2>
