@@ -17,12 +17,7 @@ export default class Dashboard extends Component {
   }
 
   changeState (size) {
-    if (size <= 70) {
-      this.setState({isOpened: false}); this.setState({size})
-    }
-    if (size > 70) {
-      this.setState({isOpened: true})
-    }
+    this.setState({isOpened: size > 70})
     this.props.changeLable(size)
   }
 

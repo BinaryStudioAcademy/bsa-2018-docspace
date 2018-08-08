@@ -13,24 +13,12 @@ class DashboardWrapper extends Component {
     this.changeLabels = this.changeLabels.bind(this)
   }
   changeLabels (size) {
-    if (size <= 215) {
-      this.setState({
-        showLabels: false
-      })
-    } else {
-      this.setState({
-        showLabels: true
-      })
-    }
-    if (size <= 130) {
-      this.setState({
-        showIcons: false
-      })
-    } else {
-      this.setState({
-        showIcons: true
-      })
-    }
+    this.setState({
+      showLabels: size > 215
+    })
+    this.setState({
+      showIcons: size > 130
+    })
   }
   render () {
     const showIconForTabs = true
