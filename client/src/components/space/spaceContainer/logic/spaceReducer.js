@@ -3,7 +3,19 @@ import { combineReducers } from 'redux'
 
 const initialState = {
   all: [],
-  byId: {}
+  byId: {
+    TS: {
+      name: 'Test space',
+      ownerId: '111',
+      key: 'TS',
+      pages: [
+        {
+          name: 'First Test Page',
+          id: '666'
+        }
+      ]
+    }
+  }
 }
 
 function all (state = initialState.all, action) {
