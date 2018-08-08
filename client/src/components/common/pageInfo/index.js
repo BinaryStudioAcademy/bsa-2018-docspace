@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 
 import 'src/components/common/pageInfo/pageInfo.css'
 
 const PageInfo = ({ src, firstName, lastName, date }) => {
   return (
     <div className='page-info-container'>
-      <div className='page-info-image'>
+      <NavLink className='page-info-image' to={''}>
         <img src={src} alt='UserAvatar' />
-      </div>
+      </NavLink>
       <div className='page-info'>
-        <div className='page-info-author'>{firstName + ' ' + lastName}</div>
+        <NavLink className='page-info-author' to={''}>{firstName + ' ' + lastName}</NavLink>
         <div className='page-info-time'>{date}</div>
       </div>
     </div>

@@ -12,7 +12,11 @@
       border-radius: 50%; }
   .page-info-author {
     font-weight: 600;
-    padding: 2px; }
+    padding: 2px;
+    text-decoration: none;
+    color: #000; }
+    .page-info-author:hover {
+      text-decoration: underline; }
   .page-info-time {
     color: #6c788f;
     font-size: 14px;

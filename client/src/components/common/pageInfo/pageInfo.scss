@@ -22,6 +22,12 @@
   &-author {
     font-weight: 600;
     padding: 2px;
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &-time {

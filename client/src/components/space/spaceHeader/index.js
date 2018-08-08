@@ -12,7 +12,7 @@ class SpaceHeader extends Component {
     switch (this.props.location.pathname) {
       case '/spaces/TS/overview':
         return 'space'
-      case '/spaces/TS/pages/666': // TODO: reblace by real id
+      case '/spaces/TS/pages/666':
         return 'page'
       default:
         return 'clear'
@@ -30,9 +30,9 @@ class SpaceHeader extends Component {
             : (
               <div className='header-page'>
                 <NavLink className='header-name page' to={`/spaces/${'TS'}/overview`}>{this.props.space.name}</NavLink>
-                <div className='buttons-item restrictions' title='Unrestricted'>
+                <NavLink className='buttons-item restrictions' title='Unrestricted' to={''}>
                   <i className='fas fa-lock-open' />
-                </div>
+                </NavLink>
               </div>
             )
         }
