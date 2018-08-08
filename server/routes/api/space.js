@@ -41,7 +41,8 @@ router.post('/', (req, res) => {
 
   spaceService.create(req.body)
     .then(data => res.json(data))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(400)
       res.end()
     })
