@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import SpaceHeaderButtons from '../../space/spaceHeaderButtons'
+import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 
 import './spaceHeader.css'
 

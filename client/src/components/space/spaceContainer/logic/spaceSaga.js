@@ -1,7 +1,7 @@
 import { takeEvery, put } from 'redux-saga/effects'
 import * as actions from './spaceActions'
 import * as actionTypes from './spaceActionTypes'
-import { spaceService } from '../../../../services/spaceService'
+import { spaceService } from 'src/services/spaceService'
 
 function * getSpace (action) {
   const result = yield spaceService.getSpace(action.payload)

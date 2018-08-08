@@ -1,6 +1,6 @@
 import { takeEvery, put, all } from 'redux-saga/effects'
 import * as actionTypes from './userActionTypes'
-import { userService } from '../../../services/userService'
+import { userService } from 'src/services/userService'
 
 function * getUser (action) {
   const result = yield userService.getUserData(action.payload.id)

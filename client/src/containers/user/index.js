@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import Camera from '../../assets/add-photo-img.png'
+import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
 import { getUserData, updateUser } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ManagePhoto } from '../../components/managePhotos/managePhotos'
-import { ProfileFields } from '../../components/userTabs/general'
-import { PrivateFields } from '../../components/userTabs/private'
-import Input from '../../components/common/input'
+import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
+import { ProfileFields } from 'src/components/userTabs/general'
+import { PrivateFields } from 'src/components/userTabs/private'
+import Input from 'src/components/common/input'
 
 import './user.css'
 
