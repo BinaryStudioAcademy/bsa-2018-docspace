@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import SpaceModal from '../../modals/spaceModal'
 import './app.css'
+import DashboardActivity from '../../dashboard/dashboardActivity'
+import SpaceSettings from 'src/components/spaceSettings'
 
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <SpaceModal />
+        <DashboardActivity />
+        <SpaceSettings />
       </div>
     )
   }
