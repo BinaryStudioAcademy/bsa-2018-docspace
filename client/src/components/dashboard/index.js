@@ -17,8 +17,7 @@ class DashboardWrapper extends Component {
       this.setState({
         showLabels: false
       })
-    }
-    if (size > 215) {
+    } else {
       this.setState({
         showLabels: true
       })
@@ -27,8 +26,7 @@ class DashboardWrapper extends Component {
       this.setState({
         showIcons: false
       })
-    }
-    if (size > 130) {
+    } else {
       this.setState({
         showIcons: true
       })
@@ -37,10 +35,13 @@ class DashboardWrapper extends Component {
   render () {
     const showIconForTabs = true
     return (
-      <div className='app__root'>
-        <Dashboard changeLable={this.changeLabels} colorSchema={'grey-schema'}
+      <div>
+        <Dashboard
+          changeLable={this.changeLabels}
+          colorSchema={'sidebar-blue-schema'}
           rightSidebar={<FullSidebar showLabels={this.state.showLabels} showIcons={this.state.showIcons} />}
-          tabs={<FullSidebar showLabels={this.state.showLabels} showIcons={showIconForTabs} />} />
+          tabs={<FullSidebar showLabels={this.state.showLabels} showIcons={showIconForTabs} />}
+        />
       </div>
     )
   }

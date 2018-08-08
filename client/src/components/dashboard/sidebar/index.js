@@ -23,14 +23,19 @@ export default class Dashboard extends Component {
     if (size > 70) {
       this.setState({isOpened: true})
     }
+    this.props.changeLable(size)
   }
 
   render () {
     return (
       <div showLabels={this.state.showLabels} className={this.props.colorSchema} >
-        <SplitPane split='vertical' minSize={70} defaultSize={350}
+        <SplitPane
+          split='vertical'
+          minSize={70}
+          defaultSize={350}
           maxSize={700}
-          onChange={size => { this.props.changeLable(size); this.changeState(size) }}>
+          onChange={size => { this.changeState(size) }}
+        >
           <div className='sidebar-container'>
             {this.state.isOpened &&
             <div className='sidebar-wrapper'>

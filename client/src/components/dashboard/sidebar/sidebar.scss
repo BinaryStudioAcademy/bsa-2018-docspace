@@ -1,75 +1,64 @@
-@import "../../../globalStyles/variables.scss";
+@import "src/globalStyles/variables.scss";
 
-.sidebar-wrapper{
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  text-align: left;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  background-color: $primaryColor;
-  ul{
-    padding-left: 0;
-    list-style: none;
-    width: 90%;
-  }
-  .tabs-wrapper{
+
+.sidebar-container{
+  .sidebar-wrapper{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $primaryColor;
     ul{
-      margin-top: 35px;
-      margin-left: 10px;
+      padding-left: 0;
+      list-style: none;
+      width: 90%;
+    }
+    .tabs-wrapper{
+      ul{
+        margin-top: 35px;
+        margin-left: 10px;
+      }
+    }
+    .icon-buttons-wrapper{
+      padding: 0 5px;
+      background-color: $primaryColor;
+    }
+    h1{
+      padding-left: 10px;
     }
   }
+  .tabs-wrapper{
+    width: 80%;
+  }
+  .minimize-dashboard-wrapper{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    height: 100%;
+    width: 70px;
+  }
+
   .icon-buttons-wrapper{
-    padding: 0 5px;
-    background-color: $primaryColor;
-  }
-  h1{
-    padding-left: 10px;
+    height: 100%;
   }
 }
-.tabs-wrapper{
-  width: 80%;
-}
-.minimize-dashboard-wrapper{
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  text-align: left;
-  margin: 0;
+
+.sidebar-container{
   height: 100%;
-  width: 70px;
 }
 .Resizer{
   z-index: 9999;
   width: 2px;
   cursor: w-resize
 }
-.sidebar-container{
-  height: 100%;
-}
-.icon-buttons-wrapper{
-  height: 100%;
-}
-.sidebar-wrapper{
- button{
-   border: none;
-   background-color: inherit;
-   color: white;
-   a{
-     display: block;
-     height: 100%;;
-     width: 100%;
-   }
- }
-}
-
-.blue-schema{
+.sidebar-blue-schema{
   .sidebar-wrapper, .minimize-dashboard-wrapper{
   background-color: $primaryColor;
-  }
-  button:hover{
-    background-color: $primalHover;
   }
   .tabs-wrapper{
     ul>li{
@@ -79,7 +68,7 @@
       text-decoration: none;
       color: white;
     }
-    ul>li:hover{
+    .nav-button:hover{
       background-color: $primalHover;
     }
   }
@@ -95,9 +84,14 @@
       color: white;
     }
   }
+  .icon-buttons-wrapper{
+    .nav-button:hover{
+      background-color:$primalHover;
+    }
+  }
 }
 
-.grey-schema{
+.sidebar-grey-schema{
   .sidebar-wrapper, .minimize-dashboard-wrapper {
     background-color: $greyBlog;
   }
@@ -106,7 +100,7 @@
         text-decoration: none;
         color: $blueText;
       }
-      ul > li:hover {
+      .nav-button:hover{
         background-color: $greyHover;
       }
     }
@@ -117,9 +111,14 @@
   .Resizer{
     color: $greyBlog
   }
+  .icon-buttons-wrapper{
+    .nav-button:hover{
+      background-color:$primalHover;
+    }
+  }
   .minimize-dashboard-wrapper{
     .icon-buttons-wrapper{
-      button:hover{
+      .nav-button:hover{
         background-color:$greyHover;
       }
       a, a:visited, a:active, a:hover {
