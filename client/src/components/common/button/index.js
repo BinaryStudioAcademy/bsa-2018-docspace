@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './button.css'
-
 const Button = (props) => (
   <button
     className={`${props.nameClass}`}
