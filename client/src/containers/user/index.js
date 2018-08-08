@@ -8,10 +8,9 @@ import { ManagePhoto } from '../../components/managePhotos/managePhotos'
 import { ProfileFields } from '../../components/userTabs/general'
 import { PrivateFields } from '../../components/userTabs/private'
 import Input from '../../components/common/input'
-import autobind from '../'
 
 import './user.css'
-@autobind
+
 class User extends Component {
   constructor (props) {
     super(props)
@@ -28,6 +27,23 @@ class User extends Component {
       isShowGeneral: true,
       isShowPrivate: false
     }
+
+    this.editMode = this.editMode.bind(this)
+    this.renderEmail = this.renderEmail.bind(this)
+    this.renderLogin = this.renderLogin.bind(this)
+    this.renderFirstName = this.renderFirstName.bind(this)
+    this.renderLastName = this.renderLastName.bind(this)
+    this.handleEmail = this.handleEmail.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleFirstName = this.handleFirstName.bind(this)
+    this.handleLastName = this.handleLastName.bind(this)
+    this.managePhoto = this.managePhoto.bind(this)
+    this.handleManagePhoto = this.handleManagePhoto.bind(this)
+    this.switchGeneral = this.switchGeneral.bind(this)
+    this.switchPrivate = this.switchPrivate.bind(this)
+    this.handleCurrentPassword = this.handleCurrentPassword.bind(this)
+    this.handleNewPassword = this.handleNewPassword.bind(this)
+    this.sendPassword = this.sendPassword.bind(this)
   }
 
   handleCurrentPassword (e) {
