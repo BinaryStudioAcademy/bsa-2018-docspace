@@ -1,0 +1,32 @@
+.auth__main {
+  background-color: #0044a9;
+  margin: 0;
+  padding: 0;
+  height: 100%; }
+
+.auth__content {
+  min-height: 500px;
+  height: 100vh;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; }
+
+.auth__signup {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column; }
+
+.auth__footer {
+  color: #333333;
+  text-align: center;
+  cursor: pointer; }
+  .auth__footer:hover {
+    text-decoration: underline; }
+
+.auth__header h2 {
+  text-align: center;
+  color: white;
+  margin-top: 48px; }

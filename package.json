@@ -3,23 +3,30 @@
     "version": "1.0.0",
     "license": "ISC",
     "scripts": {
-        "client": "cd client && yarn start",
-        "server": "nodemon ./server/server.js",
+        "client": "cd client && NODE_PATH=./ yarn start",
+        "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
     },
     "dependencies": {
+        "babel-eslint": "^8.2.6",
+        "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
         "express": "^4.16.2",
         "express-session": "^1.15.6",
-        "mongoose": "^5.2.6"
+        "mongoose": "^5.2.6",
+        "passport": "^0.4.0",
+        "passport-local": "^1.0.0",
+        "passport-local-token": "^1.0.1"
     },
     "devDependencies": {
+        "babel-eslint": "^8.2.6",
         "concurrently": "^3.5.0",
-        "eslint": "^5.2.0",
+        "babel-eslint": "^8.2.6",
+        "eslint": "^5.3.0",
         "eslint-config-standard": "^11.0.0",
         "eslint-config-standard-react": "^6.0.0",
         "eslint-plugin-import": "^2.13.0",

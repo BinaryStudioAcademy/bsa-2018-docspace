@@ -1,0 +1,47 @@
+@import 'src/globalStyles/variables.scss';
+.link{
+  color: #3572b0;
+  cursor: pointer; 
+
+  i{
+    margin-right: 0.3rem;
+  }
+}
+
+
+#space-logo{
+    max-height: 48px;
+    max-width: 48px;
+}
+
+
+.space-details-table{
+  // padding-top: 20px;
+  padding-right: 20px;
+  width: 100%;
+  min-width:200px;
+
+  td:nth-child(odd){
+    text-align: right;
+    color: $gray;
+    width: 130px;
+    vertical-align: top;
+  }
+  td:nth-child(even){
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  td.avatar-cell{
+    display: flex;
+    align-items: center;
+  }
+
+  td.avatar-label-cell{
+    vertical-align: middle
+  }
+
+  td{
+    padding: 5px 0 5px 0;
+  }
+}

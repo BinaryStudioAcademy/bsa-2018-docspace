@@ -1,0 +1,13 @@
+.like {
+  display: flex;
+  color: #475774;
+  font-size: 15px; }
+  .like-button {
+    display: flex; }
+    .like-button-text {
+      color: #1c80ff;
+      margin-left: 5px; }
+    .like-button:hover {
+      cursor: pointer; }
+  .like-summary {
+    margin-left: 20px; }

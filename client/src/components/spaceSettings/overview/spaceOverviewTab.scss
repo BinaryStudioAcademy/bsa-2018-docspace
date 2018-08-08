@@ -1,0 +1,61 @@
+@import 'src/globalStyles/variables.scss';
+
+.space-overview-body{
+  padding: 20px;
+}
+
+
+.space-details-header{
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.25;
+    text-transform: none;
+    margin-bottom:0;
+    margin-left: 10px;
+
+    .edit-icons{
+      margin-left: 2rem;
+      font-size: 19px;
+
+      i{
+        padding:0.5rem;
+        cursor: pointer;
+        &:hover, &.active{
+          color:#f6c342
+        }
+      }
+    }
+}
+
+.sub-tab-menu{
+  display: flex;
+  padding-top: 30px;
+  padding-left: 20px;
+  border-bottom: 1px solid #ccc;
+
+  .overview-tab-btn{
+    background: #e9e9e9;
+    cursor:pointer;
+    color: #333;
+    padding: 5px 10px 4px 10px;
+    border: 1px solid #ccc;
+       
+    &.left{
+      border-radius: 5px 0 0 0
+    }
+
+    &.right{
+      border-radius:  0 5px 0 0
+    }
+
+    &.active, &:hover{
+      background: white;
+    }
+
+    &.active{
+      border-bottom: 4px solid white;
+      box-shadow: 1px 1px white;
+    }
+}
+}
+

@@ -5,6 +5,9 @@ const MongoStore = require('connect-mongo')(session)
 const mongooseConnection = require('./db/dbConnect').connection
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
+const passport = require('passport')
+
+require('./config/passport')()
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -27,6 +30,9 @@ app.use(
     })
   })
 )
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 apiRoutes(app)
 
