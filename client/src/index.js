@@ -11,19 +11,23 @@ import rootSaga from './commonLogic/rootSaga'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import history from './commonLogic/history'
+import { I18nextProvider } from 'react-i18next'
+import i18n from 'src/config/i18n'
 
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route exact path='/' component={App} />
-        <Route path='/signup' component={Signup} />
-        <Route path='/login' component={Login} />
-        <Route path='/spaces' component={SpaceContainer} />
-      </Switch>
-    </ConnectedRouter>
+    <I18nextProvider i18n={i18n}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route exact path='/' component={App} />
+          <Route path='/signup' component={Signup} />
+          <Route path='/login' component={Login} />
+          <Route path='/spaces' component={SpaceContainer} />
+        </Switch>
+      </ConnectedRouter>
+    </I18nextProvider>
   </Provider>,
   document.getElementById('root')
 )
