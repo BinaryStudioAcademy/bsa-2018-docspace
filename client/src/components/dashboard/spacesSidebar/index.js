@@ -11,9 +11,9 @@ class SpacesSideBar extends Component {
 
   render () {
     const menuTabs = this.props.menuTabs
-    const listItems = menuTabs.map((tab) => {
+    const listItems = menuTabs.map((tab, index) => {
       const className = tab === this.state.active ? 'active' : ''
-      return <li className={'sideBarTab ' + className} onClick={() => this.handleClick(tab)} key={tab}>
+      return <li className={'sideBarTab ' + className} onClick={() => this.handleClick(tab)} key={index}>
         <a className={className} >{tab} </a>
       </li>
     }
