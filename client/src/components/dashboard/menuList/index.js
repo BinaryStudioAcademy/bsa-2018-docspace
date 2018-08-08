@@ -11,9 +11,9 @@ class MenuList extends Component {
     }
     render () {
       const menuTabs = this.props.menuTabs
-      const listItems = menuTabs.map((menuTab) => {
+      const listItems = menuTabs.map((menuTab, index) => {
         const className = menuTab === this.state.active ? 'active' : ''
-        return <li className={'menuTab'} onClick={() => this.handleClick(menuTab)} key={menuTab}>
+        return <li className={'menuTab'} onClick={() => this.handleClick(menuTab)} key={index}>
           <a className={className} >{menuTab}</a>
         </li>
       }
