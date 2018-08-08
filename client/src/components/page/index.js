@@ -7,7 +7,8 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import LikesAndLabelsContainer from 'src/components/common/likesAndLabelsContainer'
 import Comments from 'src/components/common/comments'
-import 'src/components/page/page.css'
+
+import './page.css'
 
 class Page extends Component {
   render () {

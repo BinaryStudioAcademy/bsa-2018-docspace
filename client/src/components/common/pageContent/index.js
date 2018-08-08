@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import 'src/components/common/pageContent/pageContent.css'
+import './pageContent.css'
 
 const PageContent = ({ content }) => {
   return (

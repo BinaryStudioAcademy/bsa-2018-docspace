@@ -1,6 +1,6 @@
 import React from 'react'
 
-import 'src/components/common/comments/comments.css'
+import './comments.css'
 
 const Comments = () => {
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
-import 'src/components/common/pageInfo/pageInfo.css'
+import './pageInfo.css'
 
 const PageInfo = ({ avatar, firstName, lastName, date }) => {
   return (

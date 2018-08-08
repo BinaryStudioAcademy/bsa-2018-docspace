@@ -1,6 +1,6 @@
 import React from 'react'
 
-import 'src/components/common/likesAndLabelsContainer/likes/likes.css'
+import './likes.css'
 
 const Likes = () => {
   return (

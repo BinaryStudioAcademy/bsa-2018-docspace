@@ -9,7 +9,9 @@ import './spaceHeader.css'
 
 class SpaceHeader extends Component {
   getType () {
-    switch (this.props.location.pathname) {
+    const { pathname } = this.props.location
+
+    switch (pathname) {
       case '/spaces/TS/overview':
         return 'space'
       case '/spaces/TS/pages/666':
@@ -37,7 +39,7 @@ class SpaceHeader extends Component {
             )
         }
         {
-          type === 'clear'
+          type !== 'clear'
             ? null
             : (
               <SpaceHeaderButtons type={type}>

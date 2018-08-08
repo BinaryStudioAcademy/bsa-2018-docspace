@@ -10,7 +10,7 @@ import SpaceSettings from 'src/components/space/spaceSettings'
 import Page from 'src/components/page'
 import Blog from 'src/components/blog'
 
-import 'src/components/space/spaceContainer/space.css'
+import './space.css'
 
 class SpaceContainer extends Component {
   render () {
