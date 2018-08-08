@@ -1,0 +1,30 @@
+.sideBarList {
+    margin-top: 10%;
+    width: 100%;
+    text-align: left;
+    list-style: none; 
+    
+
+}
+.sideBarTab {
+    width: 80%;
+  
+}
+.sideBarTab > a {
+    text-decoration: none;
+    color: #1a47a0;
+    padding-bottom: 0.25em;
+    padding-left: 0.5em;
+    
+}
+.sideBarTab.active {
+    background-color: #e6e6e6;
+}
+.sideBarTab > a.active {
+    
+    color: black;
+}
+.sideBarTab:hover {
+    background-color: #e6e6e6;
+}
+  
