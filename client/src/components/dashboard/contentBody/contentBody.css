@@ -1,4 +1,5 @@
 #menu {
+ 
   list-style: none; 
   margin: 0; 
   padding-left: 0; 
@@ -7,6 +8,7 @@
 h1 {
   margin:0.75em auto;
   padding-top: 1.25em;
+
 }
 
 .menuTab > a {
@@ -25,7 +27,7 @@ h1 {
   color: #1a47a0;
 }
 
-.header {
+.headerDashboard {
   height: 150px;
   text-align: left;
 }

@@ -16,7 +16,7 @@
   
 }
 .dashboard__content {
-  display: flex;
+  display: flex; 
   flex-direction: row;
   width: 100%;
   min-width: 700px;

@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import * as actions from './logic/spacesActions'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import './spacesContent.css'
 
@@ -14,37 +11,13 @@ class SpacesContent extends Component {
       search: ''
     }
   }
-  componentWillMount () {
-    this.props.getGreetingText()
-    console.log(this.props.getGreetingText())
-  }
-
   render () {
-    const {text} = this.props
     return (
       <div className={'spaces__content__body'} >
-        <span>{text}</span>
-
+        <span />
       </div>
     )
   }
 }
 
-SpacesContent.propTypes = {
-  text: PropTypes.string,
-  getGreetingText: PropTypes.func
-}
-
-const mapStateToProps = (state) => {
-  return {
-    text: state.greeting.text
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getGreetingText: () => dispatch(actions.getGreetingText())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SpacesContent)
+export default SpacesContent

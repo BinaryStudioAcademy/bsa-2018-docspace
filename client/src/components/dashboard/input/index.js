@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './input.css'
+import './inputDashboard.css'
 import PropTypes from 'prop-types'
 class Input extends Component {
   render () {

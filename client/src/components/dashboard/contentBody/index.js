@@ -39,7 +39,7 @@ class ContentBody extends Component {
     return (
       <div className={'dashboard__content__body'} >
 
-        <div className={'header'}>
+        <div className={'headerDashboard'}>
           <h1>{this.props.header}</h1>
 
           <div>

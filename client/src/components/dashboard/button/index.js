@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import './button.css'
+import './buttonDashboard.css'
 import PropTypes from 'prop-types'
 class Button extends Component {
   render () {
     return (
-      <button className={'button'} >
+      <button className={'buttonDashboard'} >
         {this.props.content}
       </button>
     )
