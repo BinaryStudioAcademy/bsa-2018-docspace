@@ -5,13 +5,15 @@ import { connect } from 'react-redux'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
+import LikesAndLabelsContainer from 'src/components/common/likesAndLabelsContainer'
+import Comments from 'src/components/common/comments'
 import 'src/components/page/page.css'
 
 class Page extends Component {
   render () {
     return (
       <div className='page-container'>
-        <div className='page-main'>
+        <div>
           <PageTitle text={this.props.page.title} />
           <PageInfo
             src={this.props.page.created.user.avatar}
@@ -21,11 +23,8 @@ class Page extends Component {
           />
           <PageContent content={this.props.page.content} />
         </div>
-        <div className='page-extra'>
-          <div className='likes'>Likes</div>
-          <div className='labels'>Labels</div>
-          <div className='comments'>Comments</div>
-        </div>
+        <LikesAndLabelsContainer />
+        <Comments />
       </div>
     )
   }

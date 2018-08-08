@@ -1,0 +1,9 @@
+@import 'globalStyles/variables.scss';
+
+.page-comments {
+  border: 1px solid $gray;
+  color: $gray;
+  margin-top: 80px;
+  border-radius: 4px;
+  padding: 15px;
+}
