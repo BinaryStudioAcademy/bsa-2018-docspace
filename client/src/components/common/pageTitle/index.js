@@ -10,7 +10,11 @@ const PageTitle = ({ text }) => {
 }
 
 PageTitle.propTypes = {
-  text: PropTypes.string.isRequired
+  text: PropTypes.string
+}
+
+PageTitle.defaultProps = {
+  text: ''
 }
 
 export default PageTitle

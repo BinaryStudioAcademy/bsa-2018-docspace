@@ -16,7 +16,7 @@ class Page extends Component {
         <div>
           <PageTitle text={this.props.page.title} />
           <PageInfo
-            src={this.props.page.created.user.avatar}
+            avatar={this.props.page.created.user.avatar}
             firstName={this.props.page.created.user.firstName}
             lastName={this.props.page.created.user.lastName}
             date={this.props.page.created.date}
@@ -30,11 +30,19 @@ class Page extends Component {
   }
 }
 Page.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.shape({
+    title: PropTypes.string,
+    created: PropTypes.object,
+    content: PropTypes.string
+  })
 }
 
 Page.defaultProps = {
-  page: {}
+  page: {
+    title: '',
+    created: {},
+    content: ''
+  }
 }
 
 const mapStateToProps = (state) => {
