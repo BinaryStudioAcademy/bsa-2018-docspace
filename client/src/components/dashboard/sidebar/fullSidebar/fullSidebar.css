@@ -1,8 +1,8 @@
-.icon-navigation-wrapper {
+.sidebar-container .icon-navigation-wrapper {
   height: 50%; }
 
-.top-icons {
+.sidebar-container .top-icons {
   height: 20%; }
 
-.bottom-icons {
+.sidebar-container .bottom-icons {
   height: 30%; }

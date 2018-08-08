@@ -1,4 +1,4 @@
-.sidebar-wrapper {
+.sidebar-container .sidebar-wrapper {
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
@@ -6,24 +6,24 @@
   margin: 0;
   height: 100%;
   width: 100%;
-  background-color: #0747A6; }
-  .sidebar-wrapper ul {
+  background-color: #0044a9; }
+  .sidebar-container .sidebar-wrapper ul {
     padding-left: 0;
     list-style: none;
     width: 90%; }
-  .sidebar-wrapper .tabs-wrapper ul {
+  .sidebar-container .sidebar-wrapper .tabs-wrapper ul {
     margin-top: 35px;
     margin-left: 10px; }
-  .sidebar-wrapper .icon-buttons-wrapper {
+  .sidebar-container .sidebar-wrapper .icon-buttons-wrapper {
     padding: 0 5px;
-    background-color: #0747A6; }
-  .sidebar-wrapper h1 {
+    background-color: #0044a9; }
+  .sidebar-container .sidebar-wrapper h1 {
     padding-left: 10px; }
 
-.tabs-wrapper {
+.sidebar-container .tabs-wrapper {
   width: 80%; }
 
-.minimize-dashboard-wrapper {
+.sidebar-container .minimize-dashboard-wrapper {
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
@@ -32,75 +32,70 @@
   height: 100%;
   width: 70px; }
 
+.sidebar-container .icon-buttons-wrapper {
+  height: 100%; }
+
+.sidebar-container {
+  height: 100%; }
+
 .Resizer {
   z-index: 9999;
   width: 2px;
   cursor: w-resize; }
 
-.sidebar-container {
-  height: 100%; }
+.sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
+  background-color: #0044a9; }
 
-.icon-buttons-wrapper {
-  height: 100%; }
-
-.sidebar-wrapper button {
-  border: none;
-  background-color: inherit;
-  color: white; }
-  .sidebar-wrapper button a {
-    display: block;
-    height: 100%;
-    width: 100%; }
-
-.blue-schema .sidebar-wrapper, .blue-schema .minimize-dashboard-wrapper {
-  background-color: #0747A6; }
-
-.blue-schema button:hover {
-  background-color: #08367c; }
-
-.blue-schema .tabs-wrapper ul > li {
+.sidebar-blue-schema .tabs-wrapper ul > li {
   color: white; }
 
-.blue-schema .tabs-wrapper a, .blue-schema .tabs-wrapper a:visited, .blue-schema .tabs-wrapper a:active, .blue-schema .tabs-wrapper a:hover {
+.sidebar-blue-schema .tabs-wrapper a, .sidebar-blue-schema .tabs-wrapper a:visited, .sidebar-blue-schema .tabs-wrapper a:active, .sidebar-blue-schema .tabs-wrapper a:hover {
   text-decoration: none;
   color: white; }
 
-.blue-schema .tabs-wrapper ul > li:hover {
-  background-color: #08367c; }
+.sidebar-blue-schema .tabs-wrapper .nav-button:hover {
+  background-color: #08367C; }
 
-.blue-schema h1 {
-  color: white; }
+.sidebar-blue-schema h1 {
+  color: white;
+  padding: 0; }
 
-.blue-schema .Resizer {
-  color: #0747A6; }
+.sidebar-blue-schema .Resizer {
+  color: #0044a9; }
 
-.blue-schema .icon-buttons-wrapper a, .blue-schema .icon-buttons-wrapper a:visited, .blue-schema .icon-buttons-wrapper a:active, .blue-schema .icon-buttons-wrapper a:hover {
+.sidebar-blue-schema .icon-buttons-wrapper a, .sidebar-blue-schema .icon-buttons-wrapper a:visited, .sidebar-blue-schema .icon-buttons-wrapper a:active, .sidebar-blue-schema .icon-buttons-wrapper a:hover {
   text-decoration: none;
   color: white; }
 
-.grey-schema .sidebar-wrapper, .grey-schema .minimize-dashboard-wrapper {
+.sidebar-blue-schema .icon-buttons-wrapper .nav-button:hover {
+  background-color: #08367C; }
+
+.sidebar-grey-schema .sidebar-wrapper, .sidebar-grey-schema .minimize-dashboard-wrapper {
   background-color: #F4F5F7; }
 
-.grey-schema .tabs-wrapper a, .grey-schema .tabs-wrapper a:visited, .grey-schema .tabs-wrapper a:active, .grey-schema .tabs-wrapper a:hover {
+.sidebar-grey-schema .tabs-wrapper a, .sidebar-grey-schema .tabs-wrapper a:visited, .sidebar-grey-schema .tabs-wrapper a:active, .sidebar-grey-schema .tabs-wrapper a:hover {
   text-decoration: none;
   color: #42526E; }
 
-.grey-schema .tabs-wrapper ul > li:hover {
+.sidebar-grey-schema .tabs-wrapper .nav-button:hover {
   background-color: #EAECF0; }
 
-.grey-schema h1 {
+.sidebar-grey-schema h1 {
   color: #42526E; }
 
-.grey-schema .Resizer {
+.sidebar-grey-schema .Resizer {
   color: #F4F5F7; }
 
-.grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper button:hover {
+.sidebar-grey-schema .icon-buttons-wrapper .nav-button:hover {
+  background-color: #08367C; }
+
+.sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper .nav-button:hover {
   background-color: #EAECF0; }
 
-.grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:visited, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:active, .grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:hover {
+.sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:visited, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:active, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:hover {
   text-decoration: none;
   color: #42526E; }
 
-.grey-schema .icon-buttons-wrapper a, .grey-schema .icon-buttons-wrapper a:visited, .grey-schema .icon-buttons-wrapper a:active, .grey-schema .icon-buttons-wrapper a:hover {
+.sidebar-grey-schema .icon-buttons-wrapper a, .sidebar-grey-schema .icon-buttons-wrapper a:visited, .sidebar-grey-schema .icon-buttons-wrapper a:active, .sidebar-grey-schema .icon-buttons-wrapper a:hover {
   text-decoration: none;
   color: white; }

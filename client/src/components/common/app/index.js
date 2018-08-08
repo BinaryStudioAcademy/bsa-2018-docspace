@@ -9,7 +9,6 @@ class App extends Component {
       <div className='app__root'>
         <DashboardActivity />
         <SpaceSettings />
-
       </div>
     )
   }
