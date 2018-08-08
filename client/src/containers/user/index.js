@@ -28,7 +28,6 @@ class User extends Component {
       isShowPrivate: false
     }
 
-    this.editMode = this.editMode.bind(this)
     this.renderEmail = this.renderEmail.bind(this)
     this.renderLogin = this.renderLogin.bind(this)
     this.renderFirstName = this.renderFirstName.bind(this)
@@ -87,7 +86,6 @@ class User extends Component {
   handleManagePhoto () {
     return this.state.isShowManagePhoto
   }
-
   editMode (e) {
     let buttonHTML = e.target
 
