@@ -2,8 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import SpacePagesList from 'src/components/space/spacePagesList'
-import 'src/components/space/spaceSidebar/spaceSidebar.css'
+import SpacePagesList from '../../space/spacePagesList'
+import './spaceSidebar.css'
 
 const SpaceSidebar = ({ spaceName, pages }) => {
   return (

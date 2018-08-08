@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import Modal from 'src/components/common/modal'
-import TemplateList from 'src/components/templateList'
+import Modal from '../../common/modal'
+import TemplateList from '../../templateList'
 import './spaceModal.css'
 
 // dummy
-import logo from 'src/resources/logo.svg'
+import logo from '../../../resources/logo.svg'
 
 // dummy
 const items = [
