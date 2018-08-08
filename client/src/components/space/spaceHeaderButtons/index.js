@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import 'src/components/space/spaceHeaderButtons/spaceHeaderButtons.css'
+import './spaceHeaderButtons.css'
 
 const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type }) => {
   return (

@@ -5,7 +5,7 @@ import { withRouter, NavLink } from 'react-router-dom'
 
 import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 
-import 'src/components/space/spaceHeader/spaceHeader.css'
+import './spaceHeader.css'
 
 class SpaceHeader extends Component {
   getType () {
@@ -66,7 +66,7 @@ SpaceHeader.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.space.space
+    space: state.spaces.byId.TS
   }
 }
 
