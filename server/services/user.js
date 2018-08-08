@@ -1,5 +1,5 @@
 const userRepository = require('../repositories/userRepository')
-const scheme = require('../schemes/userScheme')
+const scheme = require('../models/userScheme')
 
 module.exports = {
   findAll: (req, res) => {
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    userRepository.get(req.params.id)
+    userRepository.getById(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
