@@ -13,3 +13,18 @@ export const setSpace = (space) => {
     payload: space
   }
 }
+
+// CREATE
+export const createSpace = (space) => ({
+  type: actionTypes.CREATE_SPACE_REQUEST,
+  payload: space
+})
+
+export const createSpaceSuccess = (space) => ({
+  type: actionTypes.CREATE_SPACE_SUCCESS,
+  payload: space
+})
+
+export const createSpaceError = () => ({
+  type: actionTypes.CREATE_SPACE_ERROR
+})

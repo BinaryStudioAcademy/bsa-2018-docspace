@@ -1,60 +1,11 @@
 import React, {Component} from 'react'
 import Modal from 'src/components/common/modal'
 import TemplateList from 'src/components/templateList'
+import WizardModalBody from './wizardModalBody'
+import items from './constants/spaceTamplates'
 import './spaceModal.css'
 
-// dummy
-import logo from 'src/resources/logo.svg'
-
-// dummy
-const items = [
-  {
-    name: 'Empty space',
-    description: 'Start from empty list',
-    img: logo
-  },
-  {
-    name: 'Personal space',
-    description: 'Start from empty list',
-    img: logo
-  },
-  {
-    name: 'Team space',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    img: logo
-  },
-  {
-    name: 'Documentation space',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
-    img: logo
-  },
-  {
-    name: 'Software project space',
-    description: 'Lorem ipsum dolor sit amett',
-    img: logo
-  },
-  {
-    name: 'Knowledge base space',
-    description: 'Lorem ipsum dolor sit amet',
-    img: logo
-  },
-  {
-    name: 'Empty space',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
-    img: logo
-  },
-  {
-    name: 'Empty space',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
-    img: logo
-  },
-  {
-    name: 'Empty space',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum suscipit ',
-    img: logo
-  }
-]
-
+// TODO : SEPARATE RENDERS : TWO MODALS : ChooseTemplateModal , WizzardModal; move all state to SpaceModal component
 export default class SpaceModal extends Component {
   constructor () {
     super()
@@ -67,11 +18,11 @@ export default class SpaceModal extends Component {
     this.setState({
       showModal: !this.state.showModal,
       spaceTemplates: items,
-      selectedTemplate: null
+      selectedTemplate: null,
+      firstStep: true
     })
   }
 
-  // dummy
   handleFilter = (input) => {
     let filtered = items.filter(template => {
       return new RegExp(input.value, 'i').test(template.name)
@@ -83,28 +34,44 @@ export default class SpaceModal extends Component {
   }
 
   renderModalHeader = () => {
+    const { firstStep } = this.state
     return (
       <h2 className='modal-header' >
-        Create a space
-        <div className='modal-help-link' >
-          <a href=''> Help </a>
-        </div>
-        <form className='modal-filter-form'>
-          <input
-            type='text'
-            placeholder='filter'
-            onChange={({target}) => this.handleFilter(target)}
-          />
-        </form>
+        {firstStep ? 'Create a space' : `Create an ${this.state.selectedTemplate.name}`}
+        {
+          firstStep && <React.Fragment>
+            <div className='modal-help-link' >
+              <a href=''> Help </a>
+            </div>
+            <form className='modal-filter-form'>
+              <input
+                type='text'
+                placeholder='filter'
+                onChange={({target}) => this.handleFilter(target)}
+              />
+            </form>
+          </React.Fragment>
+        }
       </h2>
     )
   }
 
   renderModalFooter = () => {
+    const disaleSubmit = !this.state.selectedTemplate
     return (
       <div className='modal-footer'>
-        <button className='accept-button'>
-           Create
+        {
+          !this.state.firstStep &&
+          <button onClick={() => this.setState({firstStep: true})}>
+            Back
+          </button>
+        }
+        <button
+          className='accept-button'
+          onClick={() => this.setState({firstStep: false})}
+          disabled={disaleSubmit}
+        >
+          {this.state.firstStep ? 'Next' : 'Create'}
         </button>
         <button onClick={this.toggleModal}>
            Close
@@ -119,13 +86,21 @@ export default class SpaceModal extends Component {
     })
   }
 
-  renderModalContent = () => (
-    <TemplateList
-      items={this.state.spaceTemplates}
-      selectedItem={this.state.selectedTemplate}
-      handleSelectItem={this.handleSelectTemplate}
-    />
-  )
+  renderModalContent = () => {
+    const {firstStep} = this.state
+    return (
+      firstStep
+        ? <TemplateList
+          items={this.state.spaceTemplates}
+          selectedItem={this.state.selectedTemplate}
+          handleSelectItem={this.handleSelectTemplate}
+        />
+        : <WizardModalBody
+          selectedTemplate={this.state.selectedTemplate}
+        />
+
+    )
+  }
 
   render () {
     return (
