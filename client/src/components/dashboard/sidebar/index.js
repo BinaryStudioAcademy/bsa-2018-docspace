@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Route, Switch} from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import MinSidebar from './minSidebar/index'
 import PropTypes from 'prop-types'
@@ -8,7 +7,7 @@ import './sidebar.css'
 import './minSidebar/minSideBar.css'
 import './button/button.css'
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -44,15 +43,7 @@ export default class Dashboard extends Component {
             }
           </div>
           <div>
-            <Switch>
-              //Add routes with components here
-              <Route path='/' />
-              <Route path='/activity' />
-              <Route path='/works' />
-              <Route path='/spaces' />
-              <Route path='/people' />
-              <Route path='/settings' />
-            </Switch>
+            {this.props.content}
           </div>
         </SplitPane>
       </div>
@@ -63,6 +54,7 @@ Dashboard.propTypes = {
   changeLable: PropTypes.func,
   colorSchema: PropTypes.string,
   rightSidebar: PropTypes.element,
-  tabs: PropTypes.element
-
+  tabs: PropTypes.element,
+  content: PropTypes.element
 }
+export default Dashboard
