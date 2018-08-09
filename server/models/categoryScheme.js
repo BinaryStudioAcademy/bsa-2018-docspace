@@ -8,6 +8,9 @@ const categorySchema = new mongoose.Schema({
     unique: true
   },
   spaces: [Schema.Types.ObjectId]
+},
+{
+  versionKey: false
 })
 
 const Category = mongoose.model('Category', categorySchema)

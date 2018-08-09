@@ -1,9 +1,9 @@
-const categoryRepository = require('../repositories/CategoryRepository')
+const CategoryRepository = require('../repositories/CategoryRepository')
 const scheme = require('../models/categoryScheme')
 
 module.exports = {
   findAll: (req, res) => {
-    categoryRepository.getAll()
+    CategoryRepository.getAll()
       .then(categories => {
         res.send(categories)
       }).catch(err => {
@@ -14,7 +14,8 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    categoryRepository.get(req.params.id)
+    console.log(req)
+    CategoryRepository.getById(req.params.id)
       .then(category => {
         if (!category) {
           return res.status(404).send({
@@ -35,45 +36,33 @@ module.exports = {
   },
 
   add: (req, res) => {
-    const category = new scheme.Category({
-      name: req.body.name
-    })
-    category.spaces.push(req.body.spaceId)
-
-    // Save category in the database
-    category.save()
-      .then(category => {
-        res.send(category)
-      }).catch(err => {
-        res.status(500).send({
-          message: err.message || 'Some error occurred while creating the category.'
-        })
-      })
-  },
-
-  findOneAndUpdate: (req, res) => {
-    categoryRepository.update(req.params.id, req.body)
+    CategoryRepository.get({name: req.body.name})
       .then(category => {
         if (!category) {
-          return res.status(404).send({
-            message: 'category not found with id ' + req.params.id
+          category = new scheme.Category({
+            name: req.body.name
           })
+          category.spaces.push(req.body.spaceId)
+        } else if (category.spaces.indexOf(req.body.spaceId) !== -1) {
+          return res.status(200).send({message: 'This space already has such category'})
+        } else {
+          category.spaces.push(req.body.spaceId)
         }
-        res.send(category)
-      }).catch(err => {
-        if (err.kind === 'ObjectId') {
-          return res.status(404).send({
-            message: 'category not found with id ' + req.params.id
+        category.save()
+          .then(category => {
+            res.send(category)
           })
-        }
-        return res.status(500).send({
-          message: 'Error updating category with id ' + req.params.id
-        })
+          .catch(err => {
+            res.status(500).send({
+              message: err.message || 'Some error occurred while creating the category.'
+            })
+          })
       })
+      .catch(err => console.log(err))
   },
 
   findOneAndDelete: (req, res) => {
-    categoryRepository.delete(req.params.id)
+    CategoryRepository.delete(req.params.id)
       .then(category => {
         if (!category) {
           return res.status(404).send({
