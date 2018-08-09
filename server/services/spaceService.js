@@ -6,7 +6,7 @@ module.exports = {
   },
 
   get: (id) => {
-    return SpaceRepository.get(id)
+    return SpaceRepository.getById(id)
   },
 
   create: (data) => {
