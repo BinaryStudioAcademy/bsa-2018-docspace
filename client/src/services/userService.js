@@ -14,15 +14,7 @@ class UserService {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          avatar: user.avatar,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          spaces: user.spaces,
-          email: user.email,
-          login: user.login,
-          password: user.password
-        })
+        body: JSON.stringify(user)
       })
       .then(res => res.json())
       .catch(err => console.log(`Can't get user: ${err}`))

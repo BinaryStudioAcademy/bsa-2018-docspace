@@ -26,7 +26,7 @@ class PrivateFields extends Component {
   handlePasswords = () => {
     if (!this.state.isSent) {
       let currentPassword = this.state.currentPassword
-      if (!!this.props.errors.length === true) {
+      if (this.props.errors.length === 0) {
         this.setState({
           currentPassword: '',
           isSent: true
@@ -35,11 +35,13 @@ class PrivateFields extends Component {
       this.props.handlePassword(currentPassword)
     } else if (this.state.isSent) {
       let newPassword = this.state.newPassword
-      this.setState({
-        newPassword: '',
-        isSent: false
-      })
-      this.props.sendPassword(newPassword)
+      if (this.state.newPassword.length !== 0) {
+        this.setState({
+          newPassword: '',
+          isSent: false
+        })
+        this.props.sendPassword(newPassword)
+      }
     }
   }
 
@@ -86,6 +88,7 @@ class PrivateFields extends Component {
                   />
                 </div>
               </div>
+              {this.state.newPassword.length === 0 ? <label>Empty field</label> : null}
             </React.Fragment>
           )
           }
