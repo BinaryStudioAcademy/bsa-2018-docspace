@@ -6,7 +6,6 @@ class DashboardPeople extends Component {
   render () {
     return (
       <div className={'dashboard__container'} >
-        <div className={'dashboard__sidebar'}> Sidebar </div>
         <div className={'dashboard__content__spaces'}>
           <div className={'people__header'}>
             <h2>People Directory</h2>

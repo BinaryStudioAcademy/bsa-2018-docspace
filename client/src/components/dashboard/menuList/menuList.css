@@ -14,7 +14,7 @@ h1 {
   
   text-decoration: none;
   color:#333333;
-  padding-bottom: 0.25em;
+  padding-bottom: 0.15em;
   border-bottom: 2px solid #cfcfcf;
    }
 .menuTab > a.active {
@@ -29,13 +29,13 @@ h1 {
 .headerDashboard {
   height: 150px;
   text-align: left;
+  margin-right: 5%;
 }
 
 #menu > li { 
   display: inline;
   padding-right: 2em;
   padding-bottom: 0.25em;
-  border-bottom: 2px solid #cfcfcf;
  }
 
 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import './app.css'
-import DashboardSpaces from '../../dashboard/dashboardSpaces'
+import Dashboard from 'src/components/dashboard'
+
 
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <DashboardSpaces />
+        <Dashboard />
       </div>
     )
   }

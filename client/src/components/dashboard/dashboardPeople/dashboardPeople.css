@@ -43,7 +43,7 @@
   
 }
 .people__header > h2 {
-  margin-left: 10%;
+  margin-left: 5%;
   font-weight: 400;
 }
 
@@ -55,7 +55,7 @@
   min-width: 700px;
 }
 .spaces__body {
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: row;
 }
