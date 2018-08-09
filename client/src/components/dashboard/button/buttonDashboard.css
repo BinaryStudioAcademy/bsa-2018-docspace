@@ -23,3 +23,6 @@
     outline: 0;
     outline-offset: 0;
 }
+.spaces__header .buttonDashboard{
+    margin-right: 20px;
+}
