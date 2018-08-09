@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './app.css'
-import DashboardActivity from '../../dashboard/dashboardActivity'
+import Dashboard from 'src/components/dashboard'
 
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <DashboardActivity />
+        <Dashboard />
       </div>
     )
   }

@@ -6,8 +6,6 @@
   line-height: 1.67 !important;
   font: 500 16px sans-serif;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
-
-  
 }
 
 .dashboard__sidebar {
@@ -34,6 +32,6 @@
   
 }
 .dashboard__content > .input {
-  margin-top: 70px;
+  margin-top: 5.5em;
 }
 

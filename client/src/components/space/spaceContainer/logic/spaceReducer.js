@@ -2,7 +2,7 @@ import * as actionTypes from './spaceActionTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
-  all: [],
+  all: ['5b6beec45aa931280c4fdb29'],
   byId: {
     '5b6beec45aa931280c4fdb29': {
       name: 'Test space',
@@ -11,7 +11,7 @@ const initialState = {
       pages: [
         {
           name: 'First Test Page',
-          id: '666'
+          id: '5b6bf22eaf609328f4264ceb'
         }
       ]
     }

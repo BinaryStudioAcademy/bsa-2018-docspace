@@ -8,7 +8,6 @@ class DashboardActivity extends Component {
   render () {
     return (
       <div className={'dashboard__container'} >
-        <div className={'dashboard__sidebar'}> Sidebar </div>
         <div className={'dashboard__content'}>
           <ContentBody menuTabs={menuList} header='Activity' />
           <ContentSide buttonName='Create Space' /> </div>
