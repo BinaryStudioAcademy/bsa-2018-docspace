@@ -26,7 +26,7 @@ class PrivateFields extends Component {
   handlePasswords = () => {
     if (!this.state.isSent) {
       let currentPassword = this.state.currentPassword
-      if (this.props.errors.length === 0) {
+      if (this.props.errors.length === 0 && this.props.successful) {
         this.setState({
           currentPassword: '',
           isSent: true
@@ -110,5 +110,6 @@ export default PrivateFields
 PrivateFields.propTypes = {
   handlePassword: PropTypes.func,
   errors: PropTypes.array,
+  successful: PropTypes.boolean,
   sendPassword: PropTypes.func
 }
