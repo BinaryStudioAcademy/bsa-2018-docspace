@@ -1,5 +1,5 @@
 const GeneralRepository = require('./GeneralRepository')
-const scheme = require('../schemes/userScheme')
+const scheme = require('../models/userScheme')
 
 class UserRepository extends GeneralRepository {
 
