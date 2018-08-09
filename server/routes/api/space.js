@@ -4,23 +4,25 @@ const spaceService = require('../../services/spaceService')
 router.get('/', (req, res) => {
   spaceService.getAll()
     .then(data => res.json(data))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(400)
       res.end()
     })
 })
 
-router.get('/:key', (req, res) => {
-  const key = req.params.key
+router.get('/:id', (req, res) => {
+  const id = req.params.id
 
-  if (key.length === 0) {
+  if (id.length === 0) {
     res.status(400)
-    return res.end('Invalid key')
+    return res.end('Invalid id')
   }
 
-  spaceService.get(key)
+  spaceService.get(id)
     .then(data => res.json(data))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(400)
       res.end()
     })
@@ -33,7 +35,7 @@ router.post('/', (req, res) => {
     return res.end('Invalid data')
   }
 
-  if (!req.body.name || !req.body.ownerId) {
+  if (!req.body.name || !req.body.ownerId || !req.body.key) {
     res.status(400)
 
     return res.end('Missing required param')
@@ -48,35 +50,37 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/:key', (req, res) => {
-  const key = req.params.key
+router.put('/:id', (req, res) => {
+  const id = req.params.id
 
-  if (key.length === 0) {
+  if (id.length === 0) {
     res.status(400)
 
-    return res.end('Invalid key')
+    return res.end('Invalid id')
   }
 
-  spaceService.update(key, req.body)
+  spaceService.update(id, req.body)
     .then(data => res.json(data))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(400)
       res.end()
     })
 })
 
-router.delete('/:key', (req, res) => {
-  const key = req.params.key
+router.delete('/:id', (req, res) => {
+  const id = req.params.id
 
-  if (key.length === 0) {
+  if (id.length === 0) {
     res.status(400)
 
-    return res.end('Invalid key')
+    return res.end('Invalid id')
   }
 
-  spaceService.delete(key)
+  spaceService.delete(id)
     .then(data => res.json(data))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(400)
       res.end()
     })
