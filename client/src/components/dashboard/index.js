@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Dashboard from './sidebar'
 import FullSidebar from './sidebar/fullSidebar'
 import PropTypes from 'prop-types'
-import DashboardWork from './dashboardWork/index'
+import DashboardActivity from './dashboardActivity'
 
 class DashboardWrapper extends Component {
   constructor (props) {
@@ -30,7 +30,7 @@ class DashboardWrapper extends Component {
           colorSchema={'sidebar-blue-schema'}
           rightSidebar={<FullSidebar showLabels={this.state.showLabels} showIcons={this.state.showIcons} />}
           tabs={<FullSidebar showLabels={this.state.showLabels} showIcons={showIconForTabs} />}
-          content={<DashboardWork />}
+          content={<DashboardActivity />}
         />
       </div>
     )
