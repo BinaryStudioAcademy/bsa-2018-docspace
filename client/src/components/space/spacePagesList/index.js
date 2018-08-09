@@ -14,7 +14,7 @@ const SpacePagesList = ({ pages }) => {
         {
           pages.map((page) => {
             return (
-              <NavLink className='pages-list-item' key={page.id} to={`/spaces/${'TS'}/pages/${page.id}`} activeClassName='current'>
+              <NavLink className='pages-list-item' key={page.id} to={`/spaces/5b6beec45aa931280c4fdb29/pages/${page.id}`} activeClassName='current'>
                 <div className='pages-list-item-icon'>•</div>
                 <div className='pages-list-item-name'>{page.name}</div>
               </NavLink>
