@@ -20,6 +20,7 @@
         "express-session": "^1.15.6",
         "i18next": "^11.6.0",
         "mongoose": "^5.2.6",
+        "normalizr": "^3.2.4",
         "passport": "^0.4.0",
         "passport-local": "^1.0.0",
         "passport-local-token": "^1.0.1"
