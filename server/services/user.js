@@ -1,5 +1,5 @@
 const userRepository = require('../repositories/userRepository')
-const scheme = require('../schemes/userScheme')
+const scheme = require('../models/userScheme')
 
 module.exports = {
   findAll: (req, res) => {
