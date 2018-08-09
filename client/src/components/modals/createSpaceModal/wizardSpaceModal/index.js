@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import Modal from 'src/components/common/modal'
 import WizardModalBody from './wizardModalBody'
-// import SpaceFatcory from '../logic/spaceFactory'
+import SpaceFatcory from '../logic/spaceFactory'
 import PropTypes from 'prop-types'
-
-// import { createSpace } from 'src/components/space/spaceContainer/logic/spaceActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { createSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 // TODO : implement form validation, createSpace request
 
-export default class WizardSpaceModal extends Component {
+class WizardSpaceModal extends Component {
   constructor (props) {
     super(props)
     // required filds for all kind of space templates
@@ -24,7 +25,8 @@ export default class WizardSpaceModal extends Component {
   }
 
   handleCreateSpace = () => {
-    // const spaseObj = SpaceFatcory.createByFieldsAndTemplateName(this.state, this.props.selectedTemplate.name)
+    const spaceObj = SpaceFatcory.createByFieldsAndTemplateName(this.state, this.props.selectedTemplate.name)
+    this.props.actions.createSpaceRequest(spaceObj)
 
     console.log(this.state)
   }
@@ -94,5 +96,16 @@ export default class WizardSpaceModal extends Component {
 WizardSpaceModal.propTypes = {
   selectedTemplate: PropTypes.object,
   closeModal: PropTypes.func.isRequired,
-  handleBackClick: PropTypes.func.isRequired
+  handleBackClick: PropTypes.func.isRequired,
+  actions: PropTypes.shape({
+    createSpaceRequest: PropTypes.func.isRequired
+  })
 }
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators({ createSpaceRequest }, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WizardSpaceModal)

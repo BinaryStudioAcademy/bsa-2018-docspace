@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import names from '../../constants/templatesNames'
+import names from '../../logic/constants/templatesNames'
 import PropTypes from 'prop-types'
 import './wizardModalBody.css'
 
