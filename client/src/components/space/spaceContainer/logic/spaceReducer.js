@@ -4,7 +4,7 @@ import { combineReducers } from 'redux'
 const initialState = {
   all: [],
   byId: {
-    TS: {
+    '5b6beec45aa931280c4fdb29': {
       name: 'Test space',
       ownerId: '111',
       key: 'TS',

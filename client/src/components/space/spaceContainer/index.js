@@ -19,13 +19,13 @@ class SpaceContainer extends Component {
         <SpaceSidebar spaceName={this.props.space.name} pages={this.props.space.pages} />
         <SpaceContent>
           <SpaceHeader />
-          <Route path='/spaces/:key' render={() => <Redirect to='/spaces/TS/overview' />} exact />
-          <Route path='/spaces' render={() => <Redirect to='/spaces/TS/overview' />} exact />
-          <Route path='/spaces/:key/overview' component={Page} />
-          <Route path='/spaces/:key/blog' component={Blog} />
-          <Route path='/spaces/:key/settings' component={SpaceSettings} />
-          <Route path='/spaces/:key/pages/:id' component={Page} />
-          <Route path='/spaces/:key/pages' render={() => <Redirect to='/spaces/TS/overview' />} exact />
+          <Route path='/spaces/:id' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
+          <Route path='/spaces' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
+          <Route path='/spaces/:id/overview' component={Page} />
+          <Route path='/spaces/:id/blog' component={Blog} />
+          <Route path='/spaces/:id/settings' component={SpaceSettings} />
+          <Route path='/spaces/:id/pages/:id' component={Page} />
+          <Route path='/spaces/:id/pages' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
         </SpaceContent>
       </div>
     )
@@ -42,7 +42,7 @@ SpaceContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId.TS
+    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
   }
 }
 
