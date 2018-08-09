@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Dashboard from './sidebar'
 import FullSidebar from './sidebar/fullSidebar'
 import PropTypes from 'prop-types'
-import DashboardWork from './dashboardWork/index'
+import DashboardWork from './dashboardWork'
 
 class DashboardWrapper extends Component {
   constructor (props) {
