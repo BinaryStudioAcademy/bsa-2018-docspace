@@ -68,7 +68,7 @@ SpaceHeader.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId.TS
+    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
   }
 }
 

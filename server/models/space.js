@@ -8,8 +8,7 @@ const spaceSchema = new mongoose.Schema({
   },
   key: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   isDeleted: Boolean,
   ownerId: {
