@@ -48,7 +48,7 @@ Page.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page.page
+    page: state.page.byId['5b6bf22eaf609328f4264ceb']
   }
 }
 
