@@ -15,3 +15,10 @@ export const updateUser = (user) => {
     payload: user
   }
 }
+
+export const loginRequest = (user) => {
+  return ({
+    type: actionTypes.CHECK_USER_PASSWORD,
+    ...user
+  })
+}

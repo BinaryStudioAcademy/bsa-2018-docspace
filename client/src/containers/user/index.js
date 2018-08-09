@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
 import ProfileFields from 'src/components/userTabs/general'
-import { PrivateFields } from 'src/components/userTabs/private'
+import PrivateFields from 'src/components/userTabs/private'
+import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
 
 import './user.css'
 
@@ -15,8 +16,6 @@ class User extends Component {
     super(props)
     this.state = {
       isEditMode: false,
-      currentPassword: '',
-      newPassword: '',
       date: new Date(),
       isShowManagePhoto: false,
       isShowGeneral: true,
@@ -29,17 +28,12 @@ class User extends Component {
     this.handleManagePhoto = this.handleManagePhoto.bind(this)
     this.switchGeneral = this.switchGeneral.bind(this)
     this.switchPrivate = this.switchPrivate.bind(this)
-    this.handleCurrentPassword = this.handleCurrentPassword.bind(this)
-    this.handleNewPassword = this.handleNewPassword.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
   }
 
-  handleCurrentPassword (e) {
-    this.setState({currentPassword: e.target.value})
-  }
-
-  handleNewPassword (e) {
-    this.setState({newPassword: e.target.value})
+  handlePassword (shortUser) {
+    console.log(shortUser)
   }
 
   switchGeneral () {
@@ -52,7 +46,7 @@ class User extends Component {
     }
   }
 
-  managePhoto (e) {
+  managePhoto () {
     this.state.isShowManagePhoto ? this.setState({isShowManagePhoto: false}) : this.setState({isShowManagePhoto: true})
   }
 
@@ -60,7 +54,6 @@ class User extends Component {
     return this.state.isShowManagePhoto
   }
   editMode (userProfile) {
-    console.log(userProfile)
     const user = this.props.user
 
     if (this.state.isEditMode) {
@@ -215,11 +208,8 @@ class User extends Component {
                     {
                       this.state.isShowPrivate &&
                         <PrivateFields
-                          handleCurrentPassword={this.handleCurrentPassword}
-                          handleNewPassword={this.handleNewPassword}
-                          sendPassword={this.sendPassword}
-                          newPassword={this.state.newPassword}
-                          currentPassword={this.state.currentPassword}
+                          handlePassword={this.handlePassword}
+                          user={this.props.user}
                         />
                     }
                     {
@@ -234,30 +224,24 @@ class User extends Component {
                     <div className='recent-work-list-wrapper'>
                       <h2 className='recent-work-list-wrapper-header'><span>Work</span></h2>
                       <ul className='recent-work-list-items'>
-                        <div className='recent-work-list-item'>
-                          <a className='recent-work-link' href='#'>
-                            <img className='recent-work-icon' src='https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg' />
-                            <span className='recent-work-name'>i am checking how it works</span>
-                            <span className='recent-work-name-of-container'>Draft</span>
-                            <span className='recent-work-contributors'>''</span>
-                          </a>
-                        </div>
-                        <div className='recent-work-list-item'>
-                          <a className='recent-work-link' href='#'>
-                            <img className='recent-work-icon' src='https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg' />
-                            <span className='recent-work-name'>Example</span>
-                            <span className='recent-work-name-of-container'>Draft</span>
-                            <span className='recent-work-contributors'>''</span>
-                          </a>
-                        </div>
-                        <div className='recent-work-list-item'>
-                          <a className='recent-work-link' href='#'>
-                            <img className='recent-work-icon' src='https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg' />
-                            <span className='recent-work-name'>my first blog post</span>
-                            <span className='recent-work-name-of-container'>Draft</span>
-                            <span className='recent-work-contributors'>''</span>
-                          </a>
-                        </div>
+                        <RecentWorkListItem
+                          src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
+                          nameOfItem={'i am checking how it works'}
+                          nameOfSpace={'Draft'}
+                          contributors={''}
+                        />
+                        <RecentWorkListItem
+                          src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
+                          nameOfItem={'Example'}
+                          nameOfSpace={'Draft'}
+                          contributors={''}
+                        />
+                        <RecentWorkListItem
+                          src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
+                          nameOfItem={'Example'}
+                          nameOfSpace={'my first blog post'}
+                          contributors={''}
+                        />
                       </ul>
                     </div>
 
