@@ -1,0 +1,24 @@
+@import 'globalStyles/variables.scss';
+
+.like {
+  display: flex;
+  color: $grayDark;
+  font-size: 15px;
+
+  &-button {
+    display: flex;
+
+    &-text {
+      color: $blue;
+      margin-left: 5px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-summary {
+    margin-left: 20px;
+  }
+}

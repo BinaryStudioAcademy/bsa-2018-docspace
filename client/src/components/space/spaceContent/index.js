@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import 'src/components/space/spaceContent/spaceContent.css'
+import './spaceContent.css'
 
 const SpaceContent = ({ children }) => {
   return (
