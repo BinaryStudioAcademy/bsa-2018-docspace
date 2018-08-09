@@ -7,6 +7,7 @@ class SpacesSideBar extends Component {
   }
   handleClick = (tab) => {
     this.setState({active: tab})
+    this.props.updateData(tab)
   }
 
   render () {
@@ -24,6 +25,7 @@ class SpacesSideBar extends Component {
   }
 }
 SpacesSideBar.propTypes = {
-  menuTabs: PropTypes.string
+  menuTabs: PropTypes.array,
+  updateData: PropTypes.func
 }
 export default SpacesSideBar
