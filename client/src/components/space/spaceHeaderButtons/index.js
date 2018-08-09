@@ -3,12 +3,21 @@ import PropTypes from 'prop-types'
 
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, children }) => {
+const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type }) => {
   return (
     <div className='buttons-container'>
       <div className='buttons-item' title='Edit' onClick={onEdit}>
         <i className='fas fa-pen' />
       </div>
+      {
+        type === 'blog' || type === 'page'
+          ? (
+            <div className='buttons-item' title='Save for later' onClick={onSave}>
+              <i className='far fa-star' />
+            </div>
+          )
+          : null
+      }
       <div className='buttons-item' title='Watch' onClick={onWatch}>
         <i className='fas fa-eye' />
       </div>
@@ -28,7 +37,9 @@ SpaceHeaderButtons.propTypes = {
   onWatch: PropTypes.func,
   onShare: PropTypes.func,
   onMenu: PropTypes.func,
-  children: PropTypes.element
+  onSave: PropTypes.func,
+  children: PropTypes.element,
+  type: PropTypes.string
 }
 
 SpaceHeaderButtons.defaultProps = {
@@ -36,7 +47,9 @@ SpaceHeaderButtons.defaultProps = {
   onWatch: () => false,
   onShare: () => false,
   onMenu: () => false,
-  children: null
+  onSave: () => false,
+  children: null,
+  type: ''
 }
 
 export default SpaceHeaderButtons

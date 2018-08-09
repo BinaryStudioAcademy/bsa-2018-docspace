@@ -1,0 +1,39 @@
+@import 'globalStyles/variables.scss';
+
+.page-info {
+  margin-left: 5px;
+
+  &-container {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  &-image {
+    width: 45px;
+    height: 45px;
+
+    & img {
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  &-author {
+    font-weight: 600;
+    padding: 2px;
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-time {
+    color: $gray;
+    font-size: 14px;
+    padding: 2px;
+  }
+}
+

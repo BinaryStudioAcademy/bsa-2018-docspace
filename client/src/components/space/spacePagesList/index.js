@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 
 import './spacePagesList.css'
 
@@ -11,12 +12,12 @@ const SpacePagesList = ({ pages }) => {
       </div>
       <div>
         {
-          pages.map((page, i) => {
+          pages.map((page) => {
             return (
-              <div className='pages-list-item' key={i}>
+              <NavLink className='pages-list-item' key={page.id} to={`/spaces/5b6beec45aa931280c4fdb29/pages/${page.id}`} activeClassName='current'>
                 <div className='pages-list-item-icon'>•</div>
                 <div className='pages-list-item-name'>{page.name}</div>
-              </div>
+              </NavLink>
             )
           })
         }

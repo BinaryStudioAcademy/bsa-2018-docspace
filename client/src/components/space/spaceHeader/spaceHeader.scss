@@ -5,9 +5,24 @@
   padding: 25px 30px 30px 50px;
   justify-content: space-between;
 
+  &-page {
+    display: flex;
+    align-items: baseline;
+  }
+
   &-name {
     font-size: 28px;
     color:$black;
+
+    &.page {
+      color: $gray;
+      font-size: 17px;
+      text-decoration: none;
+
+      &:hover {
+        color: #949eb3;
+      }
+    }
   }
 }
 
