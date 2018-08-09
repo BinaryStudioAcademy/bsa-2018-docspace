@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { getUserData, updateUser } from './logic/userActions'
+import { getUserData, updateUser, checkPassword } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
@@ -33,7 +33,10 @@ class User extends Component {
   }
 
   handlePassword (shortUser) {
-    console.log(shortUser)
+    this.props.actions.checkPassword({
+      email: this.props.user.email,
+      password: shortUser
+    })
   }
 
   switchGeneral () {
@@ -54,21 +57,16 @@ class User extends Component {
     return this.state.isShowManagePhoto
   }
   editMode (userProfile) {
-    const user = this.props.user
-
     if (this.state.isEditMode) {
       this.setState({
         isEditMode: false
       })
       this.props.actions.updateUser({
         id: this.props.match.params.id,
-        avatar: user.avatar,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
-        spaces: user.spaces,
         email: userProfile.email,
-        login: userProfile.login,
-        password: user.password
+        login: userProfile.login
       })
     }
     this.changeIsEditMode()
@@ -86,50 +84,13 @@ class User extends Component {
     }
   }
 
-  sendPassword (e) {
-    let buttonHTML = e.target
-    while (buttonHTML.tagName !== 'BUTTON') {
-      buttonHTML = buttonHTML.parentNode
-    }
-
-    const user = this.props.user
-
-    if (this.state.currentPassword !== user.password) {
-      buttonHTML.innerHTML = `<i class='fa fa-times' aria-hidden='true' /> Error current password`
-      setTimeout(() => {
-        buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
-      }, 1500)
-      return null
-    }
-
-    if (this.state.newPassword === '') {
-      setTimeout(() => {
-        buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
-      }, 1500)
-      buttonHTML.innerHTML = `<i class='fa fa-times' aria-hidden='true' /> Password Empty`
-      return null
-    }
+  sendPassword (newPassword) {
+    console.log(newPassword)
 
     this.props.actions.updateUser({
       id: this.props.match.params.id,
-      avatar: user.avatar,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      spaces: user.spaces,
-      email: user.email,
-      login: user.login,
-      password: this.state.newPassword
+      password: newPassword
     })
-
-    setTimeout(() => {
-      buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Save password`
-    }, 1500)
-    buttonHTML.innerHTML = `<i class='fa fa-check' aria-hidden='true' /> Password was saved`
-    this.setState({
-      newPassword: '',
-      currentPassword: ''
-    })
-    return null
   }
 
   componentWillMount () {
@@ -138,6 +99,8 @@ class User extends Component {
 
   render () {
     const { firstName, lastName } = this.props.user
+    const { successful, messages, errors } = this.props.resultOfChecking
+    console.log(successful, messages, errors)
     return (
       <React.Fragment>
         <div className='main-wrapper'>
@@ -210,6 +173,9 @@ class User extends Component {
                         <PrivateFields
                           handlePassword={this.handlePassword}
                           user={this.props.user}
+                          errors={errors}
+                          successful={successful}
+                          sendPassword={this.sendPassword}
                         />
                     }
                     {
@@ -255,24 +221,40 @@ class User extends Component {
     )
   }
 }
+User.defaultProps = {
+  result: {
+    requesting: false,
+    successful: false,
+    messages: [],
+    errors: []
+  }
+}
 
 User.propTypes = {
   user: PropTypes.object,
   match: PropTypes.object,
   params: PropTypes.array,
   id: PropTypes.string,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  resultOfChecking: PropTypes.shape({
+    requesting: PropTypes.bool,
+    successful: PropTypes.bool,
+    messages: PropTypes.array,
+    errors: PropTypes.array
+  })
 }
 
 const mapStateToProps = (state) => {
+  console.log(`state`, state)
   return {
-    user: state.user
+    user: state.user.userReducer,
+    resultOfChecking: state.user.checkingReducer
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ getUserData, updateUser }, dispatch)
+    actions: bindActionCreators({ getUserData, updateUser, checkPassword }, dispatch)
   }
 }
 

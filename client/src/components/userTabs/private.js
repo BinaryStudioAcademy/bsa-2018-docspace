@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Input from '../../components/common/input'
 import Button from '../../components/common/button'
+import Errors from 'src/components/common/error'
 
 class PrivateFields extends Component {
   constructor (props) {
     super(props)
     this.state = {
       currentPassword: '',
-      newPassword: ''
+      newPassword: '',
+      isSent: false
     }
     this.handleCurrentPassword = this.handleCurrentPassword.bind(this)
     this.handleNewPassword = this.handleNewPassword.bind(this)
@@ -21,9 +23,23 @@ class PrivateFields extends Component {
     this.setState({newPassword: e.target.value})
   }
 
-  handlePasswordCur = () => {
-    if (this.props.handlePassword) {
-      this.props.handlePassword(this.state.currentPassword)
+  handlePasswords = () => {
+    if (!this.state.isSent) {
+      let currentPassword = this.state.currentPassword
+      if (!!this.props.errors.length === true) {
+        this.setState({
+          currentPassword: '',
+          isSent: true
+        })
+      }
+      this.props.handlePassword(currentPassword)
+    } else if (this.state.isSent) {
+      let newPassword = this.state.newPassword
+      this.setState({
+        newPassword: '',
+        isSent: false
+      })
+      this.props.sendPassword(newPassword)
     }
   }
 
@@ -35,37 +51,49 @@ class PrivateFields extends Component {
         </h3>
 
         <div className='current-new-passwords'>
-          <div className='current password'>
-            <label className='current password-label'>Current password</label>
-            <div className='current password-wrapper'>
-              <Input
-                name='password-input'
-                id='currentPassword'
-                inputType='password'
-                label='Current password'
-                onChange={this.handleCurrentPassword}
-                value={this.state.currentPassword}
-              />
+          {!this.state.isSent && (
+            <div className='current password'>
+              <label className='current password-label'>Current password</label>
+              <div className='current password-wrapper'>
+                <Input
+                  name='password-input'
+                  id='currentPassword'
+                  inputType='password'
+                  label='Current password'
+                  onChange={this.handleCurrentPassword}
+                  value={this.state.currentPassword}
+                />
+              </div>
             </div>
-          </div>
-          <div className='new password'>
-            <label className='new password-label'>New password</label>
-            <div className='new password-wrapper'>
-              <Input
-                name='password-input'
-                id='newPassword'
-                inputType='password'
-                label='New password'
-                onChange={this.handleNewPassword}
-                value={this.newPassword}
-              />
-            </div>
-          </div>
+          )
+          }
+          {!!this.props.errors.length && (
+            <Errors message='Failure to login due to:' errors={this.props.errors} />
+          )}
+          {this.state.isSent && (
+            <React.Fragment>
+              <label>You confirmed password</label>
+              <div className='new password'>
+                <label className='new password-label'>New password</label>
+                <div className='new password-wrapper'>
+                  <Input
+                    name='password-input'
+                    id='newPassword'
+                    inputType='password'
+                    label='New password'
+                    onChange={this.handleNewPassword}
+                    value={this.state.newPassword}
+                  />
+                </div>
+              </div>
+            </React.Fragment>
+          )
+          }
           <div className='edit-btn'>
             <Button
               icon={<i className='fa fa-check' aria-hidden='true' />}
-              value={`Save passwrod`}
-              onClick={this.handlePasswordCur}
+              value={`Confirm`}
+              onClick={this.handlePasswords}
             />
           </div>
         </div>
@@ -77,5 +105,7 @@ class PrivateFields extends Component {
 export default PrivateFields
 
 PrivateFields.propTypes = {
-  handlePassword: PropTypes.func
+  handlePassword: PropTypes.func,
+  errors: PropTypes.array,
+  sendPassword: PropTypes.func
 }

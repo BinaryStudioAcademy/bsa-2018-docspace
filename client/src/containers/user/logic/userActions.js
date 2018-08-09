@@ -16,7 +16,7 @@ export const updateUser = (user) => {
   }
 }
 
-export const loginRequest = (user) => {
+export const checkPassword = (user) => {
   return ({
     type: actionTypes.CHECK_USER_PASSWORD,
     ...user
