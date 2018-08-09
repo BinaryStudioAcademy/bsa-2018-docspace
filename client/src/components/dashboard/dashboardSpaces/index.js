@@ -8,7 +8,6 @@ class DashboardSpaces extends Component {
   render () {
     return (
       <div className={'dashboard__container'} >
-        <div className={'dashboard__sidebar'}> Sidebar </div>
         <div className={'dashboard__content__spaces'}>
           <div className={'spaces__header'}>
             <h2>Space Directory</h2><Button content='Create Space' />
