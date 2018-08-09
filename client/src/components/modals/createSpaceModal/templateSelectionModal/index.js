@@ -23,11 +23,15 @@ export default class TemplateSelectionModal extends Component {
   }
 
   renderModalFooter = () => {
+    // todo: change next btn color  whe it's disabled
+    const disableNextButton = !this.props.selectedTemplate
+    console.log(disableNextButton)
     return (
       <div className='modal-footer'>
         <button
           className='accept-button'
           onClick={this.props.handleNextClick}
+          disabled={disableNextButton}
         >
            Next
         </button>
