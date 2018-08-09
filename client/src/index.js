@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/common/app/index'
-import About from './components/about'
+// import About from './components/about'
 import SpaceContainer from 'src/components/space/spaceContainer'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
@@ -22,7 +22,7 @@ ReactDOM.render(
         <Route exact path='/' component={App} />
         <Route path='/signup' component={Signup} />
         <Route path='/login' component={Login} />
-        <Route path='/about' component={About} />
+        {/* <Route path='/about' component={About} /> */}
         <Route path='/spaces' component={SpaceContainer} />
       </Switch>
     </ConnectedRouter>

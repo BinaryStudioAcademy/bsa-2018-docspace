@@ -1,33 +1,28 @@
 import React, { Component } from 'react'
-import names from '../constants/templatesNames'
+import names from '../../constants/templatesNames'
 import PropTypes from 'prop-types'
 import './wizardModalBody.css'
 
 export default class WizardModalBody extends Component {
   constructor (props) {
     super(props)
-
     this.renderSpecialFormFieldsByTemplateName = {
       [names.EMPTY_SPACE]: this.emptySpaceFormFields,
       [names.GROUP_SPACE]: this.groupSpaceFormFields,
       [names.KNOWLEDGE_BASE]: this.knowledgeSpaceFormFields,
       [names.DOCUMENTATION_SPACE]: this.documentationSpaceFormFields
     }
-    // required filds for all kind of space templates
-    this.state = {
-      name: '',
-      key: ''
-    }
   }
 
  emptySpaceFormFields = () => {
-   const checked = this.state.isPrivate
+   const checked = this.props.isPrivateCheckboxChecked
+   console.log(checked)
    return (
      <div className='field-group'>
        <label ><i className={`fas fa-lock${checked ? '' : '-open'}`} /></label>
        <input type='checkbox'
          name='isPrivate'
-         onChange={({target}) => this.handleCheckboxChange(target)}
+         onChange={({target}) => this.props.handleCheckboxChange(target)}
        />
        <label> only for me</label>
      </div>
@@ -47,19 +42,6 @@ export default class WizardModalBody extends Component {
 
   }
 
-  handleFieldChange = (field) => {
-    // TODO : service, that create a space by template type and then call createSpaceRequest
-    this.setState({
-      [field.name]: field.value
-    })
-  }
-
-  handleCheckboxChange = (checkbox) => {
-    this.setState({
-      [checkbox.name]: checkbox.checked
-    })
-  }
-
   render () {
     const {selectedTemplate} = this.props
     const templateName = selectedTemplate.name
@@ -71,7 +53,7 @@ export default class WizardModalBody extends Component {
             <input
               type='text'
               name='name'
-              onChange={({target}) => this.handleFieldChange(target)}
+              onChange={({target}) => this.props.handleFieldChange(target)}
             />
           </div>
 
@@ -80,7 +62,7 @@ export default class WizardModalBody extends Component {
             <input
               type='text'
               name='key'
-              onChange={({target}) => this.handleFieldChange(target)}
+              onChange={({target}) => this.props.handleFieldChange(target)}
             />
           </div>
 
@@ -97,5 +79,8 @@ export default class WizardModalBody extends Component {
 }
 
 WizardModalBody.propTypes = {
-  selectedTemplate: PropTypes.object
+  selectedTemplate: PropTypes.object,
+  handleFieldChange: PropTypes.func.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired,
+  isPrivateCheckboxChecked: PropTypes.bool
 }
