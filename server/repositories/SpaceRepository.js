@@ -1,5 +1,5 @@
 const GeneralRepository = require('./GeneralRepository')
-const SpaceModel = require('../models/space')
+const SpaceModel = require('../models/spaceScheme')
 
 class SpaceRepository extends GeneralRepository {
 
