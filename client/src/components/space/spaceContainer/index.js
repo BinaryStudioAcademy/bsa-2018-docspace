@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -14,18 +14,19 @@ import './space.css'
 
 class SpaceContainer extends Component {
   render () {
+    const id = this.props.location.pathname.split('/')[2]
+
     return (
       <div className='space'>
         <SpaceSidebar spaceName={this.props.space.name} pages={this.props.space.pages} />
         <SpaceContent>
           <SpaceHeader />
-          <Route path='/spaces/:id' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
-          <Route path='/spaces' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
+          <Route path='/spaces/:id' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
+          <Route path='/spaces/:id/pages' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
           <Route path='/spaces/:id/overview' component={Page} />
           <Route path='/spaces/:id/blog' component={Blog} />
           <Route path='/spaces/:id/settings' component={SpaceSettings} />
           <Route path='/spaces/:id/pages/:id' component={Page} />
-          <Route path='/spaces/:id/pages' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
         </SpaceContent>
       </div>
     )
@@ -33,11 +34,13 @@ class SpaceContainer extends Component {
 }
 
 SpaceContainer.propTypes = {
-  space: PropTypes.object
+  space: PropTypes.object,
+  location: PropTypes.object
 }
 
 SpaceContainer.defaultProps = {
-  space: {}
+  space: {},
+  location: {}
 }
 
 const mapStateToProps = (state) => {
@@ -46,4 +49,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(SpaceContainer)
+export default withRouter(connect(mapStateToProps)(SpaceContainer))

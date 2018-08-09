@@ -35,7 +35,6 @@ export default class SpaceSettings extends Component {
     const {renderByActiveTab, activeTab} = this.state
     return (
       <div className='space-settings-page'>
-        <h1> Space Settings </h1>
         <NavBar
           handleNavLinkCLick={this.handleNavLinkCLick}
           allTabsName={Object.keys(renderByActiveTab)}
