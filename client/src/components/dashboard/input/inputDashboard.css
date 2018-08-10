@@ -18,8 +18,6 @@
 }
 .inputDashboard:active {
     background: #dfdfdf;
-    background: white;
-    
     }
 .inputDashboard:focus {
         background: white;

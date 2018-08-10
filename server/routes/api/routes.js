@@ -4,6 +4,7 @@ const page = require('./page')
 const signup = require('./auth/signup')
 const login = require('./auth/login')
 const category = require('./category')
+const comment = require('./comment')
 
 module.exports = (app) => {
   app.use('/api/signup', signup)
@@ -12,4 +13,5 @@ module.exports = (app) => {
   app.use('/api/user', user)
   app.use('/api/spaces', space)
   app.use('/api/category', category)
+  app.use('/api/comments', comment)
 }
