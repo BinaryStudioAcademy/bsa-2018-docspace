@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import signupRequest from './logic/signupActions'
-import Input from 'src/components/common/input'
-import Errors from 'src/components/common/error'
+import Input from '../../common/input'
+import Errors from '../../common/error'
 
 import './signup.css'
 
