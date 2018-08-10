@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import './spacePagesList.css'
 
-const SpacePagesList = ({ pages }) => {
+const SpacePagesList = ({ pages, spaceId }) => {
   return (
     <div className='pages-list'>
       <div className='pages-list-title'>
@@ -14,7 +14,7 @@ const SpacePagesList = ({ pages }) => {
         {
           pages.map((page) => {
             return (
-              <NavLink className='pages-list-item' key={page.id} to={`/spaces/5b6beec45aa931280c4fdb29/pages/${page.id}`} activeClassName='current'>
+              <NavLink className='pages-list-item' key={page._id} to={`/spaces/${spaceId}/pages/${page._id}`} activeClassName='current'>
                 <div className='pages-list-item-icon'>•</div>
                 <div className='pages-list-item-name'>{page.name}</div>
               </NavLink>
@@ -27,11 +27,13 @@ const SpacePagesList = ({ pages }) => {
 }
 
 SpacePagesList.propTypes = {
-  pages: PropTypes.array
+  pages: PropTypes.array,
+  spaceId: PropTypes.string
 }
 
 SpacePagesList.defaultProps = {
-  pages: []
+  pages: [],
+  spaceId: ''
 }
 
 export default SpacePagesList

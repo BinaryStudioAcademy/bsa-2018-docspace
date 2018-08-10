@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const userService = require('../../services/user')
+const userService = require('../../services/userService')
 
 router.get('/', userService.findAll)
 

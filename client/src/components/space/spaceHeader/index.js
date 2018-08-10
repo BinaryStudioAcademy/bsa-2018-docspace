@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter, NavLink } from 'react-router-dom'
 
 import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
+import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 
 import './spaceHeader.css'
 
@@ -11,27 +12,31 @@ class SpaceHeader extends Component {
   getType () {
     const { pathname } = this.props.location
 
-    switch (pathname) {
-      case '/spaces/TS/overview':
-        return 'space'
-      case '/spaces/TS/pages/666':
-        return 'page'
-      default:
-        return 'clear'
+    if (pathname.includes('overview')) {
+      return 'space'
     }
+
+    if (pathname.includes('pages')) {
+      return 'page'
+    }
+
+    return 'clear'
   }
 
   render () {
+    const { pathname } = this.props.location
     const type = this.getType()
+    const id = pathname.split('/')[2]
+    const name = pathname.includes('settings') ? 'Space settings' : this.props.space.name
 
     return (
       <div className='header'>
         {
           type === 'clear' || type === 'space'
-            ? <div className='header-name'>{this.props.space.name}</div>
+            ? <div className='header-name'>{name}</div>
             : (
               <div className='header-page'>
-                <NavLink className='header-name page' to={`/spaces/${'TS'}/overview`}>{this.props.space.name}</NavLink>
+                <NavLink className='header-name page' to={`/spaces/${id}/overview`}>{this.props.space.name}</NavLink>
                 <NavLink className='buttons-item restrictions' title='Unrestricted' to={''}>
                   <i className='fas fa-lock-open' />
                 </NavLink>
@@ -39,7 +44,7 @@ class SpaceHeader extends Component {
             )
         }
         {
-          type !== 'clear'
+          type === 'clear'
             ? null
             : (
               <SpaceHeaderButtons type={type}>
@@ -68,7 +73,7 @@ SpaceHeader.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
+    space: spaceById(state)
   }
 }
 

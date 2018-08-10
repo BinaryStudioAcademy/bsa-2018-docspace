@@ -1,9 +1,9 @@
-const userRepository = require('../repositories/userRepository')
+const UserRepository = require('../repositories/UserRepository')
 const scheme = require('../models/userScheme')
 
 module.exports = {
   findAll: (req, res) => {
-    userRepository.getAll()
+    UserRepository.getAll()
       .then(users => {
         res.send(users)
       }).catch(err => {
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    userRepository.getById(req.params.id)
+    UserRepository.getById(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -58,7 +58,7 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    userRepository.update(req.params.id, req.body)
+    UserRepository.update(req.params.id, req.body)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -79,7 +79,7 @@ module.exports = {
   },
 
   findOneAndDelete: (req, res) => {
-    userRepository.delete(req.params.id)
+    UserRepository.delete(req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -100,7 +100,7 @@ module.exports = {
   },
 
   changePassword: (req, res) => {
-    userRepository.get({email: req.body.email})
+    UserRepository.get({email: req.body.email})
       .then(user => {
         if (!user) {
           return res.send({ message: 'Incorrect email.' })
@@ -114,7 +114,7 @@ module.exports = {
               return res.send({ success: false, message: 'Incorrect current password.' })
             }
           })
-        userRepository.update(req.body.id, {password: req.body.newPassword})
+        UserRepository.update(req.body.id, {password: req.body.newPassword})
           .then(user => {
             if (!user) {
               return res.status(404).send({

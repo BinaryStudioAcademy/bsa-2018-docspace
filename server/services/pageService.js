@@ -1,9 +1,9 @@
-const pageRepository = require('../repositories/pageRepository')
+const PageRepository = require('../repositories/PageRepository')
 const scheme = require('../models/pageScheme')
 
 module.exports = {
   findAll: (req, res) => {
-    pageRepository.getAll()
+    PageRepository.getAll()
       .then(pages => {
         res.send(pages)
       }).catch(err => {
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    pageRepository.getById(req.params.id)
+    PageRepository.getById(req.params.id)
       .then(page => {
         if (!page) {
           return res.status(404).send({
@@ -59,7 +59,7 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    pageRepository.update(req.params.id, req.body)
+    PageRepository.update(req.params.id, req.body)
       .then(page => {
         if (!page) {
           return res.status(404).send({
@@ -79,7 +79,7 @@ module.exports = {
       })
   },
   findOneAndDelete: (req, res) => {
-    pageRepository.delete(req.params.id)
+    PageRepository.delete(req.params.id)
       .then(page => {
         if (!page) {
           return res.status(404).send({
