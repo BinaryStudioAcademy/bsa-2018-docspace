@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
 import SpaceHeader from 'src/components/space/spaceHeader'
 import SpaceContent from 'src/components/space/spaceContent'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
