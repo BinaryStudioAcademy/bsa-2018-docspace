@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
 
 import './button.css'
 
@@ -15,6 +15,7 @@ export default class Button extends Component {
               <p>{this.props.title}</p>
             }
           </Link>
+          <Route path={this.props.path} />
         </div>
       </React.Fragment>
     )

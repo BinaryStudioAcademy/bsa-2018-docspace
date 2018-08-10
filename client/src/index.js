@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/common/app/index'
-import SpaceContainer from 'src/components/space/spaceContainer'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
 import registerServiceWorker from './registerServiceWorker'
@@ -21,10 +20,9 @@ ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route exact path='/' component={App} />
+          <Route exact path='/' component={App} />>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
-          <Route path='/spaces' component={SpaceContainer} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>

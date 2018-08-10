@@ -43,32 +43,27 @@
   width: 2px;
   cursor: w-resize; }
 
-.sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
-  background-color: #0044a9; }
-
-.sidebar-blue-schema .tabs-wrapper ul > li {
-  color: white; }
-
-.sidebar-blue-schema .tabs-wrapper a, .sidebar-blue-schema .tabs-wrapper a:visited, .sidebar-blue-schema .tabs-wrapper a:active, .sidebar-blue-schema .tabs-wrapper a:hover {
-  text-decoration: none;
-  color: white; }
-
-.sidebar-blue-schema .tabs-wrapper .nav-button:hover {
-  background-color: #08367C; }
-
-.sidebar-blue-schema h1 {
-  color: white;
-  padding: 0; }
-
-.sidebar-blue-schema .Resizer {
-  color: #0044a9; }
-
-.sidebar-blue-schema .icon-buttons-wrapper a, .sidebar-blue-schema .icon-buttons-wrapper a:visited, .sidebar-blue-schema .icon-buttons-wrapper a:active, .sidebar-blue-schema .icon-buttons-wrapper a:hover {
-  text-decoration: none;
-  color: white; }
-
-.sidebar-blue-schema .icon-buttons-wrapper .nav-button:hover {
-  background-color: #08367C; }
+.sidebar-blue-schema {
+  height: 100%; }
+  .sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
+    background-color: #0044a9; }
+  .sidebar-blue-schema .tabs-wrapper ul > li {
+    color: white; }
+  .sidebar-blue-schema .tabs-wrapper a, .sidebar-blue-schema .tabs-wrapper a:visited, .sidebar-blue-schema .tabs-wrapper a:active, .sidebar-blue-schema .tabs-wrapper a:hover {
+    text-decoration: none;
+    color: white; }
+  .sidebar-blue-schema .tabs-wrapper .nav-button:hover {
+    background-color: #08367C; }
+  .sidebar-blue-schema h1 {
+    color: white;
+    padding: 0; }
+  .sidebar-blue-schema .Resizer {
+    color: #0044a9; }
+  .sidebar-blue-schema .icon-buttons-wrapper a, .sidebar-blue-schema .icon-buttons-wrapper a:visited, .sidebar-blue-schema .icon-buttons-wrapper a:active, .sidebar-blue-schema .icon-buttons-wrapper a:hover {
+    text-decoration: none;
+    color: white; }
+  .sidebar-blue-schema .icon-buttons-wrapper .nav-button:hover {
+    background-color: #08367C; }
 
 .sidebar-grey-schema .sidebar-wrapper, .sidebar-grey-schema .minimize-dashboard-wrapper {
   background-color: #F4F5F7; }
