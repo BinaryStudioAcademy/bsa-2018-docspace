@@ -44,7 +44,7 @@ class SpaceHeader extends Component {
             )
         }
         {
-          type !== 'clear'
+          type === 'clear'
             ? null
             : (
               <SpaceHeaderButtons type={type}>
