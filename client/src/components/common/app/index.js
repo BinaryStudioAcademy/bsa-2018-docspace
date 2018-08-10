@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import './app.css'
-import Dashboard from 'src/components/dashboard'
 
+import PageEditor from 'src/components/pageEditor'
 
 class App extends Component {
   render () {
     return (
       <div className='app__root'>
-        <Dashboard />
+        <PageEditor />
       </div>
     )
   }

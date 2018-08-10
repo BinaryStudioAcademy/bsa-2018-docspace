@@ -1,6 +1,5 @@
-body {
+html, body, #root, .app__root {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0; }
-
-.app__root {
-  text-align: center; }
