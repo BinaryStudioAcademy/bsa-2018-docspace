@@ -1,60 +1,33 @@
-import React, {Component} from 'react'
-import SplitPane from 'react-split-pane'
-import MinSidebar from './minSidebar/index'
+import React from 'react'
+import MinSidebar from './minSidebar/'
+import FullSidebar from './fullSidebar'
 import PropTypes from 'prop-types'
 
 import './sidebar.css'
 import './minSidebar/minSideBar.css'
 import './button/button.css'
 
-class Dashboard extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isOpened: true
-    }
-  }
+const DashboardSidebar = (props) => (
+  <div showLabels={props.showLabels} className='sidebar-blue-schema' >
+    <div className='sidebar-container'>
+      {props.isOpened &&
+        <div className='sidebar-wrapper'>
+          <MinSidebar />
+          <FullSidebar showLabels={props.showLabels} showIcons={props.showIcons} />
+        </div>
+      }
+      {!props.isOpened &&
+        <div className='minimize-dashboard-wrapper'>
+          <MinSidebar sidebarAction={this.closeLabeledWindow} tabs={props.tabs} /></div>
+      }
+    </div>
+  </div>
+)
 
-  changeState (size) {
-    this.setState({isOpened: size > 70})
-    this.props.changeLable(size)
-  }
-
-  render () {
-    return (
-      <div showLabels={this.state.showLabels} className={this.props.colorSchema} >
-        <SplitPane
-          split='vertical'
-          minSize={70}
-          defaultSize={350}
-          maxSize={700}
-          onChange={size => { this.changeState(size) }}
-        >
-          <div className='sidebar-container'>
-            {this.state.isOpened &&
-            <div className='sidebar-wrapper'>
-              <MinSidebar />
-              {this.props.rightSidebar}
-            </div>
-            }
-            {!this.state.isOpened &&
-            <div className='minimize-dashboard-wrapper'>
-              <MinSidebar sidebarAction={this.closeLabeledWindow} tabs={this.props.tabs} /></div>
-            }
-          </div>
-          <div>
-            {this.props.content}
-          </div>
-        </SplitPane>
-      </div>
-    )
-  }
-}
-Dashboard.propTypes = {
-  changeLable: PropTypes.func,
-  colorSchema: PropTypes.string,
-  rightSidebar: PropTypes.element,
+DashboardSidebar.propTypes = {
   tabs: PropTypes.element,
-  content: PropTypes.element
+  showLabels: PropTypes.bool,
+  isOpened: PropTypes.bool,
+  showIcons: PropTypes.bool
 }
-export default Dashboard
+export default DashboardSidebar
