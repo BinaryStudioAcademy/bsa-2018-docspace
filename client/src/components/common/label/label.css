@@ -1,0 +1,33 @@
+.labelComponent {
+    background-color: #f4f5f7;
+    padding: 2px;
+    font-weight: 400;
+    color: #5f86b7;
+    background-color: rgb(244, 245, 247);
+    color: rgb(37, 56, 88);
+    cursor: default;
+    display: flex;
+    height: 20px;
+    line-height: 1;
+    border-radius: 3px;
+    font-size:14px;
+    cursor: pointer;
+}
+.labelComponent:hover {
+    background-color: #ebecf0;
+    color: #2366f6;
+}
+.labelComponent__text {
+  margin: 2px 1px 2px 4px;
+}
+
+.labelComponent.closeButton {
+    background-color: #fcece7;
+}
+.labelComponent__button:hover {
+    cursor: pointer;
+    color: red;
+}
+.labelComponent__button.closeButtonHide {
+    display: none;
+}
