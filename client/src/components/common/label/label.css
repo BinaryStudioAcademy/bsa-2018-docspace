@@ -1,0 +1,32 @@
+.label {
+    background-color: #f4f5f7;
+    padding: 2px;
+    font-weight: 400;
+    color: #5f86b7;
+    background-color: rgb(244, 245, 247);
+    color: rgb(37, 56, 88);
+    cursor: default;
+    display: flex;
+    height: 20px;
+    line-height: 1;
+    border-radius: 3px;
+    font-size:14px;
+
+}
+.label:hover {
+    cursor: pointer;
+    background-color: #ebecf0;
+    color: #2366f6;
+}
+.label__text {
+  margin: 2px 0 2px 7px;
+}
+
+.closeButton {
+    cursor: pointer;
+    background-color: #fcece7 !important;
+}
+.label__button:hover {
+    cursor: pointer;
+    color: red;
+}
