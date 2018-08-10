@@ -19,6 +19,19 @@ class UserService {
       .then(res => res.json())
       .catch(err => console.log(`Can't get user: ${err}`))
   }
+
+  checkPassword (data) {
+    return fetch('/api/user/checkUserPassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(user => user)
+      .catch(err => console.log(`Can't get text: ${err}`))
+  }
 }
 
 export const userService = new UserService()

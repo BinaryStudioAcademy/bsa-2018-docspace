@@ -36,8 +36,7 @@ userSchema.pre('save', async function () {
 })
 
 userSchema.pre('findOneAndUpdate', async function () {
-  console.log(this.getUpdate().email)
-  if (!this.getUpdate().email) {
+  if (!this.getUpdate().login) {
     let query = this
     const saltRounds = 10
     await query.findOne()

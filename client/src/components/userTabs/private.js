@@ -23,22 +23,22 @@ class PrivateFields extends Component {
     this.setState({newPassword: e.target.value})
   }
 
-  handlePasswords = () => {
-    if (!this.state.isSent) {
-      let currentPassword = this.state.currentPassword
-      if (this.props.errors.length === 0 && this.props.successful) {
-        this.setState({
-          currentPassword: '',
-          isSent: true
-        })
-      }
-      this.props.handlePassword(currentPassword)
-    } else if (this.state.isSent) {
+  handlePasswordCheck = () => {
+    if (this.props.handlePassword) {
+      this.setState({isSent: false})
+      this.props.handlePassword(this.state.currentPassword)
+    }
+  }
+
+  handlePasswordSend = () => {
+    this.setState({isChecking: true})
+    if (this.props.sendPassword) {
       let newPassword = this.state.newPassword
       if (this.state.newPassword.length !== 0) {
         this.setState({
           newPassword: '',
-          isSent: false
+          currentPassword: '',
+          isSent: true
         })
         this.props.sendPassword(newPassword)
       }
@@ -53,7 +53,7 @@ class PrivateFields extends Component {
         </h3>
 
         <div className='current-new-passwords'>
-          {!this.state.isSent && (
+          {!this.props.successful && (
             <div className='current password'>
               <label className='current password-label'>Current password</label>
               <div className='current password-wrapper'>
@@ -72,7 +72,7 @@ class PrivateFields extends Component {
           {!!this.props.errors.length && (
             <Errors message='Failure to login due to:' errors={this.props.errors} />
           )}
-          {this.state.isSent && (
+          {this.props.successful && (
             <React.Fragment>
               <label>You confirmed password</label>
               <div className='new password'>
@@ -88,7 +88,8 @@ class PrivateFields extends Component {
                   />
                 </div>
               </div>
-              {this.state.newPassword.length === 0 ? <label>Empty field</label> : null}
+              {this.state.isSent ? <label>Password sent</label> : null}
+              {this.state.newPassword.length === 0 && !this.state.isSent ? <label>Empty field</label> : null}
             </React.Fragment>
           )
           }
@@ -96,7 +97,7 @@ class PrivateFields extends Component {
             <Button
               icon={<i className='fa fa-check' aria-hidden='true' />}
               value={`Confirm`}
-              onClick={this.handlePasswords}
+              onClick={this.props.successful ? this.handlePasswordSend : this.handlePasswordCheck}
             />
           </div>
         </div>
@@ -110,6 +111,6 @@ export default PrivateFields
 PrivateFields.propTypes = {
   handlePassword: PropTypes.func,
   errors: PropTypes.array,
-  successful: PropTypes.boolean,
+  successful: PropTypes.bool,
   sendPassword: PropTypes.func
 }

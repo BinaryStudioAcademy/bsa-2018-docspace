@@ -40,23 +40,31 @@ class ProfileFields extends Component {
   }
 
   renderEmail (email) {
+    const displayEmail = this.state.email || email
+
     return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={!this.state.email ? email : this.state.email} onChange={this.handleEmail} />
-      : <a href='#'>{!this.state.email ? email : this.state.email}</a>
+      : <a href='#'>{displayEmail}</a>
   }
 
   renderLogin (login) {
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={!this.state.login ? login : this.state.login} onChange={this.handleLogin} />
-      : <span className='profile-field-nickname' href='#'>@{!this.state.login ? login : this.state.login}</span>
+    const displayLogin = this.state.login || login
+
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayLogin} onChange={this.handleLogin} />
+      : <span className='profile-field-nickname' href='#'>@{displayLogin}</span>
   }
 
   renderFirstName (firstName) {
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={!this.state.firstName ? firstName : this.state.firstName} onChange={this.handleFirstName} />
-      : <span>{!this.state.firstName ? firstName : this.state.firstName}</span>
+    const displayFirstName = this.state.firstName || firstName
+
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayFirstName} onChange={this.handleFirstName} />
+      : <span>{displayFirstName}</span>
   }
 
   renderLastName (lastName) {
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={!this.state.lastName ? lastName : this.state.lastName} onChange={this.handleLastName} />
-      : <span>{!this.state.lastName ? lastName : this.state.lastName}</span>
+    const displayLastName = this.state.lastName || lastName
+
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayLastName} onChange={this.handleLastName} />
+      : <span>{displayLastName}</span>
   }
 
   renderLabelButton () {
@@ -133,6 +141,6 @@ ProfileFields.propTypes = {
   login: PropTypes.string,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
-  isEditMode: PropTypes.boolean,
+  isEditMode: PropTypes.bool,
   editMode: PropTypes.func
 }

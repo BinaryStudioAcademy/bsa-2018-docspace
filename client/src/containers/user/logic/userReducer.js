@@ -6,7 +6,6 @@ const initialStateUser = {
 }
 
 const initialStatePassword = {
-  requesting: false,
   successful: false,
   messages: [],
   errors: []
@@ -29,7 +28,6 @@ const checkingReducer = (state = initialStatePassword, action) => {
       return {
         errors: [],
         messages: [action.response],
-        requesting: false,
         successful: true
       }
     case actionTypes.CHECK_USER_PASSWORD_FAILED:
@@ -39,7 +37,6 @@ const checkingReducer = (state = initialStatePassword, action) => {
           time: new Date()
         }]),
         messages: [],
-        requesting: false,
         successful: false
       }
     default:

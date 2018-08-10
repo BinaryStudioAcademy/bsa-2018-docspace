@@ -9,6 +9,8 @@ router.post('/', userService.add)
 
 router.put('/:id', userService.findOneAndUpdate)
 
+router.post('/checkUserPassword', userService.comparePassword)
+
 router.delete('/:id', userService.findOneAndDelete)
 
 module.exports = router

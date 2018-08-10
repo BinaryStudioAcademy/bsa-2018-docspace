@@ -18,39 +18,37 @@ class User extends Component {
       isEditMode: false,
       date: new Date(),
       isShowManagePhoto: false,
-      isShowGeneral: true,
-      isShowPrivate: false
+      isShowGeneral: true
     }
 
     this.changeIsEditMode = this.changeIsEditMode.bind(this)
     this.editMode = this.editMode.bind(this)
     this.managePhoto = this.managePhoto.bind(this)
     this.handleManagePhoto = this.handleManagePhoto.bind(this)
-    this.switchGeneral = this.switchGeneral.bind(this)
-    this.switchPrivate = this.switchPrivate.bind(this)
+    this.changeTab = this.changeTab.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
   }
 
-  handlePassword (shortUser) {
+  handlePassword (currentPassword) {
     this.props.actions.checkPassword({
       email: this.props.user.email,
-      password: shortUser
+      password: currentPassword
     })
   }
 
-  switchGeneral () {
-    this.setState({isShowGeneral: true, isShowPrivate: false})
-  }
-
-  switchPrivate () {
+  changeTab () {
     if (!this.state.isEditMode) {
-      this.setState({isShowGeneral: false, isShowPrivate: true})
+      this.setState(prevState => {
+        return { isShowGeneral: !prevState.isShowGeneral }
+      })
     }
   }
 
   managePhoto () {
-    this.state.isShowManagePhoto ? this.setState({isShowManagePhoto: false}) : this.setState({isShowManagePhoto: true})
+    this.setState(prevState => {
+      return { isShowManagePhoto: !prevState.isShowManagePhoto }
+    })
   }
 
   handleManagePhoto () {
@@ -58,9 +56,6 @@ class User extends Component {
   }
   editMode (userProfile) {
     if (this.state.isEditMode) {
-      this.setState({
-        isEditMode: false
-      })
       this.props.actions.updateUser({
         id: this.props.match.params.id,
         firstName: userProfile.firstName,
@@ -85,8 +80,6 @@ class User extends Component {
   }
 
   sendPassword (newPassword) {
-    console.log(newPassword)
-
     this.props.actions.updateUser({
       id: this.props.match.params.id,
       password: newPassword
@@ -99,8 +92,8 @@ class User extends Component {
 
   render () {
     const { firstName, lastName } = this.props.user
-    const { successful, messages, errors } = this.props.resultOfChecking
-    console.log(successful, messages, errors)
+    const { successful, errors } = this.props.resultOfChecking
+    console.log(`render`, successful, errors)
     return (
       <React.Fragment>
         <div className='main-wrapper'>
@@ -161,15 +154,15 @@ class User extends Component {
                     <div className='profile-edit-buttons'>
                       <div className='edit-manage-btn'>
                         <div className='manage-btn'>
-                          <button onClick={this.switchGeneral}>General</button>
+                          <button onClick={this.changeTab}>General</button>
                         </div>
                         <div className='manage-btn'>
-                          <button onClick={this.switchPrivate}>Private</button>
+                          <button onClick={this.changeTab}>Private</button>
                         </div>
                       </div>
                     </div>
                     {
-                      this.state.isShowPrivate &&
+                      !this.state.isShowGeneral &&
                         <PrivateFields
                           handlePassword={this.handlePassword}
                           user={this.props.user}
@@ -245,7 +238,6 @@ User.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(`state`, state)
   return {
     user: state.user.userReducer,
     resultOfChecking: state.user.checkingReducer

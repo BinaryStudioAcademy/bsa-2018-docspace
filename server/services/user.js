@@ -99,6 +99,28 @@ module.exports = {
       })
   },
 
+  comparePassword: (req, res) => {
+    const user = userRepository.get({email: req.body.email})
+      .then(user => {
+        if (!user) {
+          return res.send({ success: false, message: 'Incorrect email.' })
+        }
+        user.comparePassword(req.body.password)
+          .then((isMatch) => {
+            if (!isMatch) {
+              return res.send({ success: false, message: 'Incorrect password.' })
+            }
+            return res.send({success: true, message: 'Password correct', user: user})
+          })
+          .catch(err => res.send(err))
+      })
+      .catch(err => res.send(err))
+
+    user
+      .then(answer => { console.log(answer) })
+      .catch(err => console.log(err))
+  },
+
   signUp: (req, res) => {
     const [firstName, lastName] = req.body.fullName.split(' ')
     const User = new scheme.User({

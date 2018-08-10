@@ -1,7 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects'
 import * as actionTypes from './userActionTypes'
 import { userService } from 'src/services/userService'
-import { loginService } from 'src/services/loginService'
 
 function * getUser (action) {
   const result = yield userService.getUserData(action.payload.id)
@@ -23,7 +22,7 @@ function * checkUserPassword (action) {
   try {
     const { email, password } = action
 
-    let response = yield call(loginService.login, {email, password})
+    let response = yield call(userService.checkPassword, {email, password})
     if (!response.success) {
       throw new Error(response.message)
     }
