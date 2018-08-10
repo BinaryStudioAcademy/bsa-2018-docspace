@@ -22,11 +22,11 @@ class SpaceSettings extends Component {
     }
   }
 
-  renderOverviewTab () {
+  renderOverviewTab = () => {
     return <SpaceOverviewTab updateSpace={this.props.updateSpace} />
   }
 
-  renderSettingsTab () {
+  renderSettingsTab = () => {
     return <SpaceSettingsTab />
   }
 
