@@ -1,14 +1,14 @@
 const router = require('express').Router()
 const spaceService = require('../../services/spaceService')
 
-router.get('/', spaceService.getAll)
+router.get('/', spaceService.findAll)
 
-router.get('/:id', spaceService.get)
+router.get('/:id', spaceService.findOne)
 
-router.post('/', spaceService.create)
+router.post('/', spaceService.add)
 
-router.put('/:id', spaceService.update)
+router.put('/:id', spaceService.findOneAndUpdate)
 
-router.delete('/:id', spaceService.delete)
+router.delete('/:id', spaceService.findOneAndDelete)
 
 module.exports = router
