@@ -13,7 +13,6 @@ export default class EditSpaceDetailsForm extends Component {
       description: space.description,
       categories: space.categories.join(' '),
       logo: space.logo,
-      status: 'current',
       homePage: space.homePage
     }
   }
@@ -35,6 +34,7 @@ export default class EditSpaceDetailsForm extends Component {
 
   handleSave = () => {
     const space = {
+      _id: this.props.space._id,
       name: this.state.name,
       description: this.state.description
     }
@@ -44,7 +44,7 @@ export default class EditSpaceDetailsForm extends Component {
   }
 
   render () {
-    const {name, description, categories, logo, status, homePage} = this.state
+    const {name, description, categories, logo, homePage} = this.state
 
     return (
       <form className='edit-space-details-form'>
@@ -72,18 +72,6 @@ export default class EditSpaceDetailsForm extends Component {
             defaultValue={description}
             onChange={({target}) => this.handleFieldChange(target)}
           />
-        </div>
-
-        <div className='field-group'>
-          <label>Status</label>
-          <select
-            name='status'
-            defaultValue={status}
-            onChange={({target}) => this.handleFieldChange(target)}
-          >
-            <option value='current'>current</option>
-            <option value='archived'>archived</option>
-          </select>
         </div>
 
         <div className='field-group'>
@@ -117,28 +105,27 @@ export default class EditSpaceDetailsForm extends Component {
   }
 }
 
+EditSpaceDetailsForm.propTypes = {
+  goBackToDetails: PropTypes.func.isRequired,
+  updateSpace: PropTypes.func.isRequired,
+  space: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    categories: ['one', 'two', 'label'],
+    logo: img,
+    homePage: PropTypes.string,
+    pages: PropTypes.arrayOf(PropTypes.object)
+  })
+}
+
 EditSpaceDetailsForm.defaultProps = {
   space: {
     name: 'name',
     description: 'lore ipsum',
     categories: ['one', 'two', 'label'],
     logo: img,
-    status: 'current',
     homePage: 'my home page',
     pages: [{name: 'first page'}, {name: 'my home page'}]
   }
-}
-
-EditSpaceDetailsForm.propTypes = {
-  goBackToDetails: PropTypes.func.isRequired,
-  updateSpace: PropTypes.func.isRequired,
-  space: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    categories: ['one', 'two', 'label'],
-    logo: img,
-    status: PropTypes.string,
-    homePage: PropTypes.string,
-    pages: PropTypes.arrayOf(PropTypes.object)
-  })
 }

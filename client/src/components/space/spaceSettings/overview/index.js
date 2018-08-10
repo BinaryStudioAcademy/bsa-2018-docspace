@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
@@ -45,13 +46,20 @@ export default class SpaceOverviewTab extends Component {
         <div className='space-overview-body'>
           {
             !isEditing
-              ? <SpaceDetails />
+              ? <SpaceDetails space={this.props.space} />
               : <EditSpaceDetailsForm
                 goBackToDetails={this.backToSpaceDetails}
+                updateSpace={this.props.updateSpace}
+                space={this.props.space}
               />
           }
         </div>
       </React.Fragment>
     )
   }
+}
+
+SpaceOverviewTab.propTypes = {
+  updateSpace: PropTypes.func.isRequired,
+  space: PropTypes.object.isRequired
 }

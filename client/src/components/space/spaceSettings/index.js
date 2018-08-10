@@ -7,6 +7,7 @@ import * as actions from 'src/components/space/spaceContainer/logic/spaceActions
 import SpaceOverviewTab from './overview'
 import SpaceSettingsTab from './settings'
 import NavBar from './navBar'
+import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import './spaceSettings.css'
 
 // will be connected to store. Fetch for space with this name in didMount
@@ -23,7 +24,7 @@ class SpaceSettings extends Component {
   }
 
   renderOverviewTab = () => {
-    return <SpaceOverviewTab updateSpace={this.props.updateSpace} />
+    return <SpaceOverviewTab updateSpace={this.props.updateSpace} space={this.props.space} />
   }
 
   renderSettingsTab = () => {
@@ -52,7 +53,14 @@ class SpaceSettings extends Component {
 }
 
 SpaceSettings.propTypes = {
-  updateSpace: PropTypes.func.isRequired
+  updateSpace: PropTypes.func.isRequired,
+  space: PropTypes.object.isRequired
+}
+
+const mapStateToprops = (state) => {
+  return {
+    space: spaceById(state)
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -61,4 +69,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SpaceSettings)
+export default connect(mapStateToprops, mapDispatchToProps)(SpaceSettings)
