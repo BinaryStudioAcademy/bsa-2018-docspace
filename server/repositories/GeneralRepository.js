@@ -26,11 +26,6 @@ class GeneralRepository {
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }
-
-  getAllByParam (param) {
-    console.log(param)
-    return this.model.find(param)
-  }
 }
 
 module.exports = GeneralRepository
