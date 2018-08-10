@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
 import './spaceOverviewTab.css'

@@ -33,6 +33,16 @@ export default class EditSpaceDetailsForm extends Component {
     // OR   : we can use select with all pages instead of input, it's gonna be better maybe
   }
 
+  handleSave = () => {
+    const space = {
+      name: this.state.name,
+      description: this.state.description
+    }
+
+    this.props.updateSpace(space)
+    this.props.goBackToDetails()
+  }
+
   render () {
     const {name, description, categories, logo, status, homePage} = this.state
 
@@ -98,7 +108,7 @@ export default class EditSpaceDetailsForm extends Component {
 
         <div className='btn-group'>
           <label />
-          <button type='submit'> Save </button>
+          <button type='submit' onClick={this.handleSave}> Save </button>
           <button onClick={this.props.goBackToDetails}> Cancel </button>
         </div>
       </form>
@@ -121,6 +131,7 @@ EditSpaceDetailsForm.defaultProps = {
 
 EditSpaceDetailsForm.propTypes = {
   goBackToDetails: PropTypes.func.isRequired,
+  updateSpace: PropTypes.func.isRequired,
   space: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
