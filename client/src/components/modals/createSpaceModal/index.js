@@ -48,6 +48,7 @@ export default class CreateSpaceModal extends Component {
               handleNextClick={this.toggleStep}
               spaceTemplates={this.state.spaceTemplates}
               selectedTemplate={this.state.selectedTemplate}
+              handleFilter={this.handleFilter}
             />
             : <WizardSpaceModal
               selectedTemplate={this.state.selectedTemplate}

@@ -1,4 +1,4 @@
-const userRep = require('../repositories/userRepository')
+const userRep = require('../repositories/UserRepository')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
