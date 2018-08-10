@@ -29,6 +29,13 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+  console.log('________________________________')
+  console.log('req:')
+  console.log(req)
+  console.log('________________________________')
+  console.log('req.user:')
+  console.log(req.user)
+
   if (typeof req.body !== 'object') {
     res.status(400)
 

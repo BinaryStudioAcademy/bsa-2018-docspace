@@ -14,6 +14,8 @@ import history from './commonLogic/history'
 import { I18nextProvider } from 'react-i18next'
 import i18n from 'src/config/i18n'
 
+import DashboadrActiviry from 'src/components/dashboard/dashboardActivity'
+
 sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
@@ -25,6 +27,7 @@ ReactDOM.render(
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
           <Route path='/spaces' component={SpaceContainer} />
+          <Route path='/activity' component={DashboadrActiviry} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>
