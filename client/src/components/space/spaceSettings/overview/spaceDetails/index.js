@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './spaceDetails.css'
 
 import img from 'src/resources/logo.svg'
 
 export default class SpaceDetails extends Component {
   render () {
+    const { space } = this.props
     return (
       <table className='space-details-table'>
         <tbody>
@@ -16,7 +18,7 @@ export default class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>Name</td>
-            <td>name</td>
+            <td>{space.name}</td>
           </tr>
           <tr>
             <td>Key</td>
@@ -34,7 +36,7 @@ export default class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>Created by</td>
-            <td> <span className='link'>Danil </span></td>
+            <td> <span className='link'>{space.ownerId}</span></td>
           </tr>
           <tr>
             <td>Categories</td>
@@ -42,7 +44,7 @@ export default class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>Description</td>
-            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed iaculis ex, eu ornare ligula. Nunc pulvinar eget libero sit amet eleifend. Curabitur laoreet enim quis consequat lacinia. Integer tincidunt aliquet turpis, at imperdiet odio ultricies ut. Vestibulum nec rhoncus velit. Quisque quis odio at sapien tincidunt fringilla et eget sapien. Mauris nec nulla nisl. Donec bibendum, urna vitae tempor accumsan, odio libero dignissim eros, eu rhoncus neque nisi in metus. Aliquam eu neque posuere, varius risus in, sollicitudin lectus. Praesent vel placerat justo.</td>
+            <td>{space.description}</td>
           </tr>
           <tr>
             <td>Administrators</td>
@@ -54,4 +56,8 @@ export default class SpaceDetails extends Component {
       </table>
     )
   }
+}
+
+SpaceDetails.propTypes = {
+  space: PropTypes.object.isRequired
 }

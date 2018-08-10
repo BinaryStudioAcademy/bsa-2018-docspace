@@ -58,6 +58,7 @@
 }
 .sidebar-blue-schema{
   height: 100%;
+  .sidebar-container{
   .sidebar-wrapper, .minimize-dashboard-wrapper{
   background-color: $primaryColor;
   }
@@ -92,8 +93,10 @@
     }
   }
 }
+}
 
 .sidebar-grey-schema{
+  .sidebar-container{
   .sidebar-wrapper, .minimize-dashboard-wrapper {
     background-color: $greyBlog;
   }
@@ -135,4 +138,5 @@
       color: white;
     }
   }
+}
 }

@@ -1,9 +1,10 @@
 {
   "name": "docspace",
-  "version": "0.1.0",
+  "version": "1.9.4",
   "private": true,
   "license": "ISC",
   "dependencies": {
+    "autobind-decorator": "^2.1.0",
     "connected-react-router": "^4.3.0",
     "cross-env": "^5.2.0",
     "history": "^4.7.2",

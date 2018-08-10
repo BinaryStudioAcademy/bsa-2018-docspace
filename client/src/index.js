@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './components/common/app/index'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
+import User from './containers/user'
 import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
@@ -17,12 +18,14 @@ sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>
+
     <I18nextProvider i18n={i18n}>
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path='/' component={App} />>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          <Route path='/userSettings/:id' component={User} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>

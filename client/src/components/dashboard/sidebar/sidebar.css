@@ -43,54 +43,59 @@
   width: 2px;
   cursor: w-resize; }
 
-.sidebar-blue-schema {
-  height: 100%; }
-  .sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
-    background-color: #0044a9; }
-  .sidebar-blue-schema .tabs-wrapper ul > li {
-    color: white; }
-  .sidebar-blue-schema .tabs-wrapper a, .sidebar-blue-schema .tabs-wrapper a:visited, .sidebar-blue-schema .tabs-wrapper a:active, .sidebar-blue-schema .tabs-wrapper a:hover {
-    text-decoration: none;
-    color: white; }
-  .sidebar-blue-schema .tabs-wrapper .nav-button:hover {
-    background-color: #08367C; }
-  .sidebar-blue-schema h1 {
-    color: white;
-    padding: 0; }
-  .sidebar-blue-schema .Resizer {
-    color: #0044a9; }
-  .sidebar-blue-schema .icon-buttons-wrapper a, .sidebar-blue-schema .icon-buttons-wrapper a:visited, .sidebar-blue-schema .icon-buttons-wrapper a:active, .sidebar-blue-schema .icon-buttons-wrapper a:hover {
-    text-decoration: none;
-    color: white; }
-  .sidebar-blue-schema .icon-buttons-wrapper .nav-button:hover {
-    background-color: #08367C; }
+.sidebar-blue-schema .sidebar-container .sidebar-wrapper, .sidebar-blue-schema .sidebar-container .minimize-dashboard-wrapper {
+  background-color: #0044a9; }
 
-.sidebar-grey-schema .sidebar-wrapper, .sidebar-grey-schema .minimize-dashboard-wrapper {
-  background-color: #F4F5F7; }
+.sidebar-blue-schema .sidebar-container .tabs-wrapper ul > li {
+  color: white; }
 
-.sidebar-grey-schema .tabs-wrapper a, .sidebar-grey-schema .tabs-wrapper a:visited, .sidebar-grey-schema .tabs-wrapper a:active, .sidebar-grey-schema .tabs-wrapper a:hover {
+.sidebar-blue-schema .sidebar-container .tabs-wrapper a, .sidebar-blue-schema .sidebar-container .tabs-wrapper a:visited, .sidebar-blue-schema .sidebar-container .tabs-wrapper a:active, .sidebar-blue-schema .sidebar-container .tabs-wrapper a:hover {
   text-decoration: none;
-  color: #42526E; }
+  color: white; }
 
-.sidebar-grey-schema .tabs-wrapper .nav-button:hover {
-  background-color: #EAECF0; }
-
-.sidebar-grey-schema h1 {
-  color: #42526E; }
-
-.sidebar-grey-schema .Resizer {
-  color: #F4F5F7; }
-
-.sidebar-grey-schema .icon-buttons-wrapper .nav-button:hover {
+.sidebar-blue-schema .sidebar-container .tabs-wrapper .nav-button:hover {
   background-color: #08367C; }
 
-.sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper .nav-button:hover {
-  background-color: #EAECF0; }
+.sidebar-blue-schema .sidebar-container h1 {
+  color: white;
+  padding: 0; }
 
-.sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:visited, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:active, .sidebar-grey-schema .minimize-dashboard-wrapper .icon-buttons-wrapper a:hover {
+.sidebar-blue-schema .sidebar-container .Resizer {
+  color: #0044a9; }
+
+.sidebar-blue-schema .sidebar-container .icon-buttons-wrapper a, .sidebar-blue-schema .sidebar-container .icon-buttons-wrapper a:visited, .sidebar-blue-schema .sidebar-container .icon-buttons-wrapper a:active, .sidebar-blue-schema .sidebar-container .icon-buttons-wrapper a:hover {
+  text-decoration: none;
+  color: white; }
+
+.sidebar-blue-schema .sidebar-container .icon-buttons-wrapper .nav-button:hover {
+  background-color: #08367C; }
+
+.sidebar-grey-schema .sidebar-container .sidebar-wrapper, .sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper {
+  background-color: #F4F5F7; }
+
+.sidebar-grey-schema .sidebar-container .tabs-wrapper a, .sidebar-grey-schema .sidebar-container .tabs-wrapper a:visited, .sidebar-grey-schema .sidebar-container .tabs-wrapper a:active, .sidebar-grey-schema .sidebar-container .tabs-wrapper a:hover {
   text-decoration: none;
   color: #42526E; }
 
-.sidebar-grey-schema .icon-buttons-wrapper a, .sidebar-grey-schema .icon-buttons-wrapper a:visited, .sidebar-grey-schema .icon-buttons-wrapper a:active, .sidebar-grey-schema .icon-buttons-wrapper a:hover {
+.sidebar-grey-schema .sidebar-container .tabs-wrapper .nav-button:hover {
+  background-color: #EAECF0; }
+
+.sidebar-grey-schema .sidebar-container h1 {
+  color: #42526E; }
+
+.sidebar-grey-schema .sidebar-container .Resizer {
+  color: #F4F5F7; }
+
+.sidebar-grey-schema .sidebar-container .icon-buttons-wrapper .nav-button:hover {
+  background-color: #08367C; }
+
+.sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper .nav-button:hover {
+  background-color: #EAECF0; }
+
+.sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper a, .sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper a:visited, .sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper a:active, .sidebar-grey-schema .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper a:hover {
+  text-decoration: none;
+  color: #42526E; }
+
+.sidebar-grey-schema .sidebar-container .icon-buttons-wrapper a, .sidebar-grey-schema .sidebar-container .icon-buttons-wrapper a:visited, .sidebar-grey-schema .sidebar-container .icon-buttons-wrapper a:active, .sidebar-grey-schema .sidebar-container .icon-buttons-wrapper a:hover {
   text-decoration: none;
   color: white; }
