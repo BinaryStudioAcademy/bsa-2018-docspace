@@ -1,7 +1,7 @@
 const SpaceRepository = require('../repositories/SpaceRepository')
 
 module.exports = {
-  getAll: (req, res) => {
+  findAll: (req, res) => {
     SpaceRepository.getAll()
       .then(data => res.json(data))
       .catch((err) => {
@@ -11,7 +11,7 @@ module.exports = {
       })
   },
 
-  get: (req, res) => {
+  findOne: (req, res) => {
     const id = req.params.id
 
     if (id.length === 0) {
@@ -28,7 +28,7 @@ module.exports = {
       })
   },
 
-  create: (req, res) => {
+  add: (req, res) => {
     if (typeof req.body !== 'object') {
       res.status(400)
 
@@ -50,7 +50,7 @@ module.exports = {
       })
   },
 
-  update: (req, res) => {
+  findOneAndUpdate: (req, res) => {
     const id = req.params.id
 
     if (id.length === 0) {
@@ -68,7 +68,7 @@ module.exports = {
       })
   },
 
-  delete: (req, res) => {
+  findOneAndDelete: (req, res) => {
     const id = req.params.id
 
     if (id.length === 0) {

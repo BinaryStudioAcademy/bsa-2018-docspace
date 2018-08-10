@@ -9,6 +9,7 @@ import SpaceSidebar from 'src/components/space/spaceSidebar'
 import SpaceSettings from 'src/components/space/spaceSettings'
 import Page from 'src/components/page'
 import Blog from 'src/components/blog'
+import { spaceById } from './logic/spaceReducer'
 
 import './space.css'
 
@@ -18,7 +19,7 @@ class SpaceContainer extends Component {
 
     return (
       <div className='space'>
-        <SpaceSidebar spaceName={this.props.space.name} pages={this.props.space.pages} />
+        <SpaceSidebar space={this.props.space} pages={this.props.space.pages} />
         <SpaceContent>
           <SpaceHeader />
           <Route path='/spaces/:id' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
@@ -45,7 +46,7 @@ SpaceContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
+    space: spaceById(state)
   }
 }
 

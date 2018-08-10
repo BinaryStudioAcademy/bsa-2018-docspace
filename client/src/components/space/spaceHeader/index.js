@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter, NavLink } from 'react-router-dom'
 
 import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
+import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 
 import './spaceHeader.css'
 
@@ -72,7 +73,7 @@ SpaceHeader.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
+    space: spaceById(state)
   }
 }
 

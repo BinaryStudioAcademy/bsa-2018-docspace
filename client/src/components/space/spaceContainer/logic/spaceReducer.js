@@ -2,20 +2,8 @@ import * as actionTypes from './spaceActionTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
-  all: ['5b6beec45aa931280c4fdb29'],
-  byId: {
-    '5b6beec45aa931280c4fdb29': {
-      name: 'Test space',
-      ownerId: '111',
-      key: 'TS',
-      pages: [
-        {
-          name: 'First Test Page',
-          id: '5b6bf22eaf609328f4264ceb'
-        }
-      ]
-    }
-  }
+  all: [],
+  byId: {}
 }
 
 function all (state = initialState.all, action) {
@@ -59,3 +47,9 @@ export default combineReducers({
 // Now you have array of spaces objects
 
 export const allSpaces = ({spaces}) => spaces.all.map(id => spaces.byId[id])
+
+export const spaceById = (state) => {
+  const id = state.router.location.pathname.split('/')[2]
+
+  return state.spaces.byId[id]
+}
