@@ -30,10 +30,12 @@ class User extends Component {
     this.handlePassword = this.handlePassword.bind(this)
   }
 
-  handlePassword (currentPassword) {
+  handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
       email: this.props.user.email,
-      password: currentPassword
+      id: this.props.match.params.id,
+      password: currentPassword,
+      newPassword: newPassword
     })
   }
 
@@ -162,22 +164,20 @@ class User extends Component {
                       </div>
                     </div>
                     {
-                      !this.state.isShowGeneral &&
-                        <PrivateFields
+                      !this.state.isShowGeneral
+                        ? <PrivateFields
                           handlePassword={this.handlePassword}
                           user={this.props.user}
                           errors={errors}
                           successful={successful}
                           sendPassword={this.sendPassword}
                         />
-                    }
-                    {
-                      this.state.isShowGeneral &&
-                      <ProfileFields
-                        isEditMode={this.state.isEditMode}
-                        editMode={this.editMode}
-                        user={this.props.user}
-                      />
+                        : this.state.isShowGeneral &&
+                        <ProfileFields
+                          isEditMode={this.state.isEditMode}
+                          editMode={this.editMode}
+                          user={this.props.user}
+                        />
                     }
 
                     <div className='recent-work-list-wrapper'>

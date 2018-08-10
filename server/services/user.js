@@ -99,26 +99,42 @@ module.exports = {
       })
   },
 
-  comparePassword: (req, res) => {
-    const user = userRepository.get({email: req.body.email})
+  changePassword: (req, res) => {
+    userRepository.get({email: req.body.email})
       .then(user => {
         if (!user) {
-          return res.send({ success: false, message: 'Incorrect email.' })
+          return res.send({ message: 'Incorrect email.' })
+        }
+        if (req.body.newPassword.length === 0 || req.body.newPassword === req.body.password) {
+          return res.send({ success: false, message: 'New password is incorrect.' })
         }
         user.comparePassword(req.body.password)
           .then((isMatch) => {
             if (!isMatch) {
-              return res.send({ success: false, message: 'Incorrect password.' })
+              return res.send({ success: false, message: 'Incorrect current password.' })
             }
-            return res.send({success: true, message: 'Password correct', user: user})
+          })
+        userRepository.update(req.body.id, {password: req.body.newPassword})
+          .then(user => {
+            if (!user) {
+              return res.status(404).send({
+                message: 'User not found with id ' + req.params.id
+              })
+            }
+            return res.send({success: true, message: 'Password changed', user: user})
+          }).catch(err => {
+            if (err.kind === 'ObjectId') {
+              return res.status(404).send({
+                message: 'User not found with id ' + req.params.id
+              })
+            }
+            return res.status(500).send({
+              message: 'Error updating User with id ' + req.params.id
+            })
           })
           .catch(err => res.send(err))
       })
       .catch(err => res.send(err))
-
-    user
-      .then(answer => { console.log(answer) })
-      .catch(err => console.log(err))
   },
 
   signUp: (req, res) => {

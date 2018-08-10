@@ -20,9 +20,10 @@ function * updUser (action) {
 
 function * checkUserPassword (action) {
   try {
-    const { email, password } = action
+    const { email, id, password, newPassword } = action
 
-    let response = yield call(userService.checkPassword, {email, password})
+    let response = yield call(userService.checkandUpdatePassword, {email, id, password, newPassword})
+    console.log(response)
     if (!response.success) {
       throw new Error(response.message)
     }

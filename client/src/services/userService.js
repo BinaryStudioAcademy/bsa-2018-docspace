@@ -20,8 +20,8 @@ class UserService {
       .catch(err => console.log(`Can't get user: ${err}`))
   }
 
-  checkPassword (data) {
-    return fetch('/api/user/checkUserPassword', {
+  checkandUpdatePassword (data) {
+    return fetch('/api/user/changePassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -9,7 +9,7 @@ router.post('/', userService.add)
 
 router.put('/:id', userService.findOneAndUpdate)
 
-router.post('/checkUserPassword', userService.comparePassword)
+router.post('/changePassword', userService.changePassword)
 
 router.delete('/:id', userService.findOneAndDelete)
 
