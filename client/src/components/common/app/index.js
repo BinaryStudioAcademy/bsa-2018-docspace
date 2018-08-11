@@ -8,7 +8,7 @@ import Spaces from 'src/components/dashboard/main/spaces'
 import Work from 'src/components/dashboard/main/work'
 import User from 'src/containers/user'
 import SpaceContainer from 'src/components/space/spaceContainer'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 
 class App extends Component {
@@ -31,31 +31,29 @@ class App extends Component {
 
   render () {
     return (
-      <Router >
-        <div className='app__root' >
-          <SplitPane
-            split='vertical'
-            minSize={70}
-            defaultSize={350}
-            maxSize={700}
-            onChange={size => { this.changeSize(size) }}
-          >
-            <DashboardSidebar
-              isOpened={this.state.isOpened}
-              showLabels={this.state.showLabels}
-              showIcons={this.state.showIcons}
-            />
-            <DashboardMain>
-              <Route path='/works' component={Work} />
-              <Route path='/activity' component={Activity} />
-              <Route path='/people' component={People} />
-              <Route path='/spacedirectory' component={Spaces} />
-              <Route path='/spaces' component={SpaceContainer} />
-              <Route path='/settings' component={User} />
-            </DashboardMain>
-          </SplitPane>
-        </div>
-      </Router>
+      <div className='app__root' >
+        <SplitPane
+          split='vertical'
+          minSize={70}
+          defaultSize={350}
+          maxSize={700}
+          onChange={size => { this.changeSize(size) }}
+        >
+          <DashboardSidebar
+            isOpened={this.state.isOpened}
+            showLabels={this.state.showLabels}
+            showIcons={this.state.showIcons}
+          />
+          <DashboardMain>
+            <Route path='/works' component={Work} />
+            <Route path='/activity' component={Activity} />
+            <Route path='/people' component={People} />
+            <Route path='/spacedirectory' component={Spaces} />
+            <Route path='/spaces' component={SpaceContainer} />
+            <Route path='/settings' component={User} />
+          </DashboardMain>
+        </SplitPane>
+      </div>
     )
   }
 }
