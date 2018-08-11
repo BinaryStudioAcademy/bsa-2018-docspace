@@ -22,9 +22,9 @@ ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route exact path='/' component={App} />>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          <Route path='/' component={App} />>
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>
