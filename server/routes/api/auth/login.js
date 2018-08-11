@@ -16,6 +16,15 @@ const login = (req, res, next) => {
   })(req, res, next)
 }
 
+const loggedIn = (req, res) => {
+  if (req.user) {
+    return res.json({ success: true, message: req.user })
+  } else {
+    return res.json({ success: false, message: 'No user in session' })
+  }
+}
+
+router.get('/', loggedIn)
 router.post('/', login)
 
 module.exports = router

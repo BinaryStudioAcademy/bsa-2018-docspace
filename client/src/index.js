@@ -13,6 +13,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import history from './commonLogic/history'
 import { I18nextProvider } from 'react-i18next'
 import i18n from 'src/config/i18n'
+import LoginCheck from 'src/components/auth/verification'
 
 sagaMiddleware.run(rootSaga)
 
@@ -22,9 +23,10 @@ ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route exact path='/' component={App} />>
+          <Route path='/' render={() => <LoginCheck component={<App />} />} />
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          {/* <PrivateRouter path='/' component={App} /> */}
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>
