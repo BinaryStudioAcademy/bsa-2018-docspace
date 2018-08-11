@@ -6,7 +6,8 @@ const joditEditorConfig = {
   uploader: {
     insertImageAsBase64URI: true
   },
-  editorCssClass: 'page-jodit-editor'
+  editorCssClass: 'page-jodit-editor',
+  useSearch: true
 }
 
 export default joditEditorConfig

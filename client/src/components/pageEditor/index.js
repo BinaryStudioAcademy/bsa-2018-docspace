@@ -6,7 +6,7 @@ import joditConfig from './joditConfig'
 import PropTypes from 'prop-types'
 import './pageEditor.css'
 
-// dummy
+// dummy avatar fro user
 import logo from 'src/resources/logo.svg'
 
 export default class PageEditor extends Component {
@@ -17,9 +17,8 @@ export default class PageEditor extends Component {
         content: this.props.page.content,
         title: this.props.page.title
       }
-      //   modals: {
-
-    //   }
+      // TODO: state for render modals (permissions, page location etc)
+      // modals: {}
     }
   }
 
@@ -43,7 +42,10 @@ export default class PageEditor extends Component {
  }
 
  handlePablishClick = () => {
-
+   // Merge page property
+   const editedPage = { ...this.props.page, ...this.state.page }
+   // createNewPageRequest or updatePageRequest
+   this.props.handlePablishBtnClick(editedPage)
  }
 
  jodit;
@@ -60,7 +62,7 @@ export default class PageEditor extends Component {
        <div className='page-editor-header'>
          <div className='page-menu'>
            <div className='breadcrumbs'>
-             {/* :space_name/pages/:page_name */}
+             {/* :space_name/pages/:page_title */}
              <span>
                {space.name}
              </span>
@@ -122,7 +124,7 @@ export default class PageEditor extends Component {
            >
               Publish
            </button>
-           <button>
+           <button onClick={this.props.handleCancelBtnClick}>
               Cancel
            </button>
            <button>
@@ -138,7 +140,7 @@ export default class PageEditor extends Component {
 PageEditor.defaultProps = {
   page: {
     content: '',
-    title: ''
+    title: 'Title'
   },
   space: {
     name: 'Fake'
@@ -149,6 +151,11 @@ PageEditor.defaultProps = {
 }
 
 PageEditor.propTypes = {
+  // create new space or update page, passing via props and go to page overwiew (/spaces/:space_id/pages/:page_id)
+  handlePablishBtnClick: PropTypes.func.isRequired,
+  // [ Save as a draft ? Maybe ], go to the existing page's overwiew (if page was editing) or go to "DashboardWork"
+  // warning: on DashboardWork component we can create page for personal space.
+  handleCancelBtnClick: PropTypes.func.isRequired,
   page: PropTypes.shape({
     title: PropTypes.string,
     content: PropTypes.string
