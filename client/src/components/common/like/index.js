@@ -8,78 +8,58 @@ class Like extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      liked: this.findUser()
+      isCurrentUserLike: this.findUser()
     }
     this.changeLikeState = this.changeLikeState.bind(this)
-    this.likes = this.props.likes
-    this.user = this.props.user
     this.sortLikes()
     this.message = this.getMessage()
   }
 
   changeLikeState () {
     this.setState((prevState) => {
-      return {liked: !prevState.liked}
+      return {isCurrentUserLike: !prevState.isCurrentUserLike}
     })
   }
 
   findUser () {
-    const likes = this.props.likes
-    const user = this.props.user
-    for (let i = 0; i < likes.length; i++) {
-      if (likes[i].id === user) {
+    for (let i = 0; i < this.props.likes.length; i++) {
+      if (this.props.likes[i].id === this.props.user) {
         return true
-      } else {
       }
     }
     return false
   }
 
   sortLikes () {
-    this.likes.sort((a) => {
-      if (a.id === this.user) {
-        return -1
-      } else {
-        return 1
-      }
+    this.props.likes.sort((a) => {
+      return a.id === this.props.user ? 1 : -1
     })
   }
 
   getMessage () {
     const {t} = this.props
-    if (!this.likes.length) {
-      return t('be the first who like it')
-    } else if (this.state.liked) {
-      if (this.likes.length === 1) {
-        return `${t('you')} ${t('already like it')}!`
-      } else if (this.likes.length === 2) {
-        return `${t('you')} ${t('and')} ${this.likes[1].name}  ${t('already like it')}!`
-      } else if (this.likes.length === 3) {
-        return `${t('you')}, ${this.likes[1].name} ${t('and')} ${this.likes[2].name}  ${t('already like it')}!`
-      } else {
-        return `${t('you')}, ${this.likes[1].name}, ${this.likes[2].name} ${t('and')} 
-        ${this.likes.length - 3} ${t('other people')} ${t('already like it')}!`
-      }
+    let maxNumber = this.state.isCurrentUserLike ? 2 : 3
+    let message
+    if (!this.props.likes.length) {
+      message = t('be the first who like it')
     } else {
-      console.log(this.likes)
-      if (this.likes.length === 1) {
-        return `${this.likes[0].name} ${t('already like it')}!`
-      } else if (this.likes.length === 2) {
-        return `${this.likes[0].name} ${t('and')} ${this.likes[1].name} ${t('already like it')}!`
-      } else if (this.likes.length === 3) {
-        return `${this.likes[0].name}, ${this.likes[1].name} ${t('and')}  ${this.likes[2].name} ${t('already like it')}!`
-      } else {
-        return `${this.likes[0].name}, ${this.likes[1].name}, ${this.likes[1].name} ${t('and')} 
-        ${this.likes.length - 3} ${t('other people')} ${t('already like it')}!`
+      message = this.state.isCurrentUserLike ? t('you') + ', ' : ''
+      const likeLength = this.state.isCurrentUserLike ? this.props.likes.length - 1 : this.props.likes.length
+      maxNumber = maxNumber > likeLength ? likeLength : maxNumber
+      for (let i = 0; i < maxNumber; i++) {
+        message += i === maxNumber - 1 ? this.props.likes[i].name + '' : this.props.likes[i].name + ', '
       }
+      message += this.props.likes.length > 3 ? ' ' + t('and') + ' ' + (this.props.likes.length - 3) + ' ' + t('other people') + ' ' : ''
+      message += ' ' + t('already like it')
     }
+    return message
   }
 
   render () {
     return (
       <div className='like-wrapper'>
         <button onClick={this.changeLikeState} >
-          <i className={`fas fa-thumbs-up ${this.state.liked ? 'active-like' : 'unactive-like '}`} />
+          <i className={`fas fa-thumbs-up ${this.state.isCurrentUserLike ? 'active-like' : 'unactive-like '}`} />
         </button>
         <span>
           {this.message}
