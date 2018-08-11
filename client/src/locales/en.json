@@ -6,9 +6,8 @@
       "people": "People",
       "settings": "Settings",
       "you": "You",
-      "and": "and",
       "already like it": "already like it",
-      "other people": "other people",
-      "be the first who like it": "Be the first who like it"
+      "be the first who like it": "Be the first who like it",
+      "and_0_ other_people": " and {{count}} other people "
     }
   }

@@ -37,19 +37,21 @@ class Like extends Component {
   }
 
   getMessage () {
-    const {t} = this.props
-    let maxNumber = this.state.isCurrentUserLike ? 2 : 3
+    const {t, likes} = this.props
+    console.log(likes)
     let message
-    if (!this.props.likes.length) {
-      message = t('be the first who like it')
+    if (!likes.length) {
+      return t('be the first who like it')
     } else {
-      message = this.state.isCurrentUserLike ? t('you') + ', ' : ''
-      const likeLength = this.state.isCurrentUserLike ? this.props.likes.length - 1 : this.props.likes.length
-      maxNumber = maxNumber > likeLength ? likeLength : maxNumber
-      for (let i = 0; i < maxNumber; i++) {
-        message += i === maxNumber - 1 ? this.props.likes[i].name + '' : this.props.likes[i].name + ', '
+      let maxNumber = this.state.isCurrentUserLike ? 2 : 3
+      message = this.state.isCurrentUserLike ? t('you') : ''
+      const likeLength = this.state.isCurrentUserLike ? likes.length - 1 : likes.length
+      const count = Math.min(likeLength, maxNumber)
+      message += this.state.isCurrentUserLike && count ? ', ' : ''
+      for (let i = 0; i < count; i++) {
+        message += i === count - 1 ? likes[i].name + '' : likes[i].name + ', '
       }
-      message += this.props.likes.length > 3 ? ' ' + t('and') + ' ' + (this.props.likes.length - 3) + ' ' + t('other people') + ' ' : ''
+      message += likes.length > 3 ? t('and_0_ other_people', { count: likes.length - 3 }) : ''
       message += ' ' + t('already like it')
     }
     return message
