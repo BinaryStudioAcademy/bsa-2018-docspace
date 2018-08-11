@@ -23,10 +23,9 @@ ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path='/' render={() => <LoginCheck component={<App />} />} />
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
-          {/* <PrivateRouter path='/' component={App} /> */}
+          <Route path='/' render={() => <LoginCheck component={<App />} />} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>

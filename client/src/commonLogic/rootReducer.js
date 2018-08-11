@@ -11,7 +11,7 @@ const baseReducer = combineReducers({
   signup: signupReducer,
   login: loginReducer,
   user: userReducers,
-  page: pageReducer,
+  pages: pageReducer,
   spaces: spaceReducer,
   verification: verReducer,
   routing
