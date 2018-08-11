@@ -24,8 +24,8 @@ class PageService {
       .catch(err => console.log(`Can't delete page: ${err}`))
   )
 
-  updatePage = (id, newPage) => (
-    fetch(`/api/pages/${id}`, {
+  updatePage = (newPage) => (
+    fetch(`/api/pages/${newPage._id}`, {
       method: 'PUT',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify(newPage)
