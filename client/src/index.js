@@ -13,6 +13,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import history from './commonLogic/history'
 import { I18nextProvider } from 'react-i18next'
 import i18n from 'src/config/i18n'
+import Page from 'src/components/page'
 
 sagaMiddleware.run(rootSaga)
 
@@ -25,6 +26,7 @@ ReactDOM.render(
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
           <Route path='/spaces' component={SpaceContainer} />
+          <Route path='/spaces/pages/nameOfPage' component={Page} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>

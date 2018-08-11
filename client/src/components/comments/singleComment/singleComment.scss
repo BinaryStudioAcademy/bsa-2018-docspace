@@ -1,0 +1,25 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+.comment-wrapper {
+	clear: left;
+    padding: 10px 0 10px 0;
+    margin: 0 0 -1px 0;
+    position: relative;
+    word-wrap: break-word;
+	.comment-body {
+		padding-left: 42px;
+		h4.comment-first-last-names {
+			padding-bottom: 8px;
+			padding-top: 1px;
+			margin: 0px;
+		}
+		h4.comment-first-last-names a {
+			color: #3572b0;
+			text-decoration: none;
+		}
+	}
+}

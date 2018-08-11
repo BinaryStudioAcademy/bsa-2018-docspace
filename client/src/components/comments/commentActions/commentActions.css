@@ -1,0 +1,15 @@
+.comment-actions-wrapper {
+  font-size: 12px;
+  color: #707070;
+  margin-top: 5px; }
+  .comment-actions-wrapper .comment-actions-list .comment-actions-item {
+    display: inline-block;
+    color: #707070;
+    cursor: pointer; }
+  .comment-actions-wrapper .comment-actions-list .comment-edit::before,
+  .comment-actions-wrapper .comment-actions-list .comment-delete::before,
+  .comment-actions-wrapper .comment-actions-list .comment-like::before,
+  .comment-actions-wrapper .comment-actions-list .comment-time::before {
+    content: "\2022";
+    color: #707070;
+    padding: 0 5px; }
