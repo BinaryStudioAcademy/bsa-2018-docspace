@@ -11,7 +11,6 @@ class AddComment extends Component {
     super(props)
     this.state = {
       text: '',
-      isEmptyTextArea: false,
       isActiveTextArea: false
     }
 
@@ -22,10 +21,8 @@ class AddComment extends Component {
 
   createComment = () => {
     if (this.state.text.length === 0) {
-      this.setState({ isEmptyTextArea: true })
     } else {
       this.setState({
-        isEmptyTextArea: false,
         text: ''
       })
 
@@ -71,15 +68,19 @@ class AddComment extends Component {
           </div>
 
           {this.state.isActiveTextArea && <div className='comment-body-manage-buttons'>
-            {
-              this.state.isEmptyTextArea && <p style={{marginTop: '10px'}}>Textarea is empty</p>
+            {!this.state.text.length
+              ? <Input
+                name='comment-body-disabled'
+                inputType='button'
+                value='Save'
+              />
+              : <Input
+                name='comment-body-save'
+                inputType='button'
+                value='Save'
+                onClick={this.createComment}
+              />
             }
-            <Input
-              name='comment-body-save'
-              inputType='button'
-              value='Save'
-              onClick={this.createComment}
-            />
             <Input
               name='comment-body-cancel'
               inputType='button'

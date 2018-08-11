@@ -8,13 +8,13 @@
   padding: 10px 0 10px 0;
   margin: 0 0 -1px 0;
   position: relative;
-  word-wrap: break-word; }
-  .comment-wrapper .comment-body {
-    padding-left: 42px; }
-    .comment-wrapper .comment-body h4.comment-first-last-names {
-      padding-bottom: 8px;
-      padding-top: 1px;
-      margin: 0px; }
-    .comment-wrapper .comment-body h4.comment-first-last-names a {
-      color: #3572b0;
-      text-decoration: none; }
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: row; }
+  .comment-wrapper h4.comment-first-last-names {
+    padding-bottom: 8px;
+    padding-top: 1px;
+    margin: 0px; }
+  .comment-wrapper h4.comment-first-last-names a {
+    color: #3572b0;
+    text-decoration: none; }
