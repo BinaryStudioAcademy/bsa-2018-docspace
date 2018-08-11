@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import SpaceHeader from 'src/components/space/spaceHeader'
 import SpaceContent from 'src/components/space/spaceContent'
@@ -9,10 +10,17 @@ import SpaceSettings from 'src/components/space/spaceSettings'
 import Page from 'src/components/page'
 import Blog from 'src/components/blog'
 import { spaceById } from './logic/spaceReducer'
+import * as actions from './logic/spaceActions'
 
 import './space.css'
 
 class SpaceContainer extends Component {
+  componentWillMount () {
+    if (!this.props.space.name) {
+      this.props.getSpaces()
+    }
+  }
+
   render () {
     const id = this.props.location.pathname.split('/')[2]
 
@@ -35,12 +43,14 @@ class SpaceContainer extends Component {
 
 SpaceContainer.propTypes = {
   space: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  getSpaces: PropTypes.func
 }
 
 SpaceContainer.defaultProps = {
   space: {},
-  location: {}
+  location: {},
+  getSpaces: () => {}
 }
 
 const mapStateToProps = (state) => {
@@ -49,4 +59,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(SpaceContainer))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSpaces: bindActionCreators(actions.getSpacesRequest, dispatch)
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SpaceContainer))
