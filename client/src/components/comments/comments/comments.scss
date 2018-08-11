@@ -1,7 +1,11 @@
 @import 'globalStyles/variables.scss';
 
-#comments-section {
+.comments-section {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
+}
+
+.comments-section h2 {
+  margin: 0px;
 }

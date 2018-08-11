@@ -53,7 +53,7 @@ class AddComment extends Component {
 
   render () {
     return (
-      <div id='addComment'>
+      <div className='addComment'>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
         <div className='comment-body-container' >
           <div>

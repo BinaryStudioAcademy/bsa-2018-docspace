@@ -13,16 +13,16 @@ class Comments extends Component {
     this.addNewComment = this.addNewComment.bind(this)
   }
 
-  addNewComment (user) {
+  addNewComment (comment) {
     this.setState(prevState => {
-      return { comments: [...prevState.comments, user] }
+      return { comments: [...prevState.comments, comment] }
     })
   }
 
   render () {
     return (
       <React.Fragment>
-        <div id='comments-section'>
+        <div className='comments-section'>
           {this.state.comments.length
             ? <h2>{this.state.comments.length} Comments</h2>
             : <h2>Add comments</h2>
