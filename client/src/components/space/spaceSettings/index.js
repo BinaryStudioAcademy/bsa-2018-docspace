@@ -59,7 +59,8 @@ SpaceSettings.propTypes = {
 
 SpaceSettings.defaultProps = {
   space: {
-    ownerId: {}
+    ownerId: {},
+    categories: []
   }
 }
 
