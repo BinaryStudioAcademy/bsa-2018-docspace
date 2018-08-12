@@ -6,15 +6,14 @@
         "client": "cd client && yarn start",
         "client-build": "cd client && yarn build",
         "server": "nodemon ./server/server.js",
+        "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && yarn build",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "prod": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client-build\"",
-        "pretest": "eslint --ignore-path .gitignore .",
-        "precommit": "yarn pretest",
-        "prepush": "yarn pretest"
+        "prod": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client-build\""
     },
     "dependencies": {
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
+        "eslint-config-loopback": "^11.0.0",
         "express": "^4.16.2",
         "express-session": "^1.15.6",
         "mongoose": "^5.2.6"

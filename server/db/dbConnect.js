@@ -1,6 +1,6 @@
 function DbConnectionHandler () {
   const mongoose = require('mongoose')
-  const config = require('../config/db')
+  const config = require('../config/db').get(process.env.NODE_ENV)
   console.log(config.uri, config.opts)
   mongoose.connect(config.uri, config.opts)
 
