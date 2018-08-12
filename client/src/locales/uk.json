@@ -4,6 +4,11 @@
     "your work": "Ваша робота",
     "spaces": "Простори",
     "people": "Люди",
-    "settings": "Налаштування"
+    "settings": "Налаштування",
+    "you": "Ви",
+    "and": "і",
+    "already like it": "сподобали це",
+    "be the first who like it": "Стань першим кому сподобається це",
+    "and_0_ other_people": " і {{count}} інших людей "
   }
 }
