@@ -3,10 +3,9 @@ import { loginService } from 'src/services/loginService'
 import * as actionTypes from './verActionTypes'
 
 function * verFlow () {
-  console.log('IN SAGA')
   try {
     let response = yield call(loginService.verification)
-    if (!response.success) {
+    if (!response.isLoggedIn) {
       throw new Error(response.message)
     }
     yield put({ type: actionTypes.VERIFICATION_SUCCESS, response })

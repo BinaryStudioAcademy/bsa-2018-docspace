@@ -17,10 +17,12 @@ const login = (req, res, next) => {
 }
 
 const loggedIn = (req, res) => {
+  console.log('USER EXIST OR NOT', req.user)
   if (req.user) {
-    return res.json({ success: true, message: req.user })
+    console.log('return user')
+    return res.json({ isLoggedIn: true, message: req.user })
   } else {
-    return res.json({ success: false, message: 'No user in session' })
+    return res.json({ isLoggedIn: false, message: 'No user in session' })
   }
 }
 

@@ -1,10 +1,10 @@
 import * as actionTypes from './verActionTypes'
 
-const verRequest = (action) => {
-  return ({
-    type: actionTypes.VERIFICATION,
-    ...action
-  })
-}
+export const verRequest = () => ({
+  type: actionTypes.VERIFICATION
+})
 
-export default verRequest
+export const saveUserInSession = (user) => ({
+  type: actionTypes.SAVE_USER_IN_SESSION,
+  user: user
+})
