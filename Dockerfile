@@ -9,6 +9,6 @@ COPY client /docspace/client/
 RUN ls
 RUN cd client && yarn add node-sass
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "prod"]
 
 EXPOSE 3000
