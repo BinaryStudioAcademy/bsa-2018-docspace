@@ -16,11 +16,20 @@ module.exports = {
 
     if (id.length === 0) {
       res.status(400)
+
       return res.end('Invalid id')
     }
 
     SpaceRepository.getById(id)
-      .then(data => res.json(data))
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+
+          return res.end()
+        }
+
+        res.json(data[0])
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
