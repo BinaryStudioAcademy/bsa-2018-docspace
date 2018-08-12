@@ -51,12 +51,31 @@ class SpaceRepository extends GeneralRepository {
         }
       },
       {
+        $lookup: {
+          from: 'users',
+          localField: 'ownerId',
+          foreignField: '_id',
+          as: 'ownerId'
+        }
+      },
+      {
+        $addFields: {
+          ownerId: {
+            $arrayElemAt: ['$ownerId', 0]
+          }
+        }
+      },
+      {
         $project: {
           _id: 1,
           name: 1,
           key: 1,
           isDeleted: 1,
-          ownerId: 1,
+          ownerId: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1
+          },
           description: 1,
           categories: {
             _id: 1,

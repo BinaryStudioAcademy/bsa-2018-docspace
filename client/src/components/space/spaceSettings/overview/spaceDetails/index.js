@@ -36,7 +36,7 @@ export default class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>Created by</td>
-            <td> <span className='link'>{space.ownerId}</span></td>
+            <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
           </tr>
           <tr>
             <td>Categories</td>

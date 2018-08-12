@@ -58,7 +58,9 @@ SpaceSettings.propTypes = {
 }
 
 SpaceSettings.defaultProps = {
-  space: {}
+  space: {
+    ownerId: {}
+  }
 }
 
 const mapStateToprops = (state) => {
