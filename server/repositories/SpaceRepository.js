@@ -5,6 +5,30 @@ const GeneralRepository = require('./GeneralRepository')
 const SpaceModel = require('../models/spaceScheme')
 
 class SpaceRepository extends GeneralRepository {
+  getAll () {
+    return this.model.aggregate([
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'categories',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          categories: {
+            _id: 1,
+            name: 1
+          }
+        }
+      }
+    ])
+  }
+
   getById (id) {
     return this.model.aggregate([
       {
@@ -19,6 +43,14 @@ class SpaceRepository extends GeneralRepository {
         }
       },
       {
+        $lookup: {
+          from: 'categories',
+          localField: 'categories',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
         $project: {
           _id: 1,
           name: 1,
@@ -26,7 +58,10 @@ class SpaceRepository extends GeneralRepository {
           isDeleted: 1,
           ownerId: 1,
           description: 1,
-          categories: 1,
+          categories: {
+            _id: 1,
+            name: 1
+          },
           homePageId: 1,
           blogId: 1,
           pages: {
