@@ -4,8 +4,10 @@
     "license": "ISC",
     "scripts": {
         "client": "cd client && yarn start",
+        "client-build": "cd client && yarn build",
         "server": "nodemon ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+        "prod": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client-build\"",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
