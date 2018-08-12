@@ -6,7 +6,7 @@
         "client": "cd client && yarn start",
         "client-build": "cd client && yarn build",
         "server": "nodemon ./server/server.js",
-        "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && yarn build",
+        "heroku-postbuild": "cd client && yarn && npm install --only=dev --no-shrinkwrap && yarn build",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "prod": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client-build\""
     },
