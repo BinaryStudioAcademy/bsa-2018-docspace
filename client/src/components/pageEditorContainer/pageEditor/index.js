@@ -61,7 +61,7 @@ export default class PageEditor extends Component {
              <a href={`/spaces/${space._id}/pages`} target='_blank'>
                 / pages
              </a>
-             <a href={`/spaces/${space._id}/pages/${page._id}}`}>
+             <a href={`/spaces/${space._id}/pages/${page._id}`} target='_blank'>
                {`/ ${page.title}`}
              </a>
            </div>
