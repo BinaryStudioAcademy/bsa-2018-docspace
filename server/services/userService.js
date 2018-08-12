@@ -1,6 +1,47 @@
 const UserRepository = require('../repositories/UserRepository')
 const scheme = require('../models/userScheme')
 
+function validateEmail (email) {
+  const re = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return {
+    success: re.test(String(email).toLowerCase()),
+    message: `Incorrect email`
+  }
+}
+function validateLogin (login) {
+  const re = /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{0,19}$/
+  return {
+    success: re.test(String(login).toLowerCase()),
+    message: `Incorrect login`
+  }
+}
+
+function validateName ({firstName, lastName}) {
+  const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/
+  const resultFirstNameValidation = re.test(String(firstName).toLowerCase())
+  const resultLastNameValidation = re.test(String(lastName).toLowerCase())
+  if (!resultFirstNameValidation && !resultLastNameValidation) {
+    return {
+      success: false,
+      message: `Incorrect first name and last name`
+    }
+  }
+  if (!resultFirstNameValidation) {
+    return {
+      success: resultFirstNameValidation,
+      message: `Incorrect first name`
+    }
+  }
+  if (!resultLastNameValidation) {
+    return {
+      success: resultLastNameValidation,
+      message: `Incorrect last name`
+    }
+  }
+
+  return {success: true}
+}
+
 module.exports = {
   findAll: (req, res) => {
     UserRepository.getAll()
@@ -50,7 +91,8 @@ module.exports = {
     User.save()
       .then(user => {
         res.send(user)
-      }).catch(err => {
+      })
+      .catch(err => {
         res.status(500).send({
           message: err.message || 'Some error occurred while creating the User.'
         })
@@ -58,24 +100,46 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    UserRepository.update(req.params.id, req.body)
+    UserRepository.getById(req.params.id)
       .then(user => {
-        if (!user) {
-          return res.status(404).send({
-            message: 'User not found with id ' + req.params.id
-          })
-        }
-        res.send(user)
-      }).catch(err => {
-        if (err.kind === 'ObjectId') {
-          return res.status(404).send({
-            message: 'User not found with id ' + req.params.id
-          })
-        }
-        return res.status(500).send({
-          message: 'Error updating User with id ' + req.params.id
+        const resultEmailValidation = validateEmail(req.body.email)
+        const resultLoginValidation = validateLogin(req.body.login)
+        const resultNameValidation = validateName({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName
         })
+        if (!resultEmailValidation.success) {
+          return res.status(500).send({...resultEmailValidation, user: user})
+        }
+        if (!resultLoginValidation.success) {
+          return res.status(500).send({...resultLoginValidation, user: user})
+        }
+        if (!resultNameValidation.success) {
+          return res.status(500).send({...resultNameValidation, user: user})
+        }
+        UserRepository.update(req.params.id, req.body)
+          .then(user => {
+            if (!user) {
+              return res.status(404).send({
+                message: 'User not found with id ' + req.params.id
+              })
+            }
+            return res.send({
+              success: true,
+              message: 'User data is changed',
+              user: user })
+          }).catch(err => {
+            if (err.kind === 'ObjectId') {
+              return res.status(404).send({
+                message: 'User not found with id ' + req.params.id
+              })
+            }
+            return res.status(500).send({
+              message: 'Error updating User with id ' + req.params.id
+            })
+          })
       })
+      .catch(err => res.send(err))
   },
 
   findOneAndDelete: (req, res) => {

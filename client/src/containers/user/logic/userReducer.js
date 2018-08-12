@@ -1,9 +1,7 @@
 import * as actionTypes from './userActionTypes'
 import { combineReducers } from 'redux'
 
-const initialStateUser = {
-  user: {}
-}
+const initialStateUser = {}
 
 const initialStatePassword = {
   successful: false,
@@ -32,10 +30,10 @@ const checkingReducer = (state = initialStatePassword, action) => {
       }
     case actionTypes.CHECK_USER_PASSWORD_FAILED:
       return {
-        errors: state.errors.concat([{
+        errors: [{
           body: action.error.toString(),
           time: new Date()
-        }]),
+        }],
         messages: [],
         successful: false
       }
@@ -48,3 +46,5 @@ export default combineReducers({
   userReducer,
   checkingReducer
 })
+
+export const userById = ({ user }) => user.userReducer

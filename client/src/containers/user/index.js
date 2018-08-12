@@ -5,6 +5,7 @@ import { getUserData, updateUser, checkPassword } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
+import { userById } from './logic/userReducer'
 import ProfileFields from 'src/components/userTabs/general'
 import PrivateFields from 'src/components/userTabs/private'
 import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
@@ -33,7 +34,7 @@ class User extends Component {
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
       email: this.props.user.email,
-      id: this.props.match.params.id,
+      id: this.props.user._id,
       password: currentPassword,
       newPassword: newPassword
     })
@@ -59,7 +60,7 @@ class User extends Component {
   editMode (userProfile) {
     if (this.state.isEditMode) {
       this.props.actions.updateUser({
-        id: this.props.match.params.id,
+        id: this.props.user._id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
         email: userProfile.email,
@@ -88,24 +89,12 @@ class User extends Component {
     })
   }
 
-  componentWillMount () {
-    this.props.actions.getUserData(this.props.match.params.id)
-  }
-
   render () {
     const { firstName, lastName } = this.props.user
     const { successful, errors } = this.props.resultOfChecking
-    console.log(`render`, successful, errors)
     return (
       <React.Fragment>
         <div className='main-wrapper'>
-          <div className='left-side-wrapper'>
-            <div>
-              <div className='left-side-content'>
-                <div className='left-side-items'>0</div>
-              </div>
-            </div>
-          </div>
           <div className='content-wrapper'>
             <div className='profile-page'>
               <div className='profile-page-responsive'>
@@ -214,12 +203,13 @@ class User extends Component {
     )
   }
 }
+
 User.defaultProps = {
-  result: {
-    requesting: false,
-    successful: false,
-    messages: [],
-    errors: []
+  user: {
+    login: 'login',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email@gmail.com'
   }
 }
 
@@ -239,7 +229,7 @@ User.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.userReducer,
+    user: Object.keys(userById(state)).length ? userById(state) : state.login.messages[0].user,
     resultOfChecking: state.user.checkingReducer
   }
 }
