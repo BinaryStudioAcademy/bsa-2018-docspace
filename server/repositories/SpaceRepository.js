@@ -93,6 +93,16 @@ class SpaceRepository extends GeneralRepository {
       }
     ])
   }
+
+  update (id, data) {
+    return super.update(id, data)
+      .then(() => this.getById(id))
+  }
+
+  create (data) {
+    return super.create(data)
+      .then(space => this.getById(space._id))
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

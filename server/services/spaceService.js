@@ -51,7 +51,7 @@ module.exports = {
     }
 
     SpaceRepository.create(req.body)
-      .then(data => res.json(data))
+      .then(data => res.json(data[0]))
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -69,7 +69,7 @@ module.exports = {
     }
 
     SpaceRepository.update(id, req.body)
-      .then(data => res.json(data))
+      .then(data => res.json(data[0]))
       .catch((err) => {
         console.log(err)
         res.status(400)
