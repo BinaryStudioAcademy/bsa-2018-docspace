@@ -26,7 +26,7 @@ class MenuList extends Component {
 }
 
 MenuList.propTypes = {
-  menuTabs: PropTypes.string
+  menuTabs: PropTypes.array
 }
 
 export default MenuList

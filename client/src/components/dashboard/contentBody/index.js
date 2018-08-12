@@ -28,7 +28,7 @@ class ContentBody extends Component {
   }
 }
 ContentBody.propTypes = {
-  menuTabs: PropTypes.string,
+  menuTabs: PropTypes.array,
   header: PropTypes.string
 }
 export default ContentBody

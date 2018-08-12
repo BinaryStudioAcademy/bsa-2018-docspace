@@ -6,7 +6,7 @@ dashboard__content__spaces{
   
 }
 .header {
-  margin-top: 1em;
+  margin-top: 2.9em;
 }
 .header > button {
   margin-top: 1.7em;
@@ -20,7 +20,7 @@ dashboard__content__spaces{
   font-weight: 400;
 }
 .welcome > img {
-  width: 100px;
+  width: 200px;
   height: 100px;
   padding-left:30%;
 }

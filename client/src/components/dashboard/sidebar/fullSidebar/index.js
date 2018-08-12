@@ -21,7 +21,7 @@ class FullSidebar extends Component {
       />
       <Button
         title={this.props.showLabels && t('spaces')}
-        path='/spaces' type={navButtonClass}
+        path='/spacedirectory' type={navButtonClass}
         icon='fa fa-folder'
       />
       <Button

@@ -4,6 +4,10 @@
       "your work": "Your work",
       "spaces": "Spaces",
       "people": "People",
-      "settings": "Settings"
+      "settings": "Settings",
+      "you": "You",
+      "already like it": "already like it",
+      "be the first who like it": "Be the first who like it",
+      "and_0_ other_people": " and {{count}} other people "
     }
   }

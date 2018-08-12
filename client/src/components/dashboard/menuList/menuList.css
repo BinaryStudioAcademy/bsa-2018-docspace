@@ -7,14 +7,14 @@
 }
 h1 {
   margin:0.75em auto;
-  padding-top: 1.25em;
+  padding-top: 1em;
 
 }
 .menuTab > a {
   
   text-decoration: none;
   color:#333333;
-  padding-bottom: 0.15em;
+  padding-bottom: 0.25em;
   border-bottom: 2px solid #cfcfcf;
    }
 .menuTab > a.active {
