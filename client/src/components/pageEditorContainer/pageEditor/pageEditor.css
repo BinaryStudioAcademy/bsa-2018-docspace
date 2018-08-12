@@ -65,11 +65,11 @@
     display: inline-block;
     margin-top: 0;
     font-size: 16px; }
-    .page-editor-wrp .breadcrumbs span {
+    .page-editor-wrp .breadcrumbs a {
       color: #0052cc;
       padding: 2px;
       cursor: pointer; }
-      .page-editor-wrp .breadcrumbs span:hover {
+      .page-editor-wrp .breadcrumbs a:hover {
         color: black; }
   .page-editor-wrp .page-settings-btn-wrp {
     padding-left: 1rem; }

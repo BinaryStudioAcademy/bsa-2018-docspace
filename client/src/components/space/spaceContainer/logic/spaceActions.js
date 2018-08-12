@@ -17,6 +17,21 @@ export const getAllSpacesError = () => ({
   type: actionTypes.GET_ALL_SPACES_ERROR
 })
 
+// GET ONE
+export const getSpaceByIdRequest = (id) => ({
+  type: actionTypes.GET_SPACE_BY_ID_REQUEST,
+  payload: id
+})
+
+export const getSpaceByIdSuccess = (space) => ({
+  type: actionTypes.GET_SPACE_BY_ID_SUCCESS,
+  payload: space
+})
+
+export const getSpaceByIdError = () => ({
+  type: actionTypes.GET_SPACE_BY_ID_ERROR
+})
+
 // POST
 export const createSpaceRequest = (space) => ({
   type: actionTypes.CREATE_SPACE_REQUEST,

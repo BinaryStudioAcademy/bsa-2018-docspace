@@ -45,9 +45,23 @@ function * deleteSpace (action) {
   }
 }
 
+function * getSpace (action) {
+  try {
+    console.log('in get space saga')
+    console.log(action)
+    const space = yield SpaceService.getSpace(action.payload)
+    console.log('space')
+    console.log(space)
+    yield put(actions.getSpaceByIdSuccess(space))
+  } catch (e) {
+    yield put(actions.getSpaceByIdError())
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_SPACES_REQUEST, getSpaces)
   yield takeEvery(actionTypes.CREATE_SPACE_REQUEST, createSpace)
   yield takeEvery(actionTypes.DELETE_SPACE_REQUEST, deleteSpace)
   yield takeEvery(actionTypes.UPDATE_SPACE_REQUEST, updateSpace)
+  yield takeEvery(actionTypes.GET_SPACE_BY_ID_REQUEST, getSpace)
 }

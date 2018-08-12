@@ -6,7 +6,7 @@ import joditConfig from './joditConfig'
 import PropTypes from 'prop-types'
 import './pageEditor.css'
 
-// dummy avatar fro user
+// dummy avatar for user
 import logo from 'src/resources/logo.svg'
 
 export default class PageEditor extends Component {
@@ -38,24 +38,16 @@ export default class PageEditor extends Component {
        title: value
      }
    })
-   console.log(this.state)
  }
 
  handlePablishClick = () => {
    // Merge page property
    const editedPage = { ...this.props.page, ...this.state.page }
-   // createNewPageRequest or updatePageRequest
-   this.props.handlePablishBtnClick(editedPage)
- }
-
- jodit;
-
- setRef = jodit => {
-   this.jodit = jodit
-   return this.jodit
+   this.props.handlePublishBtnClick(editedPage)
  }
 
  render () {
+   console.log(this.props.page)
    const {space, page, user} = this.props
    return (
      <div className='page-editor-wrp'>
@@ -63,15 +55,15 @@ export default class PageEditor extends Component {
          <div className='page-menu'>
            <div className='breadcrumbs'>
              {/* :space_name/pages/:page_title */}
-             <span>
+             <a href={`/spaces/${space._id}`} target='_blank' >
                {space.name}
-             </span>
-             <span>
+             </a>
+             <a href={`/spaces/${space._id}/pages`} target='_blank'>
                 / pages
-             </span>
-             <span>
+             </a>
+             <a href={`/spaces/${space._id}/pages/${page._id}}`}>
                {`/ ${page.title}`}
-             </span>
+             </a>
            </div>
            <div className='page-settings-btn-wrp'>
              <button data-hover-text-help='page location'>
@@ -110,7 +102,6 @@ export default class PageEditor extends Component {
          defaultValue={this.props.page.title}
        />
        <JoditEditor
-         editorRef={this.setRef}
          value={this.state.page.content}
          config={joditConfig}
          onChange={this.updatePageContent}
@@ -118,10 +109,7 @@ export default class PageEditor extends Component {
 
        <div className='page-editor-footer'>
          <div>
-           <button
-             className='accept-button'
-             onClick={this.handlePablishClick}
-           >
+           <button className='accept-button' onClick={this.handlePablishClick}>
               Publish
            </button>
            <button onClick={this.props.handleCancelBtnClick}>
@@ -140,7 +128,7 @@ export default class PageEditor extends Component {
 PageEditor.defaultProps = {
   page: {
     content: '',
-    title: 'Title'
+    title: ''
   },
   space: {
     name: 'Fake'
@@ -151,10 +139,7 @@ PageEditor.defaultProps = {
 }
 
 PageEditor.propTypes = {
-  // create new space or update page, passing via props and go to page overwiew (/spaces/:space_id/pages/:page_id)
-  handlePablishBtnClick: PropTypes.func.isRequired,
-  // [ Save as a draft ? Maybe ], go to the existing page's overwiew (if page was editing) or go to "DashboardWork"
-  // warning: on DashboardWork component we can create page for personal space.
+  handlePublishBtnClick: PropTypes.func.isRequired,
   handleCancelBtnClick: PropTypes.func.isRequired,
   page: PropTypes.shape({
     title: PropTypes.string,
