@@ -16,9 +16,8 @@ import './space.css'
 
 class SpaceContainer extends Component {
   componentWillMount () {
-    if (!this.props.space.name) {
-      this.props.getSpaces()
-    }
+    const id = this.props.location.pathname.split('/')[2]
+    this.props.getSpace(id)
   }
 
   render () {
@@ -44,7 +43,7 @@ class SpaceContainer extends Component {
 SpaceContainer.propTypes = {
   space: PropTypes.object,
   location: PropTypes.object,
-  getSpaces: PropTypes.func
+  getSpace: PropTypes.func
 }
 
 SpaceContainer.defaultProps = {
@@ -61,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSpaces: bindActionCreators(actions.getSpacesRequest, dispatch)
+    getSpace: bindActionCreators(actions.getSpaceRequest, dispatch)
   }
 }
 

@@ -54,7 +54,11 @@ class SpaceSettings extends Component {
 
 SpaceSettings.propTypes = {
   updateSpace: PropTypes.func.isRequired,
-  space: PropTypes.object.isRequired
+  space: PropTypes.object
+}
+
+SpaceSettings.defaultProps = {
+  space: {}
 }
 
 const mapStateToprops = (state) => {
