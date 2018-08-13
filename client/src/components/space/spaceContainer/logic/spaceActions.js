@@ -17,10 +17,10 @@ export const getAllSpacesError = () => ({
   type: actionTypes.GET_ALL_SPACES_ERROR
 })
 
-// GET
+// GET ONE
 export const getSpaceRequest = (id) => ({
   type: actionTypes.GET_SPACE_REQUEST,
-  payload: { id }
+  payload: id
 })
 
 export const getSpaceSuccess = (space) => ({

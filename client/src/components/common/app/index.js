@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './app.css'
+
 import DashboardSidebar from 'src/components/dashboard/sidebar'
 import DashboardMain from 'src/components/dashboard/main'
 import Activity from 'src/components/dashboard/main/activity'

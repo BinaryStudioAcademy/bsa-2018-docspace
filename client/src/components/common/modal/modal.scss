@@ -1,6 +1,7 @@
 @import "src/globalStyles/variables.scss";
 
 .modal-backdrop{
+    z-index: 1000;
     position: fixed;
     top: 0;
     bottom: 0;
