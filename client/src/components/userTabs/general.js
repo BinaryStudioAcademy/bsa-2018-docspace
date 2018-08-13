@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
+import Errors from 'src/components/common/error'
 
 class ProfileFields extends Component {
   constructor (props) {
@@ -21,6 +22,7 @@ class ProfileFields extends Component {
     this.handleFirstName = this.handleFirstName.bind(this)
     this.handleLastName = this.handleLastName.bind(this)
     this.handleSubmitDataUser = this.handleSubmitDataUser.bind(this)
+    this.propsToState = this.propsToState.bind(this)
   }
 
   handleEmail (e) {
@@ -39,32 +41,24 @@ class ProfileFields extends Component {
     this.setState({lastName: e.target.value})
   }
 
-  renderEmail (email) {
-    const displayEmail = this.state.email || email
-
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={!this.state.email ? email : this.state.email} onChange={this.handleEmail} />
-      : <a href='#'>{displayEmail}</a>
+  renderEmail (propsEmail) {
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.email} onChange={this.handleEmail} />
+      : <a href='#'>{propsEmail}</a>
   }
 
-  renderLogin (login) {
-    const displayLogin = this.state.login || login
-
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayLogin} onChange={this.handleLogin} />
-      : <span className='profile-field-nickname' href='#'>@{displayLogin}</span>
+  renderLogin (propsLogin) {
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.login} onChange={this.handleLogin} />
+      : <a href='#'>{propsLogin}</a>
   }
 
-  renderFirstName (firstName) {
-    const displayFirstName = this.state.firstName || firstName
-
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayFirstName} onChange={this.handleFirstName} />
-      : <span>{displayFirstName}</span>
+  renderFirstName (propsFirstName) {
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.firstName} onChange={this.handleFirstName} />
+      : <a href='#'>{propsFirstName}</a>
   }
 
-  renderLastName (lastName) {
-    const displayLastName = this.state.lastName || lastName
-
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={displayLastName} onChange={this.handleLastName} />
-      : <span>{displayLastName}</span>
+  renderLastName (propsLastName) {
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.lastName} onChange={this.handleLastName} />
+      : <a href='#'>{propsLastName}</a>
   }
 
   renderLabelButton () {
@@ -72,13 +66,25 @@ class ProfileFields extends Component {
       : {icon: <i className='fa fa-check' aria-hidden='true' />, value: `Save`}
   }
 
+  propsToState () {
+    if (!this.props.isEditMode) {
+      this.setState({
+        email: this.props.user.email,
+        login: this.props.user.login,
+        firstName: this.props.user.firstName,
+        lastName: this.props.user.lastName
+      })
+    }
+  }
+
   handleSubmitDataUser () {
+    this.propsToState()
     if (this.props.editMode) {
       this.props.editMode({
-        email: this.state.email ? this.state.email : this.props.user.email,
-        login: this.state.login ? this.state.login : this.props.user.login,
-        firstName: this.state.firstName ? this.state.firstName : this.props.user.firstName,
-        lastName: this.state.lastName ? this.state.lastName : this.props.user.lastName
+        email: this.state.email,
+        login: this.state.login,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
       })
     }
   }
@@ -121,6 +127,9 @@ class ProfileFields extends Component {
             </div>
           </li>
         </ul>
+        {!!this.props.errors.length && (
+          <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
+        )}
         <div className='edit-btn'>
           <Button
             icon={this.renderLabelButton().icon}
@@ -142,5 +151,6 @@ ProfileFields.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   isEditMode: PropTypes.bool,
-  editMode: PropTypes.func
+  editMode: PropTypes.func,
+  errors: PropTypes.array
 }

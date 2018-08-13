@@ -1,28 +1,36 @@
 import * as actionTypes from './userActionTypes'
 import { combineReducers } from 'redux'
 
-const initialStateUser = {
-  user: {}
-}
-
-const initialStatePassword = {
+const initialState = {
   successful: false,
   messages: [],
   errors: []
 }
 
-const userReducer = (state = initialStateUser, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_USER_DATA_SUCCESS:
     case actionTypes.UPDATE_USER_SUCCESS:
     {
-      return action.payload
+      return {
+        errors: [],
+        messages: [action.response],
+        successful: true
+      }
     }
+    case actionTypes.UPDATE_USER_FAILED:
+      return {
+        errors: [{
+          body: action.response.message.toString(),
+          time: new Date()
+        }],
+        messages: [action.response],
+        successful: false
+      }
     default: return state
   }
 }
 
-const checkingReducer = (state = initialStatePassword, action) => {
+const checkingReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CHECK_USER_PASSWORD_SUCCESS:
       return {
@@ -32,10 +40,10 @@ const checkingReducer = (state = initialStatePassword, action) => {
       }
     case actionTypes.CHECK_USER_PASSWORD_FAILED:
       return {
-        errors: state.errors.concat([{
+        errors: [{
           body: action.error.toString(),
           time: new Date()
-        }]),
+        }],
         messages: [],
         successful: false
       }
@@ -48,3 +56,5 @@ export default combineReducers({
   userReducer,
   checkingReducer
 })
+
+export const userById = ({ user }) => user.userReducer
