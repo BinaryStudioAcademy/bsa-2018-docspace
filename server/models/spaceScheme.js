@@ -17,9 +17,7 @@ const spaceSchema = new mongoose.Schema({
   },
   description: String,
   categories: [Schema.Types.ObjectId],
-  homePageId: {
-    type: Schema.Types.ObjectId
-  },
+  homePageId: Schema.Types.ObjectId,
   blogId: Schema.Types.ObjectId,
   pages: [Schema.Types.ObjectId],
   history: [Schema.Types.ObjectId],

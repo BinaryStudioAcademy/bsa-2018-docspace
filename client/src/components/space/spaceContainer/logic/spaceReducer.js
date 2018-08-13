@@ -11,6 +11,9 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_ALL_SPACES_SUCCESS:
       return action.payload.all
 
+    case actionTypes.GET_SPACE_SUCCESS:
+      return [ ...state, action.payload._id ]
+
     case actionTypes.DELETE_SPACE_SUCCESS:
       return state.filter(id => id !== action.payload.id)
 
@@ -24,6 +27,9 @@ function all (state = initialState.all, action) {
 function byId (state = initialState.byId, action) {
   switch (action.type) {
     case actionTypes.UPDATE_SPACE_SUCCESS:
+      return { ...state, [action.payload._id]: action.payload }
+
+    case actionTypes.GET_SPACE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
     case actionTypes.GET_ALL_SPACES_SUCCESS:

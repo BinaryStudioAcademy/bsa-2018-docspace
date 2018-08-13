@@ -8,7 +8,7 @@
     position: relative;
     vertical-align: top;
     margin-top: 2px; }
-    .comment-avatar .comment-link-user-avatar .comment-icon-avatar {
-      border-radius: 50%;
-      width: 32px;
-      height: 32px; }
+  .comment-avatar .comment-icon-avatar {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px; }
