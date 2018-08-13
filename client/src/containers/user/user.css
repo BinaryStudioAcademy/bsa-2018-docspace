@@ -17,30 +17,6 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   font-size: 14px;
   line-height: 1.42857; }
 
-.left-side-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 64px; }
-
-.left-side-wrapper .left-side-content {
-  min-width: 64px;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  left: 0px;
-  width: inherit;
-  z-index: 300;
-  transition: height 0.25s ease-in-out; }
-
-.left-side-items {
-  background-color: #0747a6;
-  color: #deebff;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0px 8px; }
-
 .content-wrapper {
   position: relative;
   z-index: 1;
@@ -202,7 +178,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   height: 100%;
   width: 100%;
   background-color: rgba(23, 43, 77, 0.3);
-  background-image: url("../../assets/avatar.png"); }
+  background-image: url("../../assets/user.png"); }
 
 .profile-avatar-hover {
   opacity: 0;
@@ -300,6 +276,10 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   display: inline-flex;
   margin: 0px -2px; }
 
+.profile-fields-wrapper .user-general-errors-user {
+  display: inline;
+  text-align: start; }
+
 .profile-fields-wrapper .edit-btn,
 .edit-manage-btn .manage-btn {
   flex: 1 0 auto;
@@ -355,7 +335,8 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   max-width: 575px;
   list-style: none;
   padding: 0;
-  margin: 14px 0px 14px 0px; }
+  margin: 14px 0px 14px 0px;
+  text-align: start; }
 
 .profile-fields-items .profile-fields-item {
   display: inline-block;
@@ -391,7 +372,8 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 .recent-work-list-wrapper {
   margin: 0 auto;
   width: 100%;
-  max-width: 944px; }
+  max-width: 944px;
+  text-align: start; }
 
 .recent-work-list-wrapper-header {
   font-size: 1.14em;
@@ -486,6 +468,9 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   flex: 0 0 auto;
   padding: 8px 12px 7px;
   text-decoration: none; }
+
+.change-password-wrapper {
+  text-align: start; }
 
 .change-password-header {
   font-size: 1.14em;

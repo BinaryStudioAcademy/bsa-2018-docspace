@@ -70,6 +70,9 @@ class PrivateFields extends Component {
           {!!this.props.errors.length && (
             <Errors message='Failure to login due to:' errors={this.props.errors} />
           )}
+          {this.props.successful && (
+            <span>Password is changed</span>
+          )}
           <div className='edit-btn'>
             <Button
               icon={<i className='fa fa-check' aria-hidden='true' />}
@@ -88,5 +91,6 @@ export default PrivateFields
 PrivateFields.propTypes = {
   handlePassword: PropTypes.func,
   errors: PropTypes.array,
+  successful: PropTypes.bool,
   sendPassword: PropTypes.func
 }

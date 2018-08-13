@@ -50,7 +50,7 @@ class App extends Component {
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
             <Route path='/spaces' component={SpaceContainer} />
-            <Route path='/settings' component={User} />
+            <Route path='/userSettings' component={User} />
           </DashboardMain>
         </SplitPane>
       </div>
