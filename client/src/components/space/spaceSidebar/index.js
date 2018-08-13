@@ -1,11 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import SpacePagesList from 'src/components/space/spacePagesList'
 import './spaceSidebar.css'
 
-const SpaceSidebar = ({ space, pages }) => {
+const SpaceSidebar = ({ space, pages, t }) => {
   return (
     <div className='sidebar'>
       <div className='sidebar-header'>
@@ -20,19 +21,19 @@ const SpaceSidebar = ({ space, pages }) => {
             <div className='sidebar-main-navbar-section--icon'>
               <i className='fas fa-stream' />
             </div>
-            <div className='sidebar-main-navbar-section-name'>Overview</div>
+            <div className='sidebar-main-navbar-section-name'>{t('overview')}</div>
           </NavLink>
           <NavLink className='sidebar-main-navbar-section' to={`/spaces/${space._id}/blog`} activeClassName='current'>
             <div className='sidebar-main-navbar-section-icon'>
               <i className='fas fa-quote-right' />
             </div>
-            <div className='sidebar-main-navbar-section-name'>Blog</div>
+            <div className='sidebar-main-navbar-section-name'>{t('blog')}</div>
           </NavLink>
           <NavLink className='sidebar-main-navbar-section' to={`/spaces/${space._id}/settings`} activeClassName='current'>
             <div className='sidebar-main-navbar-section-icon'>
               <i className='fas fa-cog' />
             </div>
-            <div className='sidebar-main-navbar-section-name'>Space Settings</div>
+            <div className='sidebar-main-navbar-section-name'>{t('space_settings')}</div>
           </NavLink>
         </div>
         <SpacePagesList pages={pages} spaceId={space._id} />
@@ -44,7 +45,8 @@ const SpaceSidebar = ({ space, pages }) => {
 
 SpaceSidebar.propTypes = {
   space: PropTypes.object,
-  pages: PropTypes.array
+  pages: PropTypes.array,
+  t: PropTypes.func
 }
 
 SpaceSidebar.defaultProps = {
@@ -52,4 +54,4 @@ SpaceSidebar.defaultProps = {
   pages: []
 }
 
-export default SpaceSidebar
+export default translate('translations')(SpaceSidebar)

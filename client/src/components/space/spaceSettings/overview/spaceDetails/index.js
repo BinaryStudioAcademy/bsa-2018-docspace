@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './spaceDetails.css'
+import { translate } from 'react-i18next'
 
+import './spaceDetails.css'
 import img from 'src/resources/logo.svg'
 
-export default class SpaceDetails extends Component {
+class SpaceDetails extends Component {
   render () {
-    const { space } = this.props
+    const { space, t } = this.props
     return (
       <table className='space-details-table'>
         <tbody>
@@ -17,15 +18,15 @@ export default class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>Name</td>
+            <td>{t('name')}</td>
             <td>{space.name}</td>
           </tr>
           <tr>
-            <td>Key</td>
-            <td>DOC</td>
+            <td>{t('key')}</td>
+            <td>{space.key}</td>
           </tr>
           <tr>
-            <td>Home page</td>
+            <td>{t('home_page')}</td>
             <td>
 
               <span className='link'>
@@ -35,19 +36,19 @@ export default class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>Created by</td>
+            <td>{t('created_by')}</td>
             <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
           </tr>
           <tr>
-            <td>Categories</td>
+            <td>{t('categories')}</td>
             <td />
           </tr>
           <tr>
-            <td>Description</td>
+            <td>{t('description')}</td>
             <td>{space.description}</td>
           </tr>
           <tr>
-            <td>Administrators</td>
+            <td>{t('administrators')}</td>
             <td>
               <span className='link'> Danil </span>
             </td>
@@ -59,5 +60,8 @@ export default class SpaceDetails extends Component {
 }
 
 SpaceDetails.propTypes = {
-  space: PropTypes.object.isRequired
+  space: PropTypes.object.isRequired,
+  t: PropTypes.func
 }
+
+export default translate('translations')(SpaceDetails)
