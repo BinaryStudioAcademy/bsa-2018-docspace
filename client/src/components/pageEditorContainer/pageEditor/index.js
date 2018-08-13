@@ -4,6 +4,7 @@ import 'jodit/build/jodit.min.css'
 import JoditEditor from 'jodit-react'
 import joditConfig from './joditConfig'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 import './pageEditor.css'
 
 // dummy avatar for user
@@ -47,7 +48,6 @@ export default class PageEditor extends Component {
  }
 
  render () {
-   console.log(this.props.page)
    const {space, page, user} = this.props
    return (
      <div className='page-editor-wrp'>
@@ -55,15 +55,15 @@ export default class PageEditor extends Component {
          <div className='page-menu'>
            <div className='breadcrumbs'>
              {/* :space_name/pages/:page_title */}
-             <a href={`/spaces/${space._id}`} target='_blank' >
-               {space.name}
-             </a>
-             <a href={`/spaces/${space._id}/pages`} target='_blank'>
-                / pages
-             </a>
-             <a href={`/spaces/${space._id}/pages/${page._id}`} target='_blank'>
-               {`/ ${page.title}`}
-             </a>
+             <Link to={`/spaces/${space._id}`} target='_blank' >
+               <span>{space.name}</span>
+             </Link>
+             <Link to={`/spaces/${space._id}/pages`} target='_blank'>
+               <span>/ pages</span>
+             </Link>
+             <Link to={`/spaces/${space._id}/pages/${page._id}`} target='_blank'>
+               <span>{`/ ${page.title}`}</span>
+             </Link>
            </div>
            <div className='page-settings-btn-wrp'>
              <button data-hover-text-help='page location'>

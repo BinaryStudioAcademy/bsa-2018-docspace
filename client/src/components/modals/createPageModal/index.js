@@ -77,7 +77,6 @@ class CreatePageModal extends Component {
   renderModalFooter = () => {
     // todo: change next btn color  whe it's disabled
     const disableNextButton = !this.state.selectedTemplate || !this.state.selectedSpaceId
-    console.log(disableNextButton)
     return (
       <div className='modal-footer'>
         <button
@@ -122,7 +121,6 @@ class CreatePageModal extends Component {
    }
 
    render () {
-     console.log(this.state)
      return (
        <Modal
          renderHeader={this.renderModalHeader}

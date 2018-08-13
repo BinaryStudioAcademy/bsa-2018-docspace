@@ -15,7 +15,6 @@ class PageFactory {
     this.PageCreators = pageCreatorsByTemplatesNames
   }
   createTemplatePageForSpace (spaceId, templateName) {
-    console.log(templateName)
     return this.PageCreators[templateName](spaceId)
   }
 }

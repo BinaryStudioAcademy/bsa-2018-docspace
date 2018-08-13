@@ -66,9 +66,9 @@ export const allPages = ({pages}) => pages.all.map(id => pages.byId[id])
 export const pagesByIdsArray = ({pages}, ids) => ids.map(id => pages.byId[id])
 
 export const pageByIdFromRoute = (state) => {
-  const locationNames = state.router.location.pathname.split('/')
-  // for path like /spaces/space_id/pages/PAGE_ID
-  if (locationNames.length < 5) return null
-  const id = locationNames[4]
-  return state.pages.byId[id]
+  const { pathname } = state.router.location
+  const pageIdRegExp = /(?:pages[/])([^[/]*)(?:\/.*|$)/
+  const matched = pathname.match(pageIdRegExp)
+  if (matched.length < 2) return null
+  return state.pages.byId[matched[1]]
 }

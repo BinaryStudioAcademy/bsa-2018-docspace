@@ -13,17 +13,19 @@ import fakeImg from 'src/resources/logo.svg'
 
 class Page extends Component {
   render () {
+    const { avatar, firstName, lastName } = this.props.user
+    const { page } = this.props
     return (
       <div className='page-container'>
         <div>
-          <PageTitle text={this.props.page.title} />
+          <PageTitle text={page.title} />
           <PageInfo
-            avatar={this.props.user.avatar}
-            firstName={this.props.user.firstName}
-            lastName={this.props.user.lastName}
-            date={this.props.page.created.date}
+            avatar={avatar}
+            firstName={firstName}
+            lastName={lastName}
+            date={page.created.date}
           />
-          <PageContent content={this.props.page.content} />
+          <PageContent content={page.content} />
         </div>
         <Comments />
       </div>
