@@ -13,7 +13,7 @@ export default class SpaceDetails extends Component {
           <tr>
             <td className='avatar-label-cell'>Space logo</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={img} />
+              <img id='space-logo' className='field-value space-avatar' src={img} alt='space-logo' />
             </td>
           </tr>
           <tr>
@@ -36,7 +36,7 @@ export default class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>Created by</td>
-            <td> <span className='link'>{space.ownerId}</span></td>
+            <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
           </tr>
           <tr>
             <td>Categories</td>

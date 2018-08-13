@@ -11,7 +11,7 @@ export default class EditSpaceDetailsForm extends Component {
     this.state = {
       name: space.name,
       description: space.description,
-      categories: space.categories.join(' '),
+      categories: space.categories.map(category => category.name).join(', '),
       logo: space.logo,
       homePage: space.homePage
     }
@@ -50,7 +50,7 @@ export default class EditSpaceDetailsForm extends Component {
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
           <label>Space logo</label>
-          <img id='space-logo' className='field-value space-avatar' src={logo} />
+          <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
            [<span className='link'>change</span>]
         </div>
 

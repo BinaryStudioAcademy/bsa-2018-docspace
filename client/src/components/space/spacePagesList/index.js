@@ -16,7 +16,7 @@ const SpacePagesList = ({ pages, spaceId }) => {
             return (
               <NavLink className='pages-list-item' key={page._id} to={`/spaces/${spaceId}/pages/${page._id}`} activeClassName='current'>
                 <div className='pages-list-item-icon'>•</div>
-                <div className='pages-list-item-name'>{page.name}</div>
+                <div className='pages-list-item-name'>{page.title}</div>
               </NavLink>
             )
           })

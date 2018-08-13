@@ -1,6 +1,6 @@
 import * as actionTypes from './spaceActionTypes'
 
-// GET
+// GET ALL
 export const getSpacesRequest = () => ({
   type: actionTypes.GET_ALL_SPACES_REQUEST
 })
@@ -15,6 +15,21 @@ export const allSpacesFetchedAndNormalized = (all, byId) => ({
 
 export const getAllSpacesError = () => ({
   type: actionTypes.GET_ALL_SPACES_ERROR
+})
+
+// GET ONE
+export const getSpaceRequest = (id) => ({
+  type: actionTypes.GET_SPACE_REQUEST,
+  payload: id
+})
+
+export const getSpaceSuccess = (space) => ({
+  type: actionTypes.GET_SPACE_SUCCESS,
+  payload: space
+})
+
+export const getSpaceError = () => ({
+  type: actionTypes.GET_SPACE_ERROR
 })
 
 // POST

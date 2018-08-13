@@ -1,5 +1,6 @@
 const PageRepository = require('../repositories/PageRepository')
-const scheme = require('../models/pageScheme')
+
+const SpaceRepository = require('../repositories/SpaceRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -7,6 +8,7 @@ module.exports = {
       .then(pages => {
         res.send(pages)
       }).catch(err => {
+        console.log(err)
         res.status(500).send({
           message: err.message || 'Some error occurred while retrieving pages.'
         })
@@ -23,6 +25,7 @@ module.exports = {
         }
         res.send(page)
       }).catch(err => {
+        console.log(err)
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
@@ -36,22 +39,19 @@ module.exports = {
   },
 
   add: (req, res) => {
-    const Page = new scheme.Page({
-      title: req.body.title,
-      content: req.body.content,
-      created: {
-        date: req.body.created.date,
-        userId: req.body.created.userId
-      },
-      comments: req.body.comments,
-      usersLikes: req.body.usersLikes,
-      isDeleted: req.body.isDeleted
-    })
-
-    Page.save()
+    PageRepository.create(req.body)
       .then(page => {
-        res.send(page)
+        SpaceRepository.addPageToSpace(page)
+          .then((space) => {
+            console.log(space)
+            return res.json(page)
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(500).send(err.message)
+          })
       }).catch(err => {
+        console.log(err)
         res.status(500).send({
           message: err.message || 'Some error occurred while creating the page.'
         })
@@ -68,6 +68,7 @@ module.exports = {
         }
         res.send(page)
       }).catch(err => {
+        console.log(err)
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
@@ -86,8 +87,12 @@ module.exports = {
             message: 'page not found with id ' + req.params.id
           })
         }
+        // WARNING : Here we need to delete page id from related space. !!!!
+        // For this we can create new method in SpaceRepo and pass to it page.spaceId  and  req.params.id
+        // (method PageRepository.delete must return deleted page, so we can't use deleteOne as now. We should use findOneAndRemove())
         res.send({message: 'page deleted successfully!'})
       }).catch(err => {
+        console.log(err)
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id

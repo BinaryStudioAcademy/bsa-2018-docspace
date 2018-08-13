@@ -9,6 +9,8 @@ router.post('/', userService.add)
 
 router.put('/:id', userService.findOneAndUpdate)
 
+router.put('/:id/setting', userService.updateSettingData)
+
 router.post('/changePassword', userService.changePassword)
 
 router.delete('/:id', userService.findOneAndDelete)
