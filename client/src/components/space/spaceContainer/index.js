@@ -7,6 +7,7 @@ import SpaceHeader from 'src/components/space/spaceHeader'
 import SpaceContent from 'src/components/space/spaceContent'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
 import SpaceSettings from 'src/components/space/spaceSettings'
+import MinSidebar from 'src/components/dashboard/sidebar'
 import Page from 'src/components/page'
 import Blog from 'src/components/blog'
 import { spaceById } from './logic/spaceReducer'
@@ -25,6 +26,7 @@ class SpaceContainer extends Component {
 
     return (
       <div className='space'>
+        <MinSidebar />
         <SpaceSidebar space={this.props.space} pages={this.props.space.pages} />
         <SpaceContent>
           <SpaceHeader />
