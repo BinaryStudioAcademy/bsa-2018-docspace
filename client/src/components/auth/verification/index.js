@@ -8,10 +8,8 @@ import { connect } from 'react-redux'
 class LoginCheck extends React.Component {
   componentDidMount () {
     if (this.props.user) {
-      console.log('save user in session')
       this.props.verification.saveUserInSession(this.props.user)
     } else {
-      console.log('check user from server')
       this.props.verification.verRequest()
     }
   }
@@ -25,7 +23,6 @@ class LoginCheck extends React.Component {
       return component
     }
     if (!isLoggedIn) {
-      console.log(isLoggedIn)
       return <Redirect to='/login' />
     }
   }
