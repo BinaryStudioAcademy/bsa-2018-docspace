@@ -12,8 +12,6 @@ export default class PermissionsRow extends Component {
 
   toogleChange (event) {
     const value = event.target.value
-    // Copy the object so we don't mutate the old state.
-    // (This requires an Object.assign polyfill):
     const checked = Object.assign({}, this.state.checked)
     if (!checked[value]) {
       checked[value] = true
@@ -21,7 +19,6 @@ export default class PermissionsRow extends Component {
       checked[value] = false
     };
     this.setState({checked})
-    console.log(this.state.checked)
   }
 
   allChecked () {
@@ -30,7 +27,6 @@ export default class PermissionsRow extends Component {
       checked[value] = false
     }
     this.setState({checked})
-    console.log(this.state.checked)
   }
   render () {
     return (
