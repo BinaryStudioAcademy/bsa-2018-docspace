@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
+import Errors from 'src/components/common/error'
 
 class ProfileFields extends Component {
   constructor (props) {
@@ -80,10 +81,10 @@ class ProfileFields extends Component {
     this.propsToState()
     if (this.props.editMode) {
       this.props.editMode({
-        email: this.state.email ? this.state.email : this.props.user.email,
-        login: this.state.login ? this.state.login : this.props.user.login,
-        firstName: this.state.firstName ? this.state.firstName : this.props.user.firstName,
-        lastName: this.state.lastName ? this.state.lastName : this.props.user.lastName
+        email: this.state.email,
+        login: this.state.login,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
       })
     }
   }
@@ -126,6 +127,9 @@ class ProfileFields extends Component {
             </div>
           </li>
         </ul>
+        {!!this.props.errors.length && (
+          <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
+        )}
         <div className='edit-btn'>
           <Button
             icon={this.renderLabelButton().icon}
@@ -147,5 +151,6 @@ ProfileFields.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   isEditMode: PropTypes.bool,
-  editMode: PropTypes.func
+  editMode: PropTypes.func,
+  errors: PropTypes.array
 }

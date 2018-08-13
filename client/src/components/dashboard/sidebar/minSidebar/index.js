@@ -18,7 +18,7 @@ export default class MinSidebar extends Component {
           <Button path='/' type='round-button' icon='fa fa-bell' />
           <Button path='/' type='round-button' icon='fa fa-bars' />
           <Button path='/' type='round-button' icon='fa fa-question' />
-          <Button path='/' type='round-button' icon='fa fa-user' />
+          <Button path='/userSettings' type='round-button' icon='fa fa-user' />
         </div>
       </div>
     )

@@ -98,8 +98,28 @@ module.exports = {
         })
       })
   },
-
   findOneAndUpdate: (req, res) => {
+    UserRepository.update(req.params.id, req.body)
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'User not found with id ' + req.params.id
+          })
+        }
+        return res.send(user)
+      }).catch(err => {
+        if (err.kind === 'ObjectId') {
+          return res.status(404).send({
+            message: 'User not found with id ' + req.params.id
+          })
+        }
+        return res.status(500).send({
+          message: 'Error updating User with id ' + req.params.id
+        })
+      })
+  },
+
+  updateSettingData: (req, res) => {
     UserRepository.getById(req.params.id)
       .then(user => {
         const resultEmailValidation = validateEmail(req.body.email)
@@ -109,13 +129,13 @@ module.exports = {
           lastName: req.body.lastName
         })
         if (!resultEmailValidation.success) {
-          return res.status(500).send({...resultEmailValidation, user: user})
+          return res.send({...resultEmailValidation, user: user})
         }
         if (!resultLoginValidation.success) {
-          return res.status(500).send({...resultLoginValidation, user: user})
+          return res.send({...resultLoginValidation, user: user})
         }
         if (!resultNameValidation.success) {
-          return res.status(500).send({...resultNameValidation, user: user})
+          return res.send({...resultNameValidation, user: user})
         }
         UserRepository.update(req.params.id, req.body)
           .then(user => {
@@ -178,6 +198,7 @@ module.exports = {
               return res.send({ success: false, message: 'Incorrect current password.' })
             }
           })
+          .catch(err => res.send(err))
         UserRepository.update(req.body.id, {password: req.body.newPassword})
           .then(user => {
             if (!user) {

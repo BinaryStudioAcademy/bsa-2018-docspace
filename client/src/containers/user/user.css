@@ -17,30 +17,6 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   font-size: 14px;
   line-height: 1.42857; }
 
-.left-side-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 64px; }
-
-.left-side-wrapper .left-side-content {
-  min-width: 64px;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  left: 0px;
-  width: inherit;
-  z-index: 300;
-  transition: height 0.25s ease-in-out; }
-
-.left-side-items {
-  background-color: #0747a6;
-  color: #deebff;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0px 8px; }
-
 .content-wrapper {
   position: relative;
   z-index: 1;
@@ -202,7 +178,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   height: 100%;
   width: 100%;
   background-color: rgba(23, 43, 77, 0.3);
-  background-image: url("../../assets/avatar.png"); }
+  background-image: url("../../assets/user.png"); }
 
 .profile-avatar-hover {
   opacity: 0;
@@ -299,6 +275,10 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
   margin: 0px -2px; }
+
+.profile-fields-wrapper .user-general-errors-user {
+  display: inline;
+  text-align: start; }
 
 .profile-fields-wrapper .edit-btn,
 .edit-manage-btn .manage-btn {
