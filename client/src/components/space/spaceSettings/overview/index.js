@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
 import './spaceOverviewTab.css'
 
-export default class SpaceOverviewTab extends Component {
+class SpaceOverviewTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -27,10 +28,11 @@ export default class SpaceOverviewTab extends Component {
   }
 
   render () {
-    const {isEditing} = this.state
+    const { isEditing } = this.state
+    const { t } = this.props
     return (
       <React.Fragment>
-        <h3 className='space-details-header'> Space Details
+        <h3 className='space-details-header'> {t('Space_details')}
           <span className='edit-icons'>
             <i
               className={`fas fa-pencil-alt ${isEditing ? 'active' : ''}`}
@@ -60,6 +62,9 @@ export default class SpaceOverviewTab extends Component {
 }
 
 SpaceOverviewTab.propTypes = {
+  t: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.object.isRequired
 }
+
+export default translate('translations')(SpaceOverviewTab)
