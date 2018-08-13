@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import LikesAndLabelsContainer from 'src/components/common/likesAndLabelsContainer'
-import Comments from 'src/components/common/comments'
+import Comments from 'src/components/comments/comments'
 
 import './page.css'
 
@@ -24,7 +23,6 @@ class Page extends Component {
           />
           <PageContent content={this.props.page.content} />
         </div>
-        <LikesAndLabelsContainer />
         <Comments />
       </div>
     )
@@ -48,7 +46,7 @@ Page.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page.byId['5b6bf22eaf609328f4264ceb']
+    page: state.pages.byId['5b6bf22eaf609328f4264ceb']
   }
 }
 

@@ -1,0 +1,14 @@
+.like-wrapper {
+  margin: 5px 15px; }
+  .like-wrapper button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px; }
+  .like-wrapper .unactive-like {
+    color: #6c788f; }
+  .like-wrapper .active-like {
+    color: #08367C; }
+  .like-wrapper i {
+    transition-delay: .2s;
+    transition-timing-function: ease-in-out;
+    padding: 5px; }
