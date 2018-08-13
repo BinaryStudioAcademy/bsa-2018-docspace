@@ -68,8 +68,6 @@ export const pagesByIdsArray = ({pages}, ids) => ids.map(id => pages.byId[id])
 export const pageByIdFromRoute = (state) => {
   const locationNames = state.router.location.pathname.split('/')
   // for path like /spaces/space_id/pages/PAGE_ID
-  console.log('in selectr')
-  console.log(locationNames)
   if (locationNames.length < 5) return null
   const id = locationNames[4]
   return state.pages.byId[id]

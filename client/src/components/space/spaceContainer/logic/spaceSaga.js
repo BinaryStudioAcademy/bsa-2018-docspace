@@ -47,11 +47,7 @@ function * deleteSpace (action) {
 
 function * getSpace (action) {
   try {
-    console.log('in get space saga')
-    console.log(action)
     const space = yield SpaceService.getSpace(action.payload)
-    console.log('space')
-    console.log(space)
     yield put(actions.getSpaceByIdSuccess(space))
   } catch (e) {
     yield put(actions.getSpaceByIdError())
