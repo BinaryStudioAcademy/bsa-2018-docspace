@@ -52,7 +52,7 @@ class EditSpaceDetailsForm extends Component {
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
           <label>{t('Space_logo')}</label>
-          <img id='space-logo' className='field-value space-avatar' src={logo} />
+          <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
            [<span className='link'>{t('change')}</span>]
         </div>
 

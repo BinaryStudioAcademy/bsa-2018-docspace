@@ -14,7 +14,7 @@ class SpaceDetails extends Component {
           <tr>
             <td className='avatar-label-cell'>Space logo</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={img} />
+              <img id='space-logo' className='field-value space-avatar' src={img} alt='space-logo' />
             </td>
           </tr>
           <tr>
