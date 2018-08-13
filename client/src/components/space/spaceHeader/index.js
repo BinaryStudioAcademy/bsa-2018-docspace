@@ -64,9 +64,9 @@ class SpaceHeader extends Component {
 }
 
 SpaceHeader.propTypes = {
+  t: PropTypes.func.isRequired,
   space: PropTypes.object,
-  location: PropTypes.object,
-  t: PropTypes.func
+  location: PropTypes.object
 }
 
 SpaceHeader.defaultProps = {

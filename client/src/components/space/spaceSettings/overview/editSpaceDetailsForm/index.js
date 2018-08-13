@@ -108,6 +108,7 @@ class EditSpaceDetailsForm extends Component {
 }
 
 EditSpaceDetailsForm.propTypes = {
+  t: PropTypes.func.isRequired,
   goBackToDetails: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.shape({
@@ -118,8 +119,7 @@ EditSpaceDetailsForm.propTypes = {
     logo: img,
     homePage: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)
-  }),
-  t: PropTypes.func
+  })
 }
 
 EditSpaceDetailsForm.defaultProps = {

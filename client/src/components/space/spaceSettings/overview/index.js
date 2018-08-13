@@ -62,9 +62,9 @@ class SpaceOverviewTab extends Component {
 }
 
 SpaceOverviewTab.propTypes = {
+  t: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
-  space: PropTypes.object.isRequired,
-  t: PropTypes.func
+  space: PropTypes.object.isRequired
 }
 
 export default translate('translations')(SpaceOverviewTab)

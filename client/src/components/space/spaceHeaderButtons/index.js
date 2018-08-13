@@ -34,14 +34,15 @@ const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children
 }
 
 SpaceHeaderButtons.propTypes = {
+  t: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
   onWatch: PropTypes.func,
   onShare: PropTypes.func,
   onMenu: PropTypes.func,
   onSave: PropTypes.func,
   children: PropTypes.element,
-  type: PropTypes.string,
-  t: PropTypes.func
+  type: PropTypes.string
+
 }
 
 SpaceHeaderButtons.defaultProps = {

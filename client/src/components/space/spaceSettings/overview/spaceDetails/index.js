@@ -60,8 +60,8 @@ class SpaceDetails extends Component {
 }
 
 SpaceDetails.propTypes = {
-  space: PropTypes.object.isRequired,
-  t: PropTypes.func
+  t: PropTypes.func.isRequired,
+  space: PropTypes.object.isRequired
 }
 
 export default translate('translations')(SpaceDetails)

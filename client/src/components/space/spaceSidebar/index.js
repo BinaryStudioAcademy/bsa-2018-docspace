@@ -44,9 +44,9 @@ const SpaceSidebar = ({ space, pages, t }) => {
 }
 
 SpaceSidebar.propTypes = {
+  t: PropTypes.func.isRequired,
   space: PropTypes.object,
-  pages: PropTypes.array,
-  t: PropTypes.func
+  pages: PropTypes.array
 }
 
 SpaceSidebar.defaultProps = {

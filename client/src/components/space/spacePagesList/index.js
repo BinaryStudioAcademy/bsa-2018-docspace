@@ -28,9 +28,9 @@ const SpacePagesList = ({ pages, spaceId, t }) => {
 }
 
 SpacePagesList.propTypes = {
+  t: PropTypes.func.isRequired,
   pages: PropTypes.array,
-  spaceId: PropTypes.string,
-  t: PropTypes.func
+  spaceId: PropTypes.string
 }
 
 SpacePagesList.defaultProps = {
