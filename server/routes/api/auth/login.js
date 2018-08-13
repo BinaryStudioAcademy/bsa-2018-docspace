@@ -26,7 +26,6 @@ const login = (req, res, next) => {
 
 const loggedIn = (req, res) => {
   if (req.user) {
-    console.log('return user')
     let user = {
       spaces: req.user.spaces,
       _id: req.user._id,
