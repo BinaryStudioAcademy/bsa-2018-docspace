@@ -11,16 +11,31 @@ const login = (req, res, next) => {
       if (loginErr) {
         return res.json({ success: false, message: loginErr })
       }
+      user = {
+        spaces: user.spaces,
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        login: user.login
+      }
       return res.json({ success: true, message: 'authentication succeeded', user: user })
     })
   })(req, res, next)
 }
 
 const loggedIn = (req, res) => {
-  console.log('USER EXIST OR NOT', req.user)
   if (req.user) {
     console.log('return user')
-    return res.json({ isLoggedIn: true, message: req.user })
+    let user = {
+      spaces: req.user.spaces,
+      _id: req.user._id,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      login: req.user.login
+    }
+    return res.json({ isLoggedIn: true, message: user })
   } else {
     return res.json({ isLoggedIn: false, message: 'No user in session' })
   }
