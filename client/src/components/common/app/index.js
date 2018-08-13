@@ -8,7 +8,6 @@ import People from 'src/components/dashboard/main/people'
 import Spaces from 'src/components/dashboard/main/spaces'
 import Work from 'src/components/dashboard/main/work'
 import User from 'src/containers/user'
-import SpaceContainer from 'src/components/space/spaceContainer'
 import { Route } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 
@@ -50,7 +49,6 @@ class App extends Component {
             <Route path='/activity' component={Activity} />
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
-            <Route path='/spaces' component={SpaceContainer} />
             <Route path='/userSettings' component={User} />
           </DashboardMain>
         </SplitPane>
