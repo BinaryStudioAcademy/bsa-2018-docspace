@@ -1,4 +1,4 @@
-import * as actionTypes from './verActionTypes'
+import * as actionTypes from './verificationActionTypes'
 
 const initialState = {
   requesting: true,
@@ -6,7 +6,7 @@ const initialState = {
   user: null
 }
 
-export const verReducer = (state = initialState, action) => {
+export const verificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.VERIFICATION:
       return {

@@ -1,8 +1,8 @@
 import { take, fork, call, put } from 'redux-saga/effects'
 import { loginService } from 'src/services/loginService'
-import * as actionTypes from './verActionTypes'
+import * as actionTypes from './verificationActionTypes'
 
-function * verFlow () {
+function * verificationFlow () {
   try {
     let response = yield call(loginService.verification)
     if (!response.isLoggedIn) {
@@ -14,11 +14,11 @@ function * verFlow () {
   }
 }
 
-function * verWatcher () {
+function * verificationWatcher () {
   while (true) {
     const action = yield take(actionTypes.VERIFICATION)
-    yield fork(verFlow, action)
+    yield fork(verificationFlow, action)
   }
 }
 
-export default verWatcher
+export default verificationWatcher

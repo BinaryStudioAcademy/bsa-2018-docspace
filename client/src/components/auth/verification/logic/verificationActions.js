@@ -1,6 +1,6 @@
-import * as actionTypes from './verActionTypes'
+import * as actionTypes from './verificationActionTypes'
 
-export const verRequest = () => ({
+export const verificationRequest = () => ({
   type: actionTypes.VERIFICATION
 })
 

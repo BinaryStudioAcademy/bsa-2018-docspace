@@ -19,10 +19,6 @@ class Login extends Component {
     }
   }
 
-  componentWillMount () {
-
-  }
-
   handleRedirectToSignUp = () => {
     this.setState({
       redirectToSignup: !this.state.redirectToSignup

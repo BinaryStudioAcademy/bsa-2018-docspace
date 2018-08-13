@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { verRequest, saveUserInSession } from './logic/verActions'
+import { verificationRequest, saveUserInSession } from './logic/verificationActions'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -8,11 +8,10 @@ import { connect } from 'react-redux'
 export default (ComposedComponent) => {
   class Authentication extends React.Component {
     componentDidMount () {
-      console.log('here')
       if (this.props.user) {
         this.props.verification.saveUserInSession(this.props.user)
       } else {
-        this.props.verification.verRequest()
+        this.props.verification.verificationRequest()
       }
     }
 
@@ -31,7 +30,7 @@ export default (ComposedComponent) => {
   }
   Authentication.propTypes = {
     verification: PropTypes.shape({
-      verRequest: PropTypes.func,
+      verificationRequest: PropTypes.func,
       saveUserInSession: PropTypes.func
     }),
     isLoggedIn: PropTypes.bool,
@@ -51,7 +50,7 @@ export default (ComposedComponent) => {
   }
 
   const mapDispatchToProps = dispatch => ({
-    verification: bindActionCreators({verRequest, saveUserInSession}, dispatch)
+    verification: bindActionCreators({verificationRequest, saveUserInSession}, dispatch)
   })
 
   return connect(mapStateToProps, mapDispatchToProps)(Authentication)
