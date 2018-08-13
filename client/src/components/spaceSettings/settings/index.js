@@ -4,7 +4,7 @@ export default class SpaceSettingsTab extends Component {
   render () {
     return (
       <div>
-        settings component
+        sfsdfsfd
       </div>
     )
   }
