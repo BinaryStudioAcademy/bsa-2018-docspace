@@ -7,22 +7,22 @@ import './spaceHeaderButtons.css'
 const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t }) => {
   return (
     <div className='buttons-container'>
-      <div className='buttons-item' title={t('edit')} onClick={onEdit}>
+      <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
         <i className='fas fa-pen' />
       </div>
       {
         type === 'blog' || type === 'page'
           ? (
-            <div className='buttons-item' title={t('save_for_later')} onClick={onSave}>
+            <div className='buttons-item' title={t('Save_for_later')} onClick={onSave}>
               <i className='far fa-star' />
             </div>
           )
           : null
       }
-      <div className='buttons-item' title={t('watch')}onClick={onWatch}>
+      <div className='buttons-item' title={t('Watch')}onClick={onWatch}>
         <i className='fas fa-eye' />
       </div>
-      <div className='buttons-item' title={t('share_this_page_with_others')} onClick={onShare}>
+      <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
         <i className='fas fa-share-square' />
       </div>
       <div className='buttons-item' onClick={onMenu}>

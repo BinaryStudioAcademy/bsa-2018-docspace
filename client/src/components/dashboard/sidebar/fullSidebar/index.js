@@ -10,27 +10,27 @@ class FullSidebar extends Component {
     return <div className='tabs-wrapper'>
       {this.props.showLabels && <h1> docspace </h1>}
       <Button
-        title={this.props.showLabels && t('activity')}
+        title={this.props.showLabels && t('Activity')}
         path='/activity' type={navButtonClass}
         icon='fa fa-compass'
       />
       <Button
-        title={this.props.showLabels && t('your work')}
+        title={this.props.showLabels && t('Your_work')}
         path='/works' type={navButtonClass}
         icon='fa  fa-clipboard'
       />
       <Button
-        title={this.props.showLabels && t('spaces')}
+        title={this.props.showLabels && t('Spaces')}
         path='/spacedirectory' type={navButtonClass}
         icon='fa fa-folder'
       />
       <Button
-        title={this.props.showLabels && t('people')}
+        title={this.props.showLabels && t('People')}
         path='/people' type={navButtonClass}
         icon='fa fa-users'
       />
       <Button
-        title={this.props.showLabels && t('settings')}
+        title={this.props.showLabels && t('Settings')}
         path='/settings'
         type={navButtonClass}
         icon='fa fa-cog'

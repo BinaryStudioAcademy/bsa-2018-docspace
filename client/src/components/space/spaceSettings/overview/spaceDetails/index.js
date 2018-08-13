@@ -18,15 +18,15 @@ class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>{t('name')}</td>
+            <td>{t('Name')}</td>
             <td>{space.name}</td>
           </tr>
           <tr>
-            <td>{t('key')}</td>
+            <td>{t('Key')}</td>
             <td>{space.key}</td>
           </tr>
           <tr>
-            <td>{t('home_page')}</td>
+            <td>{t('Home_page')}</td>
             <td>
 
               <span className='link'>
@@ -36,19 +36,19 @@ class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>{t('created_by')}</td>
+            <td>{t('Created_by')}</td>
             <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
           </tr>
           <tr>
-            <td>{t('categories')}</td>
+            <td>{t('Categoies')}</td>
             <td />
           </tr>
           <tr>
-            <td>{t('description')}</td>
+            <td>{t('Description')}</td>
             <td>{space.description}</td>
           </tr>
           <tr>
-            <td>{t('administrators')}</td>
+            <td>{t('Administrators')}</td>
             <td>
               <span className='link'> Danil </span>
             </td>

@@ -51,13 +51,13 @@ class EditSpaceDetailsForm extends Component {
     return (
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
-          <label>{t('space_logo')}</label>
+          <label>{t('Space_logo')}</label>
           <img id='space-logo' className='field-value space-avatar' src={logo} />
            [<span className='link'>{t('change')}</span>]
         </div>
 
         <div className='field-group'>
-          <label>{t('name')}</label>
+          <label>{t('Name')}</label>
           <input
             type='text'
             name='name'
@@ -67,7 +67,7 @@ class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>{t('description')}</label>
+          <label>{t('Description')}</label>
           <textarea
             type='text'
             name='description'
@@ -77,7 +77,7 @@ class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>{t('categories')}</label>
+          <label>{t('Categories')}</label>
           <input
             type='text'
             name='categories'
@@ -87,7 +87,7 @@ class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>{t('home_page')}</label>
+          <label>{t('Home_page')}</label>
           <input
             type='text'
             name='homePage'
@@ -98,8 +98,8 @@ class EditSpaceDetailsForm extends Component {
 
         <div className='btn-group'>
           <label />
-          <button type='submit' onClick={this.handleSave}> {t('save')} </button>
-          <button onClick={this.props.goBackToDetails}> {t('cancel')} </button>
+          <button type='submit' onClick={this.handleSave}> {t('Save')} </button>
+          <button onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
         </div>
       </form>
 
