@@ -7,7 +7,7 @@
 
   &-item {
     display: flex;
-    padding: 10px 25px;
+    padding: 10px 0 10px 20px;
     text-decoration: none;
     color: $grayDark;
 
@@ -24,6 +24,9 @@
 
     &-name {
       margin-left: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

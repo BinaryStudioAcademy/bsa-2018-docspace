@@ -3,7 +3,7 @@
 
 .pages-list-item {
   display: flex;
-  padding: 10px 25px;
+  padding: 10px 0 10px 20px;
   text-decoration: none;
   color: #475774; }
   .pages-list-item:hover {
@@ -14,4 +14,7 @@
     background: #eaecef;
     color: #0044a9; }
   .pages-list-item-name {
-    margin-left: 20px; }
+    margin-left: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
