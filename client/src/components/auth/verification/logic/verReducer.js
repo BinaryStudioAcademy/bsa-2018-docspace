@@ -24,9 +24,7 @@ export const verReducer = (state = initialState, action) => {
       return {
         requesting: false,
         isLoggedIn: false,
-        user: null,
-        ...action.response.message
-
+        user: null
       }
 
     case actionTypes.SAVE_USER_IN_SESSION:
