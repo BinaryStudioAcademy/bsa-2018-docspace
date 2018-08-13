@@ -20,7 +20,15 @@ module.exports = {
     }
 
     SpaceRepository.getById(id)
-      .then(data => res.json(data))
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+
+          return res.end()
+        }
+
+        res.json(data[0])
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -42,7 +50,7 @@ module.exports = {
     }
 
     SpaceRepository.create(req.body)
-      .then(data => res.json(data))
+      .then(data => res.json(data[0]))
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -60,7 +68,7 @@ module.exports = {
     }
 
     SpaceRepository.update(id, req.body)
-      .then(data => res.json(data))
+      .then(data => res.json(data[0]))
       .catch((err) => {
         console.log(err)
         res.status(400)

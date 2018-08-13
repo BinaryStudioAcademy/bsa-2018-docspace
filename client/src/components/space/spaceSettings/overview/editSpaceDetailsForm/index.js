@@ -11,7 +11,7 @@ export default class EditSpaceDetailsForm extends Component {
     this.state = {
       name: space.name,
       description: space.description,
-      categories: space.categories.join(' '),
+      categories: space.categories.map(category => category.name).join(', '),
       logo: space.logo,
       homePage: space.homePage
     }
