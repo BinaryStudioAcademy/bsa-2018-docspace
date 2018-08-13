@@ -6,7 +6,7 @@ import PageEditor from './pageEditor'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 import { updatePageRequest, getPageByIdRequest } from 'src/components/page/logic/pageActions'
-import { getSpaceByIdRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import { getSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 
 // TODO: get user from state and pass to PageEditor
 class PageEditorContainer extends Component {
@@ -14,7 +14,7 @@ class PageEditorContainer extends Component {
     const pathNames = this.props.location.pathname.split('/')
     // if we refresh the page ( props became undefined) , we ned to fetch target page and space from server
     !this.props.page && this.props.actions.getPageByIdRequest(pathNames[4])
-    !this.props.space && this.props.actions.getSpaceByIdRequest(pathNames[2])
+    !this.props.space && this.props.actions.getSpaceRequest(pathNames[2])
   }
 
   goToThePreviousLocation = () => {
@@ -45,7 +45,7 @@ function mapDispatchToProps (dispatch) {
       {
         updatePageRequest,
         getPageByIdRequest,
-        getSpaceByIdRequest
+        getSpaceRequest
       }
       , dispatch)
   }

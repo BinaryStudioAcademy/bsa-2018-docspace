@@ -15,17 +15,18 @@ class SpacesContent extends Component {
   render () {
     const userId = '5b6c5d79860b443cd512d7d7'
     const list = this.props.spaces.map((item, index) => {
+      const categories = item.categories.map(category => category.name).join(', ')
       let spaceItem = <tr key={index} className={'space__item'}>
         <td className='space__image'>
           <Link className='link_view' to={`/spaces/${item._id}/overview`}>
             <img src={logo} alt='' />
           </Link></td>
         <td><Link to={`/spaces/${item._id}/overview`}>{item.name}</Link></td>
-        <td>{item.description}</td><td>{item.categories}{item._id}</td>
+        <td>{item.description}</td><td>{categories}</td>
         <td><Link to={`/spaces/${item._id}/settings`}><i title='Space Info' className={'fas fa-info-circle'} /></Link></td></tr>
       if (this.props.activeTab === 'All Spaces') {
         if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
-          if ((userId === item.ownerId) || ((((item.rights).users).indexOf(userId)) !== -1)) {
+          if ((userId === item.ownerId._id) || ((((item.rights).users).indexOf(userId)) !== -1)) {
             return spaceItem
           }
         }
