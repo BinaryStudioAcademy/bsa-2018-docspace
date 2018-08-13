@@ -3,7 +3,6 @@ import * as actionTypes from './userActionTypes'
 import { userService } from 'src/services/userService'
 
 function * updUser (action) {
-  console.log(action)
   const response = yield userService.updateUser(action.payload)
   if (!response.success) {
     yield put({ type: actionTypes.UPDATE_USER_FAILED, response })
