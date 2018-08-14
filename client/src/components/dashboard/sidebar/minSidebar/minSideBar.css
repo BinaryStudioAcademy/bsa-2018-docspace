@@ -15,9 +15,17 @@
     justify-content: center;
     align-items: center; }
   .sidebar-container .minimize-dashboard-wrapper .top-icons {
-    height: 20%; }
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
   .sidebar-container .minimize-dashboard-wrapper .bottom-icons {
-    height: 30%; }
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
 
 .sidebar-container .sidebar-wrapper .top-icons {
   height: 40%;

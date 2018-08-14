@@ -44,22 +44,22 @@ export class ProfileFields extends Component {
 
   renderEmail (propsEmail) {
     return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.email} onChange={this.handleEmail} />
-      : <a href=''>{propsEmail}</a>
+      : <span>{propsEmail}</span>
   }
 
   renderLogin (propsLogin) {
     return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.login} onChange={this.handleLogin} />
-      : <a href=''>{propsLogin}</a>
+      : <span>{propsLogin}</span>
   }
 
   renderFirstName (propsFirstName) {
     return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.firstName} onChange={this.handleFirstName} />
-      : <a href=''>{propsFirstName}</a>
+      : <span>{propsFirstName}</span>
   }
 
   renderLastName (propsLastName) {
     return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.lastName} onChange={this.handleLastName} />
-      : <a href=''>{propsLastName}</a>
+      : <span>{propsLastName}</span>
   }
 
   renderLabelButton () {

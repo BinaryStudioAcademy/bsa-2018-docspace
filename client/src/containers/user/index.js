@@ -35,8 +35,8 @@ class User extends Component {
 
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
-      email: this.props.userSettings.messages[0].user.email,
-      id: this.props.userSettings.messages[0].user._id,
+      email: this.props.userSettings.user.email,
+      id: this.props.userSettings.user._id,
       password: currentPassword,
       newPassword: newPassword
     })
@@ -64,7 +64,7 @@ class User extends Component {
   editMode (userProfile) {
     if (this.state.isEditMode) {
       this.props.actions.updateUser({
-        id: this.props.userSettings.messages[0].user._id,
+        id: this.props.userSettings.user._id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
         email: userProfile.email,
@@ -94,12 +94,11 @@ class User extends Component {
   }
 
   render () {
-    const { messages } = this.props.userSettings
-    const errorsUser = this.props.userSettings.errors
-    const { firstName, lastName } = messages[0].user
-    const { successful, errors } = this.props.resultOfChecking
     const { t } = this.props
-
+    const { user } = this.props.userSettings
+    const errorsUser = this.props.userSettings.errors
+    const { firstName, lastName } = user
+    const { successful, errors } = this.props.resultOfChecking
     return (
       <React.Fragment>
         <div className='main-wrapper'>
@@ -164,7 +163,7 @@ class User extends Component {
                       !this.state.isShowGeneral
                         ? <PrivateFields
                           handlePassword={this.handlePassword}
-                          user={messages[0].user}
+                          user={user}
                           errors={errors}
                           successful={successful}
                           sendPassword={this.sendPassword}
@@ -174,7 +173,7 @@ class User extends Component {
                         <ProfileFields
                           isEditMode={this.state.isEditMode}
                           editMode={this.editMode}
-                          user={messages[0].user}
+                          user={user}
                           errors={errorsUser}
                           t={t}
                         />
@@ -215,31 +214,14 @@ class User extends Component {
   }
 }
 
-User.defaultProps = {
-  userSettings: {
-    errors: [],
-    messages: [{
-      message: 'message',
-      success: true,
-      user: {
-        email: 'email@gmail.com',
-        login: 'login',
-        firstName: 'first name',
-        lastName: 'last name'
-      }
-    }],
-    successful: true
-  }
-}
-
 User.propTypes = {
   userSettings: PropTypes.object,
   match: PropTypes.object,
   params: PropTypes.array,
   id: PropTypes.string,
   history: PropTypes.object,
-  actions: PropTypes.object.isRequired,
   t: PropTypes.func,
+  actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
     successful: PropTypes.bool,
@@ -252,8 +234,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userSettings: state.user.userReducer.messages.length
       ? state.user.userReducer
-      : state.login.messages.length ? state.login : ownProps.userSettings,
-    state: state,
+      : state.login,
     resultOfChecking: state.user.checkingReducer
   }
 }

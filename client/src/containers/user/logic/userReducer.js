@@ -13,8 +13,9 @@ const userReducer = (state = initialState, action) => {
     {
       return {
         errors: [],
-        messages: [action.response],
-        successful: true
+        messages: [action.response.message],
+        successful: true,
+        user: action.response.user
       }
     }
     case actionTypes.UPDATE_USER_FAILED:
@@ -23,8 +24,9 @@ const userReducer = (state = initialState, action) => {
           body: action.response.message.toString(),
           time: new Date()
         }],
-        messages: [action.response],
-        successful: false
+        messages: [action.response.message],
+        successful: false,
+        user: action.response.user
       }
     default: return state
   }
