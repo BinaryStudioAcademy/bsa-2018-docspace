@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
 import Errors from 'src/components/common/error'
+import { translate } from 'react-i18next'
 
-class ProfileFields extends Component {
+export class ProfileFields extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -62,8 +63,8 @@ class ProfileFields extends Component {
   }
 
   renderLabelButton () {
-    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: `Edit`}
-      : {icon: <i className='fa fa-check' aria-hidden='true' />, value: `Save`}
+    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: this.props.t('edit')}
+      : {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('save')}
   }
 
   propsToState () {
@@ -91,12 +92,13 @@ class ProfileFields extends Component {
 
   render () {
     const {email, login, firstName, lastName} = this.props.user
+    const { t } = this.props
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
           <li className='profile-fields-item'>
             <div>
-              <label htmlFor='email' className='profile-fields-item-labels'>Email</label>
+              <label htmlFor='email' className='profile-fields-item-labels'>{t('email')}</label>
               <div id='email' className='profile-fields-item-contents'>
                 {this.renderEmail(email)}
               </div>
@@ -104,7 +106,7 @@ class ProfileFields extends Component {
           </li>
           <li className='profile-fields-item'>
             <div>
-              <label htmlFor='nickname' className='profile-fields-item-labels'>Nickname</label>
+              <label htmlFor='nickname' className='profile-fields-item-labels'>{t('nickname')}</label>
               <div id='nickname' className='profile-fields-item-contents'>
                 {this.renderLogin(login)}
               </div>
@@ -112,7 +114,7 @@ class ProfileFields extends Component {
           </li>
           <li className='profile-fields-item'>
             <div>
-              <label htmlFor='firstName' className='profile-fields-item-labels'>First Name</label>
+              <label htmlFor='firstName' className='profile-fields-item-labels'>{t('first_name')}</label>
               <div id='firstName' className='profile-fields-item-contents'>
                 {this.renderFirstName(firstName)}
               </div>
@@ -120,7 +122,7 @@ class ProfileFields extends Component {
           </li>
           <li className='profile-fields-item'>
             <div>
-              <label htmlFor='lastName' className='profile-fields-item-labels'>Last Name</label>
+              <label htmlFor='lastName' className='profile-fields-item-labels'>{t('last_name')}</label>
               <div id='lastName' className='profile-fields-item-contents'>
                 {this.renderLastName(lastName)}
               </div>
@@ -142,8 +144,6 @@ class ProfileFields extends Component {
   }
 }
 
-export default ProfileFields
-
 ProfileFields.propTypes = {
   user: PropTypes.object,
   email: PropTypes.string,
@@ -152,5 +152,7 @@ ProfileFields.propTypes = {
   lastName: PropTypes.string,
   isEditMode: PropTypes.bool,
   editMode: PropTypes.func,
-  errors: PropTypes.array
+  errors: PropTypes.array,
+  t: PropTypes.func
 }
+export default translate('translations')(ProfileFields)
