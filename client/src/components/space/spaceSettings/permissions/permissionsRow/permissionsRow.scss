@@ -1,0 +1,34 @@
+@import 'src/globalStyles/variables.scss';
+.cellRowStart {
+    display:flex;
+    flex-direction: column;
+}
+.cellGroupStart {
+    border-left: 1px solid #ccc; 
+}
+.permissionsTableRow {
+    border-bottom: 1px solid #ccc; 
+}
+.permissionCell {
+    text-align: center;
+}
+.permissionAllButton {
+    box-shadow: none;
+    color: #3572b0;
+    border: none;
+    background: transparent;
+}
+.permissionAllButton:hover,
+.permissionAllButton:focus,
+.permissionAllButton:active{
+    text-decoration: underline;
+    outline: 5px auto;
+    display: inline-block;
+}
+.permissionsTableRow.editfalse > td > input {
+    display: none;
+}
+.permissionsTableRow.edittrue > td > img {
+    display: none;
+}
+

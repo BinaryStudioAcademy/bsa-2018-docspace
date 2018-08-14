@@ -16,7 +16,6 @@ module.exports = {
 
     if (id.length === 0) {
       res.status(400)
-
       return res.end('Invalid id')
     }
 

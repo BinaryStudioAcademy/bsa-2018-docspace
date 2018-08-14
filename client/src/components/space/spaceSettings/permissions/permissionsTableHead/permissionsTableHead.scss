@@ -1,0 +1,10 @@
+@import 'src/globalStyles/variables.scss';
+.permissionsTableColumnActions > th{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px
+}
+.permissionsTableHeader > tr {
+  border-bottom: 1px solid #ccc;
+  height: 40px;
+}

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import * as actions from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewTab from './overview'
-import SpaceSettingsTab from './settings'
+import SpacePermissonsTab from './permissions'
 import NavBar from './navBar'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import './spaceSettings.css'
@@ -18,7 +18,7 @@ class SpaceSettings extends Component {
       activeTab: 'overview',
       renderByActiveTab: {
         'overview': this.renderOverviewTab,
-        'settings': this.renderSettingsTab
+        'permissions': this.renderSettingsTab
       }
     }
   }
@@ -28,7 +28,7 @@ class SpaceSettings extends Component {
   }
 
   renderSettingsTab = () => {
-    return <SpaceSettingsTab />
+    return <SpacePermissonsTab />
   }
 
   handleNavLinkCLick = (tabName) => {
@@ -54,14 +54,7 @@ class SpaceSettings extends Component {
 
 SpaceSettings.propTypes = {
   updateSpace: PropTypes.func.isRequired,
-  space: PropTypes.object
-}
-
-SpaceSettings.defaultProps = {
-  space: {
-    ownerId: {},
-    categories: []
-  }
+  space: PropTypes.object.isRequired
 }
 
 const mapStateToprops = (state) => {

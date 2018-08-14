@@ -3,7 +3,8 @@
     width: 100%;
     text-align: left;
     list-style: none; 
-    
+    margin-left: 4%;
+    cursor: pointer;
 
 }
 .sideBarTab {
