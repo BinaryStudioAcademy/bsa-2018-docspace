@@ -51,6 +51,20 @@ class SpaceRepository extends GeneralRepository {
       },
       {
         $lookup: {
+          from: 'pages',
+          localField: 'homePageId',
+          foreignField: '_id',
+          as: 'homePage'
+        }
+      },
+      { // return single object homePage instead of array with this one object
+        $unwind: {
+          path: '$homePage',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
           from: 'categories',
           localField: 'categories',
           foreignField: '_id',
@@ -88,8 +102,8 @@ class SpaceRepository extends GeneralRepository {
             _id: 1,
             name: 1
           },
-          homePageId: 1,
           blogId: 1,
+          homePage: 1,
           pages: {
             _id: 1,
             title: 1

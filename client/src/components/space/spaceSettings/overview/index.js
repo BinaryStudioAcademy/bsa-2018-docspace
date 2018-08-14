@@ -9,7 +9,7 @@ export default class SpaceOverviewTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isAditing: false,
+      isEditing: false,
       showDeleteSpaceModal: false // for the future
     }
   }

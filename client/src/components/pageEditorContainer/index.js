@@ -21,6 +21,7 @@ class PageEditorContainer extends Component {
     this.props.history.goBack()
   }
   render () {
+    if (!this.props.page) return null
     return (
       <PageEditor
         page={this.props.page}

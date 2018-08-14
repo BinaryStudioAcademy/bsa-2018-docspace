@@ -1,5 +1,10 @@
 @import 'globalStyles/variables.scss';
 
 .page-content {
-  margin: 25px auto;
+  margin-top: 1rem;
+  // fix jodit bug
+  table, td, tr{
+    border : 1px solid lightgrey;
+    border-collapse: collapse;
+  }
 }

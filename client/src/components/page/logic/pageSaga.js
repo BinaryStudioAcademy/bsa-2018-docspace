@@ -62,10 +62,27 @@ function * getPage (action) {
   }
 }
 
+// REASON FOR EXIST : when we refresh window on route with page, two getPage actions
+// runs with the same payload and, as result, there are tho success actions => refucer
+// return store with non-unique value, so we can cancel second saga via memoazing last payload
+const skipConsecutiveEqualPayloads = desiredType => {
+  let lastPayload
+
+  return ({ type, payload }) => {
+    payload = JSON.stringify(payload)
+    if (type !== desiredType || payload === lastPayload) {
+      return false
+    }
+
+    lastPayload = payload
+    return true
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
-  yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
+  yield takeEvery(skipConsecutiveEqualPayloads(actionTypes.GET_PAGE_BY_ID_REQUEST), getPage)
 }
