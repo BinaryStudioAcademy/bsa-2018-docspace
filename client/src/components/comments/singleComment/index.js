@@ -64,7 +64,7 @@ export class Comment extends Component {
 
 Comment.propTypes = {
   comment: PropTypes.object,
-  margin: PropTypes.string
+  margin: PropTypes.string,
   t: PropTypes.func
 }
 export default translate('translations')(Comment)
