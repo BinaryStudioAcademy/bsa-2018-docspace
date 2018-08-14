@@ -76,3 +76,8 @@ export const deletePageSuccess = (deletedId) => ({
 export const deletePageError = () => ({
   type: actionTypes.DELETE_PAGE_ERROR
 })
+
+// CANCEL REQUST INDICATOR
+export const cancelPageByIdRequst = () => ({
+  type: actionTypes.CANCEL_PAGE_BY_ID_REQUEST
+})

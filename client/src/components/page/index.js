@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import Comments from 'src/components/comments/comments'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 
 import { translate } from 'react-i18next'
@@ -16,32 +14,6 @@ import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 
 class Page extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      pageToFetch: null
-    }
-    this.firstMount = true
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const page = nextProps.page
-    if (this.firstMount) {
-      this.firstMount = false
-      return
-    }
-    if (!page) {
-      this.props.actions.getPageByIdRequest(nextProps.match.params.page_id)
-    }
-  }
-
-  componentDidMount () {
-    const id = this.props.match.params.page_id
-    if (!this.props.page) {
-      this.props.actions.getPageByIdRequest(id)
-    }
-  }
-
   render () {
     if (!this.props.page) return null
     const { avatar, firstName, lastName } = this.props.user
@@ -70,8 +42,6 @@ Page.propTypes = {
   }),
 
   user: PropTypes.object,
-  match: PropTypes.object,
-  actions: PropTypes.object,
   t: PropTypes.func
 }
 
@@ -97,14 +67,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(
-      {
-        getPageByIdRequest
-      }
-      , dispatch)
-  }
-}
-
-export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Page)))
+export default translate('translations')(withRouter(connect(mapStateToProps)(Page)))
