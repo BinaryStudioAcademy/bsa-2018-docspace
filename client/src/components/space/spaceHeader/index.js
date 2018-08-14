@@ -32,13 +32,13 @@ class SpaceHeader extends Component {
     const name = pathname.includes('settings') ? 'Space settings' : space.name
 
     return (
-      <div className='header'>
+      <div className='space-header'>
         {
           type === 'clear' || type === 'space'
-            ? <div className='header-name'>{name}</div>
+            ? <div className='space-header-name'>{name}</div>
             : (
-              <div className='header-page'>
-                <NavLink className='header-name page' to={`/spaces/${id}/overview`}>{space.name}</NavLink>
+              <div className='space-header-page'>
+                <NavLink className='space-header-name page' to={`/spaces/${id}/overview`}>{space.name}</NavLink>
                 <NavLink className='buttons-item restrictions' title={t('Unrestricted')} to={''}>
                   <i className='fas fa-lock-open' />
                 </NavLink>

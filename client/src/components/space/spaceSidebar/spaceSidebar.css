@@ -1,51 +1,51 @@
-.sidebar {
+.space-sidebar {
   background: #f4f5f7;
   color: #475774;
   display: flex;
   flex-direction: column;
   width: 100%;
   min-width: 0; }
-  .sidebar.minimized .sidebar-main-navbar-section,
-  .sidebar.minimized .sidebar-header {
+  .space-sidebar.minimized .space-sidebar-main-navbar-section,
+  .space-sidebar.minimized .space-sidebar-header {
     justify-content: center; }
-  .sidebar-header {
+  .space-sidebar-header {
     margin: 15px;
     padding: 10px 10px 10px 3px;
     display: flex;
     flex-shrink: 0; }
-    .sidebar-header:hover {
+    .space-sidebar-header:hover {
       background: #eaecef;
       cursor: pointer; }
-    .sidebar-header-icon {
+    .space-sidebar-header-icon {
       color: #ffffff;
       background: #1c80ff;
       padding: 7px 8px;
       border: 2px solid #ffffff;
       border-radius: 6px; }
-    .sidebar-header-name {
+    .space-sidebar-header-name {
       line-height: 2.3;
       margin-left: 7px;
       font-weight: 600;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
-  .sidebar-main {
+  .space-sidebar-main {
     margin: 15px;
     overflow-y: auto; }
-    .sidebar-main-navbar {
+    .space-sidebar-main-navbar {
       margin-bottom: 15px; }
-      .sidebar-main-navbar-section {
+      .space-sidebar-main-navbar-section {
         display: flex;
         text-decoration: none;
-        color: #475774 !important;
+        color: #475774;
         padding: 10px; }
-        .sidebar-main-navbar-section.current {
+        .space-sidebar-main-navbar-section.current {
           background: #eaecef;
           color: #0044a9; }
-        .sidebar-main-navbar-section:hover {
+        .space-sidebar-main-navbar-section:hover {
           background: #eaecef;
           cursor: pointer; }
-        .sidebar-main-navbar-section-name {
+        .space-sidebar-main-navbar-section-name {
           margin-left: 20px;
           overflow: hidden;
           text-overflow: ellipsis;

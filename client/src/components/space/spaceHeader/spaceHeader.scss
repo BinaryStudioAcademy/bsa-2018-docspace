@@ -1,6 +1,6 @@
 @import 'globalStyles/variables.scss';
 
-.header {
+.space-header {
   display: flex;
   padding: 25px 30px 30px 50px;
   justify-content: space-between;
@@ -13,6 +13,10 @@
   &-name {
     font-size: 28px;
     color:$black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
 
     &.page {
       color: $gray;

@@ -18,12 +18,22 @@
       padding: 0 5px;
       background-color: $primaryColor;
       height: 100%;
+      
+      a, a:visited, a:active, a:hover{
+        text-decoration: none;
+        color: white;
+    }
   }
   h1{
       margin: 15px 0 20px 10px;
   }
   .tabs-wrapper{
     width: 80%;
+
+    a, a:visited, a:active, a:hover{
+      text-decoration: none;
+      color: white;
+    }
   }
   .minimize-dashboard-wrapper{
     display: flex;
@@ -50,10 +60,6 @@
   background-color: $primaryColor;
   }
 
-a, a:visited, a:active, a:hover{
-    text-decoration: none;
-    color: white;
-}
 .nav-button:hover{
     background-color: $primalHover;
 }

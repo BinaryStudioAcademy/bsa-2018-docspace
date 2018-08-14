@@ -1,6 +1,6 @@
 @import 'globalStyles/variables.scss';
 
-.sidebar {
+.space-sidebar {
   background: $grayLight;
   color: $grayDark;
   display: flex;
@@ -52,7 +52,7 @@
       &-section {
         display: flex;
         text-decoration: none;
-        color: $grayDark !important;
+        color: $grayDark;
         padding: 10px;
 
         &.current {

@@ -1,18 +1,22 @@
-.header {
+.space-header {
   display: flex;
   padding: 25px 30px 30px 50px;
   justify-content: space-between; }
-  .header-page {
+  .space-header-page {
     display: flex;
     align-items: baseline; }
-  .header-name {
+  .space-header-name {
     font-size: 28px;
-    color: #333333; }
-    .header-name.page {
+    color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px; }
+    .space-header-name.page {
       color: #6c788f;
       font-size: 17px;
       text-decoration: none; }
-      .header-name.page:hover {
+      .space-header-name.page:hover {
         color: #949eb3; }
 
 .space-button {

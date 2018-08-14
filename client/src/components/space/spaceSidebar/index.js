@@ -13,7 +13,7 @@ import './spaceSidebar.css'
 class SpaceSidebar extends Component {
   render () {
     const { space, t, showLabels, showContent } = this.props
-    const sidebarClass = showLabels ? 'sidebar' : 'sidebar minimized'
+    const sidebarClass = showLabels ? 'space-sidebar' : 'space-sidebar minimized'
 
     return (
       <div className='sidebar-blue-schema' >
@@ -24,31 +24,31 @@ class SpaceSidebar extends Component {
               {
                 showContent && (
                   <React.Fragment>
-                    <div className='sidebar-header'>
-                      <div className='sidebar-header-icon'>
+                    <div className='space-sidebar-header'>
+                      <div className='space-sidebar-header-icon'>
                         <i className='fas fa-folder' />
                       </div>
-                      {showLabels && <span className='sidebar-header-name'>{space.name}</span>}
+                      {showLabels && <span className='space-sidebar-header-name'>{space.name}</span>}
                     </div>
-                    <div className='sidebar-main'>
-                      <div className='sidebar-main-navbar'>
-                        <NavLink className='sidebar-main-navbar-section' to={`/spaces/${space._id}/overview`} activeClassName='current' >
-                          <div className='sidebar-main-navbar-section--icon'>
+                    <div className='space-sidebar-main'>
+                      <div className='space-sidebar-main-navbar'>
+                        <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/overview`} activeClassName='current' >
+                          <div className='space-sidebar-main-navbar-section--icon'>
                             <i className='fas fa-stream' />
                           </div>
-                          {showLabels && <div className='sidebar-main-navbar-section-name'>{t('Overview')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Overview')}</div>}
                         </NavLink>
-                        <NavLink className='sidebar-main-navbar-section' to={`/spaces/${space._id}/blog`} activeClassName='current'>
-                          <div className='sidebar-main-navbar-section-icon'>
+                        <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/blog`} activeClassName='current'>
+                          <div className='space-sidebar-main-navbar-section-icon'>
                             <i className='fas fa-quote-right' />
                           </div>
-                          {showLabels && <div className='sidebar-main-navbar-section-name'>{t('Blog')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Blog')}</div>}
                         </NavLink>
-                        <NavLink className='sidebar-main-navbar-section' to={`/spaces/${space._id}/settings`} activeClassName='current'>
-                          <div className='sidebar-main-navbar-section-icon'>
+                        <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings`} activeClassName='current'>
+                          <div className='space-sidebar-main-navbar-section-icon'>
                             <i className='fas fa-cog' />
                           </div>
-                          {showLabels && <div className='sidebar-main-navbar-section-name'>{t('Space_settings')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Space_settings')}</div>}
                         </NavLink>
                       </div>
                       {showLabels && <SpacePagesList pages={space.pages} spaceId={space._id} />}
