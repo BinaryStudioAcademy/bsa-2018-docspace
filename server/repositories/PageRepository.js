@@ -1,8 +1,8 @@
 const GeneralRepository = require('./GeneralRepository')
-const scheme = require('../models/pageScheme')
+const PageModel = require('../models/pageScheme')
 
 class PageRepository extends GeneralRepository {
 
 }
 
-module.exports = new PageRepository(scheme.Page)
+module.exports = new PageRepository(PageModel)

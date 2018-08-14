@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const RecentWorkListItem = ({src, nameOfItem, nameOfSpace, contributors}) => (
   <div className='recent-work-list-item'>
     <a className='recent-work-link' href=''>
-      <img className='recent-work-icon' src={src} alt='Work icon' />
+      <img className='recent-work-icon' src={src} alt='work-icon' />
       <span className='recent-work-name'>{nameOfItem}</span>
       <span className='recent-work-name-of-container'>{nameOfSpace}</span>
       <span className='recent-work-contributors'>{contributors}</span>

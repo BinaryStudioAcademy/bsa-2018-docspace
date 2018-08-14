@@ -39,6 +39,8 @@ class SpacesContent extends Component {
       } if (this.props.activeTab === 'Archived Spaces') {
         return spaceItem
       }
+
+      return null
     })
     return (<div className={'spaces__content__body'}>
       <div className={'header__spaces__content'}><h2>{this.props.activeTab}</h2><DashboardInput placeholder='Filter' /></div>

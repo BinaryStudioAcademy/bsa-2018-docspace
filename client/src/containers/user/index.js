@@ -246,7 +246,6 @@ const mapStateToProps = (state, ownProps) => {
     userSettings: state.user.userReducer.messages.length
       ? state.user.userReducer
       : state.login.messages.length ? state.login : ownProps.userSettings,
-    state: state,
     resultOfChecking: state.user.checkingReducer
   }
 }

@@ -46,3 +46,6 @@
   display: flex;
   justify-content: center;
   align-items: center; }
+
+.sidebar-container .icon-buttons-wrapper .nav-button.toggle-add-page-modal-btn {
+  color: white; }

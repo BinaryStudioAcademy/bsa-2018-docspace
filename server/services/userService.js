@@ -16,32 +16,6 @@ function validateLogin (login) {
   }
 }
 
-function validateName ({firstName, lastName}) {
-  const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/
-  const resultFirstNameValidation = re.test(String(firstName).toLowerCase())
-  const resultLastNameValidation = re.test(String(lastName).toLowerCase())
-  if (!resultFirstNameValidation && !resultLastNameValidation) {
-    return {
-      success: false,
-      message: `Incorrect first name and last name`
-    }
-  }
-  if (!resultFirstNameValidation) {
-    return {
-      success: resultFirstNameValidation,
-      message: `Incorrect first name`
-    }
-  }
-  if (!resultLastNameValidation) {
-    return {
-      success: resultLastNameValidation,
-      message: `Incorrect last name`
-    }
-  }
-
-  return {success: true}
-}
-
 module.exports = {
   findAll: (req, res) => {
     UserRepository.getAll()
@@ -124,18 +98,17 @@ module.exports = {
       .then(user => {
         const resultEmailValidation = validateEmail(req.body.email)
         const resultLoginValidation = validateLogin(req.body.login)
-        const resultNameValidation = validateName({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName
-        })
         if (!resultEmailValidation.success) {
           return res.send({...resultEmailValidation, user: user})
         }
         if (!resultLoginValidation.success) {
           return res.send({...resultLoginValidation, user: user})
         }
-        if (!resultNameValidation.success) {
-          return res.send({...resultNameValidation, user: user})
+        if (!req.body.login || !req.body.lastName) {
+          return res.send({
+            success: false,
+            message: 'User\'s name cannot be empty',
+            user: user })
         }
         UserRepository.update(req.params.id, req.body)
           .then(user => {

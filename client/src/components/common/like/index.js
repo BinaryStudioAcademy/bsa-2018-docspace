@@ -41,10 +41,10 @@ class Like extends Component {
     console.log(likes)
     let message
     if (!likes.length) {
-      return t('be the first who like it')
+      return t('Be_the_first_who_like_it')
     } else {
       let maxNumber = this.state.isCurrentUserLike ? 2 : 3
-      message = this.state.isCurrentUserLike ? t('you') : ''
+      message = this.state.isCurrentUserLike ? t('You') : ''
       const likeLength = this.state.isCurrentUserLike ? likes.length - 1 : likes.length
       const count = Math.min(likeLength, maxNumber)
       message += this.state.isCurrentUserLike && count ? ', ' : ''
@@ -52,7 +52,7 @@ class Like extends Component {
         message += i === count - 1 ? likes[i].name + '' : likes[i].name + ', '
       }
       message += likes.length > 3 ? t('and_0_ other_people', { count: likes.length - 3 }) : ''
-      message += ' ' + t('already like it')
+      message += ' ' + t('already_like_it')
     }
     return message
   }
