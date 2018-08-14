@@ -16,7 +16,7 @@ class ContentBody extends Component {
           <h1>{this.props.header}</h1>
 
           <div>
-            <ul id='menu'>
+            <ul className='headerDashboardMenu' id='menu'>
               <MenuList menuTabs={this.props.menuTabs} />
 
             </ul>

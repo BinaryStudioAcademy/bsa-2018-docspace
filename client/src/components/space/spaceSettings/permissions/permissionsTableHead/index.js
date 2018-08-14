@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import './permissionsTableHead.css'
 
 export default class PermissionTableHead extends Component {
+  renderHeaderCell (value, width) {
+    return <th width={width}>{value}</th>
+  }
   render () {
+    const columns = ['View', 'Add', 'Delete', 'Add', 'Delete', 'Add', 'Delete', 'Add', 'Delete', 'Add/Delete', 'Delete', 'Export', 'Admin']
     return (
       <thead className='permissionsTableHeader'>
         <tr className='permissionsTableColumnNames' >
@@ -18,19 +22,7 @@ export default class PermissionTableHead extends Component {
         </tr>
         <tr className='permissionsTableColumnActions'>
           <th />
-          <th width='40'>View</th>
-          <th width='40'>Add</th>
-          <th width='40'>Delete</th>
-          <th width='40'>Add</th>
-          <th width='40'>Delete</th>
-          <th width='40'>Add</th>
-          <th width='40'>Delete</th>
-          <th width='40'>Add</th>
-          <th width='40'>Delete</th>
-          <th width='40'>Add/Delete</th>
-          <th width='40'>Delete</th>
-          <th width='40'>Export</th>
-          <th width='40'>Admin</th>
+          {columns.map(it => this.renderHeaderCell(it, 40))}
         </tr>
       </thead>
     )

@@ -10,6 +10,13 @@ export default class PermissionsRow extends Component {
     this.toogleChange = this.toogleChange.bind(this)
   }
 
+  renderCell (value) {
+    return <td className='permissionCell'>
+      <img src={this.state.checked[value] ? check : error} alt='' />
+      <input value={value} type='checkbox' checked={this.state.checked[value]}
+        onChange={(target) => this.toogleChange(target)} /></td>
+  }
+
   toogleChange (event) {
     const value = event.target.value
     const checked = Object.assign({}, this.state.checked)
@@ -21,70 +28,31 @@ export default class PermissionsRow extends Component {
     this.setState({checked})
   }
 
-  allChecked () {
+  allChecked (event) {
     const checked = Object.assign({}, this.state.checked)
-    for (var value in checked) {
-      checked[value] = false
+    const className = event.target.className
+    if (className.indexOf('allChecked') === -1) {
+      for (let value in checked) {
+        checked[value] = false
+      }
+      event.target.className += ' allChecked'
+      event.target.textContent = 'Select All'
+    } else {
+      for (let value in checked) {
+        checked[value] = true
+      }
+      event.target.className = 'permissionAllButton'
+      event.target.textContent = 'Clear All'
     }
     this.setState({checked})
   }
   render () {
+    const valueList = ['view', 'pagesAdd', 'pagesDelete', 'blogAdd', 'blogDelete', 'commentsAdd', 'commentsDelete', 'attachmentsAdd', 'attachmentsDelete', 'restrictionsAddDelete', 'mailDelete', 'spaceExport', 'spaceAdmin']
     return (
       <tr className={'permissionsTableRow edit' + this.props.edit}>
         <td className='permissionCell cellRowStart'>{this.props.objectForPermission}
-          <button className='permissionAllButton' onClick={() => this.allChecked()}>Clear All</button></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.view ? check : error} alt='' />
-          <input value='view' type='checkbox' checked={this.state.checked.view}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.pagesAdd ? check : error} alt='' />
-          <input value='pagesAdd' type='checkbox' checked={this.state.checked.pagesAdd}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.pagesDelete ? check : error} alt='' />
-          <input value='pagesDelete' type='checkbox' checked={this.state.checked.pagesDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.blogAdd ? check : error} alt='' />
-          <input value='blogAdd' type='checkbox' checked={this.state.checked.blogAdd}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.blogDelete ? check : error} alt='' />
-          <input value='blogDelete' type='checkbox' checked={this.state.checked.blogDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.commentsAdd ? check : error} alt='' />
-          <input value='commentsAdd' type='checkbox' checked={this.state.checked.commentsAdd}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.commentsDelete ? check : error} alt='' />
-          <input value='commentsDelete' type='checkbox' checked={this.state.checked.commentsDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.attachmentsAdd ? check : error} alt='' />
-          <input value='attachmentsAdd' type='checkbox' checked={this.state.checked.attachmentsAdd}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.attachmentsDelete ? check : error} alt='' />
-          <input value='attachmentsDelete' type='checkbox' checked={this.state.checked.attachmentsDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.restrictionsAddDelete ? check : error} alt='' />
-          <input value='restrictionsAddDelete' type='checkbox' checked={this.state.checked.restrictionsAddDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.mailDelete ? check : error} alt='' />
-          <input value='mailDelete' type='checkbox' checked={this.state.checked.mailDelete}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell cellGroupStart'>
-          <img src={this.state.checked.spaceExport ? check : error} alt='' />
-          <input value='spaceExport' type='checkbox' checked={this.state.checked.spaceExport}
-            onChange={(target) => this.toogleChange(target)} /></td>
-        <td className='permissionCell'>
-          <img src={this.state.checked.spaceAdmin ? check : error} alt='' />
-          <input value='spaceAdmin' type='checkbox' checked={this.state.checked.spaceAdmin}
-            onChange={(target) => this.toogleChange(target)} /></td>
+          <button className='permissionAllButton' onClick={(target) => this.allChecked(target)}>Clear All</button></td>
+        {valueList.map(it => this.renderCell(it))}
       </tr>
 
     )
