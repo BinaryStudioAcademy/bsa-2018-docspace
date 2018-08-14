@@ -52,7 +52,7 @@
       &-section {
         display: flex;
         text-decoration: none;
-        color: $grayDark;
+        color: $grayDark !important;
         padding: 10px;
 
         &.current {

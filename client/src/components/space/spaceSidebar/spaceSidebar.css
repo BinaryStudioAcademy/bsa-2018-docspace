@@ -37,7 +37,7 @@
       .sidebar-main-navbar-section {
         display: flex;
         text-decoration: none;
-        color: #475774;
+        color: #475774 !important;
         padding: 10px; }
         .sidebar-main-navbar-section.current {
           background: #eaecef;
