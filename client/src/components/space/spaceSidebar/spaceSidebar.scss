@@ -2,11 +2,16 @@
 
 .sidebar {
   background: $grayLight;
-  flex: 0 0;
   color: $grayDark;
   display: flex;
   flex-direction: column;
-  min-width: 240px;
+  width: 100%;
+  min-width: 0;
+
+  &.minimized &-main-navbar-section,
+  &.minimized &-header {
+    justify-content: center;
+  }
 
   &-header {
     margin: 15px;

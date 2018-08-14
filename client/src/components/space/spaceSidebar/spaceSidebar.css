@@ -1,10 +1,13 @@
 .sidebar {
   background: #f4f5f7;
-  flex: 0 0;
   color: #475774;
   display: flex;
   flex-direction: column;
-  min-width: 240px; }
+  width: 100%;
+  min-width: 0; }
+  .sidebar.minimized .sidebar-main-navbar-section,
+  .sidebar.minimized .sidebar-header {
+    justify-content: center; }
   .sidebar-header {
     margin: 15px;
     padding: 10px 10px 10px 3px;
