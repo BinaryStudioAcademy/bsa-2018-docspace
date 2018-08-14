@@ -8,6 +8,7 @@
       "you": "You",
       "already like it": "already like it",
       "be the first who like it": "Be the first who like it",
-      "and_0_ other_people": " and {{count}} other people "
+      "and_0_ other_people": " and {{count}} other people ",
+      "all people": "All people"
     }
   }
