@@ -12,7 +12,7 @@ export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, 
           <span className='comment-reply' onClick={onReplyComment}>{t('reply')}</span>
         </li>
         <li className='comment-actions-item'>
-          <span className='comment-edit' onClick={onEditComment}>{t('edit')}</span>
+          <span className='comment-edit' onClick={onEditComment}>{t('Edit')}</span>
         </li>
         <li className='comment-actions-item'>
           <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>

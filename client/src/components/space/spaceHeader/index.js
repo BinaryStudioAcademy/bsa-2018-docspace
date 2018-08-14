@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter, NavLink } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import SpaceHeaderButtons from 'src/components/space/spaceHeaderButtons'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
@@ -24,10 +25,11 @@ class SpaceHeader extends Component {
   }
 
   render () {
+    const { t, space } = this.props
     const { pathname } = this.props.location
     const type = this.getType()
     const id = pathname.split('/')[2]
-    const name = pathname.includes('settings') ? 'Space settings' : this.props.space.name
+    const name = pathname.includes('settings') ? 'Space settings' : space.name
 
     return (
       <div className='header'>
@@ -36,8 +38,8 @@ class SpaceHeader extends Component {
             ? <div className='header-name'>{name}</div>
             : (
               <div className='header-page'>
-                <NavLink className='header-name page' to={`/spaces/${id}/overview`}>{this.props.space.name}</NavLink>
-                <NavLink className='buttons-item restrictions' title='Unrestricted' to={''}>
+                <NavLink className='header-name page' to={`/spaces/${id}/overview`}>{space.name}</NavLink>
+                <NavLink className='buttons-item restrictions' title={t('Unrestricted')} to={''}>
                   <i className='fas fa-lock-open' />
                 </NavLink>
               </div>
@@ -50,7 +52,7 @@ class SpaceHeader extends Component {
               <SpaceHeaderButtons type={type}>
                 {
                   type === 'space'
-                    ? <div className='space-button'>Remove From My Spaces</div>
+                    ? <div className='space-button'>{t('Remove_from_My_Spaces')}</div>
                     : null
                 }
               </SpaceHeaderButtons>
@@ -62,6 +64,7 @@ class SpaceHeader extends Component {
 }
 
 SpaceHeader.propTypes = {
+  t: PropTypes.func.isRequired,
   space: PropTypes.object,
   location: PropTypes.object
 }
@@ -77,4 +80,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(SpaceHeader))
+export default translate('translations')(withRouter(connect(mapStateToProps)(SpaceHeader)))

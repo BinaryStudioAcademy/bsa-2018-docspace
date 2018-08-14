@@ -74,19 +74,19 @@ export class AddComment extends Component {
               ? <Input
                 name='comment-body-disabled'
                 inputType='button'
-                value={t('save')}
+                value={t('Save')}
               />
               : <Input
                 name='comment-body-save'
                 inputType='button'
-                value={t('save')}
+                value={t('Save')}
                 onClick={this.createComment}
               />
             }
             <Input
               name='comment-body-cancel'
               inputType='button'
-              value={t('cancel')}
+              value={t('Cancel')}
               onClick={this.cancelSendText}
             />
           </div>
