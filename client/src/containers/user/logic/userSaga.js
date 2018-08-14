@@ -4,6 +4,7 @@ import { userService } from 'src/services/userService'
 
 function * updUser (action) {
   const response = yield userService.updateUser(action.payload)
+  console.log(response)
   if (!response.success) {
     yield put({ type: actionTypes.UPDATE_USER_FAILED, response })
   } else {

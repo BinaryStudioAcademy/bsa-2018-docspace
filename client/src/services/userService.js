@@ -1,12 +1,20 @@
-import requestHelper from 'src/requestHelper'
+import { callWebApi } from '../requestHelper'
 
 class UserService {
   updateUser (user) {
-    return requestHelper(`/api/user/${user.id}/setting`, 'PUT', user)
+    const args = { endpoint: `/api/user/${user.id}/setting`, method: 'PUT', body: JSON.stringify(user) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
   }
 
   checkandUpdatePassword (data) {
-    return requestHelper('/api/user/changePassword', 'POST', data)
+    const args = { endpoint: `/api/user/changePassword`, method: 'POST', body: JSON.stringify(data) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
   }
 }
 

@@ -1,9 +1,13 @@
-import requestHelper from 'src/requestHelper'
+import { callWebApi } from 'src/requestHelper'
 
 class SpaceService {
-  getSpaces = () => (
-    requestHelper('/api/spaces', 'GET')
-  )
+  getSpaces = () => {
+    const args = { endpoint: `/api/spaces`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
   getSpace = (id) => (
     fetch(`/api/spaces/${id}`)
