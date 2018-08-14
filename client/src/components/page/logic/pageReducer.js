@@ -31,6 +31,7 @@ function all (state = initialState.all, action) {
     case actionTypes.DELETE_PAGE_SUCCESS:
       return state.filter(id => id !== action.payload.id)
 
+    case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
       return [ ...state, action.payload._id ]
 
@@ -46,6 +47,7 @@ function byId (state = initialState.byId, action) {
     case actionTypes.GET_ALL_PAGES_SUCCESS:
       return action.payload.byId
 
+    case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
@@ -62,3 +64,11 @@ export const allPages = ({pages}) => pages.all.map(id => pages.byId[id])
 
 // TODO: test this. Usage: for getting all pages for space
 export const pagesByIdsArray = ({pages}, ids) => ids.map(id => pages.byId[id])
+
+export const pageByIdFromRoute = (state) => {
+  const { pathname } = state.router.location
+  const pageIdRegExp = /(?:pages[/])([^[/]*)(?:\/.*|$)/
+  const matched = pathname.match(pageIdRegExp)
+  if (matched.length < 2) return null
+  return state.pages.byId[matched[1]]
+}

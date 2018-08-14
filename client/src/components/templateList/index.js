@@ -16,7 +16,7 @@ class TemplateList extends React.Component {
                 key={index}
                 onClick={() => this.props.handleSelectItem(item)}
               >
-                <img className='template-preview' src={item.img} />
+                <img className='template-preview' src={item.img} alt='template-preview' />
                 <div className='template-meta'>
                   <div className='template-name'>
                     {item.name[0].toUpperCase() + item.name.slice(1)}

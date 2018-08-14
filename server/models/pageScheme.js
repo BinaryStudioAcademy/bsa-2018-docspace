@@ -4,6 +4,7 @@ const { Schema } = mongoose
 const pageSchema = new mongoose.Schema({
   title: String,
   content: String,
+  spaceId: Schema.Types.ObjectId,
   created: {
     date: Date,
     userId: {
@@ -17,6 +18,6 @@ const pageSchema = new mongoose.Schema({
   versionKey: false
 })
 
-const Page = mongoose.model('Page', pageSchema)
+const PageModel = mongoose.model('Page', pageSchema)
 
-module.exports.Page = Page
+module.exports = PageModel

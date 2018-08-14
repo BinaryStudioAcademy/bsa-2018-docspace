@@ -6,6 +6,13 @@ class PageService {
       .catch(err => console.log(`Can't get pages: ${err}`))
   )
 
+  getPage = (id) => (
+    fetch(`/api/pages/${id}`)
+      .then(res => res.json())
+      .then(page => page)
+      .catch(err => console.log(`Can't get page: ${err}`))
+  )
+
   createPage = (pageObj) => (
     fetch('/api/pages', {
       method: 'POST',

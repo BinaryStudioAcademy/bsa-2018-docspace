@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './app.css'
+
 import DashboardSidebar from 'src/components/dashboard/sidebar'
 import DashboardMain from 'src/components/dashboard/main'
 import Activity from 'src/components/dashboard/main/activity'
@@ -7,7 +8,6 @@ import People from 'src/components/dashboard/main/people'
 import Spaces from 'src/components/dashboard/main/spaces'
 import Work from 'src/components/dashboard/main/work'
 import User from 'src/containers/user'
-import SpaceContainer from 'src/components/space/spaceContainer'
 import { Route } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 
@@ -49,8 +49,7 @@ class App extends Component {
             <Route path='/activity' component={Activity} />
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
-            <Route path='/spaces' component={SpaceContainer} />
-            <Route path='/settings' component={User} />
+            <Route path='/userSettings' component={User} />
           </DashboardMain>
         </SplitPane>
       </div>

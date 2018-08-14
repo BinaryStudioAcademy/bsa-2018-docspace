@@ -27,8 +27,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function () {
   let user = this
-  console.log('IN MIDL')
-  console.log(user)
   const saltRounds = 10
   user.password = await bcrypt.hash(user.password, saltRounds)
     .then(hashPassword => hashPassword)
