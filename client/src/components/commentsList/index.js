@@ -19,11 +19,10 @@ class CommentsList extends Component {
 
   render () {
     const comments = this.getComments()
-    const aaa = comments.map(comment => <Comment margin={`${comment.level * 25}px`} comment={comment.item} />)
-    console.log(aaa)
+    const commentsList = comments.map(comment => <Comment margin={`${comment.level * 25}px`} comment={comment.item} />)
     return (
       <div className='comments-list-wrapper'>
-        {aaa}
+        {commentsList}
       </div>
     )
   }
