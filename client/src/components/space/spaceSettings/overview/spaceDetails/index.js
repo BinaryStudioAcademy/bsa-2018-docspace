@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './spaceDetails.css'
+import { translate } from 'react-i18next'
 
+import './spaceDetails.css'
 import img from 'src/resources/logo.svg'
 
-export default class SpaceDetails extends Component {
+class SpaceDetails extends Component {
   render () {
-    const { space } = this.props
+    const { space, t } = this.props
     return (
       <table className='space-details-table'>
         <tbody>
@@ -17,15 +18,15 @@ export default class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>Name</td>
+            <td>{t('Name')}</td>
             <td>{space.name}</td>
           </tr>
           <tr>
-            <td>Key</td>
-            <td>DOC</td>
+            <td>{t('Key')}</td>
+            <td>{space.key}</td>
           </tr>
           <tr>
-            <td>Home page</td>
+            <td>{t('Home_page')}</td>
             <td>
 
               <span className='link'>
@@ -35,19 +36,19 @@ export default class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>Created by</td>
+            <td>{t('Created_by')}</td>
             <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
           </tr>
           <tr>
-            <td>Categories</td>
+            <td>{t('Categoies')}</td>
             <td />
           </tr>
           <tr>
-            <td>Description</td>
+            <td>{t('Description')}</td>
             <td>{space.description}</td>
           </tr>
           <tr>
-            <td>Administrators</td>
+            <td>{t('Administrators')}</td>
             <td>
               <span className='link'> Danil </span>
             </td>
@@ -59,5 +60,8 @@ export default class SpaceDetails extends Component {
 }
 
 SpaceDetails.propTypes = {
+  t: PropTypes.func.isRequired,
   space: PropTypes.object.isRequired
 }
+
+export default translate('translations')(SpaceDetails)
