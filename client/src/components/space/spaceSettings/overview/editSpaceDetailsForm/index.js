@@ -9,13 +9,14 @@ class EditSpaceDetailsForm extends Component {
   constructor (props) {
     super(props)
     const {space} = this.props
-    this.state = {
-      name: space.name,
-      description: space.description,
-      categories: space.categories.map(category => category.name).join(', '),
-      logo: space.logo,
-      homePage: space.homePage
-    }
+    // this.state = {
+    //   name: space.name,
+    //   description: space.description,
+    //   categories: space.categories.map(category => category.name).join(', '),
+    //   logo: space.logo,
+    //   homePage: space.homePage
+    // }
+    this.state = { ...space }
   }
 
   handleFieldChange = (field) => {
@@ -34,18 +35,19 @@ class EditSpaceDetailsForm extends Component {
   }
 
   handleSave = () => {
-    const space = {
-      _id: this.props.space._id,
-      name: this.state.name,
-      description: this.state.description
-    }
+    // const space = {
+    //   _id: this.props.space._id,
+    //   name: this.state.name,
+    //   description: this.state.description
+    // }
+    const changedSpace = { ...this.props.space, ...this.state }
 
-    this.props.updateSpace(space)
+    this.props.updateSpace(changedSpace)
     this.props.goBackToDetails()
   }
 
   render () {
-    const {name, description, categories, logo, homePage} = this.state
+    const {name, description, categories, logo, homePage, pages} = this.state
     const { t } = this.props
 
     return (
@@ -86,6 +88,7 @@ class EditSpaceDetailsForm extends Component {
           />
         </div>
 
+        {/*
         <div className='field-group'>
           <label>{t('Home_page')}</label>
           <input
@@ -94,6 +97,21 @@ class EditSpaceDetailsForm extends Component {
             defaultValue={homePage}
             onChange={({target}) => this.handleHomePageInput(target)}
           />
+        </div> */}
+
+        {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
+        <div className='field-group'>
+          <label>Home page</label>
+          <select name='homePageId' onChange={({target}) => this.handleFieldChange(target)}>
+            <option value='' selected disabled hidden>{homePage ? homePage.title : 'None'}</option>
+            {
+              pages.map((page, index) => (
+                <option value={page._id} key={index}>
+                  {page.title}
+                </option>
+              ))
+            }
+          </select>
         </div>
 
         <div className='btn-group'>

@@ -37,7 +37,7 @@ class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>{t('Created_by')}</td>
-            <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td>
+            {/* <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td> */}
           </tr>
           <tr>
             <td>{t('Categoies')}</td>
