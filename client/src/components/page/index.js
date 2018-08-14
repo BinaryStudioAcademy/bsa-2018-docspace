@@ -9,6 +9,9 @@ import Comments from 'src/components/comments/comments'
 import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 
+import { translate } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
+
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 
@@ -42,7 +45,7 @@ class Page extends Component {
   render () {
     if (!this.props.page) return null
     const { avatar, firstName, lastName } = this.props.user
-    const { page } = this.props
+    const { page, t } = this.props
     return (
       <div className='page-container'>
         <PageTitle text={page.title} />
@@ -53,8 +56,7 @@ class Page extends Component {
           date={page.created ? page.created.date : ''}
         />
         <PageContent content={page.content} />
-        <Comments />
-
+        <Comments t={t} />
       </div>
     )
   }
@@ -69,7 +71,8 @@ Page.propTypes = {
 
   user: PropTypes.object,
   match: PropTypes.object,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  t: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -104,4 +107,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Page)))

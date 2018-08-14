@@ -8,9 +8,9 @@ import People from 'src/components/dashboard/main/people'
 import Spaces from 'src/components/dashboard/main/spaces'
 import Work from 'src/components/dashboard/main/work'
 import User from 'src/containers/user'
-import SpaceContainer from 'src/components/space/spaceContainer'
 import { Route } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
+import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 
 class App extends Component {
   constructor (props) {
@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   render () {
+    const showIconsInMinimizeDashboard = true
     return (
       <div className='app__root' >
         <SplitPane
@@ -44,13 +45,13 @@ class App extends Component {
             isOpened={this.state.isOpened}
             showLabels={this.state.showLabels}
             showIcons={this.state.showIcons}
+            tabs={<FullSidebar showIcons={showIconsInMinimizeDashboard} />}
           />
           <DashboardMain>
             <Route path='/works' component={Work} />
             <Route path='/activity' component={Activity} />
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
-            <Route path='/spaces' component={SpaceContainer} />
             <Route path='/userSettings' component={User} />
           </DashboardMain>
         </SplitPane>

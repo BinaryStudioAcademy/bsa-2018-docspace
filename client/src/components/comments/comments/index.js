@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import Comment from 'src/components/comments/singleComment'
-import AddComment from 'src/components/comments/addComment'
+import { Comment } from 'src/components/comments/singleComment'
+import { AddComment } from 'src/components/comments/addComment'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 import './comments.css'
 
-class Comments extends Component {
+export class Comments extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -20,24 +22,30 @@ class Comments extends Component {
   }
 
   render () {
+    const { t } = this.props
     return (
       <React.Fragment>
         <div className='comments-section'>
           {this.state.comments.length
-            ? <h2>{this.state.comments.length} Comments</h2>
-            : <h2>Add comments</h2>
+            ? <h2>{this.state.comments.length} {t('Comments')}</h2>
+            : <h2>{t('add_comments')}</h2>
           }
           {this.state.comments && this.state.comments.map((comment, index) => (
-            <Comment comment={comment} key={index} />
+            <Comment comment={comment} key={index} t={t} />
           ))}
         </div>
         <AddComment
           firstName='User'
           lastName='name'
-          addNewComment={this.addNewComment} />
+          addNewComment={this.addNewComment}
+          t={t}
+        />
       </React.Fragment>
     )
   }
 }
+Comments.propTypes = {
+  t: PropTypes.func
+}
 
-export default Comments
+export default translate('translations')(Comments)

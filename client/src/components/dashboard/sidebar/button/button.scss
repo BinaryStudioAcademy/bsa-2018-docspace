@@ -11,9 +11,6 @@
       font-size: 20px;
     }
   }
-  .active{
-    background-color: $primalHover;
-  }
   .round-button{
     display:flex;
     justify-content: center;
@@ -21,7 +18,7 @@
     text-align: center;
     border-radius:100%;
     padding:0;
-    margin:0 10px 5px 10px;
+    margin:0 0 5px 0;
     height: 50px;
     width: 50px;
     a{
@@ -46,6 +43,7 @@
     }
   }
 
+
   .full-button{
     width: 98%;
     p, i{
@@ -65,10 +63,18 @@
       float: left
     }
     i{
-      width: 30px
+      width: 40px;
+    }
+    p{
+      margin-left: 10px;
     }
     width: 90%;
     margin-left: 1%;
+  }
+}
+.icon-navigation-wrapper{
+  .tabs-wrapper{
+    width: 100%
   }
 }
 }

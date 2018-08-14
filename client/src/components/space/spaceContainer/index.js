@@ -17,6 +17,7 @@ import './space.css'
 
 class SpaceContainer extends Component {
   componentWillMount () {
+    console.log('will mount')
     const id = this.props.location.pathname.split('/')[2]
     this.props.getSpace(id)
   }

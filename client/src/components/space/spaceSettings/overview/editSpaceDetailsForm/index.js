@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './editSpaceDetailsForm.css'
+import { translate } from 'react-i18next'
 
+import './editSpaceDetailsForm.css'
 import img from 'src/resources/logo.svg'
 
-export default class EditSpaceDetailsForm extends Component {
+class EditSpaceDetailsForm extends Component {
   constructor (props) {
     super(props)
     const {space} = this.props
@@ -46,19 +47,19 @@ export default class EditSpaceDetailsForm extends Component {
   }
 
   render () {
-    console.log(this.state)
     const {name, description, categories, logo, homePage, pages} = this.state
+    const { t } = this.props
 
     return (
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
-          <label>Space logo</label>
-          <img id='space-logo' className='field-value space-avatar' src={logo} />
-           [<span className='link'>change</span>]
+          <label>{t('Space_logo')}</label>
+          <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
+           [<span className='link'>{t('change')}</span>]
         </div>
 
         <div className='field-group'>
-          <label>Name</label>
+          <label>{t('Name')}</label>
           <input
             type='text'
             name='name'
@@ -68,7 +69,7 @@ export default class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>Description</label>
+          <label>{t('Description')}</label>
           <textarea
             type='text'
             name='description'
@@ -78,7 +79,7 @@ export default class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>Categories</label>
+          <label>{t('Categories')}</label>
           <input
             type='text'
             name='categories'
@@ -87,8 +88,9 @@ export default class EditSpaceDetailsForm extends Component {
           />
         </div>
 
-        {/* <div className='field-group'>
-          <label>Home page</label>
+        {/*
+        <div className='field-group'>
+          <label>{t('Home_page')}</label>
           <input
             type='text'
             name='homePage'
@@ -114,8 +116,8 @@ export default class EditSpaceDetailsForm extends Component {
 
         <div className='btn-group'>
           <label />
-          <button type='submit' onClick={this.handleSave}> Save </button>
-          <button onClick={this.props.goBackToDetails}> Cancel </button>
+          <button type='submit' onClick={this.handleSave}> {t('Save')} </button>
+          <button onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
         </div>
       </form>
 
@@ -124,6 +126,7 @@ export default class EditSpaceDetailsForm extends Component {
 }
 
 EditSpaceDetailsForm.propTypes = {
+  t: PropTypes.func.isRequired,
   goBackToDetails: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.shape({
@@ -147,3 +150,5 @@ EditSpaceDetailsForm.defaultProps = {
     pages: [{name: 'first page'}, {name: 'my home page'}]
   }
 }
+
+export default translate('translations')(EditSpaceDetailsForm)
