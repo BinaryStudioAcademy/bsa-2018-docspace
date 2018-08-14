@@ -26,7 +26,7 @@ class SpacesContent extends Component {
         <td><Link to={`/spaces/${item._id}/settings`}><i title='Space Info' className={'fas fa-info-circle'} /></Link></td></tr>
       if (this.props.activeTab === 'All Spaces') {
         if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
-          if ((userId === item.ownerId._id) || ((((item.rights).users).indexOf(userId)) !== -1)) {
+          if ((userId === item.ownerId) || ((((item.rights).users).indexOf(userId)) !== -1)) {
             return spaceItem
           }
         }

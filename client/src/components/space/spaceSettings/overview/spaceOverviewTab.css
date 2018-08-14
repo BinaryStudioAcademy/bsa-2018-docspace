@@ -2,15 +2,15 @@
   padding: 20px; }
 
 .space-details-header {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: normal;
   line-height: 1.25;
   text-transform: none;
-  margin-bottom: 0;
-  margin-left: 10px; }
+  padding: 15px 0 0 35px; }
   .space-details-header .edit-icons {
     margin-left: 2rem;
-    font-size: 19px; }
+    font-size: 17px;
+    color: #777; }
     .space-details-header .edit-icons i {
       padding: 0.5rem;
       cursor: pointer; }

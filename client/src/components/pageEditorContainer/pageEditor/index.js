@@ -106,7 +106,6 @@ export default class PageEditor extends Component {
          config={joditConfig}
          onChange={this.updatePageContent}
        />
-
        <div className='page-editor-footer'>
          <div>
            <button className='accept-button' onClick={this.handlePablishClick}>

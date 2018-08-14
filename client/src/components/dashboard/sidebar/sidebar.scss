@@ -18,12 +18,22 @@
       padding: 0 5px;
       background-color: $primaryColor;
       height: 100%;
+
+      a, a:visited, a:active, a:hover{
+        text-decoration: none;
+        color: white;
+    }
   }
   h1{
       margin: 15px 0 20px 10px;
   }
   .tabs-wrapper {
     width: 80%;
+
+    a, a:visited, a:active, a:hover{
+      text-decoration: none;
+      color: white;
+    }
   }
   .minimize-dashboard-wrapper {
     display: flex;
@@ -42,7 +52,7 @@
 .Resizer {
   z-index: 9999;
   width: 2px;
-  cursor: w-resize
+  cursor: col-resize
 }
 .sidebar-blue-schema {
   height: 100%;

@@ -10,7 +10,7 @@ class SpaceOverviewTab extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isAditing: false,
+      isEditing: false,
       showDeleteSpaceModal: false // for the future
     }
   }
@@ -35,11 +35,11 @@ class SpaceOverviewTab extends Component {
         <h3 className='space-details-header'> {t('Space_details')}
           <span className='edit-icons'>
             <i
-              className={`fas fa-pencil-alt ${isEditing ? 'active' : ''}`}
+              className={`fas fa-pen ${isEditing ? 'active' : ''}`}
               onClick={this.goToEditDetails}
             />
             <i
-              className='fas fa-trash-alt'
+              className='fas fa-trash'
               onClick={this.handleDeleteSpace}
             />
           </span>
