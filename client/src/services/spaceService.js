@@ -6,6 +6,13 @@ class SpaceService {
       .catch(err => console.log(`Can't get spaces: ${err}`))
   )
 
+  getSpace = (id) => (
+    fetch(`/api/spaces/${id}`)
+      .then(res => res.json())
+      .then(space => space)
+      .catch(err => console.log(`Can't get space: ${err}`))
+  )
+
   createSpace = (spaceObj) => (
     fetch('/api/spaces', {
       method: 'POST',

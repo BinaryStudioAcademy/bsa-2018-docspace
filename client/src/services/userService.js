@@ -1,13 +1,6 @@
 class UserService {
-  getUserData (id) {
-    return fetch(`/api/user/${id}`)
-      .then(res => res.json())
-      .then(user => user)
-      .catch(err => console.log(`Can't get user: ${err}`))
-  }
-
   updateUser (user) {
-    return fetch(`/api/user/${user.id}`,
+    return fetch(`/api/user/${user.id}/setting`,
       {
         method: 'PUT',
         headers: {

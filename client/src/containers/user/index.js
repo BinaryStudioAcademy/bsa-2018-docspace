@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { getUserData, updateUser, checkPassword } from './logic/userActions'
+import { updateUser, checkPassword } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
@@ -25,28 +25,31 @@ class User extends Component {
     this.editMode = this.editMode.bind(this)
     this.managePhoto = this.managePhoto.bind(this)
     this.handleManagePhoto = this.handleManagePhoto.bind(this)
-    this.changeTab = this.changeTab.bind(this)
+    this.changeGeneral = this.changeGeneral.bind(this)
+    this.changePrivate = this.changePrivate.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
   }
 
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
-      email: this.props.user.email,
-      id: this.props.match.params.id,
+      email: this.props.userSettings.messages[0].user.email,
+      id: this.props.userSettings.messages[0].user._id,
       password: currentPassword,
       newPassword: newPassword
     })
   }
 
-  changeTab () {
-    if (!this.state.isEditMode) {
-      this.setState(prevState => {
-        return { isShowGeneral: !prevState.isShowGeneral }
-      })
-    }
+  handleAllPeople = () => {
+    this.props.history.push(`/people`)
   }
 
+  changeGeneral () {
+    this.setState({isShowGeneral: true})
+  }
+  changePrivate () {
+    this.setState({isShowGeneral: false})
+  }
   managePhoto () {
     this.setState(prevState => {
       return { isShowManagePhoto: !prevState.isShowManagePhoto }
@@ -59,7 +62,7 @@ class User extends Component {
   editMode (userProfile) {
     if (this.state.isEditMode) {
       this.props.actions.updateUser({
-        id: this.props.match.params.id,
+        id: this.props.userSettings.messages[0].user._id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
         email: userProfile.email,
@@ -88,14 +91,11 @@ class User extends Component {
     })
   }
 
-  componentWillMount () {
-    this.props.actions.getUserData(this.props.match.params.id)
-  }
-
   render () {
-    const { firstName, lastName } = this.props.user
+    const { messages } = this.props.userSettings
+    const errorsUser = this.props.userSettings.errors
+    const { firstName, lastName } = messages[0].user
     const { successful, errors } = this.props.resultOfChecking
-    console.log(`render`, successful, errors)
     return (
       <React.Fragment>
         <div className='main-wrapper'>
@@ -115,7 +115,7 @@ class User extends Component {
                   <ManagePhoto display={this.handleManagePhoto} />
 
                   <div className='profile-page-center'>
-                    <a className='profile-link-All-People'>
+                    <a className='profile-link-All-People' onClick={this.handleAllPeople}>
                       <span className='profile-link-arrow-img'>
                         <i className='fa fa-arrow-left' aria-hidden='true' />
                       </span>
@@ -149,10 +149,10 @@ class User extends Component {
                     <div className='profile-edit-buttons'>
                       <div className='edit-manage-btn'>
                         <div className='manage-btn'>
-                          <button onClick={this.changeTab}>General</button>
+                          <button onClick={this.changeGeneral}>General</button>
                         </div>
                         <div className='manage-btn'>
-                          <button onClick={this.changeTab}>Private</button>
+                          <button onClick={this.changePrivate}>Private</button>
                         </div>
                       </div>
                     </div>
@@ -160,7 +160,7 @@ class User extends Component {
                       !this.state.isShowGeneral
                         ? <PrivateFields
                           handlePassword={this.handlePassword}
-                          user={this.props.user}
+                          user={messages[0].user}
                           errors={errors}
                           successful={successful}
                           sendPassword={this.sendPassword}
@@ -169,7 +169,8 @@ class User extends Component {
                         <ProfileFields
                           isEditMode={this.state.isEditMode}
                           editMode={this.editMode}
-                          user={this.props.user}
+                          user={messages[0].user}
+                          errors={errorsUser}
                         />
                     }
 
@@ -207,20 +208,30 @@ class User extends Component {
     )
   }
 }
+
 User.defaultProps = {
-  result: {
-    requesting: false,
-    successful: false,
-    messages: [],
-    errors: []
+  userSettings: {
+    errors: [],
+    messages: [{
+      message: 'message',
+      success: true,
+      user: {
+        email: 'email@gmail.com',
+        login: 'login',
+        firstName: 'first name',
+        lastName: 'last name'
+      }
+    }],
+    successful: true
   }
 }
 
 User.propTypes = {
-  user: PropTypes.object,
+  userSettings: PropTypes.object,
   match: PropTypes.object,
   params: PropTypes.array,
   id: PropTypes.string,
+  history: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -230,16 +241,19 @@ User.propTypes = {
   })
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.userReducer,
+    userSettings: state.user.userReducer.messages.length
+      ? state.user.userReducer
+      : state.login.messages.length ? state.login : ownProps.userSettings,
+    state: state,
     resultOfChecking: state.user.checkingReducer
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ getUserData, updateUser, checkPassword }, dispatch)
+    actions: bindActionCreators({ updateUser, checkPassword }, dispatch)
   }
 }
 

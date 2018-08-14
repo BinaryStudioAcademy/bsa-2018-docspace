@@ -13,7 +13,18 @@ function * getSpaces (action) {
     const byId = normalized.entities.byId || {}
     yield put(actions.allSpacesFetchedAndNormalized(all, byId))
   } catch (e) {
+    console.log(e)
     yield put(actions.getAllSpacesError())
+  }
+}
+
+function * getSpace (action) {
+  try {
+    const space = yield SpaceService.getSpace(action.payload)
+    yield put(actions.getSpaceSuccess(space))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.getSpaceError())
   }
 }
 
@@ -22,6 +33,7 @@ function * createSpace (action) {
     const newSpace = yield SpaceService.createSpace(action.payload)
     yield put(actions.createSpaceSuccess(newSpace))
   } catch (e) {
+    console.log(e)
     yield put(actions.createSpaceError())
   }
 }
@@ -32,6 +44,7 @@ function * updateSpace (action) {
     const updated = yield SpaceService.updateSpace(target._id, target)
     yield put(actions.updateSpaceSuccess(updated))
   } catch (e) {
+    console.log(e)
     yield put(actions.updateSpaceError())
   }
 }
@@ -41,12 +54,14 @@ function * deleteSpace (action) {
     yield SpaceService.deleteSpace(action.payload.id)
     yield put(actions.deleteSpaceSuccess(action.payload.id))
   } catch (e) {
+    console.log(e)
     yield put(actions.deleteSpaceError())
   }
 }
 
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_SPACES_REQUEST, getSpaces)
+  yield takeEvery(actionTypes.GET_SPACE_REQUEST, getSpace)
   yield takeEvery(actionTypes.CREATE_SPACE_REQUEST, createSpace)
   yield takeEvery(actionTypes.DELETE_SPACE_REQUEST, deleteSpace)
   yield takeEvery(actionTypes.UPDATE_SPACE_REQUEST, updateSpace)

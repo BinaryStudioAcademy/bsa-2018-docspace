@@ -17,6 +17,21 @@ export const getAllPagesError = () => ({
   type: actionTypes.GET_ALL_PAGES_ERROR
 })
 
+// GET ONE
+export const getPageByIdRequest = (id) => ({
+  type: actionTypes.GET_PAGE_BY_ID_REQUEST,
+  payload: id
+})
+
+export const getPageByIdSuccess = (page) => ({
+  type: actionTypes.GET_PAGE_BY_ID_SUCCESS,
+  payload: page
+})
+
+export const getPageByIdError = () => ({
+  type: actionTypes.GET_PAGE_BY_ID_ERROR
+})
+
 // POST
 export const createPageRequest = (page) => ({
   type: actionTypes.CREATE_PAGE_REQUEST,
