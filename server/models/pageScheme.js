@@ -6,17 +6,19 @@ const pageSchema = new mongoose.Schema({
   content: String,
   spaceId: Schema.Types.ObjectId,
   created: {
-    date: Date,
-    userId: {
-      type: Schema.Types.ObjectId
-    }
+    date: {
+      type: Date
+    },
+    userId: Schema.Types.ObjectId
   },
   comments: [Schema.Types.ObjectId],
   usersLikes: [Schema.Types.ObjectId],
   isDeleted: Boolean
 }, {
   versionKey: false
-})
+}
+
+)
 
 const PageModel = mongoose.model('Page', pageSchema)
 

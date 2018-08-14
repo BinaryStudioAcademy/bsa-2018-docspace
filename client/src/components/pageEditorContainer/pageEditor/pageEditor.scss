@@ -187,3 +187,11 @@
      }
   }
 }
+// .jodit_container .jodit_workplace{
+//   padding-left: 5rem;
+//   width: 100%;
+// }
+
+.jodit_container:not(.jodit_inline) .jodit_wysiwyg{
+  padding: 20px !important;
+}

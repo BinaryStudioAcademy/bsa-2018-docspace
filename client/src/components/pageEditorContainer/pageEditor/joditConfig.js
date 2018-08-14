@@ -3,10 +3,12 @@
 const joditEditorConfig = {
   readonly: false,
   height: '100%',
+  allowResizeY: true,
+  allowResizeX: true,
   uploader: {
     insertImageAsBase64URI: true
   },
-  editorCssClass: 'page-jodit-editor',
+  eeditorCssClass: 'page-jodit-editor',
   useSearch: true
 }
 
