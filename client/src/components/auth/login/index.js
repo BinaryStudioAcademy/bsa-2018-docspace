@@ -41,10 +41,13 @@ class Login extends Component {
 
   render () {
     const { redirectToSignup, email, password } = this.state
-    const { requesting, errors } = this.props.login
+    const { requesting, errors, successful } = this.props.login
 
     if (redirectToSignup) {
       return <Redirect to='/signup' />
+    }
+    if (successful) {
+      return <Redirect to='/' />
     }
     return (
       <Fragment>
