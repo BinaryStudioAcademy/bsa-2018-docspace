@@ -43,6 +43,7 @@
     }
   }
 
+
   .full-button{
     width: 98%;
     p, i{
@@ -67,8 +68,13 @@
     p{
       margin-left: 10px;
     }
-    width: 100%;
+    width: 90%;
     margin-left: 1%;
+  }
+}
+.icon-navigation-wrapper{
+  .tabs-wrapper{
+    width: 100%
   }
 }
 }
