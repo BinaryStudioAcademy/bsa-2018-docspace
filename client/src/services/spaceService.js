@@ -1,9 +1,8 @@
+import requestHelper from 'src/requestHelper'
+
 class SpaceService {
   getSpaces = () => (
-    fetch('/api/spaces')
-      .then(res => res.json())
-      .then(spaces => spaces)
-      .catch(err => console.log(`Can't get spaces: ${err}`))
+    requestHelper('/api/spaces', 'GET')
   )
 
   getSpace = (id) => (

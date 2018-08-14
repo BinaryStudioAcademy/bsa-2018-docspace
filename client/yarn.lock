@@ -78,6 +78,19 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@types/prop-types@*":
+  version "15.5.5"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.5.tgz#17038dd322c2325f5da650a94d5f9974943625e3"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^16.3.14":
+  version "16.4.10"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.10.tgz#fb577091034b25a81f829923e7d38258f43e3165"
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -2009,6 +2022,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-0.2.37.tgz#541097234cb2513c83ceed3acddc27ff27987d54"
   dependencies:
     cssom "0.3.x"
+
+csstype@^2.2.0:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.6.tgz#2ae1db2319642d8b80a668d2d025c6196071e788"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -4437,6 +4454,17 @@ jest@20.0.4:
   resolved "https://registry.yarnpkg.com/jest/-/jest-20.0.4.tgz#3dd260c2989d6dad678b1e9cc4d91944f6d602ac"
   dependencies:
     jest-cli "^20.0.4"
+
+jodit-react@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/jodit-react/-/jodit-react-1.0.17.tgz#4ef7d42431687d4728db92f2efb5c839b23b793c"
+  dependencies:
+    "@types/react" "^16.3.14"
+    jodit "^3.2.3"
+
+jodit@^3.2.3:
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.2.9.tgz#743673b00228d350c5f7aa4ea6d3f8ba70077b4c"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.8"
