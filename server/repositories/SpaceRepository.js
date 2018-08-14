@@ -27,6 +27,7 @@ class SpaceRepository extends GeneralRepository {
           _id: 1,
           name: 1,
           description: 1,
+          ownerId: 1,
           categories: {
             _id: 1,
             name: 1
@@ -76,14 +77,13 @@ class SpaceRepository extends GeneralRepository {
           from: 'users',
           localField: 'ownerId',
           foreignField: '_id',
-          as: 'ownerId'
+          as: 'owner'
         }
       },
       {
-        $addFields: {
-          ownerId: {
-            $arrayElemAt: ['$ownerId', 0]
-          }
+        $unwind: {
+          path: '$owner',
+          preserveNullAndEmptyArrays: true
         }
       },
       {
@@ -92,7 +92,7 @@ class SpaceRepository extends GeneralRepository {
           name: 1,
           key: 1,
           isDeleted: 1,
-          ownerId: {
+          owner: {
             _id: 1,
             firstName: 1,
             lastName: 1

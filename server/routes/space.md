@@ -6,27 +6,50 @@ GET /api/spaces
 Result:
 ```js
 {
+    "_id": ObjectId,
     "name": String,
-    "key": String,
-    "isDeleted": Boolean,
     "ownerId": ObjectId,
     "description": String,
-    "categories": [ObjectId],
-    "homePageId": ObjectId,
-    "blogId": ObjectId,
-    "pages": [ObjectId],
-    "history":[ObjectId],
-    "rights": {
-        "users": [ObjectId],
-        "groups": [ObjectId],
-        "anonymous": ObjectId,
-    }
+    "categories": [{
+        "_id": ObjectId,
+        "name": String
+    }]
 }
 ```
 ## One space:
 
 ```
 GET /api/spaces/:id
+```
+Result:
+```js
+{
+    "_id": ObjectId,
+    "name": String,
+    "key": String,
+    "owner": {
+        "_id": ObjectId,
+        "firstName": String,
+        "lastName": String
+    },
+    "description": String,
+    "categories": [{
+        "_id": ObjectId,
+        "name": String
+    }],
+    "isDeleted": Boolean,
+    "blogId": ObjectId,
+    "homePage": ObjectId,
+    "pages": [{
+        "_id": ObjectId,
+        "title": String
+    }],
+    "history": [ObjectId],
+    "rights": {
+        "groups": [ObjectId],
+        "users": [ObjectId]
+    }
+}
 ```
 
 ## Create space:
