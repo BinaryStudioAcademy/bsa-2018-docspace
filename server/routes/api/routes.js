@@ -1,5 +1,19 @@
+const space = require('./space')
+const user = require('./user')
+const page = require('./page')
+const signup = require('./auth/signup')
+const login = require('./auth/login')
+const logout = require('./auth/logout')
+const category = require('./category')
+const comment = require('./comment')
+
 module.exports = (app) => {
-  app.get('/api/hello', (req, res) => {
-    res.send({ text: 'Hello World!' })
-  })
+  app.use('/api/signup', signup)
+  app.use('/api/login', login)
+  app.use('/api/logout', logout)
+  app.use('/api/pages', page)
+  app.use('/api/user', user)
+  app.use('/api/spaces', space)
+  app.use('/api/category', category)
+  app.use('/api/comments', comment)
 }

@@ -6,9 +6,10 @@ const mongooseConnection = require('./db/dbConnect').connection
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
-
+const passport = require('passport')
 const app = express()
 const port = process.env.PORT || 3001
+require('./config/passport')()
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')))
@@ -17,8 +18,8 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 
 app.use(
   session({
@@ -30,6 +31,9 @@ app.use(
     })
   })
 )
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 apiRoutes(app)
 

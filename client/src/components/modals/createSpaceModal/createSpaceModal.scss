@@ -1,0 +1,79 @@
+@import "src/globalStyles/variables.scss";
+
+.modal-header{
+    line-height: 25px;
+    border-bottom: 1px solid $grayLight;
+    box-sizing: border-box;
+    height: 56px;
+    color: #333;
+    margin: 0;
+    overflow: hidden;
+    padding: 15px 20px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal;
+    font-size: 20px;
+    text-align : left;
+}
+
+.modal-help-link{
+    margin: 2px 0 0 5px;
+    font-weight: normal;
+    font-size: 14px;
+    float: right;
+    a{
+      color: $primaryColor;
+      text-decoration: none;
+    }
+}
+
+.modal-filter-form{
+    margin: 0;
+    // float: right;
+    position: relative;
+    margin-right: 10px;
+
+    input {
+      color: $gray;
+      height: 2.14285714em;
+      line-height: 1.4285714285714;
+      padding: 4px 5px;
+      font-size: 14px;
+      border: 1px solid $grayLight;
+      border-radius: 3px;
+      box-sizing: border-box;
+      margin: 0;
+      max-width: 250px;
+      vertical-align: baseline;
+      width: 100%;
+      font-size: 14px;
+    }
+}
+
+.modal-footer{
+    border-top: 1px solid $grayLight;
+    box-sizing: border-box;
+    clear: both;
+    height: 51px;
+    overflow: hidden;
+    padding: 10px;
+    text-align: right;
+    width: 100%
+}
+
+.wizzard-modal-body{
+    height: 100%;
+    display: flex;
+}
+
+
+@media only screen and (max-width: 950px){
+  .template-list{
+      .template{
+        width: 300px;
+      }
+  }
+}
+
+

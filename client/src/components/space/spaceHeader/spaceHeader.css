@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  padding: 25px 30px 30px 50px;
+  justify-content: space-between; }
+  .header-page {
+    display: flex;
+    align-items: baseline; }
+  .header-name {
+    font-size: 28px;
+    color: #333333; }
+    .header-name.page {
+      color: #6c788f;
+      font-size: 17px;
+      text-decoration: none; }
+      .header-name.page:hover {
+        color: #949eb3; }
+
+.space-button {
+  background: #f4f5f7;
+  color: #475774;
+  padding: 7px;
+  border-radius: 2px;
+  margin-left: 10px; }
+  .space-button:hover {
+    background: #eaecef;
+    cursor: pointer; }

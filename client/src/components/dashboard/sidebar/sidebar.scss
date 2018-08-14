@@ -1,0 +1,111 @@
+@import "src/globalStyles/variables.scss";
+
+
+.sidebar-container{
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+  .sidebar-wrapper{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $primaryColor;
+  }
+  .icon-buttons-wrapper{
+      z-index: 1000;
+      padding: 0 5px;
+      background-color: $primaryColor;
+      height: 100%;
+  }
+  h1{
+      margin: 15px 0 20px 10px;
+  }
+  .tabs-wrapper{
+    width: 80%;
+  }
+  .minimize-dashboard-wrapper{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    height: 100%;
+    width: 70px;
+  }
+}
+
+.sidebar-container{
+  height: 100%;
+}
+.Resizer{
+  z-index: 9999;
+  width: 2px;
+  cursor: w-resize
+}
+.sidebar-blue-schema{
+  height: 100%;
+  .sidebar-wrapper, .minimize-dashboard-wrapper{
+  background-color: $primaryColor;
+  }
+
+a, a:visited, a:active, a:hover{
+    text-decoration: none;
+    color: white;
+}
+.nav-button:hover{
+    background-color: $primalHover;
+}
+h1{
+    color: white;
+    padding: 0;
+}
+.Resizer{
+    background-color: $primaryColor
+}
+}
+
+
+.sidebar-grey-schema{
+  .sidebar-wrapper, .minimize-dashboard-wrapper {
+    background-color: $greyBlog;
+  }
+    .tabs-wrapper {
+      a, a:visited, a:active, a:hover{
+        text-decoration: none;
+        color: $blueText;
+      }
+      .nav-button:hover{
+        background-color: $greyHover;
+      }
+    }
+
+  h1{
+    color: $blueText;
+  }
+  .Resizer{
+    background-color: $greyBlog
+  }
+  .icon-buttons-wrapper{
+    .nav-button:hover{
+      background-color:$primalHover;
+    }
+  }
+  .minimize-dashboard-wrapper{
+      .nav-button:hover{
+        background-color:$greyHover;
+      }
+      a, a:visited, a:active, a:hover {
+        text-decoration: none;
+        color: $blueText;
+      }
+  }
+  .icon-buttons-wrapper{
+    a, a:visited, a:active, a:hover {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}
+

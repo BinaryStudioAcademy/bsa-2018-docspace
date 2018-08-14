@@ -1,0 +1,29 @@
+.blog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.empty-blog-message {
+  text-align: center;
+  width: 400px; }
+  .empty-blog-message-title {
+    text-transform: uppercase;
+    color: #6c788f;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 15px; }
+  .empty-blog-message-text {
+    color: #333333;
+    margin: 15px; }
+  .empty-blog-message-button {
+    background: #0044a9;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    border: none; }
+    .empty-blog-message-button:hover {
+      cursor: pointer;
+      background: #1c80ff; }
+    .empty-blog-message-button:focus {
+      outline: 0; }
