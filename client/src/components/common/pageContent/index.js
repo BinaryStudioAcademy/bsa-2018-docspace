@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import './pageContent.css'
 
 const PageContent = ({ content }) => {
-  console.log(content)
   return (
     <div className='page-content' dangerouslySetInnerHTML={{ __html: content }} />
   )

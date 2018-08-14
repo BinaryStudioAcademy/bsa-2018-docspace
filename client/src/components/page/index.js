@@ -8,7 +8,6 @@ import PageContent from 'src/components/common/pageContent'
 import Comments from 'src/components/comments/comments'
 import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
-// import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
