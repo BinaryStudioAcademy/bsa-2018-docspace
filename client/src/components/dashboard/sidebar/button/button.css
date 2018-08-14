@@ -7,9 +7,6 @@
     padding: 10px;
     font-size: 20px; }
 
-.sidebar-container .active {
-  background-color: #08367C; }
-
 .sidebar-container .round-button {
   display: flex;
   justify-content: center;
@@ -17,7 +14,7 @@
   text-align: center;
   border-radius: 100%;
   padding: 0;
-  margin: 0 10px 5px 10px;
+  margin: 0 0 5px 0;
   height: 50px;
   width: 50px; }
   .sidebar-container .round-button a {
@@ -56,4 +53,9 @@
     display: inline-flex;
     float: left; }
   .sidebar-container .tabs-wrapper .nav-button i {
-    width: 30px; }
+    width: 40px; }
+  .sidebar-container .tabs-wrapper .nav-button p {
+    margin-left: 10px; }
+
+.sidebar-container .icon-navigation-wrapper .tabs-wrapper {
+  width: 100%; }

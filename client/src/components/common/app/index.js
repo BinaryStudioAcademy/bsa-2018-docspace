@@ -14,6 +14,7 @@ import SpaceSidebar from 'src/components/space/spaceSidebar'
 
 import { Route, withRouter } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
+import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 
 class App extends Component {
   constructor (props) {
@@ -39,6 +40,7 @@ class App extends Component {
 
   render () {
     const isSpace = this.props.location.pathname.includes('/spaces/')
+    const showIconsInMinimizeDashboard = true
 
     return (
       <div className='app__root' >
@@ -57,6 +59,7 @@ class App extends Component {
                   isOpened={this.state.isOpened}
                   showLabels={this.state.showLabels}
                   showIcons={this.state.showIcons}
+                  tabs={<FullSidebar showIcons={showIconsInMinimizeDashboard} />}
                 />
               )
           }

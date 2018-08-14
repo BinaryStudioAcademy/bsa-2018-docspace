@@ -5,9 +5,11 @@ import { updateUser, checkPassword } from './logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
-import ProfileFields from 'src/components/userTabs/general'
-import PrivateFields from 'src/components/userTabs/private'
+import { ProfileFields } from 'src/components/userTabs/general'
+import { PrivateFields } from 'src/components/userTabs/private'
 import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
+import { translate } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
 
 import './user.css'
 
@@ -33,8 +35,8 @@ class User extends Component {
 
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
-      email: this.props.userSettings.messages[0].user.email,
-      id: this.props.userSettings.messages[0].user._id,
+      email: this.props.userSettings.user.email,
+      id: this.props.userSettings.user._id,
       password: currentPassword,
       newPassword: newPassword
     })
@@ -62,7 +64,7 @@ class User extends Component {
   editMode (userProfile) {
     if (this.state.isEditMode) {
       this.props.actions.updateUser({
-        id: this.props.userSettings.messages[0].user._id,
+        id: this.props.userSettings.user._id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
         email: userProfile.email,
@@ -92,9 +94,10 @@ class User extends Component {
   }
 
   render () {
-    const { messages } = this.props.userSettings
+    const { t } = this.props
+    const { user } = this.props.userSettings
     const errorsUser = this.props.userSettings.errors
-    const { firstName, lastName } = messages[0].user
+    const { firstName, lastName } = user
     const { successful, errors } = this.props.resultOfChecking
     return (
       <React.Fragment>
@@ -107,19 +110,19 @@ class User extends Component {
                     <div className='add-photo-content'>
                       <button className='add-photo-button'>
                         <img src={Camera} alt='camera' className='add-photo-img' />
-                        <span className='add-photo-label'>Add cover photo</span>
+                        <span className='add-photo-label'>{t('add_cover_photo')}</span>
                       </button>
                     </div>
                   </div>
 
-                  <ManagePhoto display={this.handleManagePhoto} />
+                  <ManagePhoto display={this.handleManagePhoto} t={t} />
 
                   <div className='profile-page-center'>
                     <a className='profile-link-All-People' onClick={this.handleAllPeople}>
                       <span className='profile-link-arrow-img'>
                         <i className='fa fa-arrow-left' aria-hidden='true' />
                       </span>
-                      <span>All people</span>
+                      <span>{t('all_people')}</span>
                     </a>
                     <div className='profile-name-avatar'>
                       <div className='profile-avatar-wrapper'>
@@ -149,10 +152,10 @@ class User extends Component {
                     <div className='profile-edit-buttons'>
                       <div className='edit-manage-btn'>
                         <div className='manage-btn'>
-                          <button onClick={this.changeGeneral}>General</button>
+                          <button onClick={this.changeGeneral}>{t('general')}</button>
                         </div>
                         <div className='manage-btn'>
-                          <button onClick={this.changePrivate}>Private</button>
+                          <button onClick={this.changePrivate}>{t('private')}</button>
                         </div>
                       </div>
                     </div>
@@ -160,22 +163,24 @@ class User extends Component {
                       !this.state.isShowGeneral
                         ? <PrivateFields
                           handlePassword={this.handlePassword}
-                          user={messages[0].user}
+                          user={user}
                           errors={errors}
                           successful={successful}
                           sendPassword={this.sendPassword}
+                          t={t}
                         />
                         : this.state.isShowGeneral &&
                         <ProfileFields
                           isEditMode={this.state.isEditMode}
                           editMode={this.editMode}
-                          user={messages[0].user}
+                          user={user}
                           errors={errorsUser}
+                          t={t}
                         />
                     }
 
                     <div className='recent-work-list-wrapper'>
-                      <h2 className='recent-work-list-wrapper-header'><span>Work</span></h2>
+                      <h2 className='recent-work-list-wrapper-header'><span>{t('work')}</span></h2>
                       <ul className='recent-work-list-items'>
                         <RecentWorkListItem
                           src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
@@ -209,29 +214,13 @@ class User extends Component {
   }
 }
 
-User.defaultProps = {
-  userSettings: {
-    errors: [],
-    messages: [{
-      message: 'message',
-      success: true,
-      user: {
-        email: 'email@gmail.com',
-        login: 'login',
-        firstName: 'first name',
-        lastName: 'last name'
-      }
-    }],
-    successful: true
-  }
-}
-
 User.propTypes = {
   userSettings: PropTypes.object,
   match: PropTypes.object,
   params: PropTypes.array,
   id: PropTypes.string,
   history: PropTypes.object,
+  t: PropTypes.func,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -245,8 +234,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userSettings: state.user.userReducer.messages.length
       ? state.user.userReducer
-      : state.login.messages.length ? state.login : ownProps.userSettings,
-    state: state,
+      : state.login,
     resultOfChecking: state.user.checkingReducer
   }
 }
@@ -257,4 +245,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(User)))
