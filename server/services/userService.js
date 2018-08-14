@@ -104,7 +104,7 @@ module.exports = {
         if (!resultLoginValidation.success) {
           return res.send({...resultLoginValidation, user: user})
         }
-        if (!req.body.login || !req.body.lastName) {
+        if (!req.body.firstName || !req.body.lastName) {
           return res.send({
             success: false,
             message: 'User\'s name cannot be empty',
