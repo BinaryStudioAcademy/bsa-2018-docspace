@@ -39,7 +39,7 @@
 .Resizer {
   z-index: 9999;
   width: 2px;
-  cursor: w-resize; }
+  cursor: col-resize; }
 
 .sidebar-blue-schema {
   height: 100%; }

@@ -18,7 +18,7 @@
       padding: 0 5px;
       background-color: $primaryColor;
       height: 100%;
-      
+
       a, a:visited, a:active, a:hover{
         text-decoration: none;
         color: white;
@@ -52,7 +52,7 @@
 .Resizer{
   z-index: 9999;
   width: 2px;
-  cursor: w-resize
+  cursor: col-resize
 }
 .sidebar-blue-schema{
   height: 100%;
