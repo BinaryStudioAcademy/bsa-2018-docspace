@@ -18,7 +18,6 @@ class CommentsList extends Component {
   }
 
   render () {
-    // .map(comment => <Comment margin={`${comment.level * 25}px`} comment={comment.item} />)
     const comments = this.getComments()
     const aaa = comments.map(comment => <Comment margin={`${comment.level * 25}px`} comment={comment.item} />)
     console.log(aaa)

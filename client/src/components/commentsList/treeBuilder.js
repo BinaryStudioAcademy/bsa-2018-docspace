@@ -37,7 +37,7 @@ function replaceNode (node, comment, rootNode) {
     return node.children.get(comment.parentId)
   } else if (node.children.size) {
     node.children.forEach(children => {
-      rootNode = replaceNode(children, comment, rootNode)   
+      rootNode = replaceNode(children, comment, rootNode)
     })
   } else {
     return rootNode
