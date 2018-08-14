@@ -11,8 +11,8 @@ class SpaceDetails extends Component {
 
     let name = ''
 
-    if (space.ownerId) {
-      name = space.ownerId.firstName + ' ' + space.ownerId.lastName
+    if (space.owner) {
+      name = space.owner.firstName + ' ' + space.owner.lastName
     }
 
     return (
