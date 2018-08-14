@@ -1,9 +1,15 @@
 .space-settings-page{
+  font-size: 14px;
+  
   & h1{
     color: #333;
     font-weight: normal;
     margin: 0.6rem;
     text-transform: none;
+  }
+
+  & img {
+    border-radius: 5px;
   }
 }
 

@@ -3,18 +3,25 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
 import './spaceDetails.css'
-import img from 'src/resources/logo.svg'
+import logo from 'src/resources/logo.png'
 
 class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
+
+    let name = ''
+
+    if (space.ownerId) {
+      name = space.ownerId.firstName + ' ' + space.ownerId.lastName
+    }
+
     return (
       <table className='space-details-table'>
         <tbody>
           <tr>
             <td className='avatar-label-cell'>Space logo</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={img} alt='space-logo' />
+              <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
             </td>
           </tr>
           <tr>
@@ -37,7 +44,7 @@ class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>{t('Created_by')}</td>
-            {/* <td> <span className='link'>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</span></td> */}
+            <td> <span className='link'>{name}</span></td>
           </tr>
           <tr>
             <td>{t('Categoies')}</td>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
 import './editSpaceDetailsForm.css'
-import img from 'src/resources/logo.svg'
+import logo from 'src/resources/logo.png'
 
 class EditSpaceDetailsForm extends Component {
   constructor (props) {
@@ -47,7 +47,7 @@ class EditSpaceDetailsForm extends Component {
   }
 
   render () {
-    const {name, description, categories, logo, homePage, pages} = this.state
+    const {name, description, categories, homePage, pages} = this.state
     const { t } = this.props
 
     return (
@@ -134,7 +134,7 @@ EditSpaceDetailsForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     categories: ['one', 'two', 'label'],
-    logo: img,
+    logo: PropTypes.string,
     homePage: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)
   })
@@ -145,7 +145,7 @@ EditSpaceDetailsForm.defaultProps = {
     name: 'name',
     description: 'lore ipsum',
     categories: ['one', 'two', 'label'],
-    logo: img,
+    logo: '',
     homePage: 'my home page',
     pages: [{name: 'first page'}, {name: 'my home page'}]
   }
