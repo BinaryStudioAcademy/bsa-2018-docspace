@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import Comments from 'src/components/comments/comments'
+import { Comments } from 'src/components/comments/comments'
+import { translate } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
 
 import './page.css'
 
@@ -14,7 +15,7 @@ import fakeImg from 'src/resources/logo.svg'
 class Page extends Component {
   render () {
     const { avatar, firstName, lastName } = this.props.user
-    const { page } = this.props
+    const { page, t } = this.props
     return (
       <div className='page-container'>
         <div>
@@ -27,7 +28,7 @@ class Page extends Component {
           />
           <PageContent content={page.content} />
         </div>
-        <Comments />
+        <Comments t={t} />
       </div>
     )
   }
@@ -39,7 +40,8 @@ Page.propTypes = {
     content: PropTypes.string
   }),
 
-  user: PropTypes.object
+  user: PropTypes.object,
+  t: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -64,4 +66,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Page)
+export default translate('translations')(withRouter(connect(mapStateToProps)(Page)))

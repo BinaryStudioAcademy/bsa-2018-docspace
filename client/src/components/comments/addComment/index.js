@@ -3,10 +3,11 @@ import CommentAvatar from 'src/components/comments/commentAvatar'
 import UserAvatarLink from 'src/resources/icons/user-comment.png'
 import Input from 'src/components/common/input'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import './addComment.css'
 
-class AddComment extends Component {
+export class AddComment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -52,6 +53,7 @@ class AddComment extends Component {
   }
 
   render () {
+    const { t } = this.props
     return (
       <div className='addComment'>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
@@ -72,19 +74,19 @@ class AddComment extends Component {
               ? <Input
                 name='comment-body-disabled'
                 inputType='button'
-                value='Save'
+                value={t('Save')}
               />
               : <Input
                 name='comment-body-save'
                 inputType='button'
-                value='Save'
+                value={t('Save')}
                 onClick={this.createComment}
               />
             }
             <Input
               name='comment-body-cancel'
               inputType='button'
-              value='Cancel'
+              value={t('Cancel')}
               onClick={this.cancelSendText}
             />
           </div>
@@ -95,10 +97,10 @@ class AddComment extends Component {
   }
 }
 
-export default AddComment
-
 AddComment.propTypes = {
   addNewComment: PropTypes.func,
   firstName: PropTypes.string,
-  lastName: PropTypes.string
+  lastName: PropTypes.string,
+  t: PropTypes.func
 }
+export default translate('translations')(AddComment)

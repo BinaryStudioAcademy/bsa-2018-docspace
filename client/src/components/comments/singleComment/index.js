@@ -3,10 +3,11 @@ import UserAvatarLink from 'src/resources/icons/user-comment.png'
 import {CommentActions} from 'src/components/comments/commentActions'
 import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import './singleComment.css'
 
-class Comment extends Component {
+export class Comment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -39,7 +40,7 @@ class Comment extends Component {
 
   render () {
     return (
-      <div className='comment-wrapper'>
+      <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
         <div className='comment-body'>
           <h4 className='comment-first-last-names'>
@@ -53,6 +54,7 @@ class Comment extends Component {
             onEditComment={this.onEditComment}
             onDeleteComment={this.onDeleteComment}
             onLikeComment={this.onLikeComment}
+            t={this.props.t}
           />
         </div>
       </div>
@@ -61,7 +63,8 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-  comment: PropTypes.object
+  comment: PropTypes.object,
+  margin: PropTypes.string,
+  t: PropTypes.func
 }
-
-export default Comment
+export default translate('translations')(Comment)
