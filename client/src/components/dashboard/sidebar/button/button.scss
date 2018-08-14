@@ -11,9 +11,6 @@
       font-size: 20px;
     }
   }
-  .active{
-    background-color: $primalHover;
-  }
   .round-button{
     display:flex;
     justify-content: center;
@@ -21,7 +18,7 @@
     text-align: center;
     border-radius:100%;
     padding:0;
-    margin:0 10px 5px 10px;
+    margin:0 0 5px 0;
     height: 50px;
     width: 50px;
     a{
@@ -65,9 +62,12 @@
       float: left
     }
     i{
-      width: 30px
+      width: 40px;
     }
-    width: 90%;
+    p{
+      margin-left: 10px;
+    }
+    width: 100%;
     margin-left: 1%;
   }
 }

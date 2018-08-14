@@ -39,7 +39,7 @@ class Comment extends Component {
 
   render () {
     return (
-      <div className='comment-wrapper'>
+      <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
         <div className='comment-body'>
           <h4 className='comment-first-last-names'>
@@ -61,7 +61,8 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-  comment: PropTypes.object
+  comment: PropTypes.object,
+  margin: PropTypes.string
 }
 
 export default Comment

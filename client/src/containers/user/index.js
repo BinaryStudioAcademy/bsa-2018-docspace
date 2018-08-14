@@ -99,13 +99,6 @@ class User extends Component {
     return (
       <React.Fragment>
         <div className='main-wrapper'>
-          <div className='left-side-wrapper'>
-            <div>
-              <div className='left-side-content'>
-                <div className='left-side-items'>0</div>
-              </div>
-            </div>
-          </div>
           <div className='content-wrapper'>
             <div className='profile-page'>
               <div className='profile-page-responsive'>
