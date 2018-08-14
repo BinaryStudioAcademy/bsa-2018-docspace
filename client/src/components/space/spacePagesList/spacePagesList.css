@@ -1,20 +1,24 @@
-.pages-list-title {
-  text-transform: uppercase; }
-
-.pages-list-item {
-  display: flex;
-  padding: 10px 0 10px 20px;
-  text-decoration: none;
-  color: #475774; }
-  .pages-list-item:hover {
-    background: #eaecef;
-    color: #0044a9;
-    cursor: pointer; }
-  .pages-list-item.current {
-    background: #eaecef;
-    color: #0044a9; }
-  .pages-list-item-name {
-    margin-left: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; }
+.pages-list {
+  font-size: 15px; }
+  .pages-list-title {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 500;
+    padding-top: 10px; }
+  .pages-list-item {
+    display: flex;
+    padding: 10px 0 10px 20px;
+    text-decoration: none;
+    color: #475774; }
+    .pages-list-item:hover {
+      background: #eaecef;
+      color: #0044a9;
+      cursor: pointer; }
+    .pages-list-item.current {
+      background: #eaecef;
+      color: #0044a9; }
+    .pages-list-item-name {
+      margin-left: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }

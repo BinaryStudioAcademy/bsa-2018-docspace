@@ -10,12 +10,12 @@
     font-weight: normal;
     line-height: 1.25;
     text-transform: none;
-    margin-bottom: 0;
-    padding-left: 35px;
+    padding: 15px 0 0 35px;
 
     .edit-icons{
       margin-left: 2rem;
-      font-size: 19px;
+      font-size: 17px;
+      color: $grayButtons;
 
       i{
         padding:0.5rem;

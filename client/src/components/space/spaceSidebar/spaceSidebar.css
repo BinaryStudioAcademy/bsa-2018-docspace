@@ -30,10 +30,11 @@
       text-overflow: ellipsis;
       white-space: nowrap; }
   .space-sidebar-main {
-    margin: 15px;
-    overflow-y: auto; }
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 15px; }
     .space-sidebar-main-navbar {
-      margin-bottom: 15px; }
+      padding-bottom: 15px; }
       .space-sidebar-main-navbar-section {
         display: flex;
         text-decoration: none;
