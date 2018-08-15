@@ -6,6 +6,8 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import Comments from 'src/components/comments/comments'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
+import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { bindActionCreators } from 'redux'
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
@@ -14,6 +16,10 @@ import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 
 class Page extends Component {
+  componentDidMount () {
+    this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+  }
+
   render () {
     if (!this.props.page) return null
     const { avatar, firstName, lastName } = this.props.user
@@ -42,7 +48,9 @@ Page.propTypes = {
   }),
 
   user: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
+  actions: PropTypes.object,
+  match: PropTypes.object
 }
 
 Page.defaultProps = {
@@ -67,4 +75,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default translate('translations')(withRouter(connect(mapStateToProps)(Page)))
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        getPageByIdRequest
+      }
+      , dispatch)
+  }
+}
+
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Page)))
