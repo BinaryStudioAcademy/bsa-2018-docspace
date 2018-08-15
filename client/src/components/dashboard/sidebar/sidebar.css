@@ -20,7 +20,7 @@
   .sidebar-container h1 {
     margin: 15px 0 30px 10px; }
   .sidebar-container .tabs-wrapper {
-    width: 80%; }
+    width: 100%; }
     .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
       text-decoration: none;
       color: white; }

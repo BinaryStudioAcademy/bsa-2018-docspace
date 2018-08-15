@@ -22,7 +22,7 @@
     align-items: center; }
     .sidebar-container .minimize-dashboard-wrapper .top-icons img {
       width: 55px;
-      margin: 25px auto 15px; }
+      margin: 29px auto 15px; }
       .sidebar-container .minimize-dashboard-wrapper .top-icons img:hover {
         background-color: #08367C;
         border-radius: 50%; }
@@ -40,7 +40,7 @@
   align-items: center; }
   .sidebar-container .sidebar-wrapper .top-icons img {
     width: 55px;
-    margin: 25px auto 15px; }
+    margin: 29px auto 15px; }
     .sidebar-container .sidebar-wrapper .top-icons img:hover {
       background-color: #08367C;
       border-radius: 50%; }
@@ -54,7 +54,9 @@
 .sidebar-container .icon-buttons-wrapper .nav-button {
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  height: 40px;
+  width: 40px; }
 
 .sidebar-container .icon-buttons-wrapper .nav-button a {
   display: flex;
