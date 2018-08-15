@@ -7,7 +7,8 @@
   height: 100%;
   width: 70px; }
   .sidebar-container .minimize-dashboard-wrapper .icon-buttons-wrapper {
-    width: 100%; }
+    width: 100%;
+    margin-top: 30px; }
   .sidebar-container .minimize-dashboard-wrapper .icon-navigation-wrapper {
     height: 45%;
     width: 100%;
@@ -20,6 +21,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center; }
+    .sidebar-container .minimize-dashboard-wrapper .top-icons img {
+      max-width: 50px;
+      margin: auto 8px 10px auto; }
+      .sidebar-container .minimize-dashboard-wrapper .top-icons img:hover {
+        background-color: #08367C;
+        border-radius: 50%; }
   .sidebar-container .minimize-dashboard-wrapper .bottom-icons {
     height: 30%;
     display: flex;
@@ -33,6 +40,9 @@
   .sidebar-container .sidebar-wrapper .top-icons img {
     max-width: 55px;
     margin: 15px auto 25px -5px; }
+    .sidebar-container .sidebar-wrapper .top-icons img:hover {
+      background-color: #08367C;
+      border-radius: 50%; }
   .sidebar-container .sidebar-wrapper .top-icons .nav-button.round-button {
     margin: 0 0 10px 0; }
 

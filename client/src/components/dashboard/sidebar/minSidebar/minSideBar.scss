@@ -10,6 +10,7 @@
     width: 70px;
     .icon-buttons-wrapper{
       width: 100%;
+      margin-top: 30px;
     }
     .icon-navigation-wrapper {
       height: 45%;
@@ -23,7 +24,17 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center
+      align-items: center;
+
+      img {
+        max-width: 50px;
+        margin: auto 8px 10px auto;
+
+        &:hover {
+          background-color: #08367C;
+          border-radius: 50%;
+        }
+      }
     }
     .bottom-icons{
       height: 30%;
@@ -42,6 +53,11 @@
       img {
         max-width: 55px;
         margin: 15px auto 25px -5px;
+
+        &:hover {
+          background-color: #08367C;
+          border-radius: 50%;
+        }
       }
 
       .nav-button.round-button {
