@@ -1,8 +1,9 @@
 const router = require('express').Router()
 
 router.get('/', (req, res, next) => {
-  console.log(' in autologin')
-  if (!req.user) return res.json({ isLoggedIn: false, message: 'No user in session' })
+  if (!req.user) {
+    return res.json({ isLoggedIn: false, message: 'No user in session' })
+  }
   return res.json({ isLoggedIn: true, message: req.user })
 }
 )
