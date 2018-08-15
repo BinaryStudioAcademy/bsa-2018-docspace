@@ -85,4 +85,8 @@ MinSidebar.propTypes = {
   tabs: PropTypes.element
 }
 
+MinSidebar.defaultProps = {
+  tabs: null
+}
+
 export default MinSidebar

@@ -53,8 +53,13 @@ class App extends Component {
         >
           {
             isSpace
-              ? <SpaceSidebar showLabels={this.state.showSpaceLabels} showContent={this.state.showSpaceIcons} />
-              : (
+              ? (
+                <SpaceSidebar
+                  isOpened={this.state.isOpened}
+                  showLabels={this.state.showSpaceLabels}
+                  showContent={this.state.showSpaceIcons}
+                />
+              ) : (
                 <DashboardSidebar
                   isOpened={this.state.isOpened}
                   showLabels={this.state.showLabels}
