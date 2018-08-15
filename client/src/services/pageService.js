@@ -1,55 +1,45 @@
+import { callWebApi } from 'src/helpers/requestHelper'
+
 class PageService {
-  getPages = () => (
-    fetch('/api/pages', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+  getPages = () => {
+    const args = { endpoint: '/api/pages', method: 'GET' }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(pages => pages)
-      .catch(err => console.log(`Can't get pages: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  getPage = (id) => (
-    fetch(`/api/pages/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+  getPage = (id) => {
+    const args = { endpoint: `/api/pages/${id}`, method: 'GET' }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(page => page)
-      .catch(err => console.log(`Can't get page: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  createPage = (pageObj) => (
-    fetch('/api/pages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(pageObj)
-    })
+  createPage = (pageObj) => {
+    const args = { endpoint: `/api/pages`, method: 'POST', body: JSON.stringify(pageObj) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(page => page)
-      .catch(err => console.log(`Can't create page: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  deletePage = (id) => (
-    fetch(`/api/pages/${id}`, {
-      method: 'DELETE',
-      headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
-    })
+  deletePage = (id) => {
+    const args = { endpoint: `/api/pages/${id}`, method: 'DELETE' }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(data => data)
-      .catch(err => console.log(`Can't delete page: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  updatePage = (newPage) => (
-    fetch(`/api/pages/${newPage._id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(newPage)
-    })
+  updatePage = (newPage) => {
+    const args = { endpoint: `/api/pages/${newPage._id}`, method: 'PUT', body: JSON.stringify(newPage) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(updatedPage => updatedPage)
-      .catch(err => console.log(`Can't update page: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 }
 
 export default new PageService()
