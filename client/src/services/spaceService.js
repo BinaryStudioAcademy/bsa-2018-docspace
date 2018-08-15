@@ -1,13 +1,13 @@
 class SpaceService {
   getSpaces = () => (
-    fetch('/api/spaces')
+    fetch('/api/spaces', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
       .then(res => res.json())
       .then(spaces => spaces)
       .catch(err => console.log(`Can't get spaces: ${err}`))
   )
 
   getSpace = (id) => (
-    fetch(`/api/spaces/${id}`)
+    fetch(`/api/spaces/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
       .then(res => res.json())
       .then(space => space)
       .catch(err => console.log(`Can't get space: ${err}`))
@@ -16,7 +16,10 @@ class SpaceService {
   createSpace = (spaceObj) => (
     fetch('/api/spaces', {
       method: 'POST',
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(spaceObj)
     })
       .then(res => res.json())
@@ -25,7 +28,10 @@ class SpaceService {
   )
 
   deleteSpace = (id) => (
-    fetch(`/api/spaces/${id}`, { method: 'DELETE' })
+    fetch(`/api/spaces/${id}`,
+      { method: 'DELETE',
+        headers:
+      {'Authorization': `Bearer ${localStorage.getItem('token')}`} })
       .then(res => res.json())
       .then(data => data)
       .catch(err => console.log(`Can't delete space: ${err}`))
@@ -34,7 +40,7 @@ class SpaceService {
   updateSpace = (id, newSpace) => (
     fetch(`/api/spaces/${id}`, {
       method: 'PUT',
-      headers: {'content-type': 'application/json'},
+      headers: {'content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}`},
       body: JSON.stringify(newSpace)
     })
       .then(res => res.json())

@@ -1,6 +1,9 @@
 const userRep = require('../repositories/UserRepository')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const passportJWT = require('passport-jwt')
+const JWTStrategy = passportJWT.Strategy
+const ExtractJWT = passportJWT.ExtractJwt
 
 module.exports = () => {
   passport.serializeUser(function (user, done) {
@@ -37,3 +40,18 @@ module.exports = () => {
   }
   ))
 }
+
+passport.use(new JWTStrategy({
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: 'dasfjasdfjasdfjwer3442rifasdfa234234sddfDDds'
+},
+function (jwtPayload, cb) {
+  return userRep.getById({_id: jwtPayload._id})
+    .then(user => {
+      return cb(null, user)
+    })
+    .catch(err => {
+      return cb(err)
+    })
+}
+))

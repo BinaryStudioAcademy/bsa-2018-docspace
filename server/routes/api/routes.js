@@ -6,14 +6,16 @@ const login = require('./auth/login')
 const logout = require('./auth/logout')
 const category = require('./category')
 const comment = require('./comment')
+const autologin = require('./auth/autologin')
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
   app.use('/api/signup', signup)
   app.use('/api/login', login)
+  app.use('/api/autologin', autologin(passport))
   app.use('/api/logout', logout)
-  app.use('/api/pages', page)
-  app.use('/api/user', user)
-  app.use('/api/spaces', space)
-  app.use('/api/category', category)
-  app.use('/api/comments', comment)
+  app.use('/api/pages', passport.authenticate('jwt', {session: false}), page)
+  app.use('/api/user', passport.authenticate('jwt', {session: false}), user)
+  app.use('/api/spaces', passport.authenticate('jwt', {session: false}), space)
+  app.use('/api/category', passport.authenticate('jwt', {session: false}), category)
+  app.use('/api/comments', passport.authenticate('jwt', {session: false}), comment)
 }

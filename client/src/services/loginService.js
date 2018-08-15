@@ -11,9 +11,10 @@ class LoginService {
       .then(user => user)
       .catch(err => console.log(`Can't get text: ${err}`))
   }
-  verification () {
-    return fetch('/api/login', {
-      method: 'GET'
+  verification (token) {
+    return fetch('/api/autologin', {
+      method: 'GET',
+      headers: {'content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}`}
     })
       .then(res => res.json())
       .then(user => user)
