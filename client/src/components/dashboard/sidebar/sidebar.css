@@ -50,7 +50,10 @@
 
 .Resizer {
   min-width: 2px;
-  cursor: col-resize; }
+  cursor: col-resize;
+  transition: background-color 300ms ease-in-out 200ms; }
+  .Resizer:hover {
+    background-color: #1c80ff; }
 
 .sidebar-blue-schema {
   height: 100%; }

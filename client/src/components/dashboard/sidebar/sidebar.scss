@@ -75,6 +75,11 @@
 .Resizer {
   min-width: 2px;
   cursor: col-resize;
+  transition: background-color 300ms ease-in-out 200ms;
+
+  &:hover {
+    background-color: $blue;
+  }
 }
 .sidebar-blue-schema {
   height: 100%;
