@@ -20,22 +20,6 @@
       justify-content: center;
       align-items: center;
     }
-    .top-icons{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 55px;
-        margin: 29px auto 15px;
-
-        &:hover {
-          background-color: #08367C;
-          border-radius: 50%;
-        }
-      }
-    }
     .bottom-icons{
       height: 30%;
       display: flex;
@@ -45,24 +29,24 @@
 
     }
   }
-  .sidebar-wrapper{
-    .top-icons{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
 
-      img {
-        width: 55px;
-        margin: 29px auto 15px;
+  .top-icons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-        &:hover {
-          background-color: #08367C;
-          border-radius: 50%;
-        }
+    img {
+      width: 55px;
+      margin: 29px auto 15px;
+
+      &:hover {
+        background-color: #08367C;
+        border-radius: 50%;
       }
     }
   }
+  
   .bottom-icons {
     display: flex;
     justify-content: flex-end;
