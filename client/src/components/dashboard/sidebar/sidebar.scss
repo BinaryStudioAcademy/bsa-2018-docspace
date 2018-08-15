@@ -13,7 +13,7 @@
     width: 100%;
     background-color: $primaryColor;
   }
-  .icon-buttons-wrapper{
+  .icon-buttons-wrapper {
       z-index: 1000;
       padding: 0 5px;
       background-color: $primaryColor;
@@ -27,7 +27,7 @@
   h1{
       margin: 15px 0 20px 10px;
   }
-  .tabs-wrapper{
+  .tabs-wrapper {
     width: 80%;
 
     a, a:visited, a:active, a:hover{
@@ -35,7 +35,7 @@
       color: white;
     }
   }
-  .minimize-dashboard-wrapper{
+  .minimize-dashboard-wrapper {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -46,30 +46,47 @@
   }
 }
 
-.sidebar-container{
+.sidebar-container {
   height: 100%;
 }
-.Resizer{
+.Resizer {
   z-index: 9999;
   width: 2px;
   cursor: col-resize
 }
-.sidebar-blue-schema{
+.sidebar-blue-schema {
   height: 100%;
-  .sidebar-wrapper, .minimize-dashboard-wrapper{
+  .sidebar-wrapper, .minimize-dashboard-wrapper {
   background-color: $primaryColor;
   }
-
-.nav-button:hover{
-    background-color: $primalHover;
-}
-h1{
-    color: white;
-    padding: 0;
-}
-.Resizer{
-    background-color: $primaryColor
-}
+  .top-icons {
+    a, a:visited, a:active, a:hover {
+      text-decoration: none;
+      color: white;
+    }
+  }
+  .nav-button {
+    > i, {
+      color: white;
+      cursor: pointer;
+    }
+  }
+  .tabs-wrapper {
+    a, a:visited, a:active, a:hover {
+      text-decoration: none;
+      color: white;
+    }
+  }
+  .nav-button:hover {
+      background-color: $primalHover;
+  }
+  h1{
+      color: white;
+      padding: 0;
+  }
+  .Resizer {
+      background-color: $primaryColor
+  }
 }
 
 

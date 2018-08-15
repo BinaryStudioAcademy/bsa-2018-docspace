@@ -20,6 +20,11 @@ class LoginService {
       .then(user => user)
       .catch(err => console.log(`Can't get text: ${err}`))
   }
+  logout () {
+    return fetch('/api/logout')
+      .then(res => res)
+      .catch(err => console.log(`Can't get text: ${err}`))
+  }
 }
 
 export const loginService = new LoginService()
