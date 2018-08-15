@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import Comments from 'src/components/comments/comments'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
+import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { bindActionCreators } from 'redux'
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
@@ -16,30 +16,8 @@ import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 
 class Page extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      pageToFetch: null
-    }
-    this.firstMount = true
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const page = nextProps.page
-    if (this.firstMount) {
-      this.firstMount = false
-      return
-    }
-    if (!page) {
-      this.props.actions.getPageByIdRequest(nextProps.match.params.page_id)
-    }
-  }
-
   componentDidMount () {
-    const id = this.props.match.params.page_id
-    if (!this.props.page) {
-      this.props.actions.getPageByIdRequest(id)
-    }
+    this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
 
   render () {
@@ -70,9 +48,9 @@ Page.propTypes = {
   }),
 
   user: PropTypes.object,
-  match: PropTypes.object,
+  t: PropTypes.func,
   actions: PropTypes.object,
-  t: PropTypes.func
+  match: PropTypes.object
 }
 
 Page.defaultProps = {
