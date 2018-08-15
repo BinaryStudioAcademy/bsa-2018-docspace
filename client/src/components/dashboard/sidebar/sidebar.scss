@@ -16,7 +16,7 @@
   }
   .icon-buttons-wrapper {
     padding: 0 5px;
-    background-color: $primaryColor;
+    // background-color: $primaryColor;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -118,41 +118,49 @@
 .sidebar-grey-schema{
   .sidebar-wrapper, .minimize-dashboard-wrapper {
     background-color: $greyBlog;
-  }
-    .tabs-wrapper {
-      a, a:visited, a:active, a:hover{
-        text-decoration: none;
-        color: $blueText;
-      }
-      .nav-button:hover{
-        background-color: $greyHover;
-      }
+
+    .top-icons img:hover {
+      background-color: $greyHover;
     }
+  }
+
+  // TODO: check
+    // .tabs-wrapper {
+    //   a, a:visited, a:active, a:hover{
+    //     text-decoration: none;
+    //     color: $blueText;
+    //   }
+    //   .nav-button:hover{
+    //     background-color: $greyHover;
+    //   }
+    // }
 
   h1{
     color: $blueText;
   }
+
   .Resizer{
     background-color: $greyBlog
   }
+
   .icon-buttons-wrapper{
     .nav-button:hover{
-      background-color:$primalHover;
+      background-color: $greyHover;
     }
-  }
-  .minimize-dashboard-wrapper{
-      .nav-button:hover{
-        background-color:$greyHover;
-      }
-      a, a:visited, a:active, a:hover {
-        text-decoration: none;
-        color: $blueText;
-      }
-  }
-  .icon-buttons-wrapper{
-    a, a:visited, a:active, a:hover {
+
+    i, a, a:visited, a:active, a:hover {
       text-decoration: none;
-      color: white;
+      color: $grayDark;
     }
   }
+  // TODO: check
+  // .minimize-dashboard-wrapper{
+  //     .nav-button:hover{
+  //       background-color:$greyHover;
+  //     }
+  //     a, a:visited, a:active, a:hover {
+  //       text-decoration: none;
+  //       color: $blueText;
+  //     }
+  // }
 }

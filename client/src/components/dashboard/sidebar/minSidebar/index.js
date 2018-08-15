@@ -7,7 +7,8 @@ import PropTypes from 'prop-types'
 import DropdownMenu from './dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
 
-import logo from 'src/assets/logo-penguin-docspace.png'
+import whiteLogo from 'src/assets/logo-penguin-docspace.png'
+import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
 
 const dropdownMenuItems = {
   avatar: [
@@ -55,6 +56,8 @@ class MinSidebar extends Component {
   }
 
   render () {
+    const logo = this.props.isGray ? grayLogo : whiteLogo
+
     return (
       <div className='icon-buttons-wrapper' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
@@ -82,11 +85,13 @@ class MinSidebar extends Component {
 }
 
 MinSidebar.propTypes = {
-  tabs: PropTypes.element
+  tabs: PropTypes.element,
+  isGray: PropTypes.bool
 }
 
 MinSidebar.defaultProps = {
-  tabs: null
+  tabs: null,
+  isGray: false
 }
 
 export default MinSidebar

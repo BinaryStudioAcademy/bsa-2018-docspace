@@ -14,15 +14,16 @@ import './spaceSidebar.css'
 class SpaceSidebar extends Component {
   render () {
     const { space, t, showLabels, showContent, isOpened } = this.props
+    const sidebarWrapperClass = isOpened ? 'sidebar-blue-schema' : 'sidebar-blue-schema sidebar-grey-schema'
     const sidebarContainerClass = isOpened ? 'sidebar-container' : 'sidebar-container space-minimized'
     const sidebarClass = showLabels ? 'space-sidebar' : 'space-sidebar minimized'
     const sidebarButtons = isOpened ? null : <SpaceSidebarButtons spaceId={space._id} />
 
     return (
-      <div className='sidebar-blue-schema' >
+      <div className={sidebarWrapperClass} >
         <div className={sidebarContainerClass}>
           <div className='sidebar-wrapper'>
-            <MinSidebar tabs={sidebarButtons} />
+            <MinSidebar tabs={sidebarButtons} isGray={!isOpened} />
             {
               isOpened && (
                 <div className={sidebarClass}>
