@@ -31,13 +31,22 @@
       flex-direction: column;
       justify-content: center;
       align-items: center
-    
+
     }
   }
   .sidebar-wrapper{
     .top-icons{
       height: 40%;
       margin-top: 10px;
+
+      img {
+        max-width: 55px;
+        margin: 20px -5px;
+      }
+
+      .nav-button.round-button {
+        margin: 0 0 10px 0;
+      }
     }
     .bottom-icons{
       height: 55%;

@@ -1,9 +1,13 @@
 import Button from '../button'
 import React, {Component} from 'react'
+import { NavLink } from 'react-router-dom'
+
 import './minSideBar.css'
 import PropTypes from 'prop-types'
 import DropdownMenu from './dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
+
+import logo from 'src/assets/logo-penguin-docspace.png'
 
 const dropdownMenuItems = {
   avatar: [
@@ -55,6 +59,9 @@ class MinSidebar extends Component {
       <div className='icon-buttons-wrapper' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
         <div className='top-icons'>
+          <NavLink to={'/spacedirectory'}>
+            <img src={logo} alt='DocSpace logo' />
+          </NavLink>
           <Button path='/' type='round-button' icon='fa fa-search' />
           <span className='toggle-add-page-modal-btn round-button nav-button' onClick={this.toggleModal} >
             <i className='fa fa-plus' />

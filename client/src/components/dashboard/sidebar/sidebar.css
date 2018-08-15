@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Belleza");
 .sidebar-container {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif; }
   .sidebar-container .sidebar-wrapper {
@@ -18,7 +19,7 @@
       text-decoration: none;
       color: white; }
   .sidebar-container h1 {
-    margin: 15px 0 20px 10px; }
+    margin: 15px 0 30px 10px; }
   .sidebar-container .tabs-wrapper {
     width: 80%; }
     .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
@@ -58,7 +59,10 @@
     background-color: #08367C; }
   .sidebar-blue-schema h1 {
     color: white;
-    padding: 0; }
+    padding: 0;
+    margin-top: 35px;
+    font-family: 'Belleza', sans-serif;
+    text-transform: uppercase; }
   .sidebar-blue-schema .Resizer {
     background-color: #0044a9; }
 
