@@ -31,6 +31,12 @@ class User extends Component {
     this.changePrivate = this.changePrivate.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
+    this.renderAddPhoto = this.renderAddPhoto.bind(this)
+    this.renderHeaderCenter = this.renderHeaderCenter.bind(this)
+    this.renderClock = this.renderClock.bind(this)
+    this.renderEditButtons = this.renderEditButtons.bind(this)
+    this.renderMainInfo = this.renderMainInfo.bind(this)
+    this.renderRecentWorks = this.renderRecentWorks.bind(this)
   }
 
   handlePassword (currentPassword, newPassword) {
@@ -93,6 +99,124 @@ class User extends Component {
     })
   }
 
+  renderAddPhoto (t) {
+    return (
+      <div className='profile-header-add-photo' onClick={this.managePhoto}>
+        <div className='add-photo-content'>
+          <button className='add-photo-button'>
+            <img src={Camera} alt='camera' className='add-photo-img' />
+            <span className='add-photo-label'>{t('add_cover_photo')}</span>
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  renderHeaderCenter (t, firstName, lastName) {
+    return (
+      <div className='profile-page-center'>
+        <a className='profile-link-All-People' onClick={this.handleAllPeople}>
+          <span className='profile-link-arrow-img'>
+            <i className='fa fa-arrow-left' aria-hidden='true' />
+          </span>
+          <span>{t('all_people')}</span>
+        </a>
+        <div className='profile-name-avatar'>
+          <div className='profile-avatar-wrapper'>
+            <button className='avatar-btn'>
+              <span className='profile-avatar-cover-btn' >''</span>
+            </button>
+            <div className='profile-avatar-hover'>
+              <i className='fa fa-camera profile-avatar-camera' aria-hidden='true' style={{color: 'white', fontSize: '24px'}} />
+            </div>
+          </div>
+
+          <div className='profile-name'>
+            <h1>{firstName} {lastName}</h1>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderClock () {
+    return (
+      <div className='profile-about'>
+        <div className='profile-status'>
+          <div className='profile-label-time'>
+            <i className='fa fa-clock-o label-clock' aria-hidden='true' />
+            <span>{this.state.date.toLocaleTimeString().replace(/:\d+ /, ' ')}</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderEditButtons (t) {
+    return (
+      <div className='profile-edit-buttons'>
+        <div className='edit-manage-btn'>
+          <div className='manage-btn'>
+            <button onClick={this.changeGeneral}>{t('general')}</button>
+          </div>
+          <div className='manage-btn'>
+            <button onClick={this.changePrivate}>{t('private')}</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderMainInfo (t, errorsUser, user, successful, errors) {
+    return (
+      !this.state.isShowGeneral
+        ? <PrivateFields
+          handlePassword={this.handlePassword}
+          user={user}
+          errors={errors}
+          successful={successful}
+          sendPassword={this.sendPassword}
+          t={t}
+        />
+        : this.state.isShowGeneral &&
+        <ProfileFields
+          isEditMode={this.state.isEditMode}
+          editMode={this.editMode}
+          user={user}
+          errors={errorsUser}
+          t={t}
+        />
+    )
+  }
+
+  renderRecentWorks (t) {
+    return (
+      <div className='recent-work-list-wrapper'>
+        <h2 className='recent-work-list-wrapper-header'><span>{t('work')}</span></h2>
+        <ul className='recent-work-list-items'>
+          <RecentWorkListItem
+            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
+            nameOfItem={'i am checking how it works'}
+            nameOfSpace={'Draft'}
+            contributors={''}
+          />
+          <RecentWorkListItem
+            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
+            nameOfItem={'Example'}
+            nameOfSpace={'Draft'}
+            contributors={''}
+          />
+          <RecentWorkListItem
+            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
+            nameOfItem={'Example'}
+            nameOfSpace={'my first blog post'}
+            contributors={''}
+          />
+        </ul>
+      </div>
+    )
+  }
+
   render () {
     const { t } = this.props
     const { user } = this.props.userSettings
@@ -101,111 +225,17 @@ class User extends Component {
     const { successful, errors } = this.props.resultOfChecking
     return (
       <div className='main-wrapper'>
-        <div className='content-wrapper'>
-          <div className='profile-page'>
-            <div className='profile-page-responsive'>
-              <div className='profile-page-header'>
-                <div className='profile-header-add-photo' onClick={this.managePhoto}>
-                  <div className='add-photo-content'>
-                    <button className='add-photo-button'>
-                      <img src={Camera} alt='camera' className='add-photo-img' />
-                      <span className='add-photo-label'>{t('add_cover_photo')}</span>
-                    </button>
-                  </div>
-                </div>
-
-                <ManagePhoto display={this.handleManagePhoto} t={t} />
-
-                <div className='profile-page-center'>
-                  <a className='profile-link-All-People' onClick={this.handleAllPeople}>
-                    <span className='profile-link-arrow-img'>
-                      <i className='fa fa-arrow-left' aria-hidden='true' />
-                    </span>
-                    <span>{t('all_people')}</span>
-                  </a>
-                  <div className='profile-name-avatar'>
-                    <div className='profile-avatar-wrapper'>
-                      <button className='avatar-btn'>
-                        <span className='profile-avatar-cover-btn' >''</span>
-                      </button>
-                      <div className='profile-avatar-hover'>
-                        <i className='fa fa-camera profile-avatar-camera' aria-hidden='true' style={{color: 'white', fontSize: '24px'}} />
-                      </div>
-                    </div>
-
-                    <div className='profile-name'>
-                      <h1>{firstName} {lastName}</h1>
-                    </div>
-                  </div>
-                </div>
-                <div className='profile-page-center-content'>
-                  <div className='profile-about'>
-                    <div className='profile-status'>
-                      <div className='profile-label-time'>
-                        <i className='fa fa-clock-o label-clock' aria-hidden='true' />
-                        <span>{this.state.date.toLocaleTimeString().replace(/:\d+ /, ' ')}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className='profile-edit-buttons'>
-                    <div className='edit-manage-btn'>
-                      <div className='manage-btn'>
-                        <button onClick={this.changeGeneral}>{t('general')}</button>
-                      </div>
-                      <div className='manage-btn'>
-                        <button onClick={this.changePrivate}>{t('private')}</button>
-                      </div>
-                    </div>
-                  </div>
-                  {
-                    !this.state.isShowGeneral
-                      ? <PrivateFields
-                        handlePassword={this.handlePassword}
-                        user={user}
-                        errors={errors}
-                        successful={successful}
-                        sendPassword={this.sendPassword}
-                        t={t}
-                      />
-                      : this.state.isShowGeneral &&
-                      <ProfileFields
-                        isEditMode={this.state.isEditMode}
-                        editMode={this.editMode}
-                        user={user}
-                        errors={errorsUser}
-                        t={t}
-                      />
-                  }
-
-                  <div className='recent-work-list-wrapper'>
-                    <h2 className='recent-work-list-wrapper-header'><span>{t('work')}</span></h2>
-                    <ul className='recent-work-list-items'>
-                      <RecentWorkListItem
-                        src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-                        nameOfItem={'i am checking how it works'}
-                        nameOfSpace={'Draft'}
-                        contributors={''}
-                      />
-                      <RecentWorkListItem
-                        src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-                        nameOfItem={'Example'}
-                        nameOfSpace={'Draft'}
-                        contributors={''}
-                      />
-                      <RecentWorkListItem
-                        src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
-                        nameOfItem={'Example'}
-                        nameOfSpace={'my first blog post'}
-                        contributors={''}
-                      />
-                    </ul>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className='profile-page-header'>
+          { this.renderAddPhoto(t) }
+          <ManagePhoto display={this.handleManagePhoto} t={t} />
+          { this.renderHeaderCenter(t, firstName, lastName)}
+        </div>
+        <div className='profile-page-center-content'>
+          { this.renderClock() }
+          <hr />
+          { this.renderEditButtons(t) }
+          { this.renderMainInfo(t, errorsUser, user, successful, errors) }
+          { this.renderRecentWorks(t) }
         </div>
       </div>
     )
