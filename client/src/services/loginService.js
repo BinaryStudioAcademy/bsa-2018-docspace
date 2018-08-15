@@ -16,9 +16,7 @@ class LoginService {
     return apiResult
   }
   logout () {
-    return fetch('/api/logout')
-      .then(res => res)
-      .catch(err => console.log(`Can't get text: ${err}`))
+    localStorage.removeItem('token')
   }
 }
 
