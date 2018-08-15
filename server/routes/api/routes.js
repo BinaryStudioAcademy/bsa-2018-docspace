@@ -8,14 +8,14 @@ const category = require('./category')
 const comment = require('./comment')
 const autologin = require('./auth/autologin')
 
-module.exports = (app, passport) => {
+module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/signup', signup)
   app.use('/api/login', login)
-  app.use('/api/autologin', autologin(passport))
+  app.use('/api/autologin', verifyJWTMiddleware, autologin)
   app.use('/api/logout', logout)
-  app.use('/api/pages', passport.authenticate('jwt', {session: false}), page)
-  app.use('/api/user', passport.authenticate('jwt', {session: false}), user)
-  app.use('/api/spaces', passport.authenticate('jwt', {session: false}), space)
-  app.use('/api/category', passport.authenticate('jwt', {session: false}), category)
-  app.use('/api/comments', passport.authenticate('jwt', {session: false}), comment)
+  app.use('/api/pages', verifyJWTMiddleware, page)
+  app.use('/api/user', verifyJWTMiddleware, user)
+  app.use('/api/spaces', verifyJWTMiddleware, space)
+  app.use('/api/category', verifyJWTMiddleware, category)
+  app.use('/api/comments', verifyJWTMiddleware, comment)
 }
