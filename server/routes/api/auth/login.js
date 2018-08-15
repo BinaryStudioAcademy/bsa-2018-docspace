@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const jwtConfig = require('../../../config/jwt')
 
 const login = (req, res, next) => {
   passport.authenticate('local', {session: false}, function (err, user, info) {
@@ -12,7 +13,7 @@ const login = (req, res, next) => {
       if (loginErr) {
         return res.json({ success: false, message: loginErr })
       }
-      const token = jwt.sign({_id: user._id}, 'dasfjasdfjasdfjwer3442rifasdfa234234sddfDDds')
+      const token = jwt.sign({_id: user._id}, jwtConfig.secret)
       user = {
         spaces: user.spaces,
         _id: user._id,

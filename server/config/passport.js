@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local').Strategy
 const passportJWT = require('passport-jwt')
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
+const jwtConfig = require('./jwt')
 
 module.exports = () => {
   passport.serializeUser(function (user, done) {
@@ -43,7 +44,7 @@ module.exports = () => {
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'dasfjasdfjasdfjwer3442rifasdfa234234sddfDDds'
+  secretOrKey: jwtConfig.secret
 },
 function (jwtPayload, cb) {
   return userRep.getById({_id: jwtPayload._id})
