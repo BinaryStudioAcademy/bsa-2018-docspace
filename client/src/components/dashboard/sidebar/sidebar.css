@@ -45,6 +45,15 @@
   height: 100%; }
   .sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
     background-color: #0044a9; }
+  .sidebar-blue-schema .top-icons a, .sidebar-blue-schema .top-icons a:visited, .sidebar-blue-schema .top-icons a:active, .sidebar-blue-schema .top-icons a:hover {
+    text-decoration: none;
+    color: white; }
+  .sidebar-blue-schema .nav-button > i {
+    color: white;
+    cursor: pointer; }
+  .sidebar-blue-schema .tabs-wrapper a, .sidebar-blue-schema .tabs-wrapper a:visited, .sidebar-blue-schema .tabs-wrapper a:active, .sidebar-blue-schema .tabs-wrapper a:hover {
+    text-decoration: none;
+    color: white; }
   .sidebar-blue-schema .nav-button:hover {
     background-color: #08367C; }
   .sidebar-blue-schema h1 {
