@@ -1,41 +1,15 @@
 @import 'globalStyles/variables.scss';
 
-*, ::after, ::before {
-  box-sizing: border-box; }
-
-body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul {
-  margin: 0;
-  padding: 0; }
-
 .main-wrapper {
   max-height: 100vh;
   min-height: 100%;
   display: flex;
   flex: 1 1 auto;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
-  line-height: 1.42857; }
-
-.content-wrapper {
-  position: relative;
-  z-index: 1;
-  min-width: 0px;
-  flex: 1 1 auto; }
-
-.profile-page {
-  display: flex;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  min-height: 100vh;
-  max-width: 1000px;
-  margin: 0px auto;
-  padding: 0px 20px; }
-
-.profile-page-responsive {
-  width: 100%;
+  line-height: 1.42857; 
   position: absolute;
   left: 0;
   right: 0;
@@ -44,13 +18,13 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   z-index: 0;
   overflow-y: auto; }
 
+
 .profile-page-header {
   background: #172b4d;
   min-width: 100%;
   height: 224px;
-  position: absolute;
-  top: 0;
-  left: 0; }
+  text-align: center;
+  position: relative; }
 
 .profile-header-add-photo {
   position: absolute;
@@ -118,7 +92,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   min-width: 580px;
   display: flex;
   flex-direction: column;
-  height: 224px;
+  height: 164px;
   box-sizing: border-box; }
 
 .profile-page-center .profile-link-All-People {
@@ -139,7 +113,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 
 .profile-avatar-wrapper {
   position: relative;
-  top: 112px;
+  top: 56px;
   left: 0;
   z-index: 510;
   align-self: flex-start; }
@@ -200,7 +174,8 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
 
 .profile-name-avatar {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  align-self: center; }
 
 .profile-avatar-hover .profile-avatar-camera {
   display: flex;
@@ -221,7 +196,7 @@ body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul
   display: flex;
   flex-direction: row;
   flex: 1;
-  height: 112px;
+  height: 56px;
   margin: 0;
   padding: 16px 0;
   position: relative;

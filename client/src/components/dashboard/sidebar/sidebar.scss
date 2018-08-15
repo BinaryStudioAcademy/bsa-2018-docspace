@@ -15,18 +15,12 @@
     background-color: $primaryColor;
   }
   .icon-buttons-wrapper {
-      z-index: 1000;
-      padding: 0 5px;
-      background-color: $primaryColor;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      a, a:visited, a:active, a:hover{
-        text-decoration: none;
-        color: white;
-    }
+    padding: 0 5px;
+    background-color: $primaryColor;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   h1 {
       margin: 15px 0 30px 10px;
@@ -79,9 +73,8 @@
   height: 100%;
 }
 .Resizer {
-  z-index: 9999;
   min-width: 2px;
-  cursor: col-resize
+  cursor: col-resize;
 }
 .sidebar-blue-schema {
   height: 100%;

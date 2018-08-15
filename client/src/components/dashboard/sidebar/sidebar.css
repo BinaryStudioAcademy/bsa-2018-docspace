@@ -11,16 +11,12 @@
     width: 100%;
     background-color: #0044a9; }
   .sidebar-container .icon-buttons-wrapper {
-    z-index: 1000;
     padding: 0 5px;
     background-color: #0044a9;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
-    .sidebar-container .icon-buttons-wrapper a, .sidebar-container .icon-buttons-wrapper a:visited, .sidebar-container .icon-buttons-wrapper a:active, .sidebar-container .icon-buttons-wrapper a:hover {
-      text-decoration: none;
-      color: white; }
   .sidebar-container h1 {
     margin: 15px 0 30px 10px; }
   .sidebar-container .tabs-wrapper {
@@ -54,7 +50,6 @@
   height: 100%; }
 
 .Resizer {
-  z-index: 9999;
   min-width: 2px;
   cursor: col-resize; }
 
