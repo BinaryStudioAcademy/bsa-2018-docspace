@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+
 import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
@@ -14,7 +15,6 @@ import App from './components/common/app/index'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
 import PageEditorContainer from 'src/components/pageEditorContainer'
-import SpaceContainer from 'src/components/space/spaceContainer'
 
 sagaMiddleware.run(rootSaga)
 
@@ -27,7 +27,6 @@ ReactDOM.render(
           <Route path='/login' component={Login} />
           <Route path='/spaces/:id/pages/:id/edit' exact component={PageEditorContainer} />
           <Route path='/' component={RequiredAuth(App)} />
-          <Route path='/spaces' component={RequiredAuth(SpaceContainer)} />
         </Switch>
       </ConnectedRouter>
     </I18nextProvider>

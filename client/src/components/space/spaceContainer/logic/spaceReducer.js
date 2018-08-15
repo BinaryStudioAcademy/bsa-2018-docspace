@@ -1,5 +1,4 @@
 import * as actionTypes from './spaceActionTypes'
-import { CREATE_PAGE_SUCCESS, DELETE_PAGE_SUCCESS } from 'src/components/page/logic/pageActionTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
@@ -37,28 +36,6 @@ function byId (state = initialState.byId, action) {
     case actionTypes.GET_SPACE_SUCCESS:
     case actionTypes.CREATE_SPACE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
-
-    case CREATE_PAGE_SUCCESS: {
-      const {spaceId, _id} = action.payload
-      return {
-        ...state,
-        [spaceId]: {
-          ...state[spaceId],
-          pages: [ ...state[spaceId].pages, _id ]
-        }
-      }
-    }
-
-    case DELETE_PAGE_SUCCESS: {
-      const {spaceId, _id} = action.payload
-      return {
-        ...state,
-        [spaceId]: {
-          ...state[spaceId],
-          pages: state[spaceId].pages.filter(pageId => pageId !== _id)
-        }
-      }
-    }
 
     default: return state
   }

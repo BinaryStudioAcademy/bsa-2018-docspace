@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import * as actionTypes from './pageActionTypes'
+import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
   all: ['5b6bf22eaf609328f4264ceb'],
@@ -66,9 +67,15 @@ export const allPages = ({pages}) => pages.all.map(id => pages.byId[id])
 export const pagesByIdsArray = ({pages}, ids) => ids.map(id => pages.byId[id])
 
 export const pageByIdFromRoute = (state) => {
-  const { pathname } = state.router.location
-  const pageIdRegExp = /(?:pages[/])([^[/]*)(?:\/.*|$)/
-  const matched = pathname.match(pageIdRegExp)
-  if (matched.length < 2) return null
-  return state.pages.byId[matched[1]]
+  const id = getPageIdFromRouterLocation(state.router.location)
+  // console.log('SELECTOR :' ,id)
+  // console.log(state.router.location)
+  return state.pages.byId[id] || null
 }
+
+// DELETE THIS LATER!
+// export const spaceHomepageByIdFromRoute = (state) => {
+//   const names = state.router.location.pathname.split('/')
+//   const id = names[2]
+//   return state.pages.byId[id] || null
+// }

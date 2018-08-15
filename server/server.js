@@ -17,15 +17,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
 }
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
-const cookieParser = require('cookie-parser')
-app.use(cookieParser(sessionSecret))
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 
 app.use(
   session({
@@ -41,6 +34,6 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-apiRoutes(app)
+apiRoutes(app, passport)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

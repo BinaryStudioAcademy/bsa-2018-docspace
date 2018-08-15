@@ -1,4 +1,4 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, select } from 'redux-saga/effects'
 import * as actions from './pageActions'
 import * as actionTypes from './pageActionTypes'
 import PageService from 'src/services/pageService'
@@ -53,12 +53,36 @@ function * deletePage (action) {
   }
 }
 
+const pagesById = (state) => state.pages.byId
+
 function * getPage (action) {
   try {
+    const pages = yield select(pagesById)
+    if (pages[action.payload]) {
+      yield put(actions.cancelPageByIdRequst())
+      return
+    }
     const page = yield PageService.getPage(action.payload)
     yield put(actions.getPageByIdSuccess(page))
   } catch (e) {
     yield put(actions.getPageByIdError())
+  }
+}
+
+// REASON FOR EXIST : when we click on page in first time , two getPage actions
+// runs with the same payload and, as result, there are tho success actions => refucer
+// return store with non-unique value, so we can cancel second saga via memoazing last payload
+const skipConsecutiveEqualPayloads = desiredType => {
+  let lastPayload
+
+  return ({ type, payload }) => {
+    payload = JSON.stringify(payload)
+    if (type !== desiredType || payload === lastPayload) {
+      return false
+    }
+
+    lastPayload = payload
+    return true
   }
 }
 
@@ -67,5 +91,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
-  yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
+  yield takeEvery(skipConsecutiveEqualPayloads(actionTypes.GET_PAGE_BY_ID_REQUEST), getPage)
 }

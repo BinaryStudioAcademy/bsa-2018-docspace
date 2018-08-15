@@ -14,10 +14,16 @@
     padding: 0 5px;
     background-color: #0044a9;
     height: 100%; }
+    .sidebar-container .icon-buttons-wrapper a, .sidebar-container .icon-buttons-wrapper a:visited, .sidebar-container .icon-buttons-wrapper a:active, .sidebar-container .icon-buttons-wrapper a:hover {
+      text-decoration: none;
+      color: white; }
   .sidebar-container h1 {
     margin: 15px 0 20px 10px; }
   .sidebar-container .tabs-wrapper {
     width: 80%; }
+    .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
+      text-decoration: none;
+      color: white; }
   .sidebar-container .minimize-dashboard-wrapper {
     display: flex;
     flex-direction: row;
@@ -33,15 +39,12 @@
 .Resizer {
   z-index: 9999;
   width: 2px;
-  cursor: w-resize; }
+  cursor: col-resize; }
 
 .sidebar-blue-schema {
   height: 100%; }
   .sidebar-blue-schema .sidebar-wrapper, .sidebar-blue-schema .minimize-dashboard-wrapper {
     background-color: #0044a9; }
-  .sidebar-blue-schema a, .sidebar-blue-schema a:visited, .sidebar-blue-schema a:active, .sidebar-blue-schema a:hover {
-    text-decoration: none;
-    color: white; }
   .sidebar-blue-schema .nav-button:hover {
     background-color: #08367C; }
   .sidebar-blue-schema h1 {
