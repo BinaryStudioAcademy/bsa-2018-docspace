@@ -17,13 +17,16 @@ import './space.css'
 
 class SpaceContainer extends Component {
   componentWillMount () {
-    if (!this.props.space) {
-      const id = this.props.location.pathname.split('/')[2]
+    console.log('will mount')
+    console.log(this.props)
+    const id = this.props.location.pathname.split('/')[2]
+    if (!this.props.space || this.props.space._id !== id || !this.props.space.pages) {
       this.props.getSpace(id)
     }
   }
 
   render () {
+    if (!this.props.space) return null
     const id = this.props.location.pathname.split('/')[2]
     const {homePage} = this.props.space
     // const homePage = homePageId ? pages.find( page => page._id === homePageId) : null
@@ -48,11 +51,6 @@ SpaceContainer.propTypes = {
   location: PropTypes.object.isRequired,
   space: PropTypes.object,
   getSpace: PropTypes.func
-}
-
-SpaceContainer.defaultProps = {
-  space: {},
-  getSpaces: () => false
 }
 
 const mapStateToProps = (state) => {
