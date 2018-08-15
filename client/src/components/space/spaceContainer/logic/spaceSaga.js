@@ -4,6 +4,7 @@ import * as actionTypes from 'src/components/space/spaceContainer/logic/spaceAct
 import SpaceService from 'src/services/spaceService'
 import { normalize } from 'normalizr'
 import { spacesArray } from './spacesNormalizerSchema'
+import { push } from 'connected-react-router'
 
 function * getSpaces (action) {
   try {
@@ -32,6 +33,7 @@ function * createSpace (action) {
   try {
     const newSpace = yield SpaceService.createSpace(action.payload)
     yield put(actions.createSpaceSuccess(newSpace))
+    yield put(push(`/spaces/${newSpace._id}/overview`))
   } catch (e) {
     console.log(e)
     yield put(actions.createSpaceError())
