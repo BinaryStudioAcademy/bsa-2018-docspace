@@ -9,7 +9,6 @@ function getFetchArgs (args) {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
-  console.log(args)
   const {body, method} = args
   return {
     method,
