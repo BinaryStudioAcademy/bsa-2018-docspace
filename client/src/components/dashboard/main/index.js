@@ -1,11 +1,13 @@
-import { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-class DashboardMain extends Component {
-  render () {
-    return this.props.children
-  }
-}
+import './main.css'
+
+const DashboardMain = (props) => (
+  <div className='dashboard-container'>
+    {props.children}
+  </div>
+)
 
 DashboardMain.propTypes = {
   children: PropTypes.node
