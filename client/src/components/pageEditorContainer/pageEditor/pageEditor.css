@@ -1,0 +1,146 @@
+.page-editor-wrp {
+  height: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column; }
+  .page-editor-wrp input.page-title-input {
+    max-width: 100%;
+    margin: 0;
+    min-height: 32px;
+    line-height: 30px;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+    font-size: 28px;
+    height: 32px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center; }
+  .page-editor-wrp .page-editor-footer {
+    justify-content: flex-end; }
+  .page-editor-wrp .page-editor-header {
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc; }
+  .page-editor-wrp .page-editor-footer, .page-editor-wrp .page-editor-header {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 20px;
+    height: 90px;
+    margin: 0;
+    background-color: #f4f5f7; }
+  .page-editor-wrp .page-editor-footer button {
+    box-sizing: border-box;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 14px;
+    font-variant: normal;
+    font-weight: normal;
+    height: 2.14285714em;
+    line-height: 1.42857143;
+    padding: 4px 10px;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+    margin-left: 10px; }
+    .page-editor-wrp .page-editor-footer button.accept-button {
+      background: #0044a9;
+      border-color: transparent;
+      color: white;
+      font-weight: bold; }
+  .page-editor-wrp .breadcrumbs {
+    padding-left: 10px;
+    display: inline-block;
+    margin-top: 0;
+    font-size: 16px; }
+    .page-editor-wrp .breadcrumbs span {
+      color: #0052cc;
+      padding: 2px;
+      cursor: pointer; }
+      .page-editor-wrp .breadcrumbs span:hover {
+        color: black; }
+  .page-editor-wrp .page-settings-btn-wrp {
+    padding-left: 1rem; }
+    .page-editor-wrp .page-settings-btn-wrp button {
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      font-family: inherit;
+      font-size: 14px;
+      font-variant: normal;
+      font-weight: normal;
+      height: 2.14285714em;
+      line-height: 1.42857143;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background-color: #f4f5f7;
+      color: #6c788f;
+      margin-left: 0.5rem; }
+      .page-editor-wrp .page-settings-btn-wrp button:hover {
+        background-color: #ccc; }
+        .page-editor-wrp .page-settings-btn-wrp button:hover:after {
+          position: absolute;
+          background: #777;
+          color: white;
+          top: 30px;
+          left: -30px;
+          right: -30px;
+          content: attr(data-hover-text-help); }
+  .page-editor-wrp .page-menu {
+    display: flex;
+    align-items: center; }
+  .page-editor-wrp .additional-icons {
+    display: flex; }
+    .page-editor-wrp .additional-icons span {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: inherit;
+      font-size: 14px;
+      height: 2.14285714em;
+      width: 2.14285714em;
+      line-height: 1.42857143;
+      border: 1px solid #f4f5f7;
+      background-color: #f4f5f7;
+      color: #707070;
+      margin-left: 0.5rem;
+      text-align: center;
+      vertical-align: middle;
+      position: relative; }
+      .page-editor-wrp .additional-icons span:hover {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: #ccc; }
+        .page-editor-wrp .additional-icons span:hover:after {
+          position: absolute;
+          background: #777;
+          color: white;
+          top: 31.5px;
+          left: -30px;
+          right: -30px;
+          content: attr(data-hover-text-help); }
+      .page-editor-wrp .additional-icons span.avatar-wrp {
+        background-color: #f4f5f7; }
+        .page-editor-wrp .additional-icons span.avatar-wrp:hover {
+          border: 1px solid #f4f5f7; }
+    .page-editor-wrp .additional-icons span.avatar-wrp ~ span:hover:after {
+      left: -120px;
+      right: -2px; }
+    .page-editor-wrp .additional-icons img {
+      height: 2.14285714em; }
+
+.jodit_container:not(.jodit_inline) .jodit_wysiwyg {
+  padding: 20px !important; }
