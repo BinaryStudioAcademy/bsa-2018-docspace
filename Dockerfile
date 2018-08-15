@@ -8,6 +8,8 @@ RUN yarn
 COPY client /docspace/client/
 COPY server /docspace/server/
 RUN cd client && yarn add node-sass
+RUN yarn client-build && cd ..
+
 
 CMD ["yarn", "prod"]
 

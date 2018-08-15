@@ -6,9 +6,8 @@
         "client": "cd client && cross-env NODE_PATH=./ yarn start",
         "client-build": "cd client && yarn build",
         "server": "node ./server/server.js",
-        "heroku-postbuild": "cd client && yarn && npm install --only=dev --no-shrinkwrap && yarn build",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "prod": "yarn client-build && yarn server"
+        "prod": "yarn server"
     },
     "dependencies": {
         "babel-eslint": "^8.2.6",
