@@ -6,7 +6,8 @@ export function callWebApi (args) {
 function getFetchArgs (args) {
   const headers = {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
   console.log(args)
   const {body, method} = args

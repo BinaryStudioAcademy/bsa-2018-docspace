@@ -1,4 +1,4 @@
-import { callWebApi } from 'src/requestHelper'
+import { callWebApi } from 'src/helpers/requestHelper'
 
 class PageService {
   getPages = () => {

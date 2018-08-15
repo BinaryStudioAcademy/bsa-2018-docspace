@@ -94,7 +94,6 @@ module.exports = {
   },
 
   updateSettingData: (req, res) => {
-    console.log(req.body)
     UserRepository.getById(req.params.id)
       .then(user => {
         const resultEmailValidation = validateEmail(req.body.email)

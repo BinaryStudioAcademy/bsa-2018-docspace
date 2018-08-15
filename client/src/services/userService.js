@@ -1,4 +1,4 @@
-import { callWebApi } from '../requestHelper'
+import { callWebApi } from 'src/helpers/requestHelper'
 
 class UserService {
   updateUser (user) {
