@@ -11,10 +11,11 @@
     color: #6c788f;
     font-weight: 600;
     font-size: 15px;
-    margin: 15px; }
+    padding-top: 15px; }
   .empty-blog-message-text {
     color: #333333;
-    margin: 15px; }
+    padding: 15px;
+    font-size: 14px; }
   .empty-blog-message-button {
     background: #0044a9;
     padding: 10px;

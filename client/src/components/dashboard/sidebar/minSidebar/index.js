@@ -2,8 +2,39 @@ import Button from '../button'
 import React, {Component} from 'react'
 import './minSideBar.css'
 import PropTypes from 'prop-types'
-
+import DropdownMenu from './dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
+
+const dropdownMenuItems = {
+  avatar: [
+    {
+      name: 'Profile',
+      path: '/userSettings'
+    },
+    {
+      name: 'LogOut',
+      path: '/login'
+    }
+  ],
+  help: [
+    {
+      name: 'Help',
+      path: '#'
+    }
+  ],
+  notifications: [
+    {
+      name: 'Notifications',
+      path: '#'
+    }
+  ],
+  burger: [
+    {
+      name: 'Burger',
+      path: '#'
+    }
+  ]
+}
 
 class MinSidebar extends Component {
   constructor (props) {
@@ -33,10 +64,10 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <Button path='/' type='round-button' icon='fa fa-bell' />
-          <Button path='/' type='round-button' icon='fa fa-bars' />
-          <Button path='/' type='round-button' icon='fa fa-question' />
-          <Button path='/userSettings' type='round-button' icon='fa fa-user' />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={820} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={835} />
+          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={868} />
+          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={868} />
         </div>
       </div>
     )

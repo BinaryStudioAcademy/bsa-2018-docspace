@@ -15,12 +15,13 @@
     color: $gray;
     font-weight: 600;
     font-size: 15px;
-    margin: 15px;
+    padding-top: 15px;
   }
 
   &-text {
     color: $black;
-    margin: 15px;
+    padding: 15px;
+    font-size: 14px;
   }
 
   &-button {

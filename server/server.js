@@ -35,6 +35,8 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-apiRoutes(app)
+const verifyJWTMiddleware = require('./middlewares/verifyToken')(passport)
+
+apiRoutes(app, verifyJWTMiddleware)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

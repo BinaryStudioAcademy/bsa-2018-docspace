@@ -1,15 +1,12 @@
+import { callWebApi } from 'src/helpers/requestHelper'
+
 class SignupService {
   signup (data) {
-    return fetch('/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+    const args = { endpoint: '/api/signup', method: 'POST', body: JSON.stringify(data) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(user => user)
-      .catch(err => console.log(`Can't get text: ${err}`))
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
   }
 }
 
