@@ -1,5 +1,5 @@
 @import "src/globalStyles/variables.scss";
-@import url('https://fonts.googleapis.com/css?family=Belleza');
+@import url('https://fonts.googleapis.com/css?family=Carme');
 
 
 .sidebar-container{
@@ -111,8 +111,9 @@
       color: white;
       padding: 0;
       margin-top: 35px;
-      font-family: 'Belleza', sans-serif;
-      text-transform: uppercase
+      font-family: 'Carme', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2.4px;
   }
   .Resizer {
       background-color: $primaryColor

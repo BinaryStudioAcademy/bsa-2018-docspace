@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Belleza");
+@import url("https://fonts.googleapis.com/css?family=Carme");
 .sidebar-container {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif; }
   .sidebar-container .sidebar-wrapper {
@@ -74,8 +74,9 @@
     color: white;
     padding: 0;
     margin-top: 35px;
-    font-family: 'Belleza', sans-serif;
-    text-transform: uppercase; }
+    font-family: 'Carme', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.4px; }
   .sidebar-blue-schema .Resizer {
     background-color: #0044a9; }
 
