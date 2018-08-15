@@ -13,8 +13,6 @@ module.exports = {
 
   findOne: (req, res) => {
     const id = req.params.id
-    console.log(' IN SPACES')
-    console.log(req.user)
 
     if (id.length === 0) {
       res.status(400)
