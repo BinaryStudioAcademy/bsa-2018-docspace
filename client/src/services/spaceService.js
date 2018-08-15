@@ -9,41 +9,37 @@ class SpaceService {
     return apiResult
   }
 
-  getSpace = (id) => (
-    fetch(`/api/spaces/${id}`)
+  getSpace = (id) => {
+    const args = { endpoint: `/api/spaces/${id}`, method: 'GET' }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(space => space)
-      .catch(err => console.log(`Can't get space: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  createSpace = (spaceObj) => (
-    fetch('/api/spaces', {
-      method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify(spaceObj)
-    })
+  createSpace = (spaceObj) => {
+    const args = { endpoint: '/api/spaces', method: 'POST', body: JSON.stringify(spaceObj) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(space => space)
-      .catch(err => console.log(`Can't create space: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  deleteSpace = (id) => (
-    fetch(`/api/spaces/${id}`, { method: 'DELETE' })
+  deleteSpace = (id) => {
+    const args = { endpoint: `/api/spaces/${id}`, method: 'DELETE' }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(data => data)
-      .catch(err => console.log(`Can't delete space: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 
-  updateSpace = (id, newSpace) => (
-    fetch(`/api/spaces/${id}`, {
-      method: 'PUT',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify(newSpace)
-    })
+  updateSpace = (id, newSpace) => {
+    const args = { endpoint: `/api/spaces/${id}`, method: 'PUT', body: JSON.stringify(newSpace) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(updatedSpace => updatedSpace)
-      .catch(err => console.log(`Can't update space: ${err}`))
-  )
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 }
 
 export default new SpaceService()
