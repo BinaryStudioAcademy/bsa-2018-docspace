@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Carme");
 .auth__main {
   background-color: #0044a9;
   margin: 0;
@@ -23,10 +24,31 @@
   color: #333333;
   text-align: center;
   cursor: pointer; }
-  .auth__footer:hover {
-    text-decoration: underline; }
+
+.auth__footer:hover {
+  text-decoration: underline; }
 
 .auth__header h2 {
   text-align: center;
   color: white;
   margin-top: 48px; }
+
+.header__logo {
+  margin-top: 20px;
+  display: flex;
+  font-family: 'Carme', sans-serif;
+  flex-direction: row;
+  justify-content: center; }
+
+.header__logo p {
+  color: #fff;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: 3px;
+  align-self: center;
+  margin-left: 10px; }
+
+.header__logo__img {
+  width: 55px;
+  height: 55px;
+  align-self: center; }
