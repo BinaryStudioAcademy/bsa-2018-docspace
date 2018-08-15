@@ -12,8 +12,8 @@ class DashboardSpacesBody extends Component {
   }
   render () {
     return (
-      <div className={'spaces__body'}>
-        <div className={'spaces__sidebar'}><SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} /> </div>
+      <div className={'spaces-body'}>
+        <div className={'spaces-sidebar'}><SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} /> </div>
         <SpacesContent activeTab={this.state.active} />
       </div>
     )

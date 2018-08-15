@@ -14,15 +14,9 @@
     background-color: $primaryColor;
   }
   .icon-buttons-wrapper {
-      z-index: 1000;
       padding: 0 5px;
       background-color: $primaryColor;
       height: 100%;
-
-      a, a:visited, a:active, a:hover{
-        text-decoration: none;
-        color: white;
-    }
   }
   h1{
       margin: 15px 0 20px 10px;
