@@ -31,7 +31,7 @@ class FullSidebar extends Component {
       />
       <Button
         title={this.props.showLabels && t('Settings')}
-        path='/settings'
+        path='/userSettings'
         type={navButtonClass}
         icon='fa fa-cog'
       />
