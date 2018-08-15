@@ -1,12 +1,5 @@
 @import 'globalStyles/variables.scss';
 
-*, ::after, ::before {
-  box-sizing: border-box; }
-
-body, div, dl, fieldset, form, h1, h2, h3, h4, h5, h6, html, img, ol, p, pre, ul {
-  margin: 0;
-  padding: 0; }
-
 .main-wrapper {
   max-height: 100vh;
   min-height: 100%;
