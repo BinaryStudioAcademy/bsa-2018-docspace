@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
-import { bindActionCreators } from 'redux'
-import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
-
 
 import './spaceOverviewTab.css'
 
