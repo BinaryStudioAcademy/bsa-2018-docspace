@@ -14,7 +14,7 @@
       display: flex;
       padding: 0;
       list-style: none;
-      box-shadow: 0px 3px 0px 0px #0000002e;
+      box-shadow: 0px 3px 0px 0px #ccc;
       li {
         font-weight: 500;
         padding: 4px 8px;
@@ -41,9 +41,9 @@
       padding-bottom: 40.2px;
       padding-top: 3px;
       margin-bottom: 20px;
-      box-shadow: 0px 3px #0000002e;
+      box-shadow: 0px 3px #ccc;
       button {
-        align-self: flex-end
+        align-self: center
       }
     }
     .side-main {

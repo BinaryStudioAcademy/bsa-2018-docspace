@@ -8,8 +8,8 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
-    button {
-      align-self: center;
+    button.create-space-btn {
+      margin-right: 15px;
     }
   }
   .spaces-body {
