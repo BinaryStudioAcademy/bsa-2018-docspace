@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
 import './spaceDetails.css'
-import logo from 'src/resources/logo.png'
+import spaceLogo from 'src/resources/logo.png'
 
 class SpaceDetails extends Component {
   render () {
@@ -21,7 +21,7 @@ class SpaceDetails extends Component {
           <tr>
             <td className='avatar-label-cell'>Space logo</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
+              <img id='space-logo' className='field-value space-avatar' src={spaceLogo} alt='space-logo' />
             </td>
           </tr>
           <tr>

@@ -1,10 +1,10 @@
 .sidebar-container .nav-button {
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
+  padding: 11px 0;
   list-style: none; }
   .sidebar-container .nav-button i {
-    padding: 10px;
+    padding: 0 10px;
     font-size: 20px; }
 
 .sidebar-container .round-button {
@@ -47,15 +47,14 @@
     width: 100%; }
 
 .sidebar-container .tabs-wrapper .nav-button {
-  width: 90%;
-  margin-left: 1%; }
+  width: 90%; }
   .sidebar-container .tabs-wrapper .nav-button i, .sidebar-container .tabs-wrapper .nav-button p {
     display: inline-flex;
     float: left; }
   .sidebar-container .tabs-wrapper .nav-button i {
     width: 40px; }
   .sidebar-container .tabs-wrapper .nav-button p {
-    margin-left: 10px; }
+    margin: 0 0 0 10px; }
 
 .sidebar-container .icon-navigation-wrapper .tabs-wrapper {
   width: 100%; }
