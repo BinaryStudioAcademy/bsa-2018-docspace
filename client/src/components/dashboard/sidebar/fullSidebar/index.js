@@ -1,5 +1,6 @@
 import Button from '../button'
 import React, {Component} from 'react'
+import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
@@ -8,7 +9,7 @@ class FullSidebar extends Component {
     const {t} = this.props
     const navButtonClass = this.props.showLabels ? 'full-button' : 'minimize-button'
     return <div className='tabs-wrapper'>
-      {this.props.showLabels && <h1> docspace </h1>}
+      {this.props.showLabels && <NavLink to={'/spacedirectory'}><h1> docspace </h1></NavLink>}
       <Button
         title={this.props.showLabels && t('Activity')}
         path='/activity' type={navButtonClass}

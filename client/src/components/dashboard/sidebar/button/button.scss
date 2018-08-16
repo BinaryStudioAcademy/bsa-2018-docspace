@@ -4,10 +4,10 @@
   .nav-button{
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
+    padding: 11px 0;
     list-style: none;
     i{
-      padding: 10px;
+      padding: 0 10px;
       font-size: 20px;
     }
   }
@@ -56,8 +56,8 @@
       width: 100%
     }
   }
-  .tabs-wrapper{
-    .nav-button{
+.tabs-wrapper{
+  .nav-button{
     i, p{
       display: inline-flex;
       float: left
@@ -66,10 +66,9 @@
       width: 40px;
     }
     p{
-      margin-left: 10px;
+      margin: 0 0 0 10px;
     }
     width: 90%;
-    margin-left: 1%;
   }
 }
 .icon-navigation-wrapper{
