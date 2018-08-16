@@ -7,3 +7,12 @@
     text-transform: none; }
   .space-settings-page img {
     border-radius: 5px; }
+  .space-settings-page-header {
+    font-weight: normal;
+    font-size: 28px;
+    color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    padding: 25px 30px 30px 50px; }
