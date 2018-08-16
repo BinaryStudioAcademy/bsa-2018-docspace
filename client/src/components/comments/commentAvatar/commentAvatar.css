@@ -1,0 +1,14 @@
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  float: left; }
+  .comment-avatar .comment-link-user-avatar {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: 2px; }
+  .comment-avatar .comment-icon-avatar {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px; }

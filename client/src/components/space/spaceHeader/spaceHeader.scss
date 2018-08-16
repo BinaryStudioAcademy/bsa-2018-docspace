@@ -1,0 +1,45 @@
+@import 'globalStyles/variables.scss';
+
+.space-header {
+  display: flex;
+  padding: 25px 30px 30px 50px;
+  justify-content: space-between;
+
+  &-page {
+    display: flex;
+    align-items: baseline;
+  }
+
+  &-name {
+    font-size: 28px;
+    color:$black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+
+    &.page {
+      color: $gray;
+      font-size: 17px;
+      text-decoration: none;
+
+      &:hover {
+        color: #949eb3;
+      }
+    }
+  }
+}
+
+.space-button {
+  background: $grayLight;
+  color: $grayDark;
+  padding: 7px;
+  border-radius: 2px;
+  margin-left: 10px;
+
+  &:hover {
+    background: $grayBackground;
+    cursor: pointer;
+  }
+
+}

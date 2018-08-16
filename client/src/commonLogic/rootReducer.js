@@ -1,9 +1,19 @@
-import { routerReducer as routing } from 'react-router-redux'
+import { routerReducer as routing } from 'react-router-redux/lib'
 import { combineReducers } from 'redux'
-import { greetingReducer } from '../components/greeting/logic/greetingReducer'
+import { signupReducer } from 'src/components/auth/signup/logic/signupReducer'
+import { loginReducer } from 'src/components/auth/login/logic/loginReducer'
+import userReducers from 'src/components/containers/user/logic/userReducer'
+import spaceReducer from 'src/components/space/spaceContainer/logic/spaceReducer'
+import pageReducer from 'src/components/page/logic/pageReducer'
+import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
 
 const baseReducer = combineReducers({
-  greeting: greetingReducer,
+  signup: signupReducer,
+  login: loginReducer,
+  user: userReducers,
+  pages: pageReducer,
+  spaces: spaceReducer,
+  verification: verificationReducer,
   routing
 })
 

@@ -1,0 +1,22 @@
+.inputDashboard {
+    width: 250px;
+    background-color: #fafbfc;
+    border-radius: 2px;
+    border: 1px solid #cccccc;
+    font-size: 14px;
+    height: 30px;
+    padding-left: 1%;
+    font: 400 16px sans-serif;
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+}
+.inputDashboard:hover {
+
+
+    background-color: #ebecf0;
+}
+.inputDashboard:active {
+    background: #dfdfdf;
+    }
+.inputDashboard:focus {
+        background: white;
+}
