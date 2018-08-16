@@ -37,10 +37,10 @@ class Page extends Component {
     const { page, t, space } = this.props
     return (
       <React.Fragment>
-        <PageHeader 
-          space={space} 
-          t={t} 
-          handleEditPageClick={this.handleEditPageClick} 
+        <PageHeader
+          space={space}
+          t={t}
+          handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
         />
         <div className='page-container'>
@@ -85,8 +85,8 @@ Page.defaultProps = {
 
   user: {
     avatar: fakeImg,
-    firstName: 'Fake',
-    lastName: 'User'
+    firstName: 'Daryna',
+    lastName: 'Gavrylenko'
   }
 }
 

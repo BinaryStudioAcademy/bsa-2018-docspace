@@ -12,10 +12,9 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_ALL_SPACES_SUCCESS:
       return action.payload.all
 
-    case actionTypes.DELETE_SPACE_SUCCESS:{
-       return state.filter(id => id !== action.payload._id)
+    case actionTypes.DELETE_SPACE_SUCCESS: {
+      return state.filter(id => id !== action.payload._id)
     }
-     
 
     case actionTypes.GET_SPACE_SUCCESS:
     case actionTypes.CREATE_SPACE_SUCCESS:
@@ -60,10 +59,6 @@ function byId (state = initialState.byId, action) {
           pages: filteredPage
         }
       }
-    }
-
-    case DELETE_PAGE_SUCCESS: {
-      console.log(action)
     }
 
     default: return state
