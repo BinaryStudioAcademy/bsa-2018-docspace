@@ -64,10 +64,10 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={820} />
-          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={835} />
-          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={868} />
-          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={868} />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={23} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={20} />
+          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={15} />
+          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={8} />
         </div>
       </div>
     )
