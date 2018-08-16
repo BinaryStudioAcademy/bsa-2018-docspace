@@ -70,7 +70,7 @@ class App extends Component {
           }
           <DashboardMain>
             <Route path='/works' component={Work} />
-            <Route path='/activity' component={Activity} />
+            <Route path='(/|/activity)' component={Activity} />
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
             <Route path='/userSettings' component={User} />
