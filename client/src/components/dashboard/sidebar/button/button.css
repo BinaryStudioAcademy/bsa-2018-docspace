@@ -1,7 +1,7 @@
 .sidebar-container .nav-button {
   display: flex;
   flex-direction: column;
-  padding: 11px 0;
+  padding: 14px 0;
   list-style: none; }
   .sidebar-container .nav-button i {
     padding: 0 10px;
@@ -29,12 +29,14 @@
   text-align: center;
   text-align: center;
   padding: 0;
-  margin: 0 10px 5px 10px;
   height: 50px;
   width: 50px; }
   .sidebar-container .minimize-button a {
-    height: 40px;
-    width: 40px; }
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 .sidebar-container .full-button {
   width: 98%; }
@@ -51,8 +53,6 @@
   .sidebar-container .tabs-wrapper .nav-button i, .sidebar-container .tabs-wrapper .nav-button p {
     display: inline-flex;
     float: left; }
-  .sidebar-container .tabs-wrapper .nav-button i {
-    width: 40px; }
   .sidebar-container .tabs-wrapper .nav-button p {
     margin: 0 0 0 10px; }
 
