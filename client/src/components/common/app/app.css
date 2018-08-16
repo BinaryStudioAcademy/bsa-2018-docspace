@@ -7,11 +7,9 @@ html, body, #root, .app__root {
   font-size: 14px; }
   html h1, body h1, #root h1, .app__root h1 {
     font-size: 24px;
-    font-weight: 500;
-    color: #333333; }
+    font-weight: 500; }
   html h2, body h2, #root h2, .app__root h2 {
     font-size: 20px;
-    font-weight: 400;
-    color: #333333; }
+    font-weight: 400; }
   html a, html i, body a, body i, #root a, #root i, .app__root a, .app__root i {
     font-size: 14px; }
