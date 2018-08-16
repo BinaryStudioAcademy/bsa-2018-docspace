@@ -7,7 +7,8 @@
         "client-build": "cd client && yarn build",
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "prod": "yarn server"
+        "prod": "yarn server",
+        "pretest": "eslint --ignore-path .gitignore ."
     },
     "dependencies": {
         "babel-eslint": "^8.2.6",

@@ -12,15 +12,8 @@ const app = express()
 const port = process.env.PORT || 3001
 require('./config/passport')()
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')))
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
-  })
-}
-
 app.use(bodyParser.json({limit: '50mb'}))
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 
 app.use(
   session({
@@ -39,5 +32,12 @@ app.use(passport.session())
 const verifyJWTMiddleware = require('./middlewares/verifyToken')(passport)
 
 apiRoutes(app, verifyJWTMiddleware)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')))
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+  })
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
