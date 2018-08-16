@@ -1,13 +1,12 @@
 .inputDashboard {
-    width: 250px;
+    width: 230px;
     background-color: #fafbfc;
     border-radius: 2px;
-    border: 1px solid #cccccc;
-    font-size: 14px;
-    height: 30px;
-    padding-left: 1%;
-    font: 400 16px sans-serif;
-    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+    border: 2px solid #cccccc;
+    height: 20px;
+    padding: 6px;
+
+
 }
 .inputDashboard:hover {
 
