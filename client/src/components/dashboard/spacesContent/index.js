@@ -16,8 +16,8 @@ class SpacesContent extends Component {
     const userId = '5b6c5d79860b443cd512d7d7'
     const list = this.props.spaces.map((item, index) => {
       const categories = item.categories.map(category => category.name).join(', ')
-      let spaceItem = <tr key={index} className={'space__item'}>
-        <td className='space__image'>
+      let spaceItem = <tr key={index} className={'space-item'}>
+        <td className='space-image'>
           <Link className='link_view' to={`/spaces/${item._id}/overview`}>
             <img src={logo} alt='' />
           </Link></td>
@@ -42,10 +42,10 @@ class SpacesContent extends Component {
 
       return null
     })
-    return (<div className={'spaces__content__body'}>
-      <div className={'header__spaces__content'}><h2>{this.props.activeTab}</h2><DashboardInput placeholder='Filter' /></div>
-      <div className={'body__spaces__content'}><table className='table_spaces'>
-        <thead className='list__header'>
+    return (<div className={'spaces-content-body'}>
+      <div className={'header-spaces-content'}><h2>{this.props.activeTab}</h2><DashboardInput placeholder='Filter' /></div>
+      <div className={'body-spaces-content'}><table className='table-paces'>
+        <thead className='list-header'>
           <tr>
             <td className='column-heading name-heading' colSpan='2'>Space</td>
             <td className='column-heading desc-heading'>Description</td>

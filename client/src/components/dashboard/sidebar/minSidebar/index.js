@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import './minSideBar.css'
 import PropTypes from 'prop-types'
-import DropdownMenu from './dropdownMenu'
+import DropdownMenu from 'src/components/common/dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
 
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
