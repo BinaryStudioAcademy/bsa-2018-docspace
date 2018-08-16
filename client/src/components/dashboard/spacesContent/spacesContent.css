@@ -18,16 +18,24 @@
 .spaces__content__body {
   width: 100%; }
 
+.link_view {
+  display: block;
+  padding: 5px 10px; }
+
 .link_view > img {
-  padding-top: 10px;
-  padding-left: 5px;
-  height: 40px;
-  width: 40px; }
+  border-radius: 3px;
+  width: 32px; }
 
 .space__item {
   display: table-row;
   text-align: left;
   border-bottom: 1px solid #ccc; }
+
+.space-item-link {
+  text-decoration: none;
+  color: #1c80ff; }
+  .space-item-link:active, .space-item-link:visited {
+    color: #1c80ff; }
 
 .list__header > tr {
   display: table-row;
