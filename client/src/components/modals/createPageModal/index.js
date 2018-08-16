@@ -152,5 +152,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePageModal)
 CreatePageModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   spaces: PropTypes.arrayOf(PropTypes.object),
-  actions: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 }
