@@ -14,7 +14,7 @@ const Input = (props) => (
     name={props.name}
     value={props.value}
     disabled={props.disabled}
-    autoComplete='off'
+    autoComplete={props.autoComplete}
   />
 )
 
@@ -24,6 +24,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
+  autoComplete: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
   value: PropTypes.string

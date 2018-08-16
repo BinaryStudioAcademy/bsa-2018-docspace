@@ -132,7 +132,7 @@ class User extends Component {
           </div>
 
           <div className='profile-name'>
-            <h1>{firstName} {lastName}</h1>
+            <h2>{firstName} {lastName}</h2>
           </div>
         </div>
       </div>
