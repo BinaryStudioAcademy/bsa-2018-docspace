@@ -6,6 +6,7 @@ const mongooseConnection = require('./db/dbConnect').connection
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const passport = require('passport')
+const path = require('path')
 
 require('./config/passport')()
 
@@ -15,6 +16,9 @@ const port = process.env.PORT || 3001
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join('client/build', 'index.html'))
+  })
 }
 
 app.use(bodyParser.json({limit: '50mb'}))

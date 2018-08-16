@@ -1,7 +1,7 @@
 import { callWebApi } from 'src/helpers/requestHelper'
 
 class SpaceService {
-  getSpaces = () => {
+  getSpaces () {
     const args = { endpoint: `/api/spaces`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
@@ -9,7 +9,7 @@ class SpaceService {
     return apiResult
   }
 
-  getSpace = (id) => {
+  getSpace (id) {
     const args = { endpoint: `/api/spaces/${id}`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
