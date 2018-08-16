@@ -6,6 +6,7 @@ import userReducers from 'src/containers/user/logic/userReducer'
 import spaceReducer from 'src/components/space/spaceContainer/logic/spaceReducer'
 import pageReducer from 'src/components/page/logic/pageReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
+import commentReducer from '../components/page/commentsLogic/commentsReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -14,6 +15,7 @@ const baseReducer = combineReducers({
   pages: pageReducer,
   spaces: spaceReducer,
   verification: verificationReducer,
+  comments: commentReducer,
   routing
 })
 

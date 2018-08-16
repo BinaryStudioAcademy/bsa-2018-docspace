@@ -26,11 +26,14 @@ export class AddComment extends Component {
       this.setState({
         text: ''
       })
-
       this.props.addNewComment && this.props.addNewComment({
+        userId: this.props.userId,
         firstName: this.props.firstName,
         lastName: this.props.lastName,
-        text: this.state.text
+        text: this.state.text,
+        createdAt: new Date(),
+        isDeleted: false,
+        parentId: null
       })
     }
   }
@@ -101,6 +104,7 @@ AddComment.propTypes = {
   addNewComment: PropTypes.func,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
+  userId: PropTypes.string,
   t: PropTypes.func
 }
 export default translate('translations')(AddComment)

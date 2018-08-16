@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const commentService = require('../../services/commentService')
 
-router.get('/', commentService.findAll)
+router.post('/get', commentService.findAllCommentsForPage)
 
 router.get('/:id', commentService.findOne)
 

@@ -2,10 +2,10 @@ const CommentRepository = require('../repositories/CommentRepository')
 const scheme = require('../models/commentScheme')
 
 module.exports = {
-  findAll: (req, res) => {
-    CommentRepository.getAll()
+  findAllCommentsForPage: (req, res) => {
+    CommentRepository.getByArray(req.body.commentsId)
       .then(comments => {
-        res.status(200)
+        // res.status(200)
         res.send(comments)
       })
       .catch(err => {
@@ -23,7 +23,7 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        res.status(200)
+        // res.status(200)
         res.send(comment)
       })
       .catch(err => {
@@ -37,14 +37,19 @@ module.exports = {
     console.log(req.body)
     const Comment = new scheme.Comment({
       userId: req.body.userId,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       text: req.body.text,
       isDeleted: req.body.isDeleted,
       comments: req.body.comments,
-      usersLikes: req.body.usersLikes
+      usersLikes: req.body.usersLikes,
+      createdAt: req.body.createdAt,
+      parentId: req.body.parentId
     })
     Comment.save()
       .then(comment => {
-        res.status(200)
+        // res.status(200)
+        console.log(comment)
         res.send(comment)
       })
       .catch(err => {
@@ -62,8 +67,8 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        res.status(200)
-        res.send(comment)
+        // res.status(200)
+        res.send(comment[0])
       })
       .catch(err => {
         res.status(500).send({

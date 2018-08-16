@@ -16,7 +16,7 @@ function buildTree (rootNode, comment) {
 
 function createNewNode (comment) {
   return {
-    id: comment.id,
+    id: comment._id,
     children: new Map(),
     item: comment
   }

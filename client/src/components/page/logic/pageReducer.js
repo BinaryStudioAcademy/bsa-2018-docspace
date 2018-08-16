@@ -3,7 +3,7 @@ import * as actionTypes from './pageActionTypes'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
-  all: ['5b6bf22eaf609328f4264ceb'],
+  all: ['5b6c64a3c06a9d7bd00084b8'],
   byId: {
     '5b6bf22eaf609328f4264ceb': {
       title: 'First Test Page',
@@ -43,6 +43,7 @@ function all (state = initialState.all, action) {
 function byId (state = initialState.byId, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
+      console.log(action.payload)
       return { ...state, [action.payload._id]: action.payload }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:

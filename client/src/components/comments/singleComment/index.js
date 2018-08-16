@@ -30,7 +30,7 @@ export class Comment extends Component {
     })
   }
 
-  onDeleteComment () {
+  onDeleteComment (e) {
     console.log('delete clicked')
   }
 
@@ -39,6 +39,7 @@ export class Comment extends Component {
   }
 
   render () {
+    // this.state.editMode ? console.log('yei') : console.log('nope')
     return (
       <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
@@ -52,7 +53,7 @@ export class Comment extends Component {
           <CommentActions
             onReplyComment={this.onReplyComment}
             onEditComment={this.onEditComment}
-            onDeleteComment={this.onDeleteComment}
+            onDeleteComment={this.props.deleteComment}
             onLikeComment={this.onLikeComment}
             t={this.props.t}
           />
@@ -65,6 +66,7 @@ export class Comment extends Component {
 Comment.propTypes = {
   comment: PropTypes.object,
   margin: PropTypes.string,
-  t: PropTypes.func
+  t: PropTypes.func,
+  deleteComment: PropTypes.func
 }
 export default translate('translations')(Comment)
