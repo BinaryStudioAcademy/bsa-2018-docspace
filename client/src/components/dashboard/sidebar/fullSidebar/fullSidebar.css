@@ -1,8 +1,8 @@
-.sidebar-container .icon-navigation-wrapper {
-  height: 50%; }
+.tabs-wrapper .nav-button.minimize-button:first-of-type {
+  margin-top: 3rem; }
 
-.sidebar-container .top-icons {
-  height: 20%; }
+.tabs-wrapper .nav-button.minimize-button {
+  width: 100%; }
 
-.sidebar-container .bottom-icons {
-  height: 30%; }
+.tabs-wrapper .nav-button i {
+  width: 8px; }

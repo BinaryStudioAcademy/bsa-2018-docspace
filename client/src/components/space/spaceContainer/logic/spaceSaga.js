@@ -70,6 +70,7 @@ function * deleteSpace (action) {
   try {
     yield SpaceService.deleteSpace(action.payload.id)
     yield put(actions.deleteSpaceSuccess(action.payload.id))
+    yield put(push(`/spacedirectory`))
   } catch (e) {
     console.log(e)
     yield put(actions.deleteSpaceError())

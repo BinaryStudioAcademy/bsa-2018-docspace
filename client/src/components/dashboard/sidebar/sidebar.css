@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: space-between; }
   .sidebar-container h1 {
-    margin: 15px 0 30px 10px; }
+    margin: 15px 0 20.5px 8px; }
   .sidebar-container .tabs-wrapper {
     width: 100%; }
     .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
@@ -70,7 +70,7 @@
     color: white; }
   .sidebar-blue-schema .nav-button:hover {
     background-color: #08367C; }
-  .sidebar-blue-schema h1 {
+  .sidebar-blue-schema #docspace-logo-label {
     color: white;
     padding: 0;
     margin-top: 35px;
