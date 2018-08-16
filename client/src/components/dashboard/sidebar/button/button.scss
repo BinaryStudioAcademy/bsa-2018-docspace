@@ -7,12 +7,15 @@
 
 .sidebar-container{
   .nav-button{
+    height: 40px;
     display: flex;
+    width: 90%;
     flex-direction: column;
-    padding: 14px 0;
+    margin-bottom: 5px;
     list-style: none;
+    justify-content: center;
     span {
-      padding: 8px 12px 7px;
+      padding: 7px 12px 7px;
     }
     span  > i {
       margin-right: 15px;
