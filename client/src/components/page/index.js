@@ -68,7 +68,7 @@ Page.propTypes = {
 
   user: PropTypes.object,
   t: PropTypes.func,
-  actions: PropTypes.function,
+  actions: PropTypes.object,
   match: PropTypes.object,
   space: PropTypes.object,
   history: PropTypes.object
