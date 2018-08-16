@@ -16,7 +16,6 @@
   }
   .icon-buttons-wrapper {
     padding: 0 5px;
-    // background-color: $primaryColor;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -129,26 +128,12 @@
       background-color: $greyHover;
     }
   }
-
-  // TODO: check
-    // .tabs-wrapper {
-    //   a, a:visited, a:active, a:hover{
-    //     text-decoration: none;
-    //     color: $blueText;
-    //   }
-    //   .nav-button:hover{
-    //     background-color: $greyHover;
-    //   }
-    // }
-
   h1{
     color: $blueText;
   }
-
   .Resizer{
     background-color: $greyBlog
   }
-
   .icon-buttons-wrapper{
     .nav-button:hover{
       background-color: $greyHover;
@@ -159,14 +144,4 @@
       color: $grayDark;
     }
   }
-  // TODO: check
-  // .minimize-dashboard-wrapper{
-  //     .nav-button:hover{
-  //       background-color:$greyHover;
-  //     }
-  //     a, a:visited, a:active, a:hover {
-  //       text-decoration: none;
-  //       color: $blueText;
-  //     }
-  // }
 }
