@@ -1,6 +1,11 @@
+@import 'globalStyles/variables.scss';
+
 .dashboard-container {
   height: 100%;
   display: flex;
+  h1, h2 {
+    color: $black
+  }
   h1, h2 , p {
     margin: 0;
     padding: 0;

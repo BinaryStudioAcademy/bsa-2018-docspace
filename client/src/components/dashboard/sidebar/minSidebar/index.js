@@ -1,4 +1,3 @@
-import Button from '../button'
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -65,7 +64,9 @@ class MinSidebar extends Component {
           <NavLink to={'/spacedirectory'}>
             <img src={logo} alt='DocSpace logo' />
           </NavLink>
-          <Button path='/' type='round-button' icon='fa fa-search' />
+          <span className='toggle-search-btn round-button nav-button' >
+            <i className='fa fa-search' />
+          </span>
           <span className='toggle-add-page-modal-btn round-button nav-button' onClick={this.toggleModal} >
             <i className='fa fa-plus' />
           </span>
