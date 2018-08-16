@@ -1,4 +1,5 @@
 @import "src/globalStyles/variables.scss";
+@import url('https://fonts.googleapis.com/css?family=Carme');
 
 
 .sidebar-container{
@@ -14,15 +15,17 @@
     background-color: $primaryColor;
   }
   .icon-buttons-wrapper {
-      padding: 0 5px;
-      background-color: $primaryColor;
-      height: 100%;
+    padding: 0 5px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  h1{
-      margin: 15px 0 20px 10px;
+  h1 {
+      margin: 15px 0 30px 10px;
   }
   .tabs-wrapper {
-    width: 80%;
+    width: 100%;
 
     a, a:visited, a:active, a:hover{
       text-decoration: none;
@@ -38,14 +41,44 @@
     height: 100%;
     width: 70px;
   }
+
+  &.space-minimized {
+    .icon-buttons-wrapper {
+      width: 100%;
+
+      .icon-navigation-wrapper {
+        flex: 1;
+        margin-top: 20px;
+
+        .tabs-wrapper {
+          .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            img {
+              max-width: 46px;
+              border-radius: 5px;
+              margin: 5px 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .sidebar-container {
   height: 100%;
 }
 .Resizer {
-  width: 2px;
-  cursor: col-resize
+  min-width: 2px;
+  cursor: col-resize;
+  transition: background-color 300ms ease-in-out 200ms;
+
+  &:hover {
+    background-color: $blue;
+  }
 }
 .sidebar-blue-schema {
   height: 100%;
@@ -76,6 +109,10 @@
   h1{
       color: white;
       padding: 0;
+      margin-top: 35px;
+      font-family: 'Carme', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2.4px;
   }
   .Resizer {
       background-color: $primaryColor
@@ -86,17 +123,11 @@
 .sidebar-grey-schema{
   .sidebar-wrapper, .minimize-dashboard-wrapper {
     background-color: $greyBlog;
-  }
-    .tabs-wrapper {
-      a, a:visited, a:active, a:hover{
-        text-decoration: none;
-        color: $blueText;
-      }
-      .nav-button:hover{
-        background-color: $greyHover;
-      }
-    }
 
+    .top-icons img:hover {
+      background-color: $greyHover;
+    }
+  }
   h1{
     color: $blueText;
   }
@@ -105,23 +136,12 @@
   }
   .icon-buttons-wrapper{
     .nav-button:hover{
-      background-color:$primalHover;
+      background-color: $greyHover;
     }
-  }
-  .minimize-dashboard-wrapper{
-      .nav-button:hover{
-        background-color:$greyHover;
-      }
-      a, a:visited, a:active, a:hover {
-        text-decoration: none;
-        color: $blueText;
-      }
-  }
-  .icon-buttons-wrapper{
-    a, a:visited, a:active, a:hover {
+
+    i, a, a:visited, a:active, a:hover {
       text-decoration: none;
-      color: white;
+      color: $grayDark;
     }
   }
 }
-
