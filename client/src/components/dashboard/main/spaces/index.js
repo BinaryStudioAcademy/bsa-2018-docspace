@@ -4,13 +4,12 @@ import Button from '../../button'
 import DashboardSpacesBody from '../../spacesBody'
 
 const Spaces = () => (
-  <div className={'dashboard__container'} >
-    <div className={'dashboard__content__spaces'}>
-      <div className={'spaces__header'}>
-        <h2>Space Directory</h2><Button content='Create Space' />
-      </div>
-      <DashboardSpacesBody />
+  <div className={'dashboard-spaces'}>
+    <div className={'spaces-header'}>
+      <h1>Space Directory</h1>
+      <Button content='Create Space' />
     </div>
+    <DashboardSpacesBody />
   </div>
 )
 
