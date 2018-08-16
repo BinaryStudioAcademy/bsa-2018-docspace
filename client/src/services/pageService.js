@@ -25,8 +25,8 @@ class PageService {
     return apiResult
   }
 
-  deletePage = (id) => {
-    const args = { endpoint: `/api/pages/${id}`, method: 'DELETE' }
+  deletePage = (page) => {
+    const args = { endpoint: `/api/pages/${page._id}`, method: 'DELETE' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))

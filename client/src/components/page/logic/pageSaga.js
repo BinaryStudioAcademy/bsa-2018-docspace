@@ -45,8 +45,10 @@ function * updatePage (action) {
 
 function * deletePage (action) {
   try {
-    yield PageService.deletePage(action.payload.id)
-    yield put(actions.deletePageSuccess(action.payload.id))
+    yield PageService.deletePage(action.payload)
+    yield put(actions.deletePageSuccess(action.payload))
+    yield put(push(`/spaces/${action.payload.spaceId}/overview`))
+
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())

@@ -4,7 +4,7 @@ import { translate } from 'react-i18next'
 
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn }) => {
+const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn, onDelete}) => {
   return (
     <div className='buttons-container'>
       {
@@ -28,9 +28,18 @@ const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children
       <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
         <i className='fas fa-share-square' />
       </div>
+      {/*
+      TEMP HIDDEN
       <div className='buttons-item' onClick={onMenu}>
         <i className='fas fa-ellipsis-h' />
-      </div>
+      </div>*/}
+      {/* TEMP ADDED FOR DELETING PAGE*/}
+      {
+        type === 'page' && 
+        <div className='buttons-item'  onClick={onDelete} >
+          <i className='fas fa-trash'/>
+        </div>
+      }
       {children}
     </div>
   )
@@ -45,8 +54,8 @@ SpaceHeaderButtons.propTypes = {
   onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
-  hideEditBtn: PropTypes.bool
-
+  hideEditBtn: PropTypes.bool,
+  onDelete: PropTypes.func,
 }
 
 SpaceHeaderButtons.defaultProps = {
@@ -55,6 +64,7 @@ SpaceHeaderButtons.defaultProps = {
   onShare: () => false,
   onMenu: () => false,
   onSave: () => false,
+  onDelete: () => false,
   children: null,
   type: ''
 }

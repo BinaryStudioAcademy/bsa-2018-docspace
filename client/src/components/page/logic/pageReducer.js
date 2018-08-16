@@ -30,7 +30,7 @@ function all (state = initialState.all, action) {
       return action.payload.all
 
     case actionTypes.DELETE_PAGE_SUCCESS:
-      return state.filter(id => id !== action.payload.id)
+      return state.filter(id => id !== action.payload._id)
 
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
