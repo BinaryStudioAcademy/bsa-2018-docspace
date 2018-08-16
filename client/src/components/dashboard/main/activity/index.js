@@ -8,7 +8,7 @@ const menuList = ['All Updates', 'Popular']
 const Activity = () => (
   <div className='dashboard-activity'>
     <ContentBody menuTabs={menuList} header='Activity' />
-    <ContentSide buttonName='Create Space' />
+    <ContentSide />
   </div>
 )
 
