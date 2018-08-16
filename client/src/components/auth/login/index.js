@@ -70,7 +70,7 @@ class Login extends Component {
                 label='Enter email'
                 value={email}
                 onChange={this.handleFieldChange}
-                autoComplete
+                autoComplete='on'
               />
               <Input
                 inputType='password'
@@ -78,7 +78,7 @@ class Login extends Component {
                 label='Enter password'
                 value={password}
                 onChange={this.handleFieldChange}
-                autoComplete={false}
+                autoComplete='off'
               />
               <Input
                 inputType='submit'

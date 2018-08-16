@@ -24,7 +24,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
-  autoComplete: PropTypes.bool,
+  autoComplete: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
   value: PropTypes.string
