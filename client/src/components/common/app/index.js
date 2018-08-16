@@ -31,8 +31,8 @@ class App extends Component {
   changeSize (size) {
     this.setState({
       isOpened: size > 70,
-      showIcons: size > 130,
-      showLabels: size > 240,
+      showIcons: size > 90,
+      showLabels: size > 200,
       showSpaceIcons: size > 140,
       showSpaceLabels: size > 195
     })

@@ -3,7 +3,6 @@
 
 
 .sidebar-container{
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
   .sidebar-wrapper{
     display: flex;
     flex-direction: row;
@@ -26,10 +25,24 @@
   }
   .tabs-wrapper {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 
     a, a:visited, a:active, a:hover{
       text-decoration: none;
       color: white;
+    }
+    .nav-button-only-icons {
+      align-self: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:first-of-type {
+        margin-top: 20px;
+      }
     }
   }
   .minimize-dashboard-wrapper {
@@ -121,6 +134,9 @@
 
 
 .sidebar-grey-schema{
+  .nav-button-selected {
+    background-color: $greyHover;
+  }
   .sidebar-wrapper, .minimize-dashboard-wrapper {
     background-color: $greyBlog;
 
@@ -135,6 +151,7 @@
     background-color: $greyBlog
   }
   .icon-buttons-wrapper{
+    .nav-button-only-icons:hover,
     .nav-button:hover{
       background-color: $greyHover;
     }
