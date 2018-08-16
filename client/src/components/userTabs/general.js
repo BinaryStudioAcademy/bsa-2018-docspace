@@ -43,7 +43,7 @@ export class ProfileFields extends Component {
   }
 
   renderEmail (propsEmail) {
-    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='text' value={this.state.email} onChange={this.handleEmail} />
+    return this.props.isEditMode ? <Input name='user-input-change-data' inputType='email' value={this.state.email} onChange={this.handleEmail} />
       : <span>{propsEmail}</span>
   }
 
