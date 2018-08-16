@@ -19,6 +19,6 @@ let config = {
   }
 }
 
-module.exports.get = function get(env) {
-  return config[env] || config.default;
-};
+module.exports.get = function get (env) {
+  return config[env] || config.default
+}
