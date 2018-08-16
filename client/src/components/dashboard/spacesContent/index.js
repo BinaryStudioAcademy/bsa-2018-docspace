@@ -21,7 +21,7 @@ class SpacesContent extends Component {
           <Link className='link_view' to={`/spaces/${item._id}/overview`}>
             <img src={logo} alt='' />
           </Link></td>
-        <td><Link to={`/spaces/${item._id}/overview`}>{item.name}</Link></td>
+        <td><Link className='space-item-link' to={`/spaces/${item._id}/overview`}>{item.name}</Link></td>
         <td>{item.description}</td><td>{categories}</td>
         <td><Link to={`/spaces/${item._id}/settings`}><i title='Space Info' className={'fas fa-info-circle'} /></Link></td></tr>
       if (this.props.activeTab === 'All Spaces') {

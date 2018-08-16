@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import signupRequest from './logic/signupActions'
 import Input from '../../common/input'
 import Errors from '../../common/error'
+import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
 
 import './signup.css'
 
@@ -63,20 +64,22 @@ class Signup extends Component {
       return <Redirect to='/login' />
     }
     return (
-      <div className='auth__main'>
-        <div className='auth__content'>
-          <div className='auth__header'>
-            <img className='header__logo' src='' alt='logo' />
+      <div className='auth-main'>
+        <div className='auth-content'>
+          <div className='auth-header'>
+            <div className='header-logo'>
+              <img className='header-logo-img' src={logoInCircle} alt='logo' />
+              <p className='header-logo-label'>DOCSPACE</p>
+            </div>
             <h2>Sign up for your account</h2>
           </div>
-          <form className='auth__signup' onSubmit={this.handleSubmit}>
+          <form className='auth-signup' onSubmit={this.handleSubmit}>
             <Input
               inputType='email'
               name='email'
               label='Enter email adress'
               value={email}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='text'
@@ -84,7 +87,6 @@ class Signup extends Component {
               label='Enter full name'
               value={fullName}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='text'
@@ -92,7 +94,6 @@ class Signup extends Component {
               label='Enter nickname'
               value={login}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='password'
@@ -100,7 +101,6 @@ class Signup extends Component {
               label='Create password'
               value={password}
               onChange={this.handleFieldChange}
-              autoComplete={false}
             />
             <Input
               inputType='submit'
@@ -108,13 +108,13 @@ class Signup extends Component {
               name='button'
               value='Sign up'
             />
-            <div className='auth__notifications'>
+            <div className='auth-notifications'>
               {!requesting && !!errors.length && (
                 <Errors message='Failure to signup due to:' errors={errors} />
 
               )}
             </div>
-            <p className='auth__footer' onClick={this.handleRedirectToLogin}>
+            <p className='auth-footer' onClick={this.handleRedirectToLogin}>
               Already have an Docspace account? Log in
             </p>
           </form>

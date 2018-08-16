@@ -1,11 +1,11 @@
-.sidebar-container{
-  .icon-navigation-wrapper {
-    height: 50%;
+.tabs-wrapper {
+  .nav-button.minimize-button:first-of-type {
+    margin-top: 3rem;
   }
-  .top-icons{
-    height: 20%;
+  .nav-button.minimize-button{
+    width: 100%;
   }
-  .bottom-icons{
-    height: 30%;
-  } 
+  .nav-button i {
+    width: 8px
+  }
 }
