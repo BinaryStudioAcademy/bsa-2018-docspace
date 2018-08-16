@@ -1,14 +1,21 @@
 @import "src/globalStyles/variables.scss";
 
+.nav-button-selected {
+  background-color: #073c8d;
+}
+
+
 .sidebar-container{
   .nav-button{
     display: flex;
     flex-direction: column;
     padding: 14px 0;
     list-style: none;
-    i{
-      padding: 0 10px;
-      font-size: 20px;
+    span {
+      padding: 8px 12px 7px;
+    }
+    span  > i {
+      margin-right: 15px;
     }
   }
   .round-button{
@@ -58,21 +65,10 @@
       width: 100%
     }
   }
-.tabs-wrapper{
-  .nav-button{
-    i, p{
-      display: inline-flex;
-      float: left
-    }
-    p{
-      margin: 0 0 0 10px;
-    }
-    width: 90%;
-  }
-}
+
 .icon-navigation-wrapper{
   .tabs-wrapper{
-    width: 100%
+    width: 100%;
   }
 }
 }
