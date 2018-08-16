@@ -4,7 +4,7 @@ module.exports = passport => (req, res, next) => {
       return res.json({ isLoggedIn: false, message: 'Not authorized' })
     }
     if (!authUser) {
-      return res.status.json({ isLoggedIn: false, message: 'Can not find user' })
+      return res.status(500).json({ isLoggedIn: false, message: 'Can not find user' })
     }
 
     let user = {

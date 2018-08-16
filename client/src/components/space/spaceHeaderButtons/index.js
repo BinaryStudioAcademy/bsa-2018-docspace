@@ -4,12 +4,15 @@ import { translate } from 'react-i18next'
 
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t }) => {
+const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn }) => {
   return (
     <div className='buttons-container'>
-      <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
-        <i className='fas fa-pen' />
-      </div>
+      {
+        !hideEditBtn &&
+        <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
+          <i className='fas fa-pen' />
+        </div>
+      }
       {
         type === 'blog' || type === 'page'
           ? (
@@ -41,7 +44,8 @@ SpaceHeaderButtons.propTypes = {
   onMenu: PropTypes.func,
   onSave: PropTypes.func,
   children: PropTypes.element,
-  type: PropTypes.string
+  type: PropTypes.string,
+  hideEditBtn: PropTypes.bool
 
 }
 
