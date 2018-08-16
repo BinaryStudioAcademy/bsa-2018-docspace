@@ -48,7 +48,6 @@ function * deletePage (action) {
     yield PageService.deletePage(action.payload)
     yield put(actions.deletePageSuccess(action.payload))
     yield put(push(`/spaces/${action.payload.spaceId}/overview`))
-
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())

@@ -4,7 +4,7 @@ import { translate } from 'react-i18next'
 
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn, onDelete}) => {
+const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn, onDelete }) => {
   return (
     <div className='buttons-container'>
       {
@@ -32,12 +32,12 @@ const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children
       TEMP HIDDEN
       <div className='buttons-item' onClick={onMenu}>
         <i className='fas fa-ellipsis-h' />
-      </div>*/}
-      {/* TEMP ADDED FOR DELETING PAGE*/}
+      </div> */}
+      {/* TEMP ADDED FOR DELETING PAGE */}
       {
-        type === 'page' && 
-        <div className='buttons-item'  onClick={onDelete} >
-          <i className='fas fa-trash'/>
+        type === 'page' &&
+        <div className='buttons-item' onClick={onDelete} >
+          <i className='fas fa-trash' />
         </div>
       }
       {children}
@@ -55,7 +55,7 @@ SpaceHeaderButtons.propTypes = {
   children: PropTypes.element,
   type: PropTypes.string,
   hideEditBtn: PropTypes.bool,
-  onDelete: PropTypes.func,
+  onDelete: PropTypes.func
 }
 
 SpaceHeaderButtons.defaultProps = {

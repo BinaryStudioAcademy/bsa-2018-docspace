@@ -26,10 +26,27 @@
   border-radius: 3px;
   width: 32px; }
 
-.space__item {
-  display: table-row;
+.space-item .space-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 186px;
+  padding: 15px 3px; }
+
+.space-item .space-label {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #3572b0;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  padding: 1px 5px;
+  margin: 0 5px 0 0;
   text-align: left;
-  border-bottom: 1px solid #ccc; }
+  text-decoration: none; }
 
 .space-item-link {
   text-decoration: none;

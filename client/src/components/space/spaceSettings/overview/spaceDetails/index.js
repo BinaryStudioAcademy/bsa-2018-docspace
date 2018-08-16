@@ -38,7 +38,7 @@ class SpaceDetails extends Component {
 
               <span className='link'>
                 <i className='fas fa-home' />
-                    {space.homePage? space.homePage.title: ''}
+                {space.homePage ? space.homePage.title : ''}
               </span>
             </td>
           </tr>
@@ -51,7 +51,7 @@ class SpaceDetails extends Component {
           <tr>
             <td>{t('Categoies')}</td>
             <td />
-          </tr>*/}
+          </tr> */}
           <tr>
             <td>{t('Description')}</td>
             <td>{space.description}</td>

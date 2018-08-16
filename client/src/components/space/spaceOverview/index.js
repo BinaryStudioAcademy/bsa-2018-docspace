@@ -22,9 +22,9 @@ class SpaceOverview extends Component {
     const {homePage, space} = this.props
     return (
       <React.Fragment>
-        <SpaceOverviewHeader 
-          space={space} 
-          handleEditBtnClick={this.handleEditBtnClick} 
+        <SpaceOverviewHeader
+          space={space}
+          handleEditBtnClick={this.handleEditBtnClick}
           handleDeleteSpace={this.handleDeleteSpace}
         />
         {
@@ -44,7 +44,8 @@ SpaceOverview.propTypes = {
     content: PropTypes.string
   }),
   space: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  actions: PropTypes.object
 }
 
 function mapDispatchToProps (dispatch) {
