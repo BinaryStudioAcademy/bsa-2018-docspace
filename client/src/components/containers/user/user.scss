@@ -15,7 +15,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 0;
+  margin-left: -2px;
   overflow-y: auto; }
 
 
@@ -516,3 +516,7 @@
 
 .profile-fields-items .user-input-change-data {
   margin: 0; }
+
+.Resizer {
+  z-index: 1;
+}
