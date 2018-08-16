@@ -10,6 +10,8 @@
   border-radius: 3px;
   overflow: auto;
   padding: 4px 0px;
+  z-index: 1;
+  box-shadow: 4px 1px 17px 0px #00000029;
   > .dropdown-menu-item {
     align-self: center;
     color: #172b4d;
