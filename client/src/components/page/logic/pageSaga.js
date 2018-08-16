@@ -36,7 +36,7 @@ function * updatePage (action) {
     const target = action.payload
     const updated = yield PageService.updatePage(target)
     yield put(actions.updatePageSuccess(updated))
-    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}/`))
+    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
   } catch (e) {
     console.log(e)
     yield put(actions.updatePageError())
