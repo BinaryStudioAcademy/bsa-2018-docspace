@@ -7,7 +7,7 @@ COPY package.json yarn.lock /docspace/
 RUN yarn
 COPY client /docspace/client/
 COPY server /docspace/server/
-RUN cd client && yarn add node-sass
+RUN cd client && yarn cache clean && yarn add --force node-sass@latest
 RUN yarn client-build && cd ..
 
 
