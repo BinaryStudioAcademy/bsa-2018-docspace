@@ -1,49 +1,64 @@
 @import url("https://fonts.googleapis.com/css?family=Carme");
-.sidebar-container {
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif; }
-  .sidebar-container .sidebar-wrapper {
+.sidebar-container .sidebar-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0044a9; }
+
+.sidebar-container .icon-buttons-wrapper {
+  padding: 0 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+.sidebar-container h1 {
+  margin: 15px 0 20.5px 8px; }
+
+.sidebar-container .tabs-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column; }
+  .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
+    text-decoration: none;
+    color: white; }
+  .sidebar-container .tabs-wrapper .nav-button-only-icons {
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
     display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    text-align: left;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #0044a9; }
-  .sidebar-container .icon-buttons-wrapper {
-    padding: 0 5px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; }
-  .sidebar-container h1 {
-    margin: 15px 0 20.5px 8px; }
-  .sidebar-container .tabs-wrapper {
-    width: 100%; }
-    .sidebar-container .tabs-wrapper a, .sidebar-container .tabs-wrapper a:visited, .sidebar-container .tabs-wrapper a:active, .sidebar-container .tabs-wrapper a:hover {
-      text-decoration: none;
-      color: white; }
-  .sidebar-container .minimize-dashboard-wrapper {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    text-align: left;
-    margin: 0;
-    height: 100%;
-    width: 70px; }
-  .sidebar-container.space-minimized .icon-buttons-wrapper {
-    width: 100%; }
-    .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper {
-      flex: 1;
+    justify-content: center;
+    align-items: center; }
+    .sidebar-container .tabs-wrapper .nav-button-only-icons:first-of-type {
       margin-top: 20px; }
-      .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper .tabs-wrapper .logo {
-        display: flex;
-        flex-direction: column;
-        align-items: center; }
-        .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper .tabs-wrapper .logo img {
-          max-width: 46px;
-          border-radius: 5px;
-          margin: 5px 0; }
+
+.sidebar-container .minimize-dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 70px; }
+
+.sidebar-container.space-minimized .icon-buttons-wrapper {
+  width: 100%; }
+  .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper {
+    flex: 1;
+    margin-top: 20px; }
+    .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper .tabs-wrapper .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .sidebar-container.space-minimized .icon-buttons-wrapper .icon-navigation-wrapper .tabs-wrapper .logo img {
+        max-width: 46px;
+        border-radius: 5px;
+        margin: 5px 0; }
 
 .sidebar-container {
   height: 100%; }
@@ -80,6 +95,9 @@
   .sidebar-blue-schema .Resizer {
     background-color: #0044a9; }
 
+.sidebar-grey-schema .nav-button-selected {
+  background-color: #EAECF0; }
+
 .sidebar-grey-schema .sidebar-wrapper, .sidebar-grey-schema .minimize-dashboard-wrapper {
   background-color: #F4F5F7; }
   .sidebar-grey-schema .sidebar-wrapper .top-icons img:hover, .sidebar-grey-schema .minimize-dashboard-wrapper .top-icons img:hover {
@@ -91,6 +109,7 @@
 .sidebar-grey-schema .Resizer {
   background-color: #F4F5F7; }
 
+.sidebar-grey-schema .icon-buttons-wrapper .nav-button-only-icons:hover,
 .sidebar-grey-schema .icon-buttons-wrapper .nav-button:hover {
   background-color: #EAECF0; }
 
