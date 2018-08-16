@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
-<<<<<<< HEAD
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-=======
->>>>>>> demo-1
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
 import { connect } from 'react-redux'
@@ -79,10 +76,6 @@ class SpaceOverviewTab extends Component {
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> demo-1
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
@@ -100,10 +93,5 @@ SpaceOverviewTab.propTypes = {
 }
 
 export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverviewTab))
-<<<<<<< HEAD
 
 
-
-
-=======
->>>>>>> demo-1
