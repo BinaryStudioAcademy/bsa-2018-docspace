@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 
