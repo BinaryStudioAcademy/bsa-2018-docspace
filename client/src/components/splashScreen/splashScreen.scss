@@ -1,0 +1,35 @@
+
+@import url('https://fonts.googleapis.com/css?family=Belleza');
+.screen-splash-loading {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: #17183f;
+    z-index: 1;
+    opacity: .95;
+    .container-docspace-logo {
+        align-self: center;
+    }
+    .docspace-logo {
+        width: 100px;
+        height: 100px;
+        -webkit-animation: rotateY 1s infinite linear;
+        animation: rotateY 1s infinite linear;
+    }
+    .loading-text {
+        align-self: center;
+        color: #fff;
+        margin-top: 25px;
+        font-family: 'Belleza', sans-serif;
+        font-size: 30px;
+    }
+}
+
+@-webkit-keyframes rotateY {
+    to { -webkit-transform: rotateY(-360deg); }
+}
+@keyframes rotateY {
+    to { transform: rotateY(-360deg); }
+}

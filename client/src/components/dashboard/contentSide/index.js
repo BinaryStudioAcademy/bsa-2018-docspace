@@ -21,19 +21,19 @@ class ContentSide extends Component {
 
   render () {
     return (
-      <div className={'dashboard__content__side'} >
-        <div className={'header'}>
+      <div className='dashboard-content-side' >
+        <div className='side-header'>
           <Button
             content={this.props.buttonName}
             onClick={this.toggleModal}
           />
         </div>
-        <div className={'welcome'}>
+        <div className='side-main'>
           <h2>Welcome to Docspace</h2>
           <img src={welcome} alt='' />
-          <span>Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes, specs, mockups, diagrams, and projects.
+          <p>Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes, specs, mockups, diagrams, and projects.
 
-Делитесь полезными ссылками, объявлениями и информацией здесь</span>
+Делитесь полезными ссылками, объявлениями и информацией здесь</p>
         </div>
         {
           this.state.showSpaceModal &&

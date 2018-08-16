@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './contentBody.css'
 import MenuList from './../menuList'
 class ContentBody extends Component {
   constructor (props) {
@@ -10,19 +9,15 @@ class ContentBody extends Component {
 
   render () {
     return (
-      <div className={'dashboard__content__body'} >
-
-        <div className={'headerDashboard'}>
+      <div className='dashboard-content-body' >
+        <div className='content-header'>
           <h1>{this.props.header}</h1>
-
-          <div>
-            <ul id='menu'>
-              <MenuList menuTabs={this.props.menuTabs} />
-
-            </ul>
-          </div>
         </div>
-
+        <div className='content-menu'>
+          <ul className='menu'>
+            <MenuList menuTabs={this.props.menuTabs} />
+          </ul>
+        </div>
       </div>
     )
   }

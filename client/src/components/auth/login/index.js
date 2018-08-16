@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import loginRequest from './logic/loginActions'
 import Input from '../../common/input'
 import Errors from '../../common/error'
+import SplashScreen from 'src/components/splashScreen'
+import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
 
 import './login.css'
 
@@ -54,9 +56,13 @@ class Login extends Component {
         <div className='auth__main'>
           <div className='auth__content'>
             <div className='auth__header'>
-              <img className='header__logo' src='' alt='logo' />
+              <div className='header__logo'>
+                <img className='header__logo__img' src={logoInCircle} alt='logo' />
+                <p className='header__logo_label'>DOCSPACE</p>
+              </div>
               <h2>Log in to your account</h2>
             </div>
+            { requesting && <SplashScreen /> }
             <form className='auth__login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'

@@ -8,7 +8,7 @@ import Activity from 'src/components/dashboard/main/activity'
 import People from 'src/components/dashboard/main/people'
 import Spaces from 'src/components/dashboard/main/spaces'
 import Work from 'src/components/dashboard/main/work'
-import User from 'src/containers/user'
+import User from 'src/components/containers/user'
 import SpaceContainer from 'src/components/space/spaceContainer'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
 
