@@ -3,8 +3,6 @@ import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-
-import SpaceHeader from 'src/components/space/spaceHeader'
 import SpaceContent from 'src/components/space/spaceContent'
 import SpaceSettings from 'src/components/space/spaceSettings'
 import SpaceOverwiew from 'src/components/space/spaceOverview'
@@ -24,19 +22,25 @@ class SpaceContainer extends Component {
     }
   }
 
+  renderSpaceOverview = () => (
+    <SpaceOverwiew
+      homePage={this.props.space.homePage}
+      space={this.props.space}
+      history={this.props.history}
+    />
+  )
+
   render () {
-    if (!this.props.space) return null
+    const {space} = this.props
+    if (!space) return null
     const id = this.props.location.pathname.split('/')[2]
-    const {homePage} = this.props.space
-    // const homePage = homePageId ? pages.find( page => page._id === homePageId) : null
 
     return (
       <div className='space'>
         <SpaceContent>
-          <SpaceHeader />
           <Route path='/spaces/:space_id' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
           <Route path='/spaces/:space_id/pages' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
-          <Route path='/spaces/:space_id/overview' render={() => <SpaceOverwiew homePage={homePage} />} />
+          <Route path='/spaces/:space_id/overview' render={this.renderSpaceOverview} />
           <Route path='/spaces/:space_id/blog' component={Blog} />
           <Route path='/spaces/:space_id/settings' component={SpaceSettings} />
           <Route path='/spaces/:space_id/pages/:page_id' component={Page} />
@@ -49,7 +53,8 @@ class SpaceContainer extends Component {
 SpaceContainer.propTypes = {
   location: PropTypes.object.isRequired,
   space: PropTypes.object,
-  getSpace: PropTypes.func
+  getSpace: PropTypes.func,
+  history: PropTypes.object
 }
 
 const mapStateToProps = (state) => {

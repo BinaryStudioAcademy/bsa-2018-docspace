@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 
 import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 import './spacePagesList.css'
 
 const SpacePagesList = (props) => {
-  const { pages, spaceId, t } = props
+  const { pages, spaceId, t, actions } = props
   return (
     <div className='pages-list'>
       <div className='pages-list-title'>
@@ -25,7 +25,7 @@ const SpacePagesList = (props) => {
                 activeClassName='current'
                 key={page._id}
                 to={`/spaces/${spaceId}/pages/${page._id}`}
-                onClick={() => props.actions.getPageByIdRequest(page._id)}
+                onClick={() => actions.getPageByIdRequest(page._id)}
               >
                 <div className='pages-list-item-icon'>•</div>
                 <div className='pages-list-item-name'>{page.title}</div>
@@ -40,6 +40,7 @@ const SpacePagesList = (props) => {
 
 SpacePagesList.propTypes = {
   t: PropTypes.func.isRequired,
+  actions: PropTypes.object,
   pages: PropTypes.array,
   spaceId: PropTypes.string
 }
@@ -59,4 +60,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default translate('translations')(connect(null, mapDispatchToProps)(SpacePagesList))
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(SpacePagesList)))

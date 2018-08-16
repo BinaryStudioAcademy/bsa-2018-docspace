@@ -6,7 +6,8 @@ import './dropdownMenu.css'
 
 export default class DropdownMenu extends Component {
   state = {
-    isOpened: false
+    isOpened: false,
+    redirectToLogin: false
   }
 
   componentWillUnmount () {
@@ -37,7 +38,7 @@ export default class DropdownMenu extends Component {
       </div>
 
       {this.state.isOpened
-        ? (<div className='dropdown-menu-itemList' style={{bottom: `${menuHeight}%`}}>
+        ? (<div className='dropdown-menu-itemList' style={{transform: `translate3d(56px, ${menuHeight}px, 0px`}}>
           {menuItems.map((item, index) => {
             if (item.name === 'LogOut') {
               return <a href='/login' onClick={this.handleLogout} className='dropdown-menu-item' key={index} >{item.name}</a>
