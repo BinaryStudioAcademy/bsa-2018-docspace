@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
 
 import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
@@ -59,4 +59,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default translate('translations')(connect(null, mapDispatchToProps)(SpacePagesList))
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(SpacePagesList)))

@@ -8,11 +8,16 @@ import SpaceOverviewHeader from './spaceOverviewHeader'
 import PageContent from 'src/components/common/pageContent'
 
 class SpaceOverview extends Component {
+  handleEditBtnClick = () => {
+    const { space, history } = this.props
+    history.push(`/spaces/${space._id}/pages/${space.homePage._id}/edit`)
+  }
+
   render () {
     const {homePage, space} = this.props
     return (
       <React.Fragment>
-        <SpaceOverviewHeader space={space} />
+        <SpaceOverviewHeader space={space} handleEditBtnClick={this.handleEditBtnClick} />
         {
           homePage &&
           <div className='page-container'>
@@ -29,7 +34,8 @@ SpaceOverview.propTypes = {
     created: PropTypes.object,
     content: PropTypes.string
   }),
-  space: PropTypes.object
+  space: PropTypes.object,
+  history: PropTypes.object
 }
 
 function mapDispatchToProps (dispatch) {

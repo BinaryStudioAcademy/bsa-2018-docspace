@@ -7,7 +7,7 @@
     text-transform: none; }
   .space-settings-page img {
     border-radius: 5px; }
-  .space-settings-page-header {
+  .space-settings-page h2.space-settings-page-header {
     font-weight: normal;
     font-size: 28px;
     color: #333333;
