@@ -1,13 +1,13 @@
-.auth__input {
+.input {
   background-color: #fafbfc;
   border-radius: 5px;
   border-style: solid;
   border-color: #f4f5f7;
-  padding: 7px;
+  padding: 6px;
   margin-top: 24px;
   height: 24px; }
 
-.auth__input.button {
+.input.button {
   border: 0;
   height: 39px;
   margin-top: 24px;
@@ -15,5 +15,5 @@
   background-color: #0052CC;
   cursor: pointer;
   transition: background-color 200ms; }
-  .auth__input.button:hover {
+  .input.button:hover {
     background-color: #0065FF; }

@@ -84,7 +84,7 @@ class CreatePageModal extends Component {
           onClick={this.handlecreateClick}
           disabled={disableNextButton}
         >
-           create
+           Create
         </button>
         <button onClick={this.props.closeModal}>
            Close
