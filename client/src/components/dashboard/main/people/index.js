@@ -14,7 +14,7 @@ class People extends Component {
     return (
       <div className='dashboard-spaces'>
         <div className='spaces-header'>
-          <h2>People Directory</h2>
+          <h1>People Directory</h1>
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>
