@@ -1,9 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
-
 import SpaceDetails from './spaceDetails'
 import EditSpaceDetailsForm from './editSpaceDetailsForm'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+
+
 import './spaceOverviewTab.css'
 
 class SpaceOverviewTab extends Component {
@@ -13,6 +17,10 @@ class SpaceOverviewTab extends Component {
       isEditing: false,
       showDeleteSpaceModal: false // for the future
     }
+  }
+  
+  handleDeleteSpace = () => {
+    this.props.actions.deleteSpaceRequest(this.props.space._id)
   }
 
   goToEditDetails =() => {
@@ -61,10 +69,21 @@ class SpaceOverviewTab extends Component {
   }
 }
 
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        deleteSpaceRequest
+      }
+      , dispatch)
+  }
+}
+
 SpaceOverviewTab.propTypes = {
   t: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.object.isRequired
 }
 
-export default translate('translations')(SpaceOverviewTab)
+export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverviewTab))

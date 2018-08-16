@@ -8,7 +8,7 @@ import PageContent from 'src/components/common/pageContent'
 import Comments from 'src/components/comments/comments'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
@@ -26,13 +26,23 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
   }
 
+  handleDeletePage = () => {
+    console.log('deleting')
+    this.props.actions.deletePageRequest(this.props.page)
+  }
+
   render () {
     if (!this.props.page) return null
     const { avatar, firstName, lastName } = this.props.user
     const { page, t, space } = this.props
     return (
       <React.Fragment>
-        <PageHeader space={space} t={t} handleEditPageClick={this.handleEditPageClick} />
+        <PageHeader 
+          space={space} 
+          t={t} 
+          handleEditPageClick={this.handleEditPageClick} 
+          handleDeletePage={this.handleDeletePage}
+        />
         <div className='page-container'>
           <PageTitle text={page.title} />
           <PageInfo
@@ -91,7 +101,7 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest
+        getPageByIdRequest, deletePageRequest
       }
       , dispatch)
   }

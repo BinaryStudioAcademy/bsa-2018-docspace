@@ -5,11 +5,16 @@ import PropTypes from 'prop-types'
 
 import './spaceOverviewHeader.css'
 
-const SpaceOverviewHeader = ({ space, t, handleEditBtnClick }) => (
+const SpaceOverviewHeader = ({ space, t, handleEditBtnClick,handleDeleteSpace }) => (
   <div className='space-header'>
     <div className='space-header-name'>{space.name}</div>
     <SpaceHeaderButtons type='space' hideEditBtn={!space.homePage} onEdit={handleEditBtnClick}>
-      <div className='space-button'>{t('Remove_from_My_Spaces')}</div>
+      <div 
+        className='space-button'
+        onClick={handleDeleteSpace}
+      >
+        {t('Remove_from_My_Spaces')}
+      </div>
     </SpaceHeaderButtons>
   </div>
 )
