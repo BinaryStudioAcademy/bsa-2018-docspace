@@ -13,7 +13,7 @@
       display: flex;
       padding: 0;
       list-style: none;
-      box-shadow: 0px 3px 0px 0px #0000002e; }
+      box-shadow: 0px 3px 0px 0px #ccc; }
       .dashboard-activity .dashboard-content-body ul.menu li {
         font-weight: 500;
         padding: 4px 8px;
@@ -37,7 +37,7 @@
       margin-bottom: 20px;
       justify-content: center; }
       .dashboard-activity .dashboard-content-side .side-header button {
-        align-self: flex-end; }
+        align-self: center; }
     .dashboard-activity .dashboard-content-side .side-main {
       display: flex;
       flex-direction: column;

@@ -6,8 +6,8 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ccc; }
-    .dashboard-spaces .spaces-header button {
-      align-self: center; }
+    .dashboard-spaces .spaces-header button.create-space-btn {
+      margin-right: 15px; }
   .dashboard-spaces .spaces-body {
     display: flex;
     border-bottom: 1px solid #ccc; }
