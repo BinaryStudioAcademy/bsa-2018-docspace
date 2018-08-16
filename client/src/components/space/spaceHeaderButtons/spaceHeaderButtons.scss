@@ -15,8 +15,17 @@
     border: 1px solid $white;
 
     &.restrictions {
-      color: #777;
+      text-align: center;
+      vertical-align: center;
+      color: #6c788f;
       margin-left: 5px;
+     
+      
+      .space-page-header & i{
+        width:30px;
+        height: 20px;
+        margin: 0;
+      }
     }
 
     &:hover {

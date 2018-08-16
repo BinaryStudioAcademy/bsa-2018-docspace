@@ -39,7 +39,11 @@ function byId (state = initialState.byId, action) {
     // update target page title in pages list
     case UPDATE_PAGE_SUCCESS: {
       const { _id, spaceId, title } = action.payload
-      const updatedPages = state[spaceId].pages.map(page => page._id === _id ? { ...page, title: title } : page)
+      let updatedPages = [ action.payload ]
+      if (state[spaceId].pages) {
+        updatedPages = state[spaceId].pages.map(page => page._id === _id ? { ...page, title: title } : page)
+      }
+
       return {
         ...state,
         [spaceId]: {
