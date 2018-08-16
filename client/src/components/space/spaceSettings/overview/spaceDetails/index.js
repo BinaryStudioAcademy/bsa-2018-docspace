@@ -38,7 +38,7 @@ class SpaceDetails extends Component {
 
               <span className='link'>
                 <i className='fas fa-home' />
-                    my home page
+                    {space.homePage? space.homePage.title: ''}
               </span>
             </td>
           </tr>
@@ -46,10 +46,12 @@ class SpaceDetails extends Component {
             <td>{t('Created_by')}</td>
             <td> <span className='link'>{name}</span></td>
           </tr>
+          {/*
+          TEMPORALLY HIDE FOR DEMO
           <tr>
             <td>{t('Categoies')}</td>
             <td />
-          </tr>
+          </tr>*/}
           <tr>
             <td>{t('Description')}</td>
             <td>{space.description}</td>
