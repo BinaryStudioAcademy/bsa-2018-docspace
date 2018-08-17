@@ -187,11 +187,17 @@
      }
   }
 }
+
+// It's may be usefull! Sometimes there are some bugs with dispaying jodit editor workarea
 // .jodit_container .jodit_workplace{
 //   padding-left: 5rem;
 //   width: 100%;
 // }
 
-.jodit_container:not(.jodit_inline) .jodit_wysiwyg{
-  padding: 20px !important;
-}
+// .jodit_container:not(.jodit_inline) .jodit_wysiwyg{
+  // padding-left: 20px !important;
+// }
+
+// .jodit_placeholder{
+//   margin-left: 20px !important;
+// }

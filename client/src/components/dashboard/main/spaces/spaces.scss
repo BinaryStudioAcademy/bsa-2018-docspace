@@ -4,24 +4,35 @@
   width: 100%;
   padding: 20px;
   .spaces-header {
+    padding: 8px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
-    button {
-      align-self: center;
+    button.create-space-btn {
+      margin-right: 15px;
     }
   }
   .spaces-body {
     display: flex;
     border-bottom: 1px solid #ccc;
+    .space-item {
+      img {
+        border-radius: 3px;
+      }
+    }
     .spaces-sidebar {
       display: flex;
       flex-direction: column;
       border-right: 1px solid #ccc;
+      .active {
+        font-weight: 500;
+        background-color: #e6e6e6;
+      }
       ul {
         list-style: none;
         padding: 0;
         li {
+          font-weight: 400;
           width: 200px;
           cursor: pointer;
           padding: 15px 20px;
@@ -53,9 +64,6 @@
           tbody > tr {
             box-shadow: 0px 0px 0px 0.5px #ccc;
             padding: 5px 10px;
-          }
-          tbody {
-            font-size: 16px;
           }
         }
       }

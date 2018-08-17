@@ -1,5 +1,5 @@
-export function callWebApi (args) {
-  const result = fetch(args.endpoint, getFetchArgs(args))
+export async function callWebApi (args) {
+  const result = await fetch(args.endpoint, getFetchArgs(args))
   return result
 }
 
@@ -9,7 +9,8 @@ function getFetchArgs (args) {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
-  const {body, method} = args
+  const { body, method } = args
+
   return {
     method,
     headers,

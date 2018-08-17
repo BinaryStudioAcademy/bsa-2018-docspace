@@ -45,29 +45,25 @@ export class PrivateFields extends Component {
         <div className='current-new-passwords'>
           <div className='current password'>
             <label className='current password-label'>{t('current_password')}</label>
-            <div className='current password-wrapper'>
-              <Input
-                name='password-input'
-                id='currentPassword'
-                inputType='password'
-                label={t('current_password')}
-                onChange={this.handleCurrentPassword}
-                value={this.state.currentPassword}
-              />
-            </div>
+            <Input
+              name='password-wrapper'
+              id='currentPassword'
+              inputType='password'
+              label={t('current_password')}
+              onChange={this.handleCurrentPassword}
+              value={this.state.currentPassword}
+            />
           </div>
           <div className='new password'>
             <label className='new password-label'>{t('new_password')}</label>
-            <div className='new password-wrapper'>
-              <Input
-                name='password-input'
-                id='newPassword'
-                inputType='password'
-                label={t('new_password')}
-                onChange={this.handleNewPassword}
-                value={this.state.newPassword}
-              />
-            </div>
+            <Input
+              name='password-wrapper'
+              id='newPassword'
+              inputType='password'
+              label={t('new_password')}
+              onChange={this.handleNewPassword}
+              value={this.state.newPassword}
+            />
           </div>
           {!!this.props.errors.length && (
             <Errors message='Failure to login due to:' errors={this.props.errors} />

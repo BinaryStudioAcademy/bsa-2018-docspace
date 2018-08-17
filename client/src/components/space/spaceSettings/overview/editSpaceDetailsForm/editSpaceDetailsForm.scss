@@ -29,7 +29,7 @@
   }
 
   input, select{
-   
+
     height: 2.14285714em;
   }
 
@@ -37,7 +37,7 @@
   textarea{
     overflow-y: auto;
     height: 90px;
-  
+
   }
 
 
@@ -55,6 +55,7 @@
     }
     img{
       margin-left: 1.2rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -64,6 +65,7 @@
     padding-left: 1rem;
 
     button{
+      margin: 5px;
       box-sizing: border-box;
       background: #f5f5f5;
       border: 1px solid #ccc;
@@ -72,8 +74,8 @@
       cursor: pointer;
       display: inline-block;
       height: 2.14285714em;
-      line-height: 1.42857143;
-      margin: 0;
+      // line-height: 1.42857143;
+      vertical-align: middle;
       padding: 4px 10px;
       text-decoration: none;
       vertical-align: baseline;

@@ -6,12 +6,26 @@ import { normalize } from 'normalizr'
 import { spacesArray } from './spacesNormalizerSchema'
 import { push } from 'connected-react-router'
 
+const selectActiveSpaceFromRouter = (state) => state.router.location.pathname.split('/')[2]
+const spaceByIdFromRouter = (state, spaceId) => state.spaces.byId[spaceId]
+
 function * getSpaces (action) {
   try {
     const spaces = yield SpaceService.getSpaces()
     const normalized = normalize(spaces, spacesArray)
     const all = normalized.result
     const byId = normalized.entities.byId || {}
+    // Problem: when we open this modal on space overview,
+    // it's cause deleting pages from current space becouse of GET_ALL_SPACES_SUCCESS action
+    // So, we spread current space with space from server. Thus, pages will not disappear from current space
+    const id = yield select(selectActiveSpaceFromRouter)
+    if (all.includes(id)) {
+      const currentSpaceOnClient = yield select(spaceByIdFromRouter, id)
+      byId[id] = {
+        ...currentSpaceOnClient, ...byId[id]
+      }
+    }
+    //
     yield put(actions.allSpacesFetchedAndNormalized(all, byId))
   } catch (e) {
     console.log(e)
@@ -70,6 +84,7 @@ function * deleteSpace (action) {
   try {
     yield SpaceService.deleteSpace(action.payload.id)
     yield put(actions.deleteSpaceSuccess(action.payload.id))
+    yield put(push(`/spacedirectory`))
   } catch (e) {
     console.log(e)
     yield put(actions.deleteSpaceError())

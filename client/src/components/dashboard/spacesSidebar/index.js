@@ -1,31 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './spacesSidebar.css'
 import PropTypes from 'prop-types'
-class SpacesSideBar extends Component {
-  state = {
-    active: ''
-  }
-  handleClick = (tab) => {
-    this.setState({active: tab})
-    this.props.updateData(tab)
-  }
+const SpacesSideBar = ({ menuTabs, activeTab, handleClickNavTab }) =>
+  (
+    <ul className='sideBarList'>
+      {
+        menuTabs.map((tab, index) => (
+          <li
+            className={`sidebar-tab ${tab === activeTab ? 'active' : ''}`}
+            onClick={() => handleClickNavTab(tab)}
+            key={index}
+          >
+            <a >{tab} </a>
+          </li>
+        ))
+      }
+    </ul>
+  )
 
-  render () {
-    const menuTabs = this.props.menuTabs
-    const listItems = menuTabs.map((tab, index) => {
-      const className = tab === this.state.active ? 'active' : ''
-      return <li className={'sideBarTab ' + className} onClick={() => this.handleClick(tab)} key={index}>
-        <a className={className} >{tab} </a>
-      </li>
-    }
-    )
-    return (
-      <ul className={'sideBarList'}>{listItems}</ul>
-    )
-  }
-}
 SpacesSideBar.propTypes = {
   menuTabs: PropTypes.array,
-  updateData: PropTypes.func
+  handleClickNavTab: PropTypes.func,
+  activeTab: PropTypes.string
 }
 export default SpacesSideBar

@@ -1,4 +1,3 @@
-import Button from '../button'
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -65,7 +64,9 @@ class MinSidebar extends Component {
           <NavLink to={'/spacedirectory'}>
             <img src={logo} alt='DocSpace logo' />
           </NavLink>
-          <Button path='/' type='round-button' icon='fa fa-search' />
+          <span className='toggle-search-btn round-button nav-button' >
+            <i className='fa fa-search' />
+          </span>
           <span className='toggle-add-page-modal-btn round-button nav-button' onClick={this.toggleModal} >
             <i className='fa fa-plus' />
           </span>
@@ -74,10 +75,10 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={23} />
-          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={20} />
-          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={15} />
-          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={8} />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={170} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={130} />
+          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={80} />
+          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={40} />
         </div>
       </div>
     )

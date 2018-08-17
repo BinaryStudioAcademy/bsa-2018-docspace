@@ -1,15 +1,26 @@
 @import 'globalStyles/variables.scss';
 
-.auth__input {
+.input {
   background-color: #fafbfc;
   border-radius: 5px;
   border-style: solid;
   border-color: #f4f5f7;
-  padding: 7px;
+  padding: 6px;
   margin-top:24px;
   height: 24px;
+} 
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  &:focus {
+    box-shadow: 0 0 7px rgba(81, 203, 238, 1);
+  }
 }
-.auth__input.button {
+.input.button {
   border: 0;
   height: 39px;
   margin-top: 24px;

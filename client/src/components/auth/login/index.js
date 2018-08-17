@@ -49,28 +49,29 @@ class Login extends Component {
       return <Redirect to='/signup' />
     }
     if (successful) {
-      return <Redirect to='/' />
+      // only for demo. change to '/'
+      return <Redirect to='/activity' />
     }
     return (
       <Fragment>
-        <div className='auth__main'>
-          <div className='auth__content'>
-            <div className='auth__header'>
-              <div className='header__logo'>
-                <img className='header__logo__img' src={logoInCircle} alt='logo' />
-                <p className='header__logo_label'>DOCSPACE</p>
+        <div className='auth-main'>
+          <div className='auth-content'>
+            <div className='auth-header'>
+              <div className='header-logo'>
+                <img className='header-logo-img' src={logoInCircle} alt='logo' />
+                <p className='header-logo-label'>DOCSPACE</p>
               </div>
               <h2>Log in to your account</h2>
             </div>
             { requesting && <SplashScreen /> }
-            <form className='auth__login' onSubmit={this.handleSubmit}>
+            <form className='auth-login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'
                 name='email'
                 label='Enter email'
                 value={email}
                 onChange={this.handleFieldChange}
-                autoComplete
+                autoComplete='on'
               />
               <Input
                 inputType='password'
@@ -78,7 +79,7 @@ class Login extends Component {
                 label='Enter password'
                 value={password}
                 onChange={this.handleFieldChange}
-                autoComplete={false}
+                autoComplete='off'
               />
               <Input
                 inputType='submit'
@@ -86,13 +87,13 @@ class Login extends Component {
                 name='button'
                 value='Login'
               />
-              <div className='auth__notifications'>
+              <div className='auth-notifications'>
                 {!requesting && !!errors.length && (
                   <Errors message='Failure to login due to:' errors={errors} />
 
                 )}
               </div>
-              <p className='auth__footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
+              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
             </form>
           </div>
         </div>

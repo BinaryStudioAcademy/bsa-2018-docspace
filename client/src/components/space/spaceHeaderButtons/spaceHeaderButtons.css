@@ -1,17 +1,25 @@
 .buttons-container {
   display: flex;
+  align-items: center;
   color: #777; }
 
 .buttons-item {
-  height: 28px;
+  box-sizing: border-box;
+  height: 33px;
   width: 38px;
   font-size: 13px;
   text-align: center;
   line-height: 2.3;
   border: 1px solid #ffffff; }
   .buttons-item.restrictions {
-    color: #777;
+    text-align: center;
+    vertical-align: center;
+    color: #6c788f;
     margin-left: 5px; }
+    .space-page-header .buttons-item.restrictions i {
+      width: 30px;
+      height: 20px;
+      margin: 0; }
   .buttons-item:hover {
     cursor: pointer;
     background: #eaecef;

@@ -4,8 +4,10 @@
     "license": "ISC",
     "scripts": {
         "client": "cd client && cross-env NODE_PATH=./ yarn start",
+        "client-build": "cd client && yarn build",
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+        "prod": "yarn server",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
@@ -15,6 +17,8 @@
         "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
+        "path": "^0.12.7",
+        "eslint-config-loopback": "^11.0.0",
         "cookie-parser": "^1.4.3",
         "cross-env": "^5.2.0",
         "express": "^4.16.2",
