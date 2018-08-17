@@ -1,0 +1,28 @@
+.dropdown-menu-itemList {
+  left: 50px;
+  position: fixed;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-height: none;
+  border-radius: 3px;
+  overflow: auto;
+  padding: 4px 0px;
+  z-index: 1;
+  box-shadow: 4px 1px 17px 0px #00000029;
+  > .dropdown-menu-item {
+    align-self: center;
+    color: #172b4d;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    i {
+      color: white;
+    }
+    &:hover {
+      background-color: rgb(244, 245, 247);
+      text-decoration: none;
+    }
+  }
+}

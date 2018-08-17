@@ -1,0 +1,44 @@
+@import 'globalStyles/variables.scss';
+
+.blog-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-blog-message {
+  text-align: center;
+  width: 400px;
+
+  &-title {
+    text-transform: uppercase;
+    color: $gray;
+    font-weight: 600;
+    font-size: 15px;
+    padding-top: 15px;
+  }
+
+  &-text {
+    color: $black;
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  &-button {
+    background: $primaryColor;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      background: $blue;
+    }
+
+    &:focus {
+      outline: 0;
+     }
+  }
+}

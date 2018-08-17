@@ -1,0 +1,40 @@
+@import 'globalStyles/variables.scss';
+
+.buttons {
+  &-container {
+    display: flex;
+    align-items: center;
+    color: $grayButtons;
+  }
+
+  &-item{
+    box-sizing: border-box;
+    height: 33px;
+    width: 38px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 2.3;
+    border: 1px solid $white;
+
+    &.restrictions {
+      text-align: center;
+      vertical-align: center;
+      color: #6c788f;
+      margin-left: 5px;
+     
+      
+      .space-page-header & i{
+        width:30px;
+        height: 20px;
+        margin: 0;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: $grayBackground;
+      border: 1px solid $grayButtons;
+      border-radius: 3px;
+    }
+  }
+}

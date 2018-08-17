@@ -1,0 +1,8 @@
+@import 'globalStyles/variables.scss';
+
+.auth__error {
+  color: $blue;
+  li {
+    list-style: none;
+  }
+}

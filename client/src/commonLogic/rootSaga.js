@@ -1,10 +1,23 @@
-import { fork } from 'redux-saga/effects'
-import greetingSaga from '../components/greeting/logic/greetingSaga'
+
+import { fork, all } from 'redux-saga/effects'
+import signupWatcher from 'src/components/auth/signup/logic/signupSaga'
+import loginWatcher from 'src/components/auth/login/logic/loginSaga'
+import spaceSaga from 'src/components/space/spaceContainer/logic/spaceSaga'
+import userSaga from 'src/components/containers/user/logic/userSaga'
+import verificationWatcher from 'src/components/auth/verification/logic/verificationSaga'
+import pageSaga from 'src/components/page/logic/pageSaga'
+import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 
 function * rootSaga () {
-  yield [
-    fork(greetingSaga)
-  ]
+  yield all([
+    fork(spaceSaga),
+    fork(pageSaga),
+    fork(userSaga),
+    fork(commentSaga),
+    verificationWatcher(),
+    signupWatcher(),
+    loginWatcher()
+  ])
 }
 
 export default rootSaga

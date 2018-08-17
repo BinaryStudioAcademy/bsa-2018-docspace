@@ -1,0 +1,14 @@
+@import 'globalStyles/variables.scss';
+
+.page-content {
+  margin-top: 1rem;
+  // fix jodit bug
+  table, td, tr{
+    border : 1px solid lightgrey;
+    border-collapse: collapse;
+  }
+
+  img{
+    max-width:100%;
+  }
+}
