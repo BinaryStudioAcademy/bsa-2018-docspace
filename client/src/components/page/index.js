@@ -54,7 +54,7 @@ class Page extends Component {
 
   render () {
     if (!this.props.page) return null
-    const { avatar, firstName, lastName, _id } = this.props.user
+    const { firstName, lastName, _id } = this.props.user
     const { page, t, space } = this.props
     return (
       <React.Fragment>
@@ -67,7 +67,7 @@ class Page extends Component {
         <div className='page-container'>
           <PageTitle text={page.title} />
           <PageInfo
-            avatar={avatar}
+            avatar={fakeImg}
             firstName={firstName}
             lastName={lastName}
             date={page.created ? page.created.date : ''}
