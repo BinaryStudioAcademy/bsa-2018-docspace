@@ -5,20 +5,42 @@ import PageHeader from './pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import Comments from 'src/components/comments/comments'
 import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
+import CommentsList from 'src/components/commentsList'
+import { AddComment } from 'src/components/comments/addComment'
+
+import * as commentsActions from './commentsLogic/commentsActions'
+
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
+import '../comments//comments/comments.css'
 
 class Page extends Component {
+  constructor (props) {
+    super(props)
+    this.addNewComment = this.addNewComment.bind(this)
+    this.deleteComment = this.deleteComment.bind(this)
+    this.editComment = this.editComment.bind(this)
+  }
   componentDidMount () {
     this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+  }
+  addNewComment (obj) {
+    this.props.addComment(obj, this.props.page)
+  }
+
+  editComment (obj) {
+    this.props.editCommentRequest(obj, this.props.page)
+  }
+
+  deleteComment (obj) {
+    this.props.deleteCommentRequest(obj.target.props.comment, this.props.page)
   }
 
   handleEditPageClick = () => {
@@ -26,23 +48,50 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
   }
 
+  handleDeletePage = () => {
+    console.log('deleting')
+    this.props.actions.deletePageRequest(this.props.page)
+  }
+
   render () {
     if (!this.props.page) return null
-    const { avatar, firstName, lastName } = this.props.user
+    const { firstName, lastName, _id } = this.props.user
     const { page, t, space } = this.props
     return (
       <React.Fragment>
-        <PageHeader space={space} t={t} handleEditPageClick={this.handleEditPageClick} />
+        <PageHeader
+          space={space}
+          t={t}
+          handleEditPageClick={this.handleEditPageClick}
+          handleDeletePage={this.handleDeletePage}
+        />
         <div className='page-container'>
           <PageTitle text={page.title} />
           <PageInfo
-            avatar={avatar}
+            avatar={fakeImg}
             firstName={firstName}
             lastName={lastName}
             date={page.created ? page.created.date : ''}
           />
           <PageContent content={page.content} />
-          <Comments t={t} />
+          <div className='comments-section'>
+            {this.props.page.commentsArr.length
+              ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+              : <h2>{t('add_comments')}</h2>
+            }
+            <CommentsList
+              comments={this.props.page.commentsArr}
+              deleteComment={this.deleteComment}
+              editComment={this.editComment}
+            />
+            <AddComment
+              firstName={firstName}
+              lastName={lastName}
+              addNewComment={this.addNewComment}
+              userId={_id}
+              t={t}
+            />
+          </div>
         </div>
       </React.Fragment>
     )
@@ -53,13 +102,17 @@ Page.propTypes = {
   page: PropTypes.shape({
     title: PropTypes.string,
     created: PropTypes.object,
-    content: PropTypes.string
+    content: PropTypes.string,
+    commentsArr: PropTypes.array
   }),
 
   user: PropTypes.object,
   t: PropTypes.func,
   actions: PropTypes.object,
   match: PropTypes.object,
+  addComment: PropTypes.func,
+  deleteCommentRequest: PropTypes.func,
+  editCommentRequest: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object
 }
@@ -75,14 +128,16 @@ Page.defaultProps = {
 
   user: {
     avatar: fakeImg,
-    firstName: 'Fake',
-    lastName: 'User'
+    firstName: 'Daryna',
+    lastName: 'Gavrylenko'
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
+    user: state.verification.user,
+    comments: state.comments,
     space: spaceById(state)
   }
 }
@@ -91,9 +146,12 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest
+        getPageByIdRequest, deletePageRequest
       }
-      , dispatch)
+      , dispatch),
+    addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
+    deleteCommentRequest: bindActionCreators(commentsActions.deleteCommentRequest, dispatch),
+    editCommentRequest: bindActionCreators(commentsActions.editCommentRequest, dispatch)
   }
 }
 

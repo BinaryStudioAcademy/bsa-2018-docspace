@@ -100,8 +100,11 @@ class CreatePageModal extends Component {
            <span>
                 Choose a space
            </span>
-           <select name='' onChange={({target}) => this.handleSelectSpace(target.value)}>
-             <option value='' selected disabled hidden>Choose here</option>
+           <select
+             onChange={({target}) => this.handleSelectSpace(target.value)}
+             defaultValue='none'
+           >
+             <option value='none' disabled hidden>Choose here</option>
              {
                this.props.spaces.map((space, index) => (
                  <option value={space._id} key={index}>
@@ -152,5 +155,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePageModal)
 CreatePageModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   spaces: PropTypes.arrayOf(PropTypes.object),
-  actions: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 }

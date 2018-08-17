@@ -26,6 +26,10 @@ class GeneralRepository {
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }
+
+  getByArray (arrayOfId) {
+    return this.model.find({ _id: { $in: arrayOfId } })
+  }
 }
 
 module.exports = GeneralRepository

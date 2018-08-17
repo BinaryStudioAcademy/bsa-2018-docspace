@@ -38,7 +38,6 @@ class Like extends Component {
 
   getMessage () {
     const {t, likes} = this.props
-    console.log(likes)
     let message
     if (!likes.length) {
       return t('Be_the_first_who_like_it')

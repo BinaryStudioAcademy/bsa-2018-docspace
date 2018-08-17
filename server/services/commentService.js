@@ -2,8 +2,8 @@ const CommentRepository = require('../repositories/CommentRepository')
 const scheme = require('../models/commentScheme')
 
 module.exports = {
-  findAll: (req, res) => {
-    CommentRepository.getAll()
+  findAllCommentsForPage: (req, res) => {
+    CommentRepository.getByArray(req.body.commentsId)
       .then(comments => {
         res.status(200)
         res.send(comments)
@@ -34,13 +34,16 @@ module.exports = {
       })
   },
   add: (req, res) => {
-    console.log(req.body)
     const Comment = new scheme.Comment({
       userId: req.body.userId,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       text: req.body.text,
       isDeleted: req.body.isDeleted,
       comments: req.body.comments,
-      usersLikes: req.body.usersLikes
+      usersLikes: req.body.usersLikes,
+      createdAt: req.body.createdAt,
+      parentId: req.body.parentId
     })
     Comment.save()
       .then(comment => {
@@ -63,7 +66,7 @@ module.exports = {
           })
         }
         res.status(200)
-        res.send(comment)
+        res.send(comment[0])
       })
       .catch(err => {
         res.status(500).send({

@@ -3,7 +3,7 @@ import * as actionTypes from './pageActionTypes'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
-  all: ['5b6bf22eaf609328f4264ceb'],
+  all: ['5b6c64a3c06a9d7bd00084b8'],
   byId: {
     '5b6bf22eaf609328f4264ceb': {
       title: 'First Test Page',
@@ -30,7 +30,7 @@ function all (state = initialState.all, action) {
       return action.payload.all
 
     case actionTypes.DELETE_PAGE_SUCCESS:
-      return state.filter(id => id !== action.payload.id)
+      return state.filter(id => id !== action.payload._id)
 
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:

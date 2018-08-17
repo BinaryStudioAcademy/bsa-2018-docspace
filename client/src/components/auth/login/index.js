@@ -49,7 +49,8 @@ class Login extends Component {
       return <Redirect to='/signup' />
     }
     if (successful) {
-      return <Redirect to='/' />
+      // only for demo. change to '/'
+      return <Redirect to='/spacedirectory' />
     }
     return (
       <Fragment>
