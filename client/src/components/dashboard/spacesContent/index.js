@@ -8,12 +8,13 @@ import { getSpacesRequest } from '../../space/spaceContainer/logic/spaceActions'
 import './spacesContent.css'
 import logo from './space-logo.png'
 import { Link } from 'react-router-dom'
+
 class SpacesContent extends Component {
   componentDidMount () {
     this.props.actions.getSpacesRequest()
   }
+
   render () {
-    const userId = '5b6c5d79860b443cd512d7d7'
     const list = this.props.spaces.map((item, index) => {
       const spaceItem = (
         <tr key={index} className='space-item'>
@@ -38,12 +39,15 @@ class SpacesContent extends Component {
       )
 
       if (this.props.activeTab === 'All Spaces') {
-        if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
-          if ((userId === item.ownerId) || ((((item.rights).users).indexOf(userId)) !== -1)) {
-            return spaceItem
-          }
-        }
-      } if (this.props.activeTab === 'Site Spaces') {
+        // Checking permission ?
+        // if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
+        //   if ((userId === item.ownerId) || ((((item.rights).users).indexOf(userId)) !== -1)) {
+        //     return spaceItem
+        //   }
+        // }
+        return spaceItem
+      }
+      if (this.props.activeTab === 'Site Spaces') {
         return spaceItem
       } if (this.props.activeTab === 'Personal Spaces') {
         return spaceItem
@@ -55,31 +59,38 @@ class SpacesContent extends Component {
 
       return null
     })
-    return (<div className={'spaces-content-body'}>
-      <div className={'header-spaces-content'}><h2>{this.props.activeTab}</h2><DashboardInput placeholder='Filter' /></div>
-      <div className={'body-spaces-content'}><table className='table-paces'>
-        <thead className='list-header'>
-          <tr>
-            <td className='column-heading name-heading' colSpan='2'>Space</td>
-            <td className='column-heading desc-heading'>Description</td>
-            <td className='column-heading labels-heading'>Categories</td>
-            <td className='column-heading icon-column-heading' />
-          </tr>
-        </thead>
-        <tbody>
-          {list}
-        </tbody>
-      </table></div>
-    </div>)
+    return (
+      <div className={'spaces-content-body'}>
+        <div className={'header-spaces-content'}>
+          <h2>{this.props.activeTab}</h2>
+          <DashboardInput placeholder='Filter' />
+        </div>
+        <div className={'body-spaces-content'}><table className='table-paces'>
+          <thead className='list-header'>
+            <tr>
+              <td className='column-heading name-heading' colSpan='2'>Space</td>
+              <td className='column-heading desc-heading'>Description</td>
+              <td className='column-heading labels-heading'>Categories</td>
+              <td className='column-heading icon-column-heading' />
+            </tr>
+          </thead>
+          <tbody>
+            {list}
+          </tbody>
+        </table></div>
+      </div>
+    )
   }
 }
-const mapStateToProps = state => {
-  const props = {spaces: allSpaces(state)}
-  return props
-}
+
+const mapStateToProps = state => ({
+  spaces: allSpaces(state)
+})
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({getSpacesRequest}, dispatch)
 })
+
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
   actions: PropTypes.object,

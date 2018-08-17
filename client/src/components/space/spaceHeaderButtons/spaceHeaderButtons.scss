@@ -3,11 +3,13 @@
 .buttons {
   &-container {
     display: flex;
+    align-items: center;
     color: $grayButtons;
   }
 
   &-item{
-    height: 28px;
+    box-sizing: border-box;
+    height: 33px;
     width: 38px;
     font-size: 13px;
     text-align: center;

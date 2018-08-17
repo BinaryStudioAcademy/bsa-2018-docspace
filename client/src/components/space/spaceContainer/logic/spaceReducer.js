@@ -39,9 +39,14 @@ function byId (state = initialState.byId, action) {
     // update target page title in pages list
     case UPDATE_PAGE_SUCCESS: {
       const { _id, spaceId, title } = action.payload
-      let updatedPages = [ action.payload ]
-      if (state[spaceId].pages) {
-        updatedPages = state[spaceId].pages.map(page => page._id === _id ? { ...page, title: title } : page)
+      const newPageForSpace = { _id, title }
+      const pages = state[spaceId].pages
+      let updatedPages = [ newPageForSpace ]
+      if (pages) {
+        // If page in space already exist, we shoul update title for this space, becouse it's was updated maybe
+        if (pages.some((page) => page._id === _id)) {
+          updatedPages = pages.map(page => page._id === _id ? newPageForSpace : page)
+        } else updatedPages = [ newPageForSpace, ...pages ]
       }
 
       return {
