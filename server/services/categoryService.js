@@ -42,11 +42,8 @@ module.exports = {
           category = new scheme.Category({
             name: req.body.name
           })
-          category.spaces.push(req.body.spaceId)
-        } else if (category.spaces.indexOf(req.body.spaceId) !== -1) {
-          return res.status(200).send({message: 'This space already has such category'})
         } else {
-          category.spaces.push(req.body.spaceId)
+          return res.status(200).send({message: 'This category already exist'})
         }
         category.save()
           .then(category => {
