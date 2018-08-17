@@ -14,7 +14,7 @@ function * signupFlow (action) {
     yield localStorage.setItem('token', response.token)
     yield put({ type: actionTypes.SIGNUP_SUCCESS, ...response.user })
     yield put(saveUserInSession(response.user))
-    yield put(push(`/`))
+    yield put(push(`/activity`))
   } catch (error) {
     yield put({ type: actionTypes.SIGNUP_ERROR, error })
   }
