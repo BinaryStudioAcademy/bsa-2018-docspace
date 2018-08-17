@@ -16,14 +16,23 @@ class SpacesContent extends Component {
     const userId = '5b6c5d79860b443cd512d7d7'
     const list = this.props.spaces.map((item, index) => {
       const categories = item.categories.map(category => category.name).join(', ')
-      let spaceItem = <tr key={index} className={'space-item'}>
-        <td className='space-image'>
-          <Link className='link_view' to={`/spaces/${item._id}/overview`}>
-            <img src={logo} alt='' />
-          </Link></td>
-        <td><Link className='space-item-link' to={`/spaces/${item._id}/overview`}>{item.name}</Link></td>
-        <td>{item.description}</td><td>{categories}</td>
-        <td><Link to={`/spaces/${item._id}/settings`}><i title='Space Info' className={'fas fa-info-circle'} /></Link></td></tr>
+      let spaceItem = (
+        <tr key={index} className='space-item'>
+          <td className='space-image'>
+            <Link className='link_view' to={`/spaces/${item._id}/overview`}>
+              <img src={logo} alt='' />
+            </Link>
+          </td>
+          <td>
+            <Link className='space-item-link' to={`/spaces/${item._id}/overview`}>{item.name}</Link>
+          </td>
+          <td className='space-description'>{item.description} This is cool and big descrasfgasgasgasgasgasggggggggggggggsdgasgiption</td>
+          <td>{categories} <a href='#' className='space-label'>my docs</a></td>
+          <td>
+            <Link to={`/spaces/${item._id}/settings`}><i title='Space Info' className={'fas fa-info-circle'} /></Link>
+          </td>
+        </tr>
+      )
       if (this.props.activeTab === 'All Spaces') {
         if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
           if ((userId === item.ownerId) || ((((item.rights).users).indexOf(userId)) !== -1)) {
