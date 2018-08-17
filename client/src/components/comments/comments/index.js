@@ -22,7 +22,6 @@ export class Comments extends Component {
 
   render () {
     const { t } = this.props
-    console.log(this.comments)
     return (
       <React.Fragment>
         <div className='comments-section'>
@@ -30,7 +29,6 @@ export class Comments extends Component {
             ? <h2>{this.state.comments.length} {t('Comments')}</h2>
             : <h2>{t('add_comments')}</h2>
           }
-          {/* <CommentsList comments={this.comments} t={t} /> */}
         </div>
         <AddComment
           firstName='User'

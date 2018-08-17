@@ -43,7 +43,6 @@ function all (state = initialState.all, action) {
 function byId (state = initialState.byId, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
-      console.log(action.payload)
       return { ...state, [action.payload._id]: action.payload }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:

@@ -36,6 +36,14 @@ export class Comment extends Component {
   onLikeComment () {
   }
 
+  transformData () {
+    const time = this.props.comment.createdAt.substr(11, 5)
+    const year = this.props.comment.createdAt.substr(0, 4)
+    const mounth = this.props.comment.createdAt.substr(5, 2)
+    const day = this.props.comment.createdAt.substr(8, 2)
+    return `${time} ${day}.${mounth}.${year}`
+  }
+
   render () {
     return (
       this.state.editMode
@@ -63,6 +71,7 @@ export class Comment extends Component {
               onDeleteComment={this.onDeleteComment}
               onLikeComment={this.onLikeComment}
               editComment={this.props.editComment}
+              creationDate={this.transformData()}
               t={this.props.t}
             />
           </div>

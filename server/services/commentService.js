@@ -34,7 +34,6 @@ module.exports = {
       })
   },
   add: (req, res) => {
-    console.log(req.body)
     const Comment = new scheme.Comment({
       userId: req.body.userId,
       firstName: req.body.firstName,
@@ -49,7 +48,6 @@ module.exports = {
     Comment.save()
       .then(comment => {
         res.status(200)
-        console.log(comment)
         res.send(comment)
       })
       .catch(err => {

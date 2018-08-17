@@ -19,6 +19,7 @@ import { withRouter } from 'react-router-dom'
 
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
+import '../comments//comments/comments.css'
 
 class Page extends Component {
   constructor (props) {
@@ -73,18 +74,24 @@ class Page extends Component {
             date={page.created ? page.created.date : ''}
           />
           <PageContent content={page.content} />
-          <CommentsList
-            comments={this.props.page.commentsArr}
-            deleteComment={this.deleteComment}
-            editComment={this.editComment}
-          />
-          <AddComment
-            firstName={firstName}
-            lastName={lastName}
-            addNewComment={this.addNewComment}
-            userId={_id}
-            t={t}
-          />
+          <div className='comments-section'>
+            {this.props.page.commentsArr.length
+              ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+              : <h2>{t('add_comments')}</h2>
+            }
+            <CommentsList
+              comments={this.props.page.commentsArr}
+              deleteComment={this.deleteComment}
+              editComment={this.editComment}
+            />
+            <AddComment
+              firstName={firstName}
+              lastName={lastName}
+              addNewComment={this.addNewComment}
+              userId={_id}
+              t={t}
+            />
+          </div>
         </div>
       </React.Fragment>
     )

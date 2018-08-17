@@ -38,7 +38,6 @@ function * editComment (action) {
 function * deleteComment (action) {
   try {
     yield commentService.deleteComment(action.payload.comment._id)
-    // const newComments = [...action.payload.page.commentsArr]
     const commentsRemoved = action.payload.page.comments.filter(_id => _id !== action.payload.comment._id)
     action.payload.page.comments = commentsRemoved
     yield put(pageAction.updatePageRequest(action.payload.page))

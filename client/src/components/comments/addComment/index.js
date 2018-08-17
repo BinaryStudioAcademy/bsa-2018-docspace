@@ -26,8 +26,8 @@ export class AddComment extends Component {
       this.setState({
         text: ''
       })
-      this.props.editComment
-        ? this.props.editComment && this.props.editComment({
+      if (this.props.onEditComment) {
+        this.props.editComment && this.props.editComment({
           userId: this.props.userId,
           firstName: this.props.firstName,
           lastName: this.props.lastName,
@@ -37,7 +37,9 @@ export class AddComment extends Component {
           parentId: null,
           _id: this.props._id
         })
-        : this.props.addNewComment && this.props.addNewComment({
+        this.props.onEditComment()
+      } else {
+        this.props.addNewComment && this.props.addNewComment({
           userId: this.props.userId,
           firstName: this.props.firstName,
           lastName: this.props.lastName,
@@ -46,6 +48,7 @@ export class AddComment extends Component {
           isDeleted: false,
           parentId: null
         })
+      }
     }
   }
 

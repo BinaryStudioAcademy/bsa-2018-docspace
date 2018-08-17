@@ -61,12 +61,10 @@ function * getPage (action) {
   try {
     const pages = yield select(pagesById)
     if (pages[action.payload]) {
-      console.log(pages)
       yield put(actions.cancelPageByIdRequst())
       return
     }
     const page = yield PageService.getPage(action.payload)
-    console.log(page)
     yield commentsActions.allCommentsFetched(page.commentsArr)
     yield put(actions.getPageByIdSuccess(page))
   } catch (e) {

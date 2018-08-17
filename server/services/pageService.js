@@ -43,7 +43,6 @@ module.exports = {
       .then(page => {
         SpaceRepository.addPageToSpace(page)
           .then((space) => {
-            console.log(space)
             return res.json(page)
           })
           .catch(err => {
