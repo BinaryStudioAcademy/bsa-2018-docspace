@@ -47,7 +47,7 @@ class EditSpaceDetailsForm extends Component {
   }
 
   render () {
-    const {name, description, categories, homePage, pages} = this.state
+    const {name, description, homePage, pages} = this.state
     const { t } = this.props
 
     return (
@@ -78,6 +78,10 @@ class EditSpaceDetailsForm extends Component {
           />
         </div>
 
+        {/*
+
+        TEMPORALLY HIDE FOR DEMO
+
         <div className='field-group'>
           <label>{t('Categories')}</label>
           <input
@@ -86,7 +90,7 @@ class EditSpaceDetailsForm extends Component {
             defaultValue={categories}
             onChange={({target}) => this.handleFieldChange(target)}
           />
-        </div>
+        </div> */}
 
         {/*
         <div className='field-group'>
@@ -133,7 +137,7 @@ EditSpaceDetailsForm.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
-    categories: ['one', 'two', 'label'],
+    categories: PropTypes.array,
     logo: PropTypes.string,
     homePage: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)

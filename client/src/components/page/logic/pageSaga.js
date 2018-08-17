@@ -37,7 +37,7 @@ function * updatePage (action) {
     const target = action.payload
     const updated = yield PageService.updatePage(target)
     yield put(actions.updatePageSuccess(updated))
-    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}/`))
+    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
   } catch (e) {
     console.log(e)
     yield put(actions.updatePageError())
@@ -46,8 +46,9 @@ function * updatePage (action) {
 
 function * deletePage (action) {
   try {
-    yield PageService.deletePage(action.payload.id)
-    yield put(actions.deletePageSuccess(action.payload.id))
+    yield PageService.deletePage(action.payload)
+    yield put(actions.deletePageSuccess(action.payload))
+    yield put(push(`/spaces/${action.payload.spaceId}/overview`))
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())

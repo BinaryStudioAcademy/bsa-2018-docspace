@@ -12,17 +12,18 @@ class People extends Component {
   }
   render () {
     return (
-      <div className={'dashboard__container'} >
-        <div className={'dashboard__content__spaces'}>
-          <div className={'people__header'}>
-            <h2>People Directory</h2>
+      <div className='dashboard-spaces'>
+        <div className='spaces-header'>
+          <h1>People Directory</h1>
+        </div>
+        <div className='spaces-body'>
+          <div className='spaces-sidebar'>
+            <SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} />
           </div>
-          <div className={'spaces__body'}>
-            <div className={'spaces__sidebar'}><SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} /></div>
-            <div />
-          </div>
+          <div />
         </div>
       </div>
+
     )
   }
 }

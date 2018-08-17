@@ -84,7 +84,7 @@ class CreatePageModal extends Component {
           onClick={this.handlecreateClick}
           disabled={disableNextButton}
         >
-           create
+           Create
         </button>
         <button onClick={this.props.closeModal}>
            Close
@@ -152,5 +152,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePageModal)
 CreatePageModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   spaces: PropTypes.arrayOf(PropTypes.object),
-  actions: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 }

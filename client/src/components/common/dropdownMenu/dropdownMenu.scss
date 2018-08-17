@@ -1,6 +1,5 @@
 .dropdown-menu-itemList {
-  top: 0px;
-  left: 0px;
+  left: 5%;
   position: fixed;
   background-color: #fff;
   display: flex;
@@ -10,6 +9,8 @@
   border-radius: 3px;
   overflow: auto;
   padding: 4px 0px;
+  z-index: 1;
+  box-shadow: 4px 1px 17px 0px #00000029;
   > .dropdown-menu-item {
     align-self: center;
     color: #172b4d;

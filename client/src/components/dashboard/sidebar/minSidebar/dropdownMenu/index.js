@@ -6,7 +6,8 @@ import './dropdownMenu.css'
 
 export default class DropdownMenu extends Component {
   state = {
-    isOpened: false
+    isOpened: false,
+    redirectToLogin: false
   }
 
   componentWillUnmount () {

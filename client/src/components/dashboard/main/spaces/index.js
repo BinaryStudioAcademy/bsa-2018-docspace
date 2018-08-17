@@ -1,16 +1,16 @@
 import React from 'react'
-import './spaces.css'
-import Button from '../../button'
 import DashboardSpacesBody from '../../spacesBody'
+import CreateSpaceButton from 'src/components/common/createSpaceButton'
+
+import './spaces.css'
 
 const Spaces = () => (
-  <div className={'dashboard__container'} >
-    <div className={'dashboard__content__spaces'}>
-      <div className={'spaces__header'}>
-        <h2>Space Directory</h2><Button content='Create Space' />
-      </div>
-      <DashboardSpacesBody />
+  <div className={'dashboard-spaces'}>
+    <div className={'spaces-header'}>
+      <h1>Space Directory</h1>
+      <CreateSpaceButton />
     </div>
+    <DashboardSpacesBody />
   </div>
 )
 
