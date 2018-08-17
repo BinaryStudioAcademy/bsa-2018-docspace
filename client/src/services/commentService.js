@@ -1,0 +1,37 @@
+import { callWebApi } from 'src/helpers/requestHelper'
+
+class CommentService {
+    getComments = (commentsId) => {
+      const args = {endpoint: '/api/comments/get', method: 'POST', body: JSON.stringify(commentsId)}
+      const apiResult = callWebApi(args)
+        .then(res => res.json())
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
+
+    createComment = (comment) => {
+      const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify(comment)}
+      const apiResult = callWebApi(args)
+        .then(res => res.json())
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
+
+    editComment = (id, comment) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify(comment)}
+      const apiResult = callWebApi(args)
+        .then(res => res.json())
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
+
+    deleteComment = (id) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE'}
+      const apiResult = callWebApi(args)
+        .then(res => res.json())
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
+}
+
+export const commentService = new CommentService()

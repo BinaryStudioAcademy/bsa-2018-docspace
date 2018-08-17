@@ -5,6 +5,7 @@ import PageService from 'src/services/pageService'
 import { normalize } from 'normalizr'
 import { pagesArray } from './pagesNormalizerSchema'
 import { push } from 'connected-react-router'
+import * as commentsActions from '../commentsLogic/commentsActions'
 
 function * getPages (action) {
   try {
@@ -64,6 +65,7 @@ function * getPage (action) {
       return
     }
     const page = yield PageService.getPage(action.payload)
+    yield commentsActions.allCommentsFetched(page.commentsArr)
     yield put(actions.getPageByIdSuccess(page))
   } catch (e) {
     yield put(actions.getPageByIdError())
@@ -75,7 +77,6 @@ function * getPage (action) {
 // return store with non-unique value, so we can cancel second saga via memoazing last payload
 const skipConsecutiveEqualPayloads = desiredType => {
   let lastPayload
-
   return ({ type, payload }) => {
     payload = JSON.stringify(payload)
     if (type !== desiredType || payload === lastPayload) {

@@ -35,7 +35,8 @@
     .edit-space-details-form .avatar-field label {
       margin-top: 0; }
     .edit-space-details-form .avatar-field img {
-      margin-left: 1.2rem; }
+      margin-left: 1.2rem;
+      margin-right: 0.5rem; }
   .edit-space-details-form .btn-group {
     display: flex;
     margin-top: 0.7rem;
@@ -50,7 +51,7 @@
       cursor: pointer;
       display: inline-block;
       height: 2.14285714em;
-      line-height: 1.42857143;
+      vertical-align: middle;
       padding: 4px 10px;
       text-decoration: none;
       vertical-align: baseline;

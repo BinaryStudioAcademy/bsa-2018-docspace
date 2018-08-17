@@ -18,12 +18,12 @@ module.exports = {
   findOne: (req, res) => {
     PageRepository.getById(req.params.id)
       .then(page => {
-        if (!page) {
+        if (!page[0]) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
           })
         }
-        res.send(page)
+        res.send(page[0])
       }).catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {
@@ -43,7 +43,6 @@ module.exports = {
       .then(page => {
         SpaceRepository.addPageToSpace(page)
           .then((space) => {
-            console.log(space)
             return res.json(page)
           })
           .catch(err => {
@@ -66,7 +65,7 @@ module.exports = {
             message: 'page not found with id ' + req.params.id
           })
         }
-        res.send(page)
+        res.send(page[0])
       }).catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {
