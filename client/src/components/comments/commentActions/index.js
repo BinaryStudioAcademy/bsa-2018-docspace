@@ -33,6 +33,7 @@ CommentActions.propTypes = {
   onEditComment: PropTypes.func,
   onDeleteComment: PropTypes.func,
   onLikeComment: PropTypes.func,
+  creationDate: PropTypes.string,
   t: PropTypes.func
 }
 export default translate('translations')(CommentActions)

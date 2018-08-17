@@ -100,8 +100,11 @@ class CreatePageModal extends Component {
            <span>
                 Choose a space
            </span>
-           <select name='' onChange={({target}) => this.handleSelectSpace(target.value)}>
-             <option value='' selected disabled hidden>Choose here</option>
+           <select
+             onChange={({target}) => this.handleSelectSpace(target.value)}
+             defaultValue='none'
+           >
+             <option value='none' disabled hidden>Choose here</option>
              {
                this.props.spaces.map((space, index) => (
                  <option value={space._id} key={index}>
