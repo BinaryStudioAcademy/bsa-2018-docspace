@@ -1,6 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import * as actionTypes from './signupActionTypes'
+import { push } from 'connected-react-router'
 import { signupService } from '../../../../services/signupService'
+import { saveUserInSession } from 'src/components/auth/verification/logic/verificationActions'
 
 function * signupFlow (action) {
   try {
@@ -9,7 +11,10 @@ function * signupFlow (action) {
     if (response.hasOwnProperty('error')) {
       throw new Error(response.error)
     }
-    yield put({ type: actionTypes.SIGNUP_SUCCESS, response })
+    yield localStorage.setItem('token', response.token)
+    yield put({ type: actionTypes.SIGNUP_SUCCESS, ...response.user })
+    yield put(saveUserInSession(response.user))
+    yield put(push(`/spacedirectory`))
   } catch (error) {
     yield put({ type: actionTypes.SIGNUP_ERROR, error })
   }
