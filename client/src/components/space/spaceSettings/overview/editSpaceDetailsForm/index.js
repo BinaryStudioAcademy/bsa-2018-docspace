@@ -106,8 +106,11 @@ class EditSpaceDetailsForm extends Component {
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
           <label>Home page</label>
-          <select name='homePageId' onChange={({target}) => this.handleFieldChange(target)}>
-            <option value='' selected disabled hidden>{homePage ? homePage.title : 'None'}</option>
+          <select name='homePageId'
+            onChange={({target}) => this.handleFieldChange(target)}
+            defaultValue={homePage ? homePage._id : 'none'}
+          >
+            <option value='none' disabled hidden> None </option>
             {
               pages.map((page, index) => (
                 <option value={page._id} key={index}>
@@ -139,7 +142,7 @@ EditSpaceDetailsForm.propTypes = {
     description: PropTypes.string,
     categories: PropTypes.array,
     logo: PropTypes.string,
-    homePage: PropTypes.string,
+    homePage: PropTypes.object,
     pages: PropTypes.arrayOf(PropTypes.object)
   })
 }
@@ -150,7 +153,6 @@ EditSpaceDetailsForm.defaultProps = {
     description: 'lore ipsum',
     categories: ['one', 'two', 'label'],
     logo: '',
-    homePage: 'my home page',
     pages: [{name: 'first page'}, {name: 'my home page'}]
   }
 }
