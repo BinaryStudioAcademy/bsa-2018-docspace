@@ -5,15 +5,21 @@ import SpacesContent from '../spacesContent'
 const sideBarTabs = ['All Spaces', 'Site Spaces', 'Personal Spaces', 'My Spaces', 'Archived Spaces']
 class DashboardSpacesBody extends Component {
   state = {
-    active: ''
+    active: 'All Spaces'
   }
-  updateData = (tab) => {
+  handleClickNavTab = (tab) => {
     this.setState({ active: tab })
   }
   render () {
     return (
       <div className={'spaces-body'}>
-        <div className={'spaces-sidebar'}><SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} /> </div>
+        <div className={'spaces-sidebar'}>
+          <SpacesSideBar
+            menuTabs={sideBarTabs}
+            handleClickNavTab={this.handleClickNavTab}
+            activeTab={this.state.active}
+          />
+        </div>
         <SpacesContent activeTab={this.state.active} />
       </div>
     )
