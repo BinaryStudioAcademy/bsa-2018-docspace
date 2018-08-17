@@ -49,7 +49,7 @@ class Login extends Component {
       return <Redirect to='/signup' />
     }
     if (successful) {
-      return <Redirect to='/' />
+      return <Redirect to='/activity' />
     }
     return (
       <Fragment>
