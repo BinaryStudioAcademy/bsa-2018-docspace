@@ -5,7 +5,7 @@ module.exports = {
   findAllCommentsForPage: (req, res) => {
     CommentRepository.getByArray(req.body.commentsId)
       .then(comments => {
-        // res.status(200)
+        res.status(200)
         res.send(comments)
       })
       .catch(err => {
@@ -23,7 +23,7 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        // res.status(200)
+        res.status(200)
         res.send(comment)
       })
       .catch(err => {
@@ -48,7 +48,7 @@ module.exports = {
     })
     Comment.save()
       .then(comment => {
-        // res.status(200)
+        res.status(200)
         console.log(comment)
         res.send(comment)
       })
@@ -67,7 +67,7 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        // res.status(200)
+        res.status(200)
         res.send(comment[0])
       })
       .catch(err => {

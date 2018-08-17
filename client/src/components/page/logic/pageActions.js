@@ -63,9 +63,11 @@ export const updatePageError = () => ({
 })
 
 // DELETE
-export const deletePageRequest = (id) => ({
+export const deletePageRequest = (page) => ({
   type: actionTypes.DELETE_PAGE_REQUEST,
-  payload: { id }
+  payload: {
+    page: page
+  }
 })
 
 export const deletePageSuccess = (deletedId) => ({

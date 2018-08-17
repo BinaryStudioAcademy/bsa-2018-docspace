@@ -22,6 +22,8 @@ class Page extends Component {
   constructor (props) {
     super(props)
     this.addNewComment = this.addNewComment.bind(this)
+    this.deleteComment = this.deleteComment.bind(this)
+    this.editComment = this.editComment.bind(this)
   }
   componentDidMount () {
     this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
@@ -31,17 +33,17 @@ class Page extends Component {
     this.props.addComment(obj, this.props.page)
   }
 
-  deleteComment () {
-    console.log('delete comment')
-    // console.log(e)
+  editComment (obj) {
+    this.props.editCommentRequest(obj, this.props.page)
   }
 
+  deleteComment (obj) {
+    this.props.deleteCommentRequest(obj.target.props.comment, this.props.page)
+  }
   render () {
     if (!this.props.page) return null
     const { firstName, lastName, _id } = this.props.user
     const {page, t} = this.props
-    console.log(this.props.page.commentsArr)
-    // const comments = this.props.comments!==[] ? this.props.comments : this.props.page.commentsArr
     return (
       <div className='page-container'>
         <PageTitle text={page.title} />
@@ -52,7 +54,11 @@ class Page extends Component {
           date={page.created ? page.created.date : ''}
         />
         <PageContent content={page.content} />
-        <CommentsList comments={this.props.page.commentsArr} deleteComment={this.props.deleteComment} />
+        <CommentsList
+          comments={this.props.page.commentsArr}
+          deleteComment={this.deleteComment}
+          editComment={this.editComment}
+        />
         <AddComment
           firstName={firstName}
           lastName={lastName}
@@ -78,7 +84,8 @@ Page.propTypes = {
   actions: PropTypes.object,
   match: PropTypes.object,
   addComment: PropTypes.func,
-  deleteComment: PropTypes.func
+  deleteCommentRequest: PropTypes.func,
+  editCommentRequest: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -98,7 +105,6 @@ Page.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.comments)
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
@@ -114,8 +120,8 @@ function mapDispatchToProps (dispatch) {
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
-    deleteComment: bindActionCreators(commentsActions.deleteCommentRequest, dispatch)
-
+    deleteCommentRequest: bindActionCreators(commentsActions.deleteCommentRequest, dispatch),
+    editCommentRequest: bindActionCreators(commentsActions.editCommentRequest, dispatch)
   }
 }
 

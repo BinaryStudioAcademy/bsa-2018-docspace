@@ -17,23 +17,21 @@ class CommentService {
       return apiResult
     }
 
-    editComment = (comment) => (
-      fetch(`/api/comments/${comment._id}`, {
-        method: 'PUT',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(comment)
-      })
+    editComment = (id, comment) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify(comment)}
+      const apiResult = callWebApi(args)
         .then(res => res.json())
-        .then(updatedPage => updatedPage)
-        .catch(err => console.log(`Can't edit comment: ${err}`))
-    )
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
 
-    deletePage = (id) => (
-      fetch(`/api/comments/${id}`, { method: 'DELETE' })
+    deleteComment = (id) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE'}
+      const apiResult = callWebApi(args)
         .then(res => res.json())
-        .then(data => data)
-        .catch(err => console.log(`Can't delete comment: ${err}`))
-    )
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
 }
 
 export const commentService = new CommentService()

@@ -11,7 +11,7 @@ export class AddComment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      text: '',
+      text: this.props.text || '',
       isActiveTextArea: false
     }
 
@@ -26,15 +26,26 @@ export class AddComment extends Component {
       this.setState({
         text: ''
       })
-      this.props.addNewComment && this.props.addNewComment({
-        userId: this.props.userId,
-        firstName: this.props.firstName,
-        lastName: this.props.lastName,
-        text: this.state.text,
-        createdAt: new Date(),
-        isDeleted: false,
-        parentId: null
-      })
+      this.props.editComment
+        ? this.props.editComment && this.props.editComment({
+          userId: this.props.userId,
+          firstName: this.props.firstName,
+          lastName: this.props.lastName,
+          text: this.state.text,
+          createdAt: new Date(),
+          isDeleted: false,
+          parentId: null,
+          _id: this.props._id
+        })
+        : this.props.addNewComment && this.props.addNewComment({
+          userId: this.props.userId,
+          firstName: this.props.firstName,
+          lastName: this.props.lastName,
+          text: this.state.text,
+          createdAt: new Date(),
+          isDeleted: false,
+          parentId: null
+        })
     }
   }
 
@@ -90,7 +101,7 @@ export class AddComment extends Component {
               name='comment-body-cancel'
               inputType='button'
               value={t('Cancel')}
-              onClick={this.cancelSendText}
+              onClick={this.props.onEditComment || this.cancelSendText}
             />
           </div>
           }
@@ -105,6 +116,10 @@ AddComment.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   userId: PropTypes.string,
-  t: PropTypes.func
+  t: PropTypes.func,
+  editComment: PropTypes.func,
+  onEditComment: PropTypes.func,
+  text: PropTypes.string,
+  _id: PropTypes.string
 }
 export default translate('translations')(AddComment)

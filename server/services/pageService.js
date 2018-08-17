@@ -66,7 +66,7 @@ module.exports = {
             message: 'page not found with id ' + req.params.id
           })
         }
-        res.send(page)
+        res.send(page[0])
       }).catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {

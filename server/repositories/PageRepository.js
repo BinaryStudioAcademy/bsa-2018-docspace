@@ -19,11 +19,10 @@ class PageRepository extends GeneralRepository {
       }
     ])
   }
-  // update (id, data) {
-  //   console.log(id, data)
-  //   return super.update(id, data)
-  //     .then(() => this.getById(id))
-  // }
+  update (id, data) {
+    return super.update(id, data)
+      .then(() => this.getById(id))
+  }
 }
 
 module.exports = new PageRepository(PageModel)

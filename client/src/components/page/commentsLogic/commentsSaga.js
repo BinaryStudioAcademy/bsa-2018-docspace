@@ -7,8 +7,6 @@ import * as pageAction from '../logic/pageActions'
 function * getComments (action) {
   try {
     const comments = yield commentService.getComments(action.payload)
-    console.log('its saga')
-    console.log(comments)
     yield put(actions.allCommentsFetched(comments))
   } catch (e) {
     yield put(actions.getAllCommentsFailure())
@@ -19,8 +17,9 @@ function * createComment (action) {
   try {
     const comment = yield commentService.createComment(action.payload.comment)
     action.payload.page.comments.push(comment._id)
-    action.payload.page.commentsArr.push(comment)
-    yield put(actions.addCommentSuccessfully(action.payload.page.commentsArr))
+    const newComments = [...action.payload.page.commentsArr]
+    newComments.push(comment)
+    yield put(actions.addCommentSuccessfully(newComments))
     yield put(pageAction.updatePageRequest(action.payload.page))
   } catch (e) {
     yield put(actions.addCommentFailure())
@@ -29,8 +28,8 @@ function * createComment (action) {
 
 function * editComment (action) {
   try {
-    const comments = yield commentService.editComment(action.payload.commentId, action.payload.comment)
-    console.log(comments)
+    yield commentService.editComment(action.payload.comment._id, action.payload.comment)
+    yield put(pageAction.updatePageRequest(action.payload.page))
   } catch (e) {
     yield put(actions.editCommentFailure())
   }
@@ -38,8 +37,11 @@ function * editComment (action) {
 
 function * deleteComment (action) {
   try {
-    const comments = yield commentService.deleteComment(action.payload.commentId)
-    console.log(comments)
+    yield commentService.deleteComment(action.payload.comment._id)
+    // const newComments = [...action.payload.page.commentsArr]
+    const commentsRemoved = action.payload.page.comments.filter(_id => _id !== action.payload.comment._id)
+    action.payload.page.comments = commentsRemoved
+    yield put(pageAction.updatePageRequest(action.payload.page))
   } catch (e) {
     yield put(actions.deleteCommentFailure())
   }

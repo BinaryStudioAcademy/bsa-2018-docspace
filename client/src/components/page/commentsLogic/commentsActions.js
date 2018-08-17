@@ -41,27 +41,28 @@ export const addCommentFailure = () => ({
 })
 
 // EDIT
-export const editCommentRequest = (id, comment) => ({
-  type: commentsActionTypes.CREATE_COMMENT_REQUEST,
+export const editCommentRequest = (comment, page) => ({
+  type: commentsActionTypes.EDIT_COMMENT_REQUEST,
   payload: {
-    commentId: id,
-    comment: comment
+    comment: comment,
+    page: page
   }
 })
 
 export const editCommentSuccessfully = () => ({
-  type: commentsActionTypes.CREATE_COMMENT_SUCCESS
+  type: commentsActionTypes.EDIT_COMMENT_SUCCESS
 })
 
 export const editCommentFailure = () => ({
-  type: commentsActionTypes.CREATE_COMMENT_ERROR
+  type: commentsActionTypes.EDIT_COMMENT_ERROR
 })
 
 // DELETE
-export const deleteCommentRequest = (id) => ({
+export const deleteCommentRequest = (comment, page) => ({
   type: commentsActionTypes.DELETE_COMMENT_REQUEST,
   payload: {
-    commentId: id
+    comment: comment,
+    page: page
   }
 })
 
