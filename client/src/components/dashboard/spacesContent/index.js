@@ -29,7 +29,7 @@ class SpacesContent extends Component {
           <td className='space-description'>{item.description}</td>
           <td>
             {
-              item.categories.map(category => <a href='#' className='space-label'>{category.name}</a>)
+              item.categories.map(category => <a href='' className='space-label'>{category.name}</a>)
             }
           </td>
           <td>

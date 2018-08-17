@@ -165,6 +165,9 @@ module.exports = {
         if (req.body.newPassword.length === 0 || req.body.newPassword === req.body.password) {
           return res.send({ success: false, message: 'New password is incorrect.' })
         }
+        if (req.body.newPassword.length < 7) {
+          return res.send({ success: false, message: 'Short password, need 7 symbols or more.' })
+        }
         user.comparePassword(req.body.password)
           .then((isMatch) => {
             if (!isMatch) {

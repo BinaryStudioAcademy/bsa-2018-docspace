@@ -132,7 +132,7 @@ class User extends Component {
           </div>
 
           <div className='profile-name'>
-            <h2>{firstName} {lastName}</h2>
+            <h1>{firstName} {lastName}</h1>
           </div>
         </div>
       </div>
@@ -196,20 +196,20 @@ class User extends Component {
         <ul className='recent-work-list-items'>
           <RecentWorkListItem
             src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'i am checking how it works'}
-            nameOfSpace={'Draft'}
+            nameOfItem={'Web application'}
+            nameOfSpace={'DocSpace Project'}
             contributors={''}
           />
           <RecentWorkListItem
             src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'Example'}
-            nameOfSpace={'Draft'}
+            nameOfItem={'Mobile application'}
+            nameOfSpace={'DocSpace Project'}
             contributors={''}
           />
           <RecentWorkListItem
             src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
-            nameOfItem={'Example'}
-            nameOfSpace={'my first blog post'}
+            nameOfItem={'Blog about adding new features'}
+            nameOfSpace={'DocSpace Project'}
             contributors={''}
           />
         </ul>
