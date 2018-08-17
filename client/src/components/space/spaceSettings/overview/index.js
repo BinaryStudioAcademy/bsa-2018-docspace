@@ -17,7 +17,6 @@ class SpaceOverviewTab extends Component {
       showDeleteSpaceModal: false // for the future
     }
   }
-
   handleDeleteSpace = () => {
     this.props.actions.deleteSpaceRequest(this.props.space._id)
   }
