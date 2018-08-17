@@ -59,7 +59,7 @@ class SpaceDetails extends Component {
           <tr>
             <td>{t('Administrators')}</td>
             <td>
-              <span className='link'> Danil </span>
+              <span className='link'>{name}</span>
             </td>
           </tr>
         </tbody>
