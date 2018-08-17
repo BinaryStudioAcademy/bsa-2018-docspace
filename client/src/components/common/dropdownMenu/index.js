@@ -37,7 +37,7 @@ export default class DropdownMenu extends Component {
       </div>
 
       {this.state.isOpened
-        ? (<div className='dropdown-menu-itemList' style={{bottom: `${menuHeight}%`}}>
+        ? (<div className='dropdown-menu-itemList' style={{bottom: `${menuHeight}px`}}>
           {menuItems.map((item, index) => {
             if (item.name === 'LogOut') {
               return <a href='/login' onClick={this.handleLogout} className='dropdown-menu-item' key={index} >{item.name}</a>
