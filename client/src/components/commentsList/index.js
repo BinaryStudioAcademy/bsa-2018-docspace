@@ -5,21 +5,40 @@ import PropTypes from 'prop-types'
 
 import './commentsList.css'
 class CommentsList extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {commentTree: this.getComments(props.comments)}
+  }
+
   sortComments () {
     this.props.comments.sort((a, b) => {
-      return a.date > b.date ? 1 : -1
+      return a.createdAt > b.createdAt ? 1 : -1
     })
   }
-  getComments () {
-    this.sortComments()
-    const tree = getTree(this.props.comments)
-    const flatArray = Array.from(convertTreeToArray(tree, 0))
-    return flatArray
+  getComments (comments) {
+    if (comments) {
+      this.sortComments()
+      const tree = getTree(comments)
+      const flatArray = Array.from(convertTreeToArray(tree, 0))
+      return flatArray
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.comments !== nextProps.comments) {
+      this.setState({commentTree: this.getComments(nextProps.comments)})
+    }
   }
 
   render () {
-    const comments = this.getComments()
-    const commentsList = comments.map(comment => <Comment margin={`${comment.level * 25}px`} comment={comment.item} />)
+    const commentsList = this.state.commentTree.map(comment =>
+      <Comment
+        margin={`${comment.level * 25}px`}
+        comment={comment.item}
+        key={comment.id}
+        deleteComment={this.props.deleteComment}
+        editComment={this.props.editComment}
+      />)
     return (
       <div className='comments-list-wrapper'>
         {commentsList}
@@ -31,5 +50,7 @@ class CommentsList extends Component {
 export default CommentsList
 
 CommentsList.propTypes = {
-  comments: PropTypes.array
+  comments: PropTypes.array,
+  deleteComment: PropTypes.func,
+  editComment: PropTypes.func
 }

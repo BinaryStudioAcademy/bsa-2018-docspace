@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Comment } from 'src/components/comments/singleComment'
 import { AddComment } from 'src/components/comments/addComment'
 import { translate } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -30,9 +29,6 @@ export class Comments extends Component {
             ? <h2>{this.state.comments.length} {t('Comments')}</h2>
             : <h2>{t('add_comments')}</h2>
           }
-          {this.state.comments && this.state.comments.map((comment, index) => (
-            <Comment comment={comment} key={index} t={t} />
-          ))}
         </div>
         <AddComment
           firstName='User'

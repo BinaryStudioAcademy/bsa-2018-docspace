@@ -4,7 +4,7 @@ import { translate } from 'react-i18next'
 
 import './commentActions.css'
 
-export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, onLikeComment, t}) => {
+export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate}) => {
   return (
     <div className='comment-actions-wrapper'>
       <ul className='comment-actions-list'>
@@ -21,7 +21,7 @@ export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, 
           <span className='comment-like' onClick={onLikeComment}>{t('like')}</span>
         </li>
         <li className='comment-actions-item'>
-          <span className='comment-time'>{t('just_a_moment_ago')}</span>
+          <span className='comment-time'>{creationDate}</span>
         </li>
       </ul>
     </div>

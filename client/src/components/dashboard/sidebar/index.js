@@ -8,7 +8,7 @@ import './minSidebar/minSideBar.css'
 import './button/button.css'
 
 const DashboardSidebar = (props) => (
-  <div className='sidebar-blue-schema' >
+  <div showLabels={props.showLabels} className='sidebar-blue-schema' >
     <div className='sidebar-container'>
       {props.isOpened &&
         <div className='sidebar-wrapper'>
