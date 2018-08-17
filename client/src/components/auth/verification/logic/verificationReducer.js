@@ -1,4 +1,5 @@
 import * as actionTypes from './verificationActionTypes'
+import { SIGNUP_SUCCESS } from 'src/components/auth/signup/logic/signupActionTypes'
 
 const initialState = {
   requesting: true,
@@ -32,6 +33,13 @@ export const verificationReducer = (state = initialState, action) => {
         requesting: false,
         isLoggedIn: true,
         user: action.user
+      }
+
+    case SIGNUP_SUCCESS:
+      return {
+        requesting: false,
+        isLoggedIn: true,
+        user: action
       }
 
     default:
