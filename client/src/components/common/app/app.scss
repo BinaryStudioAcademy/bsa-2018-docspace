@@ -1,25 +1,21 @@
-.app__root {
-  text-align: center;
-}
+@import 'globalStyles/variables.scss';
 
-.app__logo {
-  animation: app__logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.app__header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.app__title {
-  font-size: 1.5em;
-}
-
-
-@keyframes app__logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+html, body, #root, .app__root{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  h1 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 400;
+  }
+  a, i {
+    font-size: 14px;
+  }
 }

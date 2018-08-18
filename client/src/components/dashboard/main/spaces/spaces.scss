@@ -1,0 +1,74 @@
+@import 'globalStyles/variables.scss';
+
+.dashboard-spaces {
+  width: 100%;
+  padding: 20px;
+  .spaces-header {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    button.create-space-btn {
+      margin-right: 15px;
+    }
+  }
+  .spaces-body {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    .space-item {
+      img {
+        border-radius: 3px;
+      }
+    }
+    .spaces-sidebar {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #ccc;
+      .active {
+        font-weight: 500;
+        background-color: #e6e6e6;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        li {
+          font-weight: 400;
+          width: 200px;
+          cursor: pointer;
+          padding: 15px 20px;
+          &:hover {
+            background-color: #e6e6e6;
+          }
+          a {
+            color: #3572b0;
+            line-height: 1.14;
+            word-wrap: break-word;
+          }
+        }
+      }
+
+    }
+    .spaces-content-body {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      .header-spaces-content {
+        display: flex;
+        justify-content: space-between;
+      }
+      .body-spaces-content {
+        margin-top: 10px;
+        table {
+          width: 100%;
+          tbody > tr {
+            box-shadow: 0px 0px 0px 0.5px #ccc;
+            padding: 5px 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+

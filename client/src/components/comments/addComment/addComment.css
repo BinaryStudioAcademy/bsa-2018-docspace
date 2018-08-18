@@ -1,0 +1,56 @@
+.addComment {
+  padding-top: 20px;
+  margin-left: 0px;
+  width: 100%;
+  display: flex; }
+  .addComment .comment-body-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto; }
+  .addComment .comment-body-container-textarea {
+    padding: 6px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 42px;
+    color: black;
+    width: 100%; }
+  .addComment .comment-body-manage-buttons {
+    max-width: 100%;
+    display: flex;
+    justify-content: flex-end; }
+  .addComment .comment-body-cancel,
+  .addComment .comment-body-save,
+  .addComment .comment-body-disabled {
+    align-items: baseline;
+    box-sizing: border-box;
+    cursor: default;
+    font-size: inherit;
+    font-style: normal;
+    height: 32px;
+    line-height: 32px;
+    max-width: 100%;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    border-radius: 3px;
+    border-width: 0px;
+    margin: 10px;
+    padding: 0px 8px;
+    text-decoration: none;
+    transition: background 0.1s ease-out; }
+  .addComment .comment-body-save {
+    color: white;
+    background: #0052cc; }
+    .addComment .comment-body-save:hover {
+      cursor: pointer;
+      background: #0065ff; }
+  .addComment .comment-body-disabled {
+    color: white;
+    background: grey; }
+  .addComment .comment-body-cancel {
+    color: #505f79;
+    background: rgba(9, 30, 66, 0.08); }
+    .addComment .comment-body-cancel:hover {
+      cursor: pointer;
+      background: rgba(9, 30, 66, 0.12); }

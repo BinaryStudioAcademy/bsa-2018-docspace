@@ -1,0 +1,28 @@
+@import 'globalStyles/variables.scss';
+
+.space-settings-page{
+  font-size: 14px;
+  
+  & h1{
+    color: #333;
+    font-weight: normal;
+    margin: 0.6rem;
+    text-transform: none;
+  }
+
+  & img {
+    border-radius: 5px;
+  }
+
+  h2.space-settings-page-header{
+    font-weight: normal;
+    font-size: 28px;
+    color:$black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    padding: 25px 30px 30px 50px;
+  }
+}
+

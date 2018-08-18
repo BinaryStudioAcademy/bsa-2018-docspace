@@ -1,0 +1,31 @@
+.dashboard-work {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  padding: 20px;
+  .work-header {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    .work-filter {
+      align-self: center;
+    }
+  }
+  .work-body {
+    ul {
+      display: flex;
+      padding: 0;
+      list-style: none;
+      box-shadow: 0px 3px 0px 0px #0000002e;
+      li {
+        font-weight: 500;
+        padding: 4px 8px;
+        cursor: pointer;
+        &:hover {
+          color: blue;
+        }
+      }
+    }
+  }
+}
