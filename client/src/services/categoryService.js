@@ -27,7 +27,6 @@ class CategoryService {
 
   deleteCategory = (categoryId, spaceId) => {
     const args = { endpoint: `/api/category/${categoryId}`, method: 'DELETE', body: JSON.stringify({spaceId}) }
-    console.log(args)
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))

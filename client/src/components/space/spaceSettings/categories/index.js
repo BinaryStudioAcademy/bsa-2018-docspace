@@ -28,7 +28,6 @@ class CategoriesAddTab extends Component {
 
   handleDeleteCategory = ({ target }) => {
     const categoryToDelete = this.props.space.categories[Number(target.id)]
-    console.log(categoryToDelete._id, this.props.space._id)
     this.props.deleteCategory(categoryToDelete._id, this.props.space._id)
   }
 
@@ -50,8 +49,8 @@ class CategoriesAddTab extends Component {
                 ? categories.map((category, index) =>
                   <li key={index} className='category-label'>
                     <a href=''>{category.name}</a>
-                    <span id={index} className='category-delete-btn' onClick={this.handleDeleteCategory}>
-                      x
+                    <span className='category-delete-btn' onClick={this.handleDeleteCategory}>
+                      <i id={index} className='fas fa-times' />
                     </span>
                   </li>)
                 : null
