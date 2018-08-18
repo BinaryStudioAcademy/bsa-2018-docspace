@@ -8,6 +8,7 @@ class CommentsList extends Component {
   constructor (props) {
     super(props)
     this.state = {commentTree: this.getComments(props.comments)}
+    this.replyComment = this.replyComment.bind(this)
   }
 
   sortComments () {
@@ -30,7 +31,14 @@ class CommentsList extends Component {
     }
   }
 
+  replyComment (obj) {
+    console.log(obj)
+    // this.props.page.commentsArr.push({parentId: obj._id, text: 'TEST REPLY'})
+    console.log(this)
+  }
+
   render () {
+    console.log(this.state.commentTree)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}
@@ -38,6 +46,11 @@ class CommentsList extends Component {
         key={comment.id}
         deleteComment={this.props.deleteComment}
         editComment={this.props.editComment}
+        replyComment={this.replyComment}
+        level={comment.level}
+        addNewComment={this.props.addNewComment}
+        firstName={this.props.firstName}
+        lastName={this.props.lastName}
       />)
     return (
       <div className='comments-list-wrapper'>
@@ -52,5 +65,8 @@ export default CommentsList
 CommentsList.propTypes = {
   comments: PropTypes.array,
   deleteComment: PropTypes.func,
-  editComment: PropTypes.func
+  editComment: PropTypes.func,
+  addNewComment: PropTypes.func,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string
 }

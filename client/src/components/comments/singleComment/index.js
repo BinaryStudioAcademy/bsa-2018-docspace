@@ -12,7 +12,8 @@ export class Comment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      editMode: false
+      editMode: false,
+      replyMode: false
     }
     this.onReplyComment = this.onReplyComment.bind(this)
     this.onEditComment = this.onEditComment.bind(this)
@@ -21,6 +22,11 @@ export class Comment extends Component {
   }
 
   onReplyComment () {
+    this.props.replyComment({target: this.props.comment._id, level: this.props.level})
+    this.setState(prevState => {
+      return { replyMode: !prevState.replyMode }
+    })
+    console.log(this)
   }
 
   onEditComment () {
@@ -45,37 +51,50 @@ export class Comment extends Component {
   }
 
   render () {
+    console.log(this)
     return (
-      this.state.editMode
-        ? <AddComment
-          text={this.props.comment.text}
-          onEditComment={this.onEditComment}
-          editComment={this.props.editComment}
-          firstName={this.props.comment.firstName}
-          lastName={this.props.comment.lastName}
-          userId={this.props.comment.userId}
-          _id={this.props.comment._id}
-        />
-        : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-          <CommentAvatar UserAvatarLink={UserAvatarLink} />
-          <div className='comment-body'>
-            <h4 className='comment-first-last-names'>
-              <a href=''>{this.props.comment.firstName} {this.props.comment.lastName}</a>
-            </h4>
-            <div className='comment-body-content'>
-              <p>{this.props.comment.text}</p>
+      <React.Fragment>
+        {this.state.editMode
+          ? <AddComment
+            text={this.props.comment.text}
+            onEditComment={this.onEditComment}
+            editComment={this.props.editComment}
+            firstName={this.props.comment.firstName}
+            lastName={this.props.comment.lastName}
+            userId={this.props.comment.userId}
+            _id={this.props.comment._id}
+            parentId={this.props.comment.parentId}
+          />
+          : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
+            <CommentAvatar UserAvatarLink={UserAvatarLink} />
+            <div className='comment-body'>
+              <h4 className='comment-first-last-names'>
+                <a href=''>{this.props.comment.firstName} {this.props.comment.lastName}</a>
+              </h4>
+              <div className='comment-body-content'>
+                <p>{this.props.comment.text}</p>
+              </div>
+              <CommentActions
+                onReplyComment={this.onReplyComment}
+                onEditComment={this.onEditComment}
+                onDeleteComment={this.onDeleteComment}
+                onLikeComment={this.onLikeComment}
+                editComment={this.props.editComment}
+                creationDate={this.transformData()}
+                t={this.props.t}
+              />
             </div>
-            <CommentActions
-              onReplyComment={this.onReplyComment}
-              onEditComment={this.onEditComment}
-              onDeleteComment={this.onDeleteComment}
-              onLikeComment={this.onLikeComment}
-              editComment={this.props.editComment}
-              creationDate={this.transformData()}
-              t={this.props.t}
-            />
-          </div>
-        </div>
+          </div>}
+        {this.state.replyMode &&
+        <AddComment
+          parentId={this.props.comment._id}
+          style={{'marginLeft': `${(this.props.level + 1) * 25}px`}}
+          addNewComment={this.props.addNewComment}
+          ReplyComment={this.onReplyComment}
+          firstName={this.props.firstName}
+          lastName={this.props.lastName}
+        />}
+      </React.Fragment>
     )
   }
 }
@@ -85,6 +104,12 @@ Comment.propTypes = {
   margin: PropTypes.string,
   t: PropTypes.func,
   deleteComment: PropTypes.func,
-  editComment: PropTypes.func
+  editComment: PropTypes.func,
+  replyComment: PropTypes.func,
+  addNewComment: PropTypes.func,
+  level: PropTypes.number,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string
+
 }
 export default translate('translations')(Comment)
