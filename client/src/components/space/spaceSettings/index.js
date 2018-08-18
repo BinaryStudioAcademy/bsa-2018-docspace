@@ -9,6 +9,7 @@ import SpaceSettingsTab from './settings'
 import NavBar from './navBar'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import './spaceSettings.css'
+import CategoriesAddTab from './categories'
 
 // will be connected to store. Fetch for space with this name in didMount
 class SpaceSettings extends Component {
@@ -18,7 +19,8 @@ class SpaceSettings extends Component {
       activeTab: 'overview',
       renderByActiveTab: {
         'overview': this.renderOverviewTab,
-        'settings': this.renderSettingsTab
+        'settings': this.renderSettingsTab,
+        'categories': this.renderCategoriesTab
       }
     }
   }
@@ -29,6 +31,10 @@ class SpaceSettings extends Component {
 
   renderSettingsTab = () => {
     return <SpaceSettingsTab />
+  }
+
+  renderCategoriesTab = () => {
+    return <CategoriesAddTab createCategory={this.props.categoryCreate} deleteCategory={this.props.categoryDelete} space={this.props.space} />
   }
 
   handleNavLinkCLick = (tabName) => {
@@ -55,6 +61,8 @@ class SpaceSettings extends Component {
 
 SpaceSettings.propTypes = {
   updateSpace: PropTypes.func.isRequired,
+  categoryCreate: PropTypes.func.isRequired,
+  categoryDelete: PropTypes.func.isRequired,
   space: PropTypes.object
 }
 
@@ -73,7 +81,10 @@ const mapStateToprops = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch)
+    updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch),
+    categoryCreate: bindActionCreators(actions.createCategoryRequest, dispatch),
+    categoryDelete: bindActionCreators(actions.deleteCategoryRequest, dispatch)
+
   }
 }
 

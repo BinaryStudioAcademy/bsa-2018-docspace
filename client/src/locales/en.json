@@ -1,5 +1,5 @@
 {
-    "translations": {
+  "translations": {
     "Activity": "Activity",
     "Your_work": "Your work",
     "Spaces": "Spaces",
@@ -45,6 +45,7 @@
     "Name": "Name",
     "Description": "Description",
     "Categories": "Categories",
+    "Categories_description": "Space Categories will appear inside the categories tab on your dashboard and as tabs in the space directory. They can be used to group together related spaces.",
     "Home_page": "Home page",
     "Save": "Save",
     "Cancel": "Cancel",
@@ -52,6 +53,8 @@
     "Key": "Key",
     "Created_by": "Created by",
     "Administrators": "Administrators",
-    "Space_details": "Space Details"
-    }
+    "Space_details": "Space Details",
+    "None": "None",
+    "Done": "Done"
   }
+}
