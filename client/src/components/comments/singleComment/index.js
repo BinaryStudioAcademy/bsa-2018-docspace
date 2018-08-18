@@ -26,7 +26,6 @@ export class Comment extends Component {
     this.setState(prevState => {
       return { replyMode: !prevState.replyMode }
     })
-    console.log(this)
   }
 
   onEditComment () {
@@ -51,7 +50,6 @@ export class Comment extends Component {
   }
 
   render () {
-    console.log(this)
     return (
       <React.Fragment>
         {this.state.editMode

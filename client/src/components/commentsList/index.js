@@ -31,14 +31,7 @@ class CommentsList extends Component {
     }
   }
 
-  replyComment (obj) {
-    console.log(obj)
-    // this.props.page.commentsArr.push({parentId: obj._id, text: 'TEST REPLY'})
-    console.log(this)
-  }
-
   render () {
-    console.log(this.state.commentTree)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}

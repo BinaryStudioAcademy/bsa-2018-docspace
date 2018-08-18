@@ -26,7 +26,6 @@ export class AddComment extends Component {
       this.setState({
         text: ''
       })
-      console.log(this.props)
       if (this.props.onEditComment) {
         this.props.editComment && this.props.editComment({
           userId: this.props.userId,
@@ -73,7 +72,6 @@ export class AddComment extends Component {
 
   render () {
     const { t } = this.props
-    console.log(this.props.style)
     return (
       <div className='addComment' style={this.props.style || null}>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
