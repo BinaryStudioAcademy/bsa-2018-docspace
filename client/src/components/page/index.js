@@ -83,6 +83,9 @@ class Page extends Component {
               comments={this.props.page.commentsArr}
               deleteComment={this.deleteComment}
               editComment={this.editComment}
+              addNewComment={this.addNewComment}
+              firstName={firstName}
+              lastName={lastName}
             />
             <AddComment
               firstName={firstName}
@@ -137,7 +140,6 @@ const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
-    comments: state.comments,
     space: spaceById(state)
   }
 }
