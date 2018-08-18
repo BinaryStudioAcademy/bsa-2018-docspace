@@ -1,5 +1,7 @@
 const UserRepository = require('../repositories/UserRepository')
 const scheme = require('../models/userScheme')
+const jwt = require('jsonwebtoken')
+const jwtConfig = require('../config/jwt')
 
 function validateEmail (email) {
   const re = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -209,7 +211,8 @@ module.exports = {
     })
     User.save()
       .then(user => {
-        res.status(200).send(user)
+        const token = jwt.sign({_id: user._id}, jwtConfig.secret)
+        res.status(200).json({ user, token })
       })
       .catch(err => {
         let msg = ''

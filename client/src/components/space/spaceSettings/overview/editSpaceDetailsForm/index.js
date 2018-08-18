@@ -47,7 +47,7 @@ class EditSpaceDetailsForm extends Component {
   }
 
   render () {
-    const {name, description, homePage, pages} = this.state
+    const {name, description, homePage, pages, categories} = this.state
     const { t } = this.props
 
     return (
@@ -78,10 +78,6 @@ class EditSpaceDetailsForm extends Component {
           />
         </div>
 
-        {/*
-
-        TEMPORALLY HIDE FOR DEMO
-
         <div className='field-group'>
           <label>{t('Categories')}</label>
           <input
@@ -90,7 +86,7 @@ class EditSpaceDetailsForm extends Component {
             defaultValue={categories}
             onChange={({target}) => this.handleFieldChange(target)}
           />
-        </div> */}
+        </div>
 
         {/*
         <div className='field-group'>
@@ -106,8 +102,11 @@ class EditSpaceDetailsForm extends Component {
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
           <label>Home page</label>
-          <select name='homePageId' onChange={({target}) => this.handleFieldChange(target)}>
-            <option value='' selected disabled hidden>{homePage ? homePage.title : 'None'}</option>
+          <select name='homePageId'
+            onChange={({target}) => this.handleFieldChange(target)}
+            defaultValue={homePage ? homePage._id : 'none'}
+          >
+            <option value='none' disabled hidden> None </option>
             {
               pages.map((page, index) => (
                 <option value={page._id} key={index}>
@@ -139,7 +138,7 @@ EditSpaceDetailsForm.propTypes = {
     description: PropTypes.string,
     categories: PropTypes.array,
     logo: PropTypes.string,
-    homePage: PropTypes.string,
+    homePage: PropTypes.object,
     pages: PropTypes.arrayOf(PropTypes.object)
   })
 }
@@ -150,7 +149,6 @@ EditSpaceDetailsForm.defaultProps = {
     description: 'lore ipsum',
     categories: ['one', 'two', 'label'],
     logo: '',
-    homePage: 'my home page',
     pages: [{name: 'first page'}, {name: 'my home page'}]
   }
 }
