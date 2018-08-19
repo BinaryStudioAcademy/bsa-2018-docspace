@@ -49,12 +49,6 @@ SpacePagesList.defaultProps = {
   spaceId: ''
 }
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
-
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
@@ -65,4 +59,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SpacePagesList)))
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(SpacePagesList)))
