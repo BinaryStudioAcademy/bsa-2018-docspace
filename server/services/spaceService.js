@@ -44,12 +44,6 @@ module.exports = {
       return res.end('Invalid data')
     }
 
-    // if (!req.body.name || !req.body.ownerId || !req.body.key) {
-    //   res.status(400)
-
-    //   return res.end('Missing required param')
-    // }
-
     const spaceWithOwner = { ...req.body, ownerId: req.user._id }
 
     SpaceRepository.create(spaceWithOwner)
