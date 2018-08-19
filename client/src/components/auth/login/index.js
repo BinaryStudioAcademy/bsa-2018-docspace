@@ -16,6 +16,7 @@ class Login extends Component {
     super(props)
     this.state = {
       redirectToSignup: false,
+      redirectToReset: false,
       email: '',
       password: ''
     }
@@ -24,6 +25,12 @@ class Login extends Component {
   handleRedirectToSignUp = () => {
     this.setState({
       redirectToSignup: !this.state.redirectToSignup
+    })
+  }
+
+  handleRedirectToReset = () => {
+    this.setState({
+      redirectToReset: !this.state.redirectToReset
     })
   }
 
@@ -42,14 +49,16 @@ class Login extends Component {
   isSubmitAllowed = () => this.state.email && this.state.password;
 
   render () {
-    const { redirectToSignup, email, password } = this.state
+    const { redirectToSignup, redirectToReset, email, password } = this.state
     const { requesting, errors, successful } = this.props.login
 
     if (redirectToSignup) {
       return <Redirect to='/signup' />
     }
+    if (redirectToReset) {
+      return <Redirect to='/reset' />
+    }
     if (successful) {
-      // only for demo. change to '/'
       return <Redirect to='/activity' />
     }
     return (
@@ -94,6 +103,7 @@ class Login extends Component {
                 )}
               </div>
               <p className='auth-footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
+              <p className='auth-footer' onClick={this.handleRedirectToReset}>Forgot Password ?</p>
             </form>
           </div>
         </div>
