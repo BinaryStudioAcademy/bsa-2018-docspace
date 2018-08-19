@@ -7,7 +7,7 @@
         "client-build": "cd client && yarn build",
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "prod": "yarn server",
+        "prod": "yarn client-build && yarn server",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
