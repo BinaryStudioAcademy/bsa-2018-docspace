@@ -34,7 +34,7 @@ export class AddComment extends Component {
           text: this.state.text,
           createdAt: new Date(),
           isDeleted: false,
-          parentId: null,
+          parentId: this.props.parentId,
           _id: this.props._id
         })
         this.props.onEditComment()
@@ -46,8 +46,9 @@ export class AddComment extends Component {
           text: this.state.text,
           createdAt: new Date(),
           isDeleted: false,
-          parentId: null
+          parentId: this.props.parentId || null
         })
+        this.props.ReplyComment && this.props.ReplyComment()
       }
     }
   }
@@ -72,7 +73,7 @@ export class AddComment extends Component {
   render () {
     const { t } = this.props
     return (
-      <div className='addComment'>
+      <div className='addComment' style={this.props.style || null}>
         <CommentAvatar UserAvatarLink={UserAvatarLink} />
         <div className='comment-body-container' >
           <div>
@@ -104,7 +105,7 @@ export class AddComment extends Component {
               name='comment-body-cancel'
               inputType='button'
               value={t('Cancel')}
-              onClick={this.props.onEditComment || this.cancelSendText}
+              onClick={this.props.onEditComment || this.props.ReplyComment || this.cancelSendText}
             />
           </div>
           }
@@ -123,6 +124,9 @@ AddComment.propTypes = {
   editComment: PropTypes.func,
   onEditComment: PropTypes.func,
   text: PropTypes.string,
-  _id: PropTypes.string
+  _id: PropTypes.string,
+  ReplyComment: PropTypes.func,
+  parentId: PropTypes.string,
+  style: PropTypes.string
 }
 export default translate('translations')(AddComment)

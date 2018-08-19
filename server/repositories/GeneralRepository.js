@@ -27,8 +27,8 @@ class GeneralRepository {
     return this.model.deleteOne({ _id: id })
   }
 
-  getByArray (arrayOfId) {
-    return this.model.find({ _id: { $in: arrayOfId } })
+  deleteByCondition (condition) {
+    return this.model.deleteMany(condition)
   }
 }
 
