@@ -22,7 +22,7 @@ const initialState = {
       ]
     }
   },
-  isFetching: true
+  isFetching: false
 }
 
 function all (state = initialState.all, action) {

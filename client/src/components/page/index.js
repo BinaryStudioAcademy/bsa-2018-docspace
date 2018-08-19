@@ -30,7 +30,7 @@ class Page extends Component {
     this.editComment = this.editComment.bind(this)
   }
   componentDidMount () {
-    this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+    !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
   addNewComment (obj) {
     this.props.addComment(obj, this.props.page)
@@ -65,7 +65,7 @@ class Page extends Component {
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
         />
-        { isFetching && !this.props.page
+        { isFetching || !this.props.page
           ? <div className='page-loader'>
             <div className='sweet-loading'>
               <MoonLoader
