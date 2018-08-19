@@ -24,6 +24,7 @@ class CategoriesAddTab extends Component {
       return
     }
     this.props.createCategory({spaceId: this.props.space._id, categoryName})
+    this.setState({categoryName: ''})
   }
 
   handleDeleteCategory = ({ target }) => {
@@ -67,7 +68,7 @@ class CategoriesAddTab extends Component {
             onClick={this.handleCreateCategory}
             value='Add'
           />
-          <Link to='' className='category-done-btn'>{this.props.t('Done')}</Link>
+          <Link to={`${this.props.match.url}/overview`} className='category-done-btn'>{this.props.t('Done')}</Link>
         </div>
       </div>
     )
@@ -77,7 +78,10 @@ class CategoriesAddTab extends Component {
 CategoriesAddTab.propTypes = {
   t: PropTypes.func.isRequired,
   createCategory: PropTypes.func.isRequired,
-  deleteCategory: PropTypes.func,
+  deleteCategory: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string
+  }),
   space: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,

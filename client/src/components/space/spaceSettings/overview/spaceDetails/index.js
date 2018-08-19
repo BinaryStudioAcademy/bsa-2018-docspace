@@ -52,8 +52,10 @@ class SpaceDetails extends Component {
             <td >
               {space.categories.length
                 ? space.categories.map((category, index) =>
-                  <Link key={index} to='#' className='space-category'> {category.name} </Link>)
-                : `(${t('None')})` } [<Link to='#'>Edit</Link>]
+                  <Link key={index} to='#' className='space-category'>
+                    {category.name}
+                  </Link>)
+                : `(${t('None')})` } [<Link to={this.props.pathToCategories}>Edit</Link>]
             </td>
           </tr>
           <tr>
@@ -74,7 +76,8 @@ class SpaceDetails extends Component {
 
 SpaceDetails.propTypes = {
   t: PropTypes.func.isRequired,
-  space: PropTypes.object.isRequired
+  pathToCategories: PropTypes.string.isRequired,
+  space: PropTypes.shape
 }
 
 export default translate('translations')(SpaceDetails)

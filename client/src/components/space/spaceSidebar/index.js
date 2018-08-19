@@ -50,7 +50,7 @@ class SpaceSidebar extends Component {
                               </div>
                               {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Blog')}</div>}
                             </NavLink>
-                            <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings`} activeClassName='current'>
+                            <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings/overview`} activeClassName='current'>
                               <div className='space-sidebar-main-navbar-section-icon'>
                                 <i className='fas fa-cog' />
                               </div>
