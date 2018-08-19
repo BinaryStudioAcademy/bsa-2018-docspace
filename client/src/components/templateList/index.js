@@ -15,6 +15,7 @@ class TemplateList extends React.Component {
                 className={`template${isSelected ? ' selected' : ''}`}
                 key={index}
                 onClick={() => this.props.handleSelectItem(item)}
+                onDoubleClick={() => this.props.handleSelectAndSendItem()}
               >
                 <img className='template-preview' src={item.img} alt='template-preview' />
                 <div className='template-meta'>
@@ -40,7 +41,8 @@ TemplateList.propTypes = {
   })),
 
   selectedItem: PropTypes.object,
-  handleSelectItem: PropTypes.func.isRequired
+  handleSelectItem: PropTypes.func.isRequired,
+  handleSelectAndSendItem: PropTypes.func
 }
 
 export default TemplateList

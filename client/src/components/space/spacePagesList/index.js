@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink, withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
-
 import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -50,6 +49,12 @@ SpacePagesList.defaultProps = {
   spaceId: ''
 }
 
+const mapStateToProps = (state) => {
+  return {
+    state: state
+  }
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
@@ -60,4 +65,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(SpacePagesList)))
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SpacePagesList)))
