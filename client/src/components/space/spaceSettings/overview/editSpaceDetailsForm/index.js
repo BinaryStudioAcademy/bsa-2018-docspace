@@ -78,16 +78,6 @@ class EditSpaceDetailsForm extends Component {
           />
         </div>
 
-        {/* <div className='field-group'>
-          <label>{t('Categories')}</label>
-          <input
-            type='text'
-            name='categories'
-            defaultValue={categories}
-            onChange={({target}) => this.handleFieldChange(target)}
-          />
-        </div> */}
-
         {/*
         <div className='field-group'>
           <label>{t('Home_page')}</label>
