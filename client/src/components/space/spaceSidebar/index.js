@@ -3,17 +3,17 @@ import { NavLink, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
-
 import MinSidebar from 'src/components/dashboard/sidebar/minSidebar'
 import SpacePagesList from 'src/components/space/spacePagesList'
 import SpaceSidebarButtons from './spaceSidebarButtons'
-import { spaceById } from '../spaceContainer/logic/spaceReducer'
+import { spaceById, isSpacesFetching } from '../spaceContainer/logic/spaceReducer'
+import { MoonLoader } from 'react-spinners'
 
 import './spaceSidebar.css'
 
 class SpaceSidebar extends Component {
   render () {
-    const { space, t, showLabels, showContent, isOpened } = this.props
+    const { space, t, showLabels, showContent, isOpened, isFetching } = this.props
     const sidebarWrapperClass = isOpened ? 'sidebar-blue-schema' : 'sidebar-blue-schema sidebar-grey-schema'
     const sidebarContainerClass = isOpened ? 'sidebar-container' : 'sidebar-container space-minimized'
     const sidebarClass = showLabels ? 'space-sidebar' : 'space-sidebar minimized'
@@ -57,7 +57,17 @@ class SpaceSidebar extends Component {
                               {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Space_settings')}</div>}
                             </NavLink>
                           </div>
-                          {showLabels && <SpacePagesList pages={space.pages} spaceId={space._id} />}
+                          { isFetching
+                            ? <div className='space-sidebar-loader'>
+                              <div className='sweet-loading'>
+                                <MoonLoader
+                                  sizeUnit={'px'}
+                                  size={16}
+                                  color={'#475774'}
+                                />
+                              </div>
+                            </div>
+                            : showLabels && <SpacePagesList pages={space.pages} spaceId={space._id} />}
                         </div>
                       </React.Fragment>
                     )
@@ -77,7 +87,8 @@ SpaceSidebar.propTypes = {
   showLabels: PropTypes.bool.isRequired,
   showContent: PropTypes.bool.isRequired,
   isOpened: PropTypes.bool.isRequired,
-  space: PropTypes.object
+  space: PropTypes.object,
+  isFetching: PropTypes.bool
 }
 
 SpaceSidebar.defaultProps = {
@@ -86,7 +97,8 @@ SpaceSidebar.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    isFetching: isSpacesFetching(state)
   }
 }
 

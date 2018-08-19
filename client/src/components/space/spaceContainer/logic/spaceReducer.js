@@ -4,7 +4,8 @@ import { combineReducers } from 'redux'
 
 const initialState = {
   all: [],
-  byId: {}
+  byId: {},
+  isFetching: false
 }
 
 function all (state = initialState.all, action) {
@@ -77,9 +78,27 @@ function byId (state = initialState.byId, action) {
   }
 }
 
+function isFetching (state = initialState.isFetching, action) {
+  switch (action.type) {
+    case actionTypes.GET_ALL_SPACES_REQUEST:
+    case actionTypes.GET_SPACE_REQUEST:
+      return true
+    case actionTypes.GET_ALL_SPACES_SUCCESS:
+    case actionTypes.GET_ALL_SPACES_ERROR:
+    case actionTypes.UPDATE_SPACE_SUCCESS:
+    case actionTypes.UPDATE_SPACE_ERROR:
+    case actionTypes.GET_SPACE_SUCCESS:
+    case actionTypes.GET_SPACE_ERROR:
+      return false
+    default:
+      return state
+  }
+};
+
 export default combineReducers({
   all,
-  byId
+  byId,
+  isFetching
 })
 
 // SELECTOR
@@ -94,3 +113,4 @@ export const spaceById = (state) => {
 
   return state.spaces.byId[id]
 }
+export const isSpacesFetching = ({ spaces }) => spaces.isFetching
