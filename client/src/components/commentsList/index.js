@@ -8,7 +8,6 @@ class CommentsList extends Component {
   constructor (props) {
     super(props)
     this.state = {commentTree: this.getComments(props.comments)}
-    this.replyComment = this.replyComment.bind(this)
   }
 
   sortComments () {
