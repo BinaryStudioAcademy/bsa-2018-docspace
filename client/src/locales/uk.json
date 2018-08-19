@@ -46,6 +46,7 @@
     "Name": "Назва",
     "Description": "Опис",
     "Categories": "Категорії",
+    "Categories_description": "Требует перевода",
     "Home_page": "Домашня сторінка",
     "Save": "Зберегти",
     "Cancel": "Скасувати",
@@ -53,6 +54,8 @@
     "Key": "Ключ",
     "Created_by": "Автор",
     "Administrators": "Адміністратори",
-    "Space_details": "Деталі простору"
+    "Space_details": "Деталі простору",
+    "None": "Порожньо",
+    "Done": "Готово"
   }
 }

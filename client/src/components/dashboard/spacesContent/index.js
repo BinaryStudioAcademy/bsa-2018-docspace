@@ -37,7 +37,6 @@ class SpacesContent extends Component {
           </td>
         </tr>
       )
-
       if (this.props.activeTab === 'All Spaces') {
         // Checking permission ?
         // if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {

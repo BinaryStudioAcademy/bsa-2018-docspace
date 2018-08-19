@@ -76,3 +76,32 @@ export const deleteSpaceSuccess = (deletedId) => ({
 export const deleteSpaceError = () => ({
   type: actionTypes.DELETE_SPACE_ERROR
 })
+
+// CATEGORY ACTIONS
+export const createCategoryRequest = ({spaceId, categoryName}) => ({
+  type: actionTypes.CREATE_CATEGORY_REQUEST,
+  payload: {spaceId, categoryName}
+})
+
+export const createCategorySuccess = (space) => ({
+  type: actionTypes.CREATE_CATEGORY_SUCCESS,
+  payload: space
+})
+
+export const createCategoryError = () => ({
+  type: actionTypes.CREATE_CATEGORY_ERROR
+})
+
+export const deleteCategoryRequest = (categoryId, spaceId) => ({
+  type: actionTypes.DELETE_CATEGORY_REQUEST,
+  payload: { spaceId, categoryId }
+})
+
+export const deleteCategorySuccess = (updatedSpace) => ({
+  type: actionTypes.DELETE_CATEGORY_SUCCESS,
+  payload: updatedSpace
+})
+
+export const deleteCategoryError = () => ({
+  type: actionTypes.DELETE_CATEGORY_ERROR
+})
