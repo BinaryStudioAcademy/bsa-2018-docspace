@@ -14,7 +14,6 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    console.log(req)
     CategoryRepository.getById(req.params.id)
       .then(category => {
         if (!category) {
@@ -51,7 +50,6 @@ module.exports = {
   },
 
   findOneAndDelete: async (req, res) => {
-    console.log('FIND AND DELETE')
     let numberCategoryInSpaces = await SpaceRepository.getCountCategory(req.params.id)
     if (numberCategoryInSpaces <= 1) {
       CategoryRepository.delete(req.params.id)
