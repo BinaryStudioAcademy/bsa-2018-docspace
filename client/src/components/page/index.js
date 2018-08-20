@@ -5,12 +5,13 @@ import PageHeader from './pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
+import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import { getPageByIdRequest, deletePageRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
+import { MoonLoader } from 'react-spinners'
 
 import * as commentsActions from './commentsLogic/commentsActions'
 
@@ -29,7 +30,7 @@ class Page extends Component {
     this.editComment = this.editComment.bind(this)
   }
   componentDidMount () {
-    this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+    !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
   addNewComment (obj) {
     console.log(obj)
@@ -57,9 +58,8 @@ class Page extends Component {
   }
 
   render () {
-    if (!this.props.page) return null
     const { firstName, lastName, _id } = this.props.user
-    const { page, t, space } = this.props
+    const { page, t, space, isFetching } = this.props
     return (
       <React.Fragment>
         <PageHeader
@@ -68,37 +68,45 @@ class Page extends Component {
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
         />
-        <div className='page-container'>
-          <PageTitle text={page.title} />
-          <PageInfo
-            avatar={fakeImg}
-            firstName={firstName}
-            lastName={lastName}
-            date={page.created ? page.created.date : ''}
-          />
-          <PageContent content={page.content} />
-          <div className='comments-section'>
-            {this.props.page.commentsArr.length
-              ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
-              : <h2>{t('add_comments')}</h2>
-            }
-            <CommentsList
-              comments={this.props.page.commentsArr}
-              deleteComment={this.deleteComment}
-              editComment={this.editComment}
-              addNewComment={this.addNewComment}
-              firstName={firstName}
-              lastName={lastName}
-            />
-            <AddComment
-              firstName={firstName}
-              lastName={lastName}
-              addNewComment={this.addNewComment}
-              userId={_id}
-              t={t}
-            />
+        { isFetching || !this.props.page
+          ? <div className='page-loader'>
+            <div className='sweet-loading'>
+              <MoonLoader
+                sizeUnit={'px'}
+                size={32}
+                color={'#123abc'}
+              />
+            </div>
           </div>
-        </div>
+          : <div className='page-container'>
+            <PageTitle text={page.title} />
+            <PageInfo
+              avatar={fakeImg}
+              firstName={firstName}
+              lastName={lastName}
+              date={page.created ? page.created.date : ''}
+            />
+            <PageContent content={page.content} />
+            <div className='comments-section'>
+              {this.props.page.commentsArr.length
+                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+                : <h2>{t('add_comments')}</h2>
+              }
+              <CommentsList
+                comments={this.props.page.commentsArr}
+                deleteComment={this.deleteComment}
+                editComment={this.editComment}
+              />
+              <AddComment
+                firstName={firstName}
+                lastName={lastName}
+                addNewComment={this.addNewComment}
+                userId={_id}
+                t={t}
+              />
+            </div>
+          </div>
+        }
       </React.Fragment>
     )
   }
@@ -120,7 +128,8 @@ Page.propTypes = {
   deleteCommentRequest: PropTypes.func,
   editCommentRequest: PropTypes.func,
   space: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  isFetching: PropTypes.bool
 }
 
 Page.defaultProps = {
@@ -143,7 +152,9 @@ const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
-    space: spaceById(state)
+    comments: state.comments,
+    space: spaceById(state),
+    isFetching: isPagesFetching(state)
   }
 }
 

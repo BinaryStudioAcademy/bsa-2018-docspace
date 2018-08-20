@@ -56,6 +56,15 @@ class CreatePageModal extends Component {
     })
   }
 
+  handleSelectAndSendTemplate = () => {
+    const {selectedSpaceId, selectedTemplate} = this.state
+    const disableSend = !selectedSpaceId || !selectedTemplate
+    if (!disableSend) {
+      const templatedPage = PageFactory.createTemplatePageForSpace(selectedSpaceId, selectedTemplate.name)
+      this.props.actions.createPageRequest(templatedPage)
+    }
+  }
+
   renderModalHeader = () => {
     return (
       <h2 className='modal-header' >
@@ -118,6 +127,7 @@ class CreatePageModal extends Component {
            items={this.state.templates}
            selectedItem={this.state.selectedTemplate}
            handleSelectItem={this.handleSelectTemplate}
+           handleSelectAndSendItem={this.handleSelectAndSendTemplate}
          />
        </React.Fragment>
      )

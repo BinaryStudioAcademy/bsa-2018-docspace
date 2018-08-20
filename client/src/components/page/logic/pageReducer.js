@@ -21,7 +21,8 @@ const initialState = {
         'Daryna Gavrylenko'
       ]
     }
-  }
+  },
+  isFetching: false
 }
 
 function all (state = initialState.all, action) {
@@ -56,9 +57,23 @@ function byId (state = initialState.byId, action) {
   }
 }
 
+function isFetching (state = initialState.isFetching, action) {
+  switch (action.type) {
+    case actionTypes.GET_PAGE_BY_ID_REQUEST:
+      return true
+    case actionTypes.GET_PAGE_BY_ID_SUCCESS:
+    case actionTypes.GET_PAGE_BY_ID_ERROR:
+    case actionTypes.CANCEL_PAGE_BY_ID_REQUEST:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   all,
-  byId
+  byId,
+  isFetching
 })
 
 export const allPages = ({pages}) => pages.all.map(id => pages.byId[id])
@@ -72,7 +87,9 @@ export const pageByIdFromRoute = (state) => {
   // console.log(state.router.location)
   return state.pages.byId[id] || null
 }
-
+export const isPagesFetching = ({ pages }) => {
+  return pages.isFetching
+}
 // DELETE THIS LATER!
 // export const spaceHomepageByIdFromRoute = (state) => {
 //   const names = state.router.location.pathname.split('/')
