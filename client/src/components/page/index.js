@@ -50,7 +50,6 @@ class Page extends Component {
   }
 
   handleDeletePage = () => {
-    console.log('deleting')
     this.props.actions.deletePageRequest(this.props.page)
   }
 
