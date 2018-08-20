@@ -16,19 +16,14 @@
   flex-direction: column;
 }
 
-.auth-reset {
+.auth-reset-new-pass {
   background-color: $white;
   border-radius: 5px;
   padding: 48px;
   display: flex;
   flex-direction: column;
 }
-.auth-reset-answer {
-  background-color: $white;
-  border-radius: 5px;
-  padding: 16px;
-  display: flex;
-}
+
 .auth-footer {
   color: $black;
   text-align: center;

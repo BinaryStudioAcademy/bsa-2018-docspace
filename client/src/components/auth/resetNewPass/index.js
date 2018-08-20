@@ -2,11 +2,6 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router-dom'
 import Input from '../../common/input'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
-import resetRequest from './logic/resetActions'
-import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
 import './reset.css'
 
 class ResetPassword extends Component {
@@ -14,7 +9,8 @@ class ResetPassword extends Component {
     super(props)
     this.state = {
       redirectToLogin: false,
-      email: ''
+      newPassword: '',
+      repeatNewPassword: ''
     }
   }
   handleRedirectToLogin = () => {
@@ -22,21 +18,10 @@ class ResetPassword extends Component {
       redirectToLogin: !this.state.redirectToLogin
     })
   }
-  handleFieldChange = ({ target }) => {
-    this.setState(state => ({ state, [target.name]: target.value }))
-  }
   isSubmitAllowed = () => this.state.email
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-    this.props.resetRequest({
-      email: this.state.email
-    })
-  }
   render () {
     const { email, redirectToLogin } = this.state
-    const { message, successful } = this.props.reset
-    console.log(`render`, message, successful)
+
     if (redirectToLogin) {
       return <Redirect to='/login' />
     }
@@ -49,13 +34,21 @@ class ResetPassword extends Component {
                 <img className='header-logo-img' src={logoInCircle} alt='logo' />
                 <p className='header-logo-label'>DOCSPACE</p>
               </div>
-              <h2>Forgot password ?</h2>
+              <h2>Create new password</h2>
             </div>
-            <form className='auth-reset' onSubmit={this.handleSubmit}>
+            <form className='auth-reset-new-pass' onSubmit={this.handleSubmit}>
               <Input
-                inputType='email'
-                name='email'
-                label='Enter email'
+                inputType='password'
+                name='newPassword'
+                label='New password'
+                value={email}
+                onChange={this.handleFieldChange}
+                autoComplete='on'
+              />
+              <Input
+                inputType='password'
+                name='repeatNewPassword'
+                label='Repeat password'
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete='on'
@@ -64,13 +57,9 @@ class ResetPassword extends Component {
                 inputType='submit'
                 disabled={!this.isSubmitAllowed()}
                 name='button'
-                value='Send recovery link'
+                value='Change password'
               />
-              <p className='auth-footer' onClick={this.handleRedirectToLogin}>Is return to Log In ?</p>
             </form>
-            <h4 className='auth-reset-answer'>
-              {message}
-            </h4>
           </div>
         </div>
       </Fragment>
@@ -78,24 +67,4 @@ class ResetPassword extends Component {
   }
 }
 
-ResetPassword.propTypes = {
-  resetRequest: PropTypes.func,
-  reset: PropTypes.object
-}
-
-ResetPassword.defaultProps = {
-  reset: {
-    successful: false,
-    message: ''
-  }
-}
-
-const mapStateToProps = state => ({
-  reset: state.reset
-})
-
-const mapDispatchToProps = dispatch => ({
-  resetRequest: bindActionCreators(resetRequest, dispatch)
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
+export default ResetPassword
