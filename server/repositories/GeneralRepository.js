@@ -4,7 +4,11 @@ class GeneralRepository {
   }
 
   getAll () {
-    return this.model.find()
+    return this.getAllByCriteria({})
+  }
+
+  getAllByCriteria (criteria) {
+    return this.model.find(criteria)
   }
 
   getById (id) {
