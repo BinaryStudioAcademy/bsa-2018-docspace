@@ -8,6 +8,7 @@
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "prod": "yarn client-build && yarn server",
+        "test": "",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
