@@ -4,7 +4,8 @@ import { combineReducers } from 'redux'
 const initialState = {
   successful: false,
   messages: [],
-  errors: []
+  errors: [],
+  isFetching: false
 }
 
 const userReducer = (state = initialState, action) => {
@@ -54,9 +55,28 @@ const checkingReducer = (state = initialState, action) => {
   }
 }
 
+function isFetching (state = initialState.isFetching, action) {
+  switch (action.type) {
+    case actionTypes.UPDATE_USER:
+    case actionTypes.CHECK_USER_PASSWORD:
+      return true
+    case actionTypes.UPDATE_USER_SUCCESS:
+    case actionTypes.UPDATE_USER_FAILED:
+    case actionTypes.CHECK_USER_PASSWORD_SUCCESS:
+    case actionTypes.CHECK_USER_PASSWORD_FAILED:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   userReducer,
-  checkingReducer
+  checkingReducer,
+  isFetching
 })
 
 export const userById = ({ user }) => user.userReducer
+export const isUserFetching = ({ user }) => {
+  return user.isFetching
+}

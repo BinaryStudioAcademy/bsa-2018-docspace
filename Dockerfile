@@ -1,5 +1,6 @@
 FROM node:8
 ENV NODE_ENV production
+ENV PORT 8080
 ENV NODE_PATH ./
 WORKDIR /docspace
 
@@ -8,9 +9,8 @@ RUN yarn
 COPY client /docspace/client/
 COPY server /docspace/server/
 RUN cd client && yarn cache clean && yarn add --force node-sass@latest
-RUN yarn client-build && cd ..
 
 
 CMD ["yarn", "prod"]
 
-EXPOSE 3001
+EXPOSE 8080

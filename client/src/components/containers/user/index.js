@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
 import { updateUser, checkPassword } from './logic/userActions'
+import { isUserFetching } from './logic/userReducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
@@ -10,6 +11,7 @@ import { PrivateFields } from 'src/components/userTabs/private'
 import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
+import { MoonLoader } from 'react-spinners'
 
 import './user.css'
 
@@ -152,7 +154,7 @@ class User extends Component {
     )
   }
 
-  renderEditButtons (t) {
+  renderEditButtons (t, isFetching) {
     return (
       <div className='profile-edit-buttons'>
         <div className='edit-manage-btn'>
@@ -163,6 +165,21 @@ class User extends Component {
             <button onClick={this.changePrivate}>{t('private')}</button>
           </div>
         </div>
+        { isFetching
+          ? <div className='sweet-loading'>
+            {
+              this.state.isShowGeneral
+                ? <span className='user-loading-info'>Data is changing</span>
+                : <span className='user-loading-info'>Password is changing</span>
+            }
+            <MoonLoader
+              sizeUnit={'px'}
+              size={16}
+              color={'#123abc'}
+            />
+          </div>
+          : null
+        }
       </div>
     )
   }
@@ -218,11 +235,12 @@ class User extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { t, isFetching } = this.props
     const { user } = this.props.userSettings
-    const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { firstName, lastName } = user
+    const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
+    console.log(isFetching)
     return (
       <div className='main-wrapper'>
         <div className='profile-page-header'>
@@ -233,7 +251,7 @@ class User extends Component {
         <div className='profile-page-center-content'>
           { this.renderClock() }
           <hr />
-          { this.renderEditButtons(t) }
+          { this.renderEditButtons(t, isFetching) }
           { this.renderMainInfo(t, errorsUser, user, successful, errors) }
           { this.renderRecentWorks(t) }
         </div>
@@ -245,6 +263,7 @@ class User extends Component {
 User.propTypes = {
   userSettings: PropTypes.object,
   match: PropTypes.object,
+  isFetching: PropTypes.bool,
   params: PropTypes.array,
   id: PropTypes.string,
   history: PropTypes.object,
@@ -258,12 +277,13 @@ User.propTypes = {
   })
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     userSettings: state.user.userReducer.messages.length
       ? state.user.userReducer
       : state.verification,
-    resultOfChecking: state.user.checkingReducer
+    resultOfChecking: state.user.checkingReducer,
+    isFetching: isUserFetching(state)
   }
 }
 

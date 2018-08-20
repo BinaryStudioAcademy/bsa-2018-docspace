@@ -244,8 +244,18 @@
 .profile-edit-buttons {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex: 1; }
+
+.profile-edit-buttons .sweet-loading {
+  display: flex;
+}
+
+.profile-edit-buttons .sweet-loading .user-loading-info {
+  display: inline-block;
+  margin-right: 10px;
+  color: #505f79;
+}
 
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
