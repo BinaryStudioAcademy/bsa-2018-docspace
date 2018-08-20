@@ -16,3 +16,19 @@
     white-space: nowrap;
     margin: 0;
     padding: 25px 30px 30px 50px; }
+  .space-settings-page .nav-bar {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #f4f5f7; }
+    .space-settings-page .nav-bar .nav-bar-tab {
+      padding: 9px 10px;
+      cursor: pointer;
+      color: #333;
+      text-transform: capitalize;
+      text-decoration: none; }
+      .space-settings-page .nav-bar .nav-bar-tab:hover {
+        text-decoration: underline; }
+    .space-settings-page .nav-bar .active-link {
+      border-bottom: 3px solid #205081;
+      font-weight: bold; }
