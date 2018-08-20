@@ -1,9 +1,7 @@
 # Use node_js environnement
 language: node_js
-node_js:  
-  - 9
-  - 8
-  - node
+node_js:
+  - "8"
 
 # Cache Gcloud SDK between commands
 cache:
