@@ -7,7 +7,7 @@
         "client-build": "cd client && yarn build",
         "server": "node ./server/server.js",
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-        "prod": "yarn server",
+        "prod": "yarn client-build && yarn server",
         "pretest": "eslint --ignore-path .gitignore .",
         "precommit": "yarn pretest",
         "prepush": "yarn pretest"
@@ -36,7 +36,11 @@
         "passport-local": "^1.0.0",
         "passport-local-token": "^1.0.1",
         "path": "^0.12.7",
+<<<<<<< HEAD
         "xoauth2": "^1.2.0"
+=======
+        "react-spinners": "^0.4.4"
+>>>>>>> develop
     },
     "devDependencies": {
         "babel-eslint": "^8.2.6",
