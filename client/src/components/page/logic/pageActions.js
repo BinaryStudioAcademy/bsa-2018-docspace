@@ -53,10 +53,20 @@ export const updatePageRequest = (newPage) => ({
   payload: newPage
 })
 
-export const updatePageSuccess = (updatedPage) => ({
-  type: actionTypes.UPDATE_PAGE_SUCCESS,
-  payload: updatedPage
-})
+export const updatePageSuccess = (updatedPage) => {
+  const pageWithCorrectCommentTime = updatedPage
+
+  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+    comment.createdAt = new Date(comment.createdAt)
+
+    return comment
+  })
+
+  return {
+    type: actionTypes.UPDATE_PAGE_SUCCESS,
+    payload: pageWithCorrectCommentTime
+  }
+}
 
 export const updatePageError = () => ({
   type: actionTypes.UPDATE_PAGE_ERROR
