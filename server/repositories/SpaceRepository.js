@@ -124,6 +124,18 @@ class SpaceRepository extends GeneralRepository {
     return super.create(data)
       .then(space => this.getById(space._id))
   }
+
+  updateCategory (id, categoryId) {
+    return super.update(id, {'$addToSet': {'categories': categoryId}})
+  }
+
+  deleteCategory (id, categoryId) {
+    return super.update(id, {'$pull': {'categories': categoryId}})
+  }
+
+  getCountCategory (id) {
+    return this.model.find({'categories': {'$in': [id]}}).count()
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

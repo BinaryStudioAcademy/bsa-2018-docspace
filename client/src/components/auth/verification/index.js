@@ -4,6 +4,8 @@ import { verificationRequest, saveUserInSession } from './logic/verificationActi
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { MoonLoader } from 'react-spinners'
+import './verification.css'
 
 export default (ComposedComponent) => {
   class Authentication extends React.Component {
@@ -18,7 +20,17 @@ export default (ComposedComponent) => {
     render () {
       const { isLoggedIn, loading } = this.props
       if (loading) {
-        return <div>Is loading....</div>
+        return (
+          <div className='verification-loader'>
+            <div className='sweet-loading'>
+              <MoonLoader
+                sizeUnit={'px'}
+                size={32}
+                color={'#123abc'}
+              />
+            </div>
+          </div>
+        )
       }
       if (!loading && isLoggedIn) {
         return <ComposedComponent {...this.props} />
