@@ -33,10 +33,13 @@ class Page extends Component {
     !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
   addNewComment (obj) {
+    console.log(obj)
+    console.log(this.props.page)
     this.props.addComment(obj, this.props.page)
   }
 
   editComment (obj) {
+    console.log(obj)
     this.props.editCommentRequest(obj, this.props.page)
   }
 

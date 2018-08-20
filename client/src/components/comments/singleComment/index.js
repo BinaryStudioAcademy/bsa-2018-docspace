@@ -22,7 +22,6 @@ export class Comment extends Component {
   }
 
   onReplyComment () {
-    this.props.replyComment({target: this.props.comment._id, level: this.props.level})
     this.setState(prevState => {
       return { replyMode: !prevState.replyMode }
     })
@@ -103,7 +102,6 @@ Comment.propTypes = {
   t: PropTypes.func,
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
-  replyComment: PropTypes.func,
   addNewComment: PropTypes.func,
   level: PropTypes.number,
   firstName: PropTypes.string,
