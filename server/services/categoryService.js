@@ -45,6 +45,7 @@ module.exports = {
     }
     SpaceRepository.updateCategory(req.body.spaceId, category._id)
       .populate('categories')
+      .populate('pages')
       .then(populatedSpace => res.json(populatedSpace))
       .catch(err => err)
   },
@@ -56,6 +57,7 @@ module.exports = {
     }
     SpaceRepository.deleteCategory(req.body.spaceId, req.params.id)
       .populate('categories')
+      .populate('pages')
       .then(populatedSpace => res.json(populatedSpace))
       .catch(err => err)
   }
