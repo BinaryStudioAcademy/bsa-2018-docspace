@@ -64,17 +64,14 @@ const forgot = (req, res, next) => {
 }
 
 const redirectToForgotPass = (req, res) => {
-  console.log(hostname)
   return res.redirect(hostname.url + 'reset/' + req.params.token)
 }
 
 const resetNewPass = (req, res) => {
   async.waterfall([
     function (done) {
-      console.log(`start`, req.body.token)
       userRep.getByToken(req.body.token)
         .then(user => {
-          console.log(user)
           if (!user) {
             return res.send({succesful: false, message: 'Password reset token is invalid or has expired.'})
           }

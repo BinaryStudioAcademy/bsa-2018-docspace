@@ -36,11 +36,7 @@
         "passport-local": "^1.0.0",
         "passport-local-token": "^1.0.1",
         "path": "^0.12.7",
-<<<<<<< HEAD
-        "xoauth2": "^1.2.0"
-=======
         "react-spinners": "^0.4.4"
->>>>>>> develop
     },
     "devDependencies": {
         "babel-eslint": "^8.2.6",
