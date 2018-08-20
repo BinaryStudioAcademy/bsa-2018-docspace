@@ -20,7 +20,7 @@ const spaceSchema = new mongoose.Schema({
   homePageId: Schema.Types.ObjectId,
   blogId: Schema.Types.ObjectId,
   pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
-  history: [Schema.Types.ObjectId],
+  history: [{type: Schema.Types.ObjectId, ref: 'History'}],
   rights: {
     users: [Schema.Types.ObjectId],
     groups: [Schema.Types.ObjectId],

@@ -7,6 +7,7 @@ const logout = require('./auth/logout')
 const category = require('./category')
 const comment = require('./comment')
 const autologin = require('./auth/autologin')
+const history = require('./history')
 
 module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/signup', signup)
@@ -18,4 +19,5 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/spaces', verifyJWTMiddleware, space)
   app.use('/api/category', verifyJWTMiddleware, category)
   app.use('/api/comments', verifyJWTMiddleware, comment)
+  app.use('/api/history', verifyJWTMiddleware, history)
 }
