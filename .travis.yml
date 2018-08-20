@@ -2,7 +2,7 @@
 language: node_js
 node_js:
   - "8"
-  
+
 # Cache Gcloud SDK between commands
 cache:
   yarn: true
@@ -12,6 +12,9 @@ cache:
 # Install services
 services:
   - docker
+
+script:
+  - echo "skipping tests"
 
 # Set env vars
 env:
