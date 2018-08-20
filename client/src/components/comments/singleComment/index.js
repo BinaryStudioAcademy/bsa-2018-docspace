@@ -41,11 +41,27 @@ export class Comment extends Component {
   }
 
   transformData () {
-    const time = this.props.comment.createdAt.substr(11, 5)
-    const year = this.props.comment.createdAt.substr(0, 4)
-    const mounth = this.props.comment.createdAt.substr(5, 2)
-    const day = this.props.comment.createdAt.substr(8, 2)
-    return `${time} ${day}.${mounth}.${year}`
+    const { createdAt } = this.props.comment
+    let hours = createdAt.getHours()
+    let minutes = createdAt.getMinutes()
+    let day = createdAt.getDate()
+    let month = createdAt.getMonth() + 1
+    const year = createdAt.getFullYear()
+
+    if (hours < 10) {
+      hours = `0${hours}`
+    }
+    if (minutes < 10) {
+      minutes = `0${minutes}`
+    }
+    if (day < 10) {
+      day = `0${day}`
+    }
+    if (month < 10) {
+      month = `0${month}`
+    }
+
+    return `${hours}:${minutes} ${day}/${month}/${year}`
   }
 
   render () {
