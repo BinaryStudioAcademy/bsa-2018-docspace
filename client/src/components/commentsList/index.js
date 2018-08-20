@@ -31,7 +31,6 @@ class CommentsList extends Component {
   }
 
   render () {
-    console.log(this.state.commentTree)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}
