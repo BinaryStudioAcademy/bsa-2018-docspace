@@ -24,6 +24,21 @@
   flex-direction: column;
 }
 
+.auth-reset-new-pass-equal {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 16px;
+  display: flex;
+}
+
+.auth-reset-password-result {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
 .auth-footer {
   color: $black;
   text-align: center;
@@ -33,6 +48,11 @@
     text-decoration: underline;
     }
   }
+.auth-footer-message {
+  color: $black;
+  text-align: center;
+  margin-bottom: 0px;
+}
 
 .auth-header h2 {
   text-align: center;

@@ -19,5 +19,5 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/spaces', verifyJWTMiddleware, space)
   app.use('/api/category', verifyJWTMiddleware, category)
   app.use('/api/comments', verifyJWTMiddleware, comment)
-  app.use('/api/reset', reset)
+  app.use('/reset', reset)
 }

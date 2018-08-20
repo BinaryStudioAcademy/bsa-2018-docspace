@@ -68,9 +68,11 @@ class ResetPassword extends Component {
               />
               <p className='auth-footer' onClick={this.handleRedirectToLogin}>Is return to Log In ?</p>
             </form>
-            <h4 className='auth-reset-answer'>
-              {message}
-            </h4>
+            { !!message &&
+              <h4 className='auth-reset-answer'>
+                {message}
+              </h4>
+            }
           </div>
         </div>
       </Fragment>

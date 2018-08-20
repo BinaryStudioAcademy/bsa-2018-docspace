@@ -4,6 +4,7 @@ import { verificationRequest, saveUserInSession } from './logic/verificationActi
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import SplashScreen from 'src/components/splashScreen'
 
 export default (ComposedComponent) => {
   class Authentication extends React.Component {
@@ -18,7 +19,7 @@ export default (ComposedComponent) => {
     render () {
       const { isLoggedIn, loading } = this.props
       if (loading) {
-        return <div>Is loading....</div>
+        return <SplashScreen />
       }
       if (!loading && isLoggedIn) {
         return <ComposedComponent {...this.props} />

@@ -56,7 +56,7 @@ class Login extends Component {
       return <Redirect to='/signup' />
     }
     if (redirectToReset) {
-      return <Redirect to='/reset' />
+      return <Redirect to='/forgot' />
     }
     if (successful) {
       return <Redirect to='/activity' />

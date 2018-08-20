@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const async = require('async')
 const userRep = require('../../../repositories/UserRepository')
 var nodemailer = require('nodemailer')
+const hostname = require('../../../config/host').get(process.env.NODE_ENV)
 
 const forgot = (req, res, next) => {
   const email = req.body.email
@@ -17,7 +18,7 @@ const forgot = (req, res, next) => {
       userRep.get({ email })
         .then(user => {
           if (!user) {
-            res.send({succesful: false, message: 'No account with that email address exists.'})
+            return res.send({succesful: false, message: 'No account with that email address exists.'})
           }
 
           user.resetPasswordToken = token
@@ -53,14 +54,47 @@ const forgot = (req, res, next) => {
         }
         console.log('Message sent: %s', info.messageId)
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-        res.send({succesful: true, message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'})
+        return res.send({succesful: true, message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'})
       })
     }
   ], function (err) {
     if (err) return next(err)
-    res.send({message: 'Error'})
+    return res.send({message: 'Error'})
+  })
+}
+
+const redirectToForgotPass = (req, res) => {
+  console.log(hostname)
+  return res.redirect(hostname.url + 'reset/' + req.params.token)
+}
+
+const resetNewPass = (req, res) => {
+  async.waterfall([
+    function (done) {
+      console.log(`start`, req.body.token)
+      userRep.getByToken(req.body.token)
+        .then(user => {
+          console.log(user)
+          if (!user) {
+            return res.send({succesful: false, message: 'Password reset token is invalid or has expired.'})
+          }
+          userRep.update(user._id, {password: req.body.password, resetPasswordToken: undefined, resetPasswordExpires: undefined})
+            .then(user => {
+              if (!user) {
+                return res.status(404).send({
+                  message: 'User not found with id ' + req.params.id
+                })
+              }
+              return res.send({succesful: true, message: 'Success! Your password has been changed.'})
+            })
+        })
+    }
+  ], function (err) {
+    res.send(err)
   })
 }
 
 router.post('/', forgot)
+router.post('/:token', resetNewPass)
+router.get('/:token', redirectToForgotPass)
 module.exports = router
