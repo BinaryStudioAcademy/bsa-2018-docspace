@@ -7,7 +7,7 @@ const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
 const passport = require('passport')
-
+var flash = require('express-flash')
 const app = express()
 const port = process.env.PORT || 3001
 require('./config/passport')()
@@ -25,6 +25,7 @@ app.use(
     })
   })
 )
+app.use(flash())
 
 app.use(passport.initialize())
 app.use(passport.session())

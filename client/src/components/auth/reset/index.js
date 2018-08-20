@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router-dom'
 import Input from '../../common/input'
-import Errors from '../../common/error'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
-
 import './reset.css'
 
 class ResetPassword extends Component {
