@@ -4,8 +4,7 @@ import {groupService} from 'src/services/groupService'
 
 function * createGroup (action) {
   try {
-    yield console.log('Saga')
-    groupService.createGroup(action.payload)
+    yield groupService.createGroup(action.payload)
   } catch (e) {
     console.log(e)
   }

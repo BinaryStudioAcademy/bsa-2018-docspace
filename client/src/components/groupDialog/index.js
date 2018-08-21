@@ -48,7 +48,6 @@ class GroupDialog extends Component {
   }
 
   handleChange = (target) => {
-    console.log('AAAAAAA')
     this.setState({[target.name]: target.value})
   }
 
@@ -58,8 +57,6 @@ class GroupDialog extends Component {
       title: this.state.name,
       description: this.state.description
     }
-    console.log(group)
-    console.log(this)
     this.props.actions.createGroupRequest(group)
   }
 
@@ -76,7 +73,6 @@ class GroupDialog extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <React.Fragment>
         <Modal renderHeader={this.renderHeader} renderContent={this.renderContent} renderFooter={this.renderFooter} />
