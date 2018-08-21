@@ -57,11 +57,11 @@
     "None": "None",
     "Done": "Done",
     "passwords_are_not_equal": "Passwords are not equal",
-    "is_return_to_log_in_?": "Is return to Log In ?",
+    "return_to_the_login_page": "Return to the login page",
     "forgot_password_?": "Forgot password ?",
     "send_recovery_link": "Send recovery link",
     "create_new_password": "Create new password",
-    "sign_up_for_account": "Sign up for account",
-    "already_have_an_Docspace_account?_log_in": "Already have an Docspace account? Log in"
+    "sign_up": "Sign up",
+    "already_have_a_Docspace_account?_log_in": "Already have a Docspace account? Log in"
   }
 }

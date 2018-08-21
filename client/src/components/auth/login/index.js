@@ -103,7 +103,7 @@ class Login extends Component {
 
                 )}
               </div>
-              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>{t('sign_up_for_account')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>{t('sign_up')}</p>
               <p className='auth-footer' onClick={this.handleRedirectToReset}>{t('forgot_password_?')}</p>
             </form>
           </div>

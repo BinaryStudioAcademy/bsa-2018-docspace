@@ -72,7 +72,7 @@ class Signup extends Component {
               <img className='header-logo-img' src={logoInCircle} alt='logo' />
               <p className='header-logo-label'>DOCSPACE</p>
             </div>
-            <h2>{t('sign_up_for_account')}</h2>
+            <h2>{t('sign_up')}</h2>
           </div>
           <form className='auth-signup' onSubmit={this.handleSubmit}>
             <Input
@@ -116,7 +116,7 @@ class Signup extends Component {
               )}
             </div>
             <p className='auth-footer' onClick={this.handleRedirectToLogin}>
-              {t('already_have_an_Docspace_account?_log_in')}
+              {t('already_have_a_Docspace_account?_log_in')}
             </p>
           </form>
         </div>

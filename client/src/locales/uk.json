@@ -57,12 +57,12 @@
     "Space_details": "Деталі простору",
     "None": "Порожньо",
     "Done": "Готово",
-    "passwords_are_not_equal": "Паролі не рівні",
-    "is_return_to_log_In_?": "Повернутися на логін ?",
+    "passwords_are_not_equal": "Паролі не однакові",
+    "return_to_the_login_page": "Повернутися на сторінку авторизації",
     "forgot_password_?": "Забули пароль ?",
     "send_recovery_link": "Надіслати посилання для відновлення",
     "create_new_password": "Створити новий пароль",
-    "sign_up_for_account": "Зареєструватися",
-    "already_have_an_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти"
+    "sign_up": "Зареєструватися",
+    "already_have_a_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти"
   }
 }

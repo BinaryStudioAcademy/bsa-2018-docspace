@@ -103,7 +103,7 @@ class NewPassword extends Component {
               </div>
               <div className='auth-reset-password-result'>
                 <p className='auth-footer-message'>{message}</p>
-                <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('is_return_to_log_in_?')}</p>
+                <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('return_to_the_login_page')}</p>
               </div>
             </div>
           </div>
