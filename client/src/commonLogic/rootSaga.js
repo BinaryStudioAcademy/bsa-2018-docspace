@@ -10,6 +10,7 @@ import verificationWatcher from 'src/components/auth/verification/logic/verifica
 import pageSaga from 'src/components/page/logic/pageSaga'
 import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
+import groupSaga from 'src/components/groupDialog/logic/groupSaga'
 
 function * rootSaga () {
   yield all([
@@ -17,6 +18,7 @@ function * rootSaga () {
     fork(pageSaga),
     fork(userSaga),
     fork(commentSaga),
+    fork(groupSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
     verificationWatcher(),
