@@ -27,11 +27,11 @@ class SpaceHeaderButtons extends Component {
     const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport } = this.props
     const dropdownMenuItems = [
       {
-        name: 'Export to PDF',
+        name: t('Export_to_PDF'),
         onClick: () => onPdfExport()
       },
       {
-        name: 'Export to Word',
+        name: t('Export_to_Word'),
         onClick: () => onWordExport()
       }
     ]
@@ -64,21 +64,6 @@ class SpaceHeaderButtons extends Component {
           type='buttons-item'
           menuItems={dropdownMenuItems}
         />
-        {/*
-          <div className='menu-wrapper'>
-            <div className='buttons-item' onClick={this.onMenu}>
-              <i className='fas fa-ellipsis-h' />
-            </div>
-            {
-              this.state.isMenuOpened && (
-                <div className='menu-container'>
-                  <div onClick={onPdfExport}>Export to PDF</div>
-                  <div onClick={onWordExport}>Export to Word</div>
-                </div>
-              )
-            }
-          </div>
-        */}
         {/* TEMP ADDED FOR DELETING PAGE */}
         {
           type === 'page' &&

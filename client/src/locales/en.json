@@ -55,6 +55,8 @@
     "Administrators": "Administrators",
     "Space_details": "Space Details",
     "None": "None",
-    "Done": "Done"
+    "Done": "Done",
+    "Export_to_PDF": "Export to PDF",
+    "Export_to_Word": "Export to Word"
   }
 }
