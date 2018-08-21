@@ -7,7 +7,6 @@ const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
 const passport = require('passport')
-
 const app = express()
 const port = process.env.PORT || 3001
 require('./config/passport')()
