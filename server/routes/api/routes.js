@@ -15,7 +15,7 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/autologin', verifyJWTMiddleware, autologin)
   app.use('/api/logout', logout)
   app.use('/api/pages', verifyJWTMiddleware, page)
-  app.use('/api/user', user)
+  app.use('/api/user', verifyJWTMiddleware, user)
   app.use('/api/spaces', verifyJWTMiddleware, space)
   app.use('/api/category', verifyJWTMiddleware, category)
   app.use('/api/comments', verifyJWTMiddleware, comment)

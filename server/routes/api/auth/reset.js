@@ -67,7 +67,7 @@ const redirectToForgotPass = (req, res) => {
   return res.redirect(hostname.url + 'reset/' + req.params.token)
 }
 
-const setNewPass = (req, res) => {
+const setNewPassword = (req, res) => {
   async.waterfall([
     function (done) {
       userRep.getByToken(req.body.token)
@@ -92,6 +92,6 @@ const setNewPass = (req, res) => {
 }
 
 router.post('/', forgot)
-router.post('/:token', setNewPass)
+router.post('/:token', setNewPassword)
 router.get('/:token', redirectToForgotPass)
 module.exports = router

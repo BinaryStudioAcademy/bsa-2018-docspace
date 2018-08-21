@@ -1,11 +1,11 @@
-import * as actionTypes from './setNewPassActionTypes'
+import * as actionTypes from './setNewPasswordActionTypes'
 
 const initialState = {
   successful: false,
   message: ''
 }
 
-export const setNewPassReducer = (state = initialState, action) => {
+export const setNewPasswordReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.VALID_LINK_SUCCESS:
       return {

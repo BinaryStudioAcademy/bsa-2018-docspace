@@ -9,7 +9,7 @@ class ResetService {
     return apiResult
   }
 
-  setNewPass (data) {
+  setNewPassword (data) {
     const args = { endpoint: '/reset/:token', method: 'POST', body: JSON.stringify(data) }
     const apiResult = callWebApi(args)
       .then(res => res.json())

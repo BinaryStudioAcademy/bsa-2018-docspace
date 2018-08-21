@@ -55,6 +55,10 @@
     "Administrators": "Administrators",
     "Space_details": "Space Details",
     "None": "None",
-    "Done": "Done"
+    "Done": "Done",
+    "passwords_are_not_equal": "Passwords are not equal",
+    "is_return_to_log_in_?": "Is return to Log In ?",
+    "forgot_password_?": "Forgot password ?",
+    "send_recovery_link": "Send recovery link"
   }
 }

@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import Input from '../../common/input'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
 import resetRequest from './logic/resetActions'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { translate } from 'react-i18next'
 
 import './reset.css'
 
@@ -36,6 +37,7 @@ class ResetPassword extends Component {
   render () {
     const { email, redirectToLogin } = this.state
     const { message, successful } = this.props.reset
+    const { t } = this.props
     console.log(`render`, message, successful)
     if (redirectToLogin) {
       return <Redirect to='/login' />
@@ -49,7 +51,7 @@ class ResetPassword extends Component {
                 <img className='header-logo-img' src={logoInCircle} alt='logo' />
                 <p className='header-logo-label'>DOCSPACE</p>
               </div>
-              <h2>Forgot password ?</h2>
+              <h2>{t('forgot_password_?')}</h2>
             </div>
             <form className='auth-reset' onSubmit={this.handleSubmit}>
               <Input
@@ -64,9 +66,9 @@ class ResetPassword extends Component {
                 inputType='submit'
                 disabled={!this.isSubmitAllowed()}
                 name='button'
-                value='Send recovery link'
+                value={t('send_recovery_link')}
               />
-              <p className='auth-footer' onClick={this.handleRedirectToLogin}>Is return to Log In ?</p>
+              <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('is_return_to_log_in_?')}</p>
             </form>
             { !!message &&
               <h4 className='auth-reset-answer'>
@@ -82,7 +84,8 @@ class ResetPassword extends Component {
 
 ResetPassword.propTypes = {
   resetRequest: PropTypes.func,
-  reset: PropTypes.object
+  reset: PropTypes.object,
+  t: PropTypes.func
 }
 
 ResetPassword.defaultProps = {
@@ -100,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   resetRequest: bindActionCreators(resetRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(ResetPassword)))
