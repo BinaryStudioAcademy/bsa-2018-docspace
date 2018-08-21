@@ -19,13 +19,14 @@ script:
 # Set env vars
 env:
     global:
-    - PATH=$PATH:$HOME/google-cloud-sdk/bin
-    - PROJECT_ID="docspace-213816"
-    - ZONE="us-central1-a"
-    - IMAGE_NAME=docspace:latest
-    - FULL_IMAGE_NAME=gcr.io/docspace-213816/docspace
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - PROJECT_ID="docspace-213816"
     - CLUSTER_NAME=docspace-cluster
+    - CLOUDSDK_COMPUTE_ZONE="us-central1-a"
+    - DOCKER_IMAGE_NAME=docspace:latest
+    - KUBE_DEPLOYMENT_NAME=docspace-web
+    - KUBE_DEPLOYMENT_CONTAINER_NAME=docspace-web
+    - NODE_ENV=CI
 
 before_deploy:
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
