@@ -22,7 +22,7 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport } = this.props
+    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport } = this.props
 
     return (
       <div className='buttons-container'>
@@ -55,6 +55,7 @@ class SpaceHeaderButtons extends Component {
             this.state.isMenuOpened && (
               <div className='menu-container'>
                 <div onClick={onPdfExport}>Export to PDF</div>
+                <div onClick={onWordExport}>Export to Word</div>
               </div>
             )
           }
@@ -78,6 +79,7 @@ SpaceHeaderButtons.propTypes = {
   onWatch: PropTypes.func,
   onShare: PropTypes.func,
   onPdfExport: PropTypes.func,
+  onWordExport: PropTypes.func,
   onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
@@ -90,6 +92,7 @@ SpaceHeaderButtons.defaultProps = {
   onWatch: () => false,
   onShare: () => false,
   onPdfExport: () => false,
+  onWordExport: () => false,
   onSave: () => false,
   onDelete: () => false,
   children: null,

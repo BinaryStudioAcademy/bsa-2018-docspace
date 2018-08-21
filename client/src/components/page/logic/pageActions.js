@@ -97,3 +97,8 @@ export const exportPageToPdf = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_PDF,
   payload: page
 })
+
+export const exportPageToWord = (page) => ({
+  type: actionTypes.EXPORT_PAGE_TO_WORD,
+  payload: page
+})
