@@ -30,10 +30,6 @@ class GeneralRepository {
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }
-
-  deleteByCondition (condition) {
-    return this.model.deleteMany(condition)
-  }
 }
 
 module.exports = GeneralRepository
