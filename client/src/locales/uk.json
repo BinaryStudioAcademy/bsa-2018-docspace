@@ -60,6 +60,7 @@
     "passwords_are_not_equal": "Паролі не рівні",
     "is_return_to_log_In_?": "Повернутися на логін ?",
     "forgot_password_?": "Забули пароль ?",
-    "send_recovery_link": "Надіслати посилання для відновлення"
+    "send_recovery_link": "Надіслати посилання для відновлення",
+    "create_new_password": "Створити новий пароль"
   }
 }
