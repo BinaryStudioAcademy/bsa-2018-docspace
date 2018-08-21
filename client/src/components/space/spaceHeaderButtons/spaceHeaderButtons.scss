@@ -41,7 +41,7 @@
       }
     }
 
-    &:hover {
+    &:hover, &.activated {
       cursor: pointer;
       background: $grayBackground;
       border: 1px solid $grayButtons;

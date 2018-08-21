@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
+import DropdownMenu from 'src/components/common/dropdownMenu'
+
 import './spaceHeaderButtons.css'
 
 class SpaceHeaderButtons extends Component {
@@ -23,6 +25,16 @@ class SpaceHeaderButtons extends Component {
 
   render () {
     const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport } = this.props
+    const dropdownMenuItems = [
+      {
+        name: 'Export to PDF',
+        onClick: () => onPdfExport()
+      },
+      {
+        name: 'Export to Word',
+        onClick: () => onWordExport()
+      }
+    ]
 
     return (
       <div className='buttons-container'>
@@ -47,19 +59,26 @@ class SpaceHeaderButtons extends Component {
         <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
           <i className='fas fa-share-square' />
         </div>
-        <div className='menu-wrapper'>
-          <div className='buttons-item' onClick={this.onMenu}>
-            <i className='fas fa-ellipsis-h' />
+        <DropdownMenu
+          icon='fas fa-ellipsis-h'
+          type='buttons-item'
+          menuItems={dropdownMenuItems}
+        />
+        {/*
+          <div className='menu-wrapper'>
+            <div className='buttons-item' onClick={this.onMenu}>
+              <i className='fas fa-ellipsis-h' />
+            </div>
+            {
+              this.state.isMenuOpened && (
+                <div className='menu-container'>
+                  <div onClick={onPdfExport}>Export to PDF</div>
+                  <div onClick={onWordExport}>Export to Word</div>
+                </div>
+              )
+            }
           </div>
-          {
-            this.state.isMenuOpened && (
-              <div className='menu-container'>
-                <div onClick={onPdfExport}>Export to PDF</div>
-                <div onClick={onWordExport}>Export to Word</div>
-              </div>
-            )
-          }
-        </div>
+        */}
         {/* TEMP ADDED FOR DELETING PAGE */}
         {
           type === 'page' &&
