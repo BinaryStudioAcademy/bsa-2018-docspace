@@ -20,7 +20,7 @@ script:
 env:
     global:
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
-    - PROJECT_ID="docspace-213816"
+    - PROJECT_ID="docspace-214009"
     - CLUSTER_NAME=docspace-cluster
     - CLOUDSDK_COMPUTE_ZONE=us-central1-a
     - DOCKER_IMAGE_NAME=docspace
