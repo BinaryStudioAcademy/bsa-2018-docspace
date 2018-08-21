@@ -63,6 +63,8 @@ class SpaceOverviewTab extends Component {
                 goBackToDetails={this.backToSpaceDetails}
                 updateSpace={this.props.updateSpace}
                 space={this.props.space}
+                deleteCategory={this.props.deleteCategory}
+                createCategory={this.props.createCategory}
               />
           }
         </div>
@@ -86,6 +88,8 @@ SpaceOverviewTab.propTypes = {
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.object.isRequired,
   actions: PropTypes.object,
+  createCategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
   })
