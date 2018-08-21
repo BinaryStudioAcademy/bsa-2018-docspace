@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import loginRequest from './logic/loginActions'
@@ -8,6 +7,8 @@ import Input from '../../common/input'
 import Errors from '../../common/error'
 import SplashScreen from 'src/components/splashScreen'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
+import { Redirect, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import './login.css'
 
@@ -51,7 +52,7 @@ class Login extends Component {
   render () {
     const { redirectToSignup, redirectToReset, email, password } = this.state
     const { requesting, errors, successful } = this.props.login
-
+    const { t } = this.props
     if (redirectToSignup) {
       return <Redirect to='/signup' />
     }
@@ -102,8 +103,8 @@ class Login extends Component {
 
                 )}
               </div>
-              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
-              <p className='auth-footer' onClick={this.handleRedirectToReset}>Forgot Password ?</p>
+              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>{t('sign_up_for_account')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToReset}>{t('forgot_password_?')}</p>
             </form>
           </div>
         </div>
@@ -119,7 +120,8 @@ Login.propTypes = {
     successful: PropTypes.bool,
     messages: PropTypes.array,
     errors: PropTypes.array
-  })
+  }),
+  t: PropTypes.func
 }
 Login.defaultProps = {
   login: {
@@ -138,4 +140,4 @@ const mapDispatchToProps = dispatch => ({
   loginRequest: bindActionCreators(loginRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)))
