@@ -34,7 +34,7 @@ const dropdownMenuItems = {
   ],
   burger: [
     {
-      name: 'Burger',
+      name: 'Create group',
       path: '#'
     }
   ]
