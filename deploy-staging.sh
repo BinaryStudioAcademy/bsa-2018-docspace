@@ -12,6 +12,7 @@ gcloud --quiet config set container/cluster $CLUSTER_NAME
 gcloud --quiet config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
 gcloud --quiet container clusters get-credentials $CLUSTER_NAME
 
+docker-credential-gcr configure-docker
 gcloud auth configure-docker
 
 gcloud docker -- push gcr.io/${PROJECT_ID}/${DOCKER_IMAGE_NAME}
