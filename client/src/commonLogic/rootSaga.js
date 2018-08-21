@@ -8,6 +8,7 @@ import verificationWatcher from 'src/components/auth/verification/logic/verifica
 import pageSaga from 'src/components/page/logic/pageSaga'
 import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
+import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 
 function * rootSaga () {
   yield all([
@@ -15,6 +16,7 @@ function * rootSaga () {
     fork(pageSaga),
     fork(userSaga),
     fork(commentSaga),
+    fork(activitySaga),
     verificationWatcher(),
     signupWatcher(),
     loginWatcher(),

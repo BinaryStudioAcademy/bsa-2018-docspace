@@ -7,6 +7,7 @@ import spaceReducer from 'src/components/space/spaceContainer/logic/spaceReducer
 import pageReducer from 'src/components/page/logic/pageReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
 import commentReducer from '../components/page/commentsLogic/commentsReducer'
+import { activityReducer } from 'src/components/dashboard/main/activity/logic/activityReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -16,6 +17,7 @@ const baseReducer = combineReducers({
   spaces: spaceReducer,
   verification: verificationReducer,
   comments: commentReducer,
+  activity: activityReducer,
   routing
 })
 
