@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import './pageHeader.css'
 
-const PageHeader = ({space, t, handleEditPageClick, handleDeletePage}) => (
+const PageHeader = ({ space, t, handleEditPageClick, handleDeletePage, onPdfExport }) => (
   <div className='space-page-header'>
     <div className='title'>
       <NavLink className='space-name-link' to={`/spaces/${space._id}/overview`}>{space && space.name}</NavLink>
@@ -13,8 +13,12 @@ const PageHeader = ({space, t, handleEditPageClick, handleDeletePage}) => (
         <i className='fas fa-lock-open' />
       </NavLink>
     </div>
-    <SpaceHeaderButtons type='page' onEdit={handleEditPageClick} onDelete={handleDeletePage} />
-
+    <SpaceHeaderButtons
+      type='page'
+      onEdit={handleEditPageClick}
+      onDelete={handleDeletePage}
+      onPdfExport={onPdfExport}
+    />
   </div>
 )
 
@@ -22,7 +26,8 @@ PageHeader.propTypes = {
   t: PropTypes.func,
   handleEditPageClick: PropTypes.func,
   space: PropTypes.object,
-  handleDeletePage: PropTypes.func
+  handleDeletePage: PropTypes.func,
+  onPdfExport: PropTypes.func
 }
 
 export default PageHeader
