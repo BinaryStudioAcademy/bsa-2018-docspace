@@ -1,0 +1,46 @@
+@import 'globalStyles/variables.scss';
+
+.auth-main {
+  background-color: $primaryColor;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.auth-content {
+  min-height: 500px;
+  height: 100vh;
+  width: 400px;
+  margin: 0 auto;
+  display:flex;
+  flex-direction: column;
+}
+
+.auth-reset {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+}
+.auth-reset-answer {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 16px;
+  display: flex;
+}
+.auth-footer {
+  color: $black;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 0px;
+  &:hover {
+    text-decoration: underline;
+    }
+  }
+
+.auth-header h2 {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+}

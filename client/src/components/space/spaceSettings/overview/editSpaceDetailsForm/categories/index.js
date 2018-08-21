@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { translate } from 'react-i18next'
 import PropTypes from 'prop-types'
 import Input from 'src/components/common/input'
-import { Link } from 'react-router-dom'
 
-import './categoriesAddTab.css'
+import './categories.css'
 
-class CategoriesAddTab extends Component {
+class Categories extends Component {
   state = {
     categoryName: '',
     hasCategory: false
@@ -16,34 +15,29 @@ class CategoriesAddTab extends Component {
     this.setState({categoryName: target.value})
   }
 
-  hasCategory = (categoryName) => !this.props.space.categories.every((category) => category.name !== categoryName)
+  hasCategory = (categoryName) => !this.props.categories.every((category) => category.name !== categoryName)
 
   handleCreateCategory = () => {
     const { categoryName } = this.state
     if (this.hasCategory(categoryName)) {
       return
     }
-    this.props.createCategory({spaceId: this.props.space._id, categoryName})
+    this.props.createCategory({spaceId: this.props.spaceId, categoryName})
     this.setState({categoryName: ''})
   }
 
   handleDeleteCategory = ({ target }) => {
-    const categoryToDelete = this.props.space.categories[Number(target.id)]
-    this.props.deleteCategory(categoryToDelete._id, this.props.space._id)
+    const categoryToDelete = this.props.categories[Number(target.id)]
+    this.props.deleteCategory(categoryToDelete._id, this.props.spaceId)
   }
 
   isAllowedSubmit = () => !this.state.categoryName.length
 
   render () {
-    const { categories } = this.props.space
+    const { categories } = this.props
     return (
-      <div className='space-categories-edit'>
-        <h2>{this.props.t('Categories')}</h2>
-        <p className='categories-description'>
-          {this.props.t('Categories_description')}
-        </p>
+      <React.Fragment>
         <div className='categories-labels-editor'>
-          <span>Labels</span>
           <div className='categories-labels'>
             <ul>
               {categories
@@ -59,44 +53,28 @@ class CategoriesAddTab extends Component {
             </ul>
           </div>
         </div>
-        <div className='categories-input'>
+        <div className='field-group'>
+          <label>Categories</label>
           <Input placeholder={this.props.t('Enter_category')} inputType='text' name='category-input' onChange={this.handleChangeName} value={this.state.categoryName} />
-          <Input
-            inputType='submit'
-            disabled={this.isAllowedSubmit()}
-            name='category-submit'
-            onClick={this.handleCreateCategory}
-            value='Add'
-          />
-          <Link to={`${this.props.match.url}/overview`} className='category-done-btn'>{this.props.t('Done')}</Link>
+          <button type='submit' className='add-btn' disabled={this.isAllowedSubmit()} onClick={this.handleCreateCategory}>Add</button>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
 
-CategoriesAddTab.propTypes = {
+Categories.propTypes = {
   t: PropTypes.func.isRequired,
   createCategory: PropTypes.func.isRequired,
   deleteCategory: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    url: PropTypes.string
-  }),
-  space: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    categories: PropTypes.array,
-    logo: PropTypes.string,
-    homePage: PropTypes.object,
-    pages: PropTypes.arrayOf(PropTypes.object)
-  })
+  categories: PropTypes.array,
+  spaceId: PropTypes.string
 }
 
-CategoriesAddTab.defaultProps = {
+Categories.defaultProps = {
   space: {
     categories: []
   }
 }
 
-export default translate('translations')(CategoriesAddTab)
+export default translate('translations')(Categories)
