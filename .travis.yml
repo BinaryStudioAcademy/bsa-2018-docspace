@@ -38,7 +38,7 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: "$TRAVIS_BUILD_DIR/deploy-staging.sh"
+    script: chmod u+x ./deploy-staging.sh
     skip_cleanup: true
     on:
       branch: feature/deploy
