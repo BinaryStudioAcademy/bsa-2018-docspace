@@ -22,8 +22,8 @@ env:
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
     - PROJECT_ID="docspace-213816"
     - CLUSTER_NAME=docspace-cluster
-    - CLOUDSDK_COMPUTE_ZONE="us-central1-a"
-    - DOCKER_IMAGE_NAME=docspace:latest
+    - CLOUDSDK_COMPUTE_ZONE=us-central1-a
+    - DOCKER_IMAGE_NAME=docspace
     - KUBE_DEPLOYMENT_NAME=docspace-web
     - KUBE_DEPLOYMENT_CONTAINER_NAME=docspace-web
     - NODE_ENV=CI
