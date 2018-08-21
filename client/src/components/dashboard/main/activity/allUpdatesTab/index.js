@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const getRightProps = (content) => {
-  console.log(content)
   switch (content.action) {
     case 'CREATE_SPACE_SUCCESS':
     case 'UPDATE_SPACE_SUCCESS':
@@ -71,7 +70,7 @@ ContentCard.propTypes = {
 AllUpdatesTab.propTypes = {
   userAvatar: PropTypes.string,
   userName: PropTypes.string,
-  allUpdates: PropTypes.object
+  allUpdates: PropTypes.array
 }
 
 export default AllUpdatesTab
