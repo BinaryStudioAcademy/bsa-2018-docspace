@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import signupRequest from './logic/signupActions'
 import Input from '../../common/input'
 import Errors from '../../common/error'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
+import { translate } from 'react-i18next'
 
 import './signup.css'
 
@@ -59,7 +60,7 @@ class Signup extends Component {
       login
     } = this.state
     const { requesting, errors } = this.props.signup
-
+    const { t } = this.props
     if (redirectToLogin) {
       return <Redirect to='/login' />
     }
@@ -71,7 +72,7 @@ class Signup extends Component {
               <img className='header-logo-img' src={logoInCircle} alt='logo' />
               <p className='header-logo-label'>DOCSPACE</p>
             </div>
-            <h2>Sign up for your account</h2>
+            <h2>{t('sign_up_for_account')}</h2>
           </div>
           <form className='auth-signup' onSubmit={this.handleSubmit}>
             <Input
@@ -115,7 +116,7 @@ class Signup extends Component {
               )}
             </div>
             <p className='auth-footer' onClick={this.handleRedirectToLogin}>
-              Already have an Docspace account? Log in
+              {t('already_have_an_Docspace_account?_log_in')}
             </p>
           </form>
         </div>
@@ -131,7 +132,8 @@ Signup.propTypes = {
     successful: PropTypes.bool,
     messages: PropTypes.array,
     errors: PropTypes.array
-  })
+  }),
+  t: PropTypes.func
 }
 Signup.defaultProps = {
   signup: {
@@ -150,4 +152,4 @@ const mapDispatchToProps = dispatch => ({
   signupRequest: bindActionCreators(signupRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup)))
