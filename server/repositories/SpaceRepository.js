@@ -136,6 +136,18 @@ class SpaceRepository extends GeneralRepository {
   getCountCategory (id) {
     return this.model.find({'categories': {'$in': [id]}}).count()
   }
+
+  updateHistory (id, historyId) {
+    return super.update(id, {'$push': {'history': historyId}})
+  }
+
+  deleteOneHistory (id, historyId) {
+    return super.update(id, {'$pull': {'history': historyId}})
+  }
+
+  deleteAllHistory (id) {
+    return super.update(id, {'$set': {'history': []}})
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)
