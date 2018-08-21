@@ -38,12 +38,7 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./deploy-staging.sh
-    skip_cleanup: true
-    on:
-      branch: feature/deploy
-  - provider: script
     script: ./deploy-production.sh
     skip_cleanup: true
     on:
-      branch: master
+      branch: feature/deploy
