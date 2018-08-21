@@ -583,10 +583,6 @@ concurrently@^3.5.0:
     supports-color "^3.2.3"
     tree-kill "^1.1.0"
 
-connect-flash@0.1.x:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/connect-flash/-/connect-flash-0.1.1.tgz#d8630f26d95a7f851f9956b1e8cc6732f3b6aa30"
-
 connect-mongo@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/connect-mongo/-/connect-mongo-2.0.1.tgz#514d649cff1d5d5546c087193245bb54ff5b703b"
@@ -1026,12 +1022,6 @@ esutils@^2.0.2:
 etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
-
-express-flash@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/express-flash/-/express-flash-0.0.2.tgz#23d1a8bcf3f90d707928e489f96869ecad0acda2"
-  dependencies:
-    connect-flash "0.1.x"
 
 express-session@^1.15.6:
   version "1.15.6"

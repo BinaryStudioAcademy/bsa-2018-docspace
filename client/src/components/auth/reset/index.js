@@ -23,7 +23,7 @@ class ResetPassword extends Component {
     })
   }
   handleFieldChange = ({ target }) => {
-    this.setState(state => ({ state, [target.name]: target.value }))
+    this.setState({ [target.name]: target.value })
   }
   isSubmitAllowed = () => this.state.email
 

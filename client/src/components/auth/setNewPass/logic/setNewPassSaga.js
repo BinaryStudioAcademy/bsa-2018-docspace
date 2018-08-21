@@ -1,11 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
 import { resetService } from 'src/services/resetService'
-import * as actionTypes from './resetNewPassActionTypes'
+import * as actionTypes from './setNewPassActionTypes'
 
-function * resetNewPassFlow (action) {
+function * setNewPassFlow (action) {
   try {
     const { token, password } = action
-    const response = yield call(resetService.resetNewPass, {token, password})
+    const response = yield call(resetService.setNewPass, {token, password})
     console.log(response)
     if (!response.succesful) {
       throw new Error(response.message)
@@ -16,6 +16,6 @@ function * resetNewPassFlow (action) {
   }
 }
 
-export default function * resetNewPassSaga () {
-  yield takeLatest(actionTypes.VALID_LINK_REQUEST, resetNewPassFlow)
+export default function * setNewPassSaga () {
+  yield takeLatest(actionTypes.VALID_LINK_REQUEST, setNewPassFlow)
 }

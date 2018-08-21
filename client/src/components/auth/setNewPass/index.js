@@ -4,10 +4,10 @@ import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import resetNewPassRequest from './logic/resetNewPassActions'
+import setNewPassRequest from './logic/setNewPassActions'
 import { Redirect } from 'react-router-dom'
 
-import './resetNewPass.css'
+import './setNewPass.css'
 
 class NewPassword extends Component {
   constructor (props) {
@@ -20,7 +20,7 @@ class NewPassword extends Component {
     }
   }
   handleFieldChange = ({ target }) => {
-    this.setState(state => ({ state, [target.name]: target.value }))
+    this.setState({[target.name]: target.value})
   }
   isSubmitAllowed = () => this.state.newPassword && this.state.repeatNewPassword
   handleSubmit = (event) => {
@@ -28,7 +28,7 @@ class NewPassword extends Component {
     const { newPassword, repeatNewPassword } = this.state
     if (newPassword === repeatNewPassword) {
       this.setState({ isEqualPasswords: true })
-      this.props.resetNewPassRequest({
+      this.props.setNewPassRequest({
         token: this.props.match.params.token,
         password: this.state.newPassword
       })
@@ -43,7 +43,7 @@ class NewPassword extends Component {
   }
   render () {
     const { newPassword, repeatNewPassword, isEqualPasswords, redirectToLogin } = this.state
-    const { message, successful } = this.props.resetNewPass
+    const { message, successful } = this.props.setNewPass
     if (redirectToLogin) {
       return <Redirect to='/login' />
     }
@@ -111,23 +111,23 @@ class NewPassword extends Component {
   }
 }
 NewPassword.propTypes = {
-  resetNewPassRequest: PropTypes.func,
+  setNewPassRequest: PropTypes.func,
   match: PropTypes.object,
-  resetNewPass: PropTypes.object
+  setNewPass: PropTypes.object
 }
 
 NewPassword.defaultProps = {
-  resetNewPass: {
+  setNewPass: {
     successful: false,
     message: ''
   }
 }
 
 const mapStateToProps = state => ({
-  resetNewPass: state.resetNewPass
+  setNewPass: state.setNewPass
 })
 
 const mapDispatchToProps = dispatch => ({
-  resetNewPassRequest: bindActionCreators(resetNewPassRequest, dispatch)
+  setNewPassRequest: bindActionCreators(setNewPassRequest, dispatch)
 })
 export default connect(mapStateToProps, mapDispatchToProps)(NewPassword)

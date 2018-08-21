@@ -15,7 +15,7 @@ import App from './components/common/app/index'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
 import ResetPassword from './components/auth/reset'
-import NewPassword from './components/auth/resetNewPass'
+import NewPassword from './components/auth/setNewPass'
 import PageEditorContainer from 'src/components/pageEditorContainer'
 
 sagaMiddleware.run(rootSaga)
