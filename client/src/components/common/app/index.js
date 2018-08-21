@@ -12,7 +12,7 @@ import User from 'src/components/containers/user'
 import SpaceContainer from 'src/components/space/spaceContainer'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
 
-import { Route, withRouter } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 
@@ -31,7 +31,7 @@ class App extends Component {
   changeSize (size) {
     this.setState({
       isOpened: size > 70,
-      showIcons: size > 90,
+      showIcons: size > 85,
       showLabels: size > 200,
       showSpaceIcons: size > 140,
       showSpaceLabels: size > 195
@@ -69,8 +69,9 @@ class App extends Component {
               )
           }
           <DashboardMain>
+            <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
             <Route path='/works' component={Work} />
-            <Route path='(/|/activity)' component={Activity} />
+            <Route path='/activity' component={Activity} />
             <Route path='/people' component={People} />
             <Route path='/spacedirectory' component={Spaces} />
             <Route path='/userSettings' component={User} />
