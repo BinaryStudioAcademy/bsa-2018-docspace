@@ -14,7 +14,6 @@ gcloud --quiet config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
 gcloud --quiet container clusters get-credentials $CLUSTER_NAME
 
 gcloud auth configure-docker
-gcloud beta auth configure-docker
 
 gcloud docker -- push gcr.io/${PROJECT_ID}/${DOCKER_IMAGE_NAME}
 
