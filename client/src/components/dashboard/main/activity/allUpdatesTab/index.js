@@ -25,7 +25,7 @@ const getRightProps = (content) => {
       return {
         name: content.pageId.title,
         time: new Date(content.date).toLocaleString(),
-        path: '#',
+        path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'New page created'
       }
@@ -33,7 +33,7 @@ const getRightProps = (content) => {
       return {
         name: content.pageId.title,
         time: new Date(content.date).toLocaleString(),
-        path: '#',
+        path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'Update page'
       }
