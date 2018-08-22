@@ -10,9 +10,9 @@ import joditEditorConfig from './joditConfig'
 
 class PageEditorContainer extends Component {
   componentDidMount () {
-    const pathNames = this.props.location.pathname.split('/')
-    !this.props.page && this.props.actions.getPageByIdRequest(pathNames[4])
-    !this.props.space && this.props.actions.getSpaceRequest(pathNames[2])
+    const { page, space, actions, match } = this.props
+    !page && actions.getPageByIdRequest(match.params.page_id)
+    !space && actions.getSpaceRequest(match.params.space_id)
   }
 
   goToThePreviousLocation = () => {
@@ -20,7 +20,10 @@ class PageEditorContainer extends Component {
   }
 
   render () {
-    if (!this.props.page) return null
+    if (!this.props.page) {
+      return null
+    }
+
     return (
       <PageEditor
         page={this.props.page}
@@ -55,7 +58,7 @@ function mapDispatchToProps (dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(PageEditorContainer)
 
 PageEditorContainer.propTypes = {
-  location: PropTypes.object,
+  match: PropTypes.object,
   page: PropTypes.shape({
     title: PropTypes.string,
     content: PropTypes.sting,
