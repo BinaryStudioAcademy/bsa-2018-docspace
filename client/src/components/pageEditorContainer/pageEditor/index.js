@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import 'jodit'
 import 'jodit/build/jodit.min.css'
 import JoditEditor from 'jodit-react'
-import joditConfig from './joditConfig'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import './pageEditor.css'
@@ -48,7 +47,7 @@ export default class PageEditor extends Component {
  }
 
  render () {
-   const {space, page, user} = this.props
+   const {space, page, user, joditEditorConfig} = this.props
    return (
      <div className='page-editor-wrp'>
        <div className='page-editor-header'>
@@ -103,7 +102,7 @@ export default class PageEditor extends Component {
        />
        <JoditEditor
          value={this.state.page.content}
-         config={joditConfig}
+         config={joditEditorConfig}
          onChange={this.updatePageContent}
        />
        <div className='page-editor-footer'>
@@ -151,5 +150,6 @@ PageEditor.propTypes = {
   }),
   user: PropTypes.shape({
     avatar: PropTypes.string
-  })
+  }),
+  joditEditorConfig: PropTypes.object
 }

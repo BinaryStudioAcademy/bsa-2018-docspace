@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux'
 import { createGroupRequest, getAllUserGroupsRequest } from './logic/groupsAction'
 import Button from 'src/components/common/button'
 import Input from 'src/components/common/input'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import GroupDialog from 'src/components/modals/groupDialog'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import './groups.css'
 
@@ -56,15 +57,17 @@ class Group extends Component {
   }
 
   render () {
+    const { t } = this.props
+    console.log(this.props)
     return (
       <div className='group-container'>
         {this.state.modalIsOpened && <GroupDialog cancelModal={this.closeModal} />}
         <div className='group-header'>
-          <h1>Groups</h1>
-          <Button value='Create group' nameClass='groups-button' onClick={this.openModal} />
+          <h1>{t('Groups')}</h1>
+          <Button value={t('Create group')} nameClass='groups-button' onClick={this.openModal} />
         </div>
         <div className='group-filter-container'>
-          <Input label='Group name contains'
+          <Input label={t('Group name contains')}
             onChange={({target}) => this.handleChange(target)}
             value={this.state.filterField}
           />
@@ -73,9 +76,9 @@ class Group extends Component {
           <table>
             <thead>
               <tr>
-                <th className='name'>Name</th>
+                <th className='name'>{t('Name')}</th>
                 <th className='tags' />
-                <th className='description'>Description</th>
+                <th className='description'>{t('Description')}</th>
               </tr>
             </thead>
             <tbody>
@@ -90,8 +93,10 @@ class Group extends Component {
 
 Group.propTypes = {
   user: PropTypes.object,
-  actions: PropTypes.func,
-  groups: PropTypes.array
+  actions: PropTypes.obj,
+  groups: PropTypes.array,
+  t: PropTypes.func
+
 }
 
 const mapStateToProps = (state) => {
@@ -112,4 +117,5 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Group)
+// export default connect(mapStateToProps, mapDispatchToProps)(Group)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Group)))

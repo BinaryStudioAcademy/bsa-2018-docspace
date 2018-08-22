@@ -28,6 +28,7 @@ class SpaceRepository extends GeneralRepository {
           name: 1,
           description: 1,
           ownerId: 1,
+          blogId: 1,
           categories: {
             _id: 1,
             name: 1
@@ -113,16 +114,6 @@ class SpaceRepository extends GeneralRepository {
         }
       }
     ])
-  }
-
-  update (id, data) {
-    return super.update(id, data)
-      .then(() => this.getById(id))
-  }
-
-  create (data) {
-    return super.create(data)
-      .then(space => this.getById(space._id))
   }
 
   updateCategory (id, categoryId) {

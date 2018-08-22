@@ -92,7 +92,11 @@ export class ProfileFields extends Component {
 
   render () {
     const {email, login, firstName, lastName} = this.props.user
-    const { t } = this.props
+    const { t, i18n } = this.props
+    const changeLanguage = lng => {
+      i18n.changeLanguage(lng)
+      localStorage.setItem('language', lng)
+    }
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -139,6 +143,19 @@ export class ProfileFields extends Component {
             onClick={this.handleSubmitDataUser}
           />
         </div>
+        <div className='language-choise'>
+          <span>{t('choose language')}</span>
+          <Button
+            value={t('Ukrainian')}
+            onClick={() => changeLanguage('uk')}
+            nameClass='language-choise-button'
+          />
+          <Button
+            value={t('English')}
+            onClick={() => changeLanguage('en')}
+            nameClass='language-choise-button'
+          />
+        </div>
       </div>
     )
   }
@@ -153,6 +170,7 @@ ProfileFields.propTypes = {
   isEditMode: PropTypes.bool,
   editMode: PropTypes.func,
   errors: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  i18n: PropTypes.object
 }
 export default translate('translations')(ProfileFields)

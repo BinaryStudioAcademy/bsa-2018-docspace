@@ -32,12 +32,39 @@ function * createPage (action) {
   }
 }
 
+const spaceIdFromPathname = (state) => state.router.location.pathname.split('/')[2]
+
+function * createBlogPage (action) {
+  try {
+    const newPage = yield PageService.createPage(action.payload)
+    const spaceId = action.spaceId
+    yield put(push(`/spaces/${spaceId}/blog/${newPage._id}/edit`))
+    yield put(actions.createBlogPageSuccess(newPage))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.createPageError())
+  }
+}
+
 function * updatePage (action) {
   try {
     const target = action.payload
     const updated = yield PageService.updatePage(target)
-    yield put(actions.updatePageSuccess(updated))
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
+    yield put(actions.updatePageSuccess(updated))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.updatePageError())
+  }
+}
+
+function * updateBlogPage (action) {
+  try {
+    const target = action.payload
+    const updated = yield PageService.updatePage(target)
+    const spaceId = yield select(spaceIdFromPathname)
+    yield put(push(`/spaces/${spaceId}/blog/${updated._id}`))
+    yield put(actions.updateBlogPageSuccess(updated))
   } catch (e) {
     console.log(e)
     yield put(actions.updatePageError())
@@ -49,6 +76,18 @@ function * deletePage (action) {
     yield PageService.deletePage(action.payload)
     yield put(actions.deletePageSuccess(action.payload))
     yield put(push(`/spaces/${action.payload.spaceId}/overview`))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.deletePageError())
+  }
+}
+
+function * deleteBlogPage (action) {
+  try {
+    yield PageService.deletePage(action.payload)
+    yield put(actions.deleteBlogPageSuccess(action.payload))
+    const spaceId = yield select(spaceIdFromPathname)
+    yield put(push(`/spaces/${spaceId}/blog`))
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())
@@ -94,6 +133,11 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
   yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
+
+  yield takeEvery(actionTypes.CREATE_BLOG_PAGE_REQUEST, createBlogPage)
+  yield takeEvery(actionTypes.DELETE_BLOG_PAGE_REQUEST, deleteBlogPage)
+  yield takeEvery(actionTypes.UPDATE_BLOG_PAGE_REQUEST, updateBlogPage)
+
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
 }

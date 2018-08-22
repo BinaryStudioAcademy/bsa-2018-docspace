@@ -1,11 +1,5 @@
 .group{
     width: 100%;  
-    // display: flex;
-    // justify-content: center;
-    // flex-shrink: 0;
-    // tbody, tr{
-    //     width: 100%;
-    // }
     td.group-modal-label{
         padding-right: 20px;
         padding-bottom: 10px;
@@ -35,4 +29,7 @@
 .modal-footer-group button{
     border: none;
     margin: 0 5px;
+}
+.modal-header{
+    text-align: center;
 }

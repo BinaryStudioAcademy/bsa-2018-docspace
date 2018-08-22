@@ -11,6 +11,7 @@ import Work from 'src/components/dashboard/main/work'
 import User from 'src/components/containers/user'
 import SpaceContainer from 'src/components/space/spaceContainer'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
+import BlogSidebar from 'src/components/blog/blogSidebar'
 
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
@@ -39,9 +40,35 @@ class App extends Component {
     })
   }
 
+  renderSidebarDependOnLocation = () => {
+    const pathname = this.props.location.pathname
+
+    if (pathname.includes('/blog')) {
+      return <BlogSidebar
+        isOpened={this.state.isOpened}
+        showLabels={this.state.showSpaceLabels}
+        showContent={this.state.showSpaceIcons}
+      />
+    }
+
+    if (pathname.includes('/spaces/')) {
+      return <SpaceSidebar
+        isOpened={this.state.isOpened}
+        showLabels={this.state.showSpaceLabels}
+        showContent={this.state.showSpaceIcons}
+      />
+    }
+
+    return <DashboardSidebar
+      isOpened={this.state.isOpened}
+      showLabels={this.state.showLabels}
+      showIcons={this.state.showIcons}
+      tabs={<FullSidebar showIcons />}
+    />
+  }
+
   render () {
-    const isSpace = this.props.location.pathname.includes('/spaces/')
-    const showIconsInMinimizeDashboard = true
+    // const showIconsInMinimizeDashboard = true
 
     return (
       // <Group />
@@ -54,21 +81,7 @@ class App extends Component {
           onChange={size => { this.changeSize(size) }}
         >
           {
-            isSpace
-              ? (
-                <SpaceSidebar
-                  isOpened={this.state.isOpened}
-                  showLabels={this.state.showSpaceLabels}
-                  showContent={this.state.showSpaceIcons}
-                />
-              ) : (
-                <DashboardSidebar
-                  isOpened={this.state.isOpened}
-                  showLabels={this.state.showLabels}
-                  showIcons={this.state.showIcons}
-                  tabs={<FullSidebar showIcons={showIconsInMinimizeDashboard} />}
-                />
-              )
+            this.renderSidebarDependOnLocation()
           }
           <DashboardMain>
             <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />

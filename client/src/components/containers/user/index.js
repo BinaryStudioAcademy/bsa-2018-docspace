@@ -184,7 +184,7 @@ class User extends Component {
     )
   }
 
-  renderMainInfo (t, errorsUser, user, successful, errors) {
+  renderMainInfo (t, i18n, errorsUser, user, successful, errors) {
     return (
       !this.state.isShowGeneral
         ? <PrivateFields
@@ -202,6 +202,7 @@ class User extends Component {
           user={user}
           errors={errorsUser}
           t={t}
+          i18n={i18n}
         />
     )
   }
@@ -235,7 +236,7 @@ class User extends Component {
   }
 
   render () {
-    const { t, isFetching } = this.props
+    const { t, i18n, isFetching } = this.props
     const { user } = this.props.userSettings
     const { firstName, lastName } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
@@ -252,7 +253,7 @@ class User extends Component {
           { this.renderClock() }
           <hr />
           { this.renderEditButtons(t, isFetching) }
-          { this.renderMainInfo(t, errorsUser, user, successful, errors) }
+          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors) }
           { this.renderRecentWorks(t) }
         </div>
       </div>
@@ -268,6 +269,7 @@ User.propTypes = {
   id: PropTypes.string,
   history: PropTypes.object,
   t: PropTypes.func,
+  i18n: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
