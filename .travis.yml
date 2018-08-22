@@ -41,4 +41,4 @@ deploy:
     script: bash ./deploy-staging.sh
     skip_cleanup: true
     on:
-      branch: feature/deploy
+      branch: develop
