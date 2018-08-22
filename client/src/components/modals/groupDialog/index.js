@@ -3,7 +3,7 @@ import Modal from 'src/components/common/modal'
 import Input from 'src/components/common/input'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createGroupRequest } from './logic/groupsAction'
+import { createGroupRequest } from '../../group/logic/groupsAction'
 import PropTypes from 'prop-types'
 
 import './groupModal.css'
@@ -58,17 +58,18 @@ class GroupDialog extends Component {
       description: this.state.description
     }
     this.props.actions.createGroupRequest(group)
+    this.props.cancelModal()
   }
 
   renderFooter = () => {
     const idDisabled = !this.state.name
-    return <div className='modal-footer group'>
+    return <div className='modal-footer-group'>
       <button
         className='accept-button'
         onClick={this.createGroup}
         disabled={idDisabled}
       >Create</button>
-      <button>Close</button>
+      <button onClick={this.props.cancelModal}>Close</button>
     </div>
   }
 
@@ -83,7 +84,8 @@ class GroupDialog extends Component {
 
 GroupDialog.propTypes = {
   user: PropTypes.object,
-  actions: PropTypes.func
+  actions: PropTypes.func,
+  cancelModal: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

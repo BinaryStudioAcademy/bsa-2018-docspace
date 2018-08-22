@@ -11,7 +11,7 @@ import pageSaga from 'src/components/page/logic/pageSaga'
 import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import blogSaga from 'src/components/blog/logic/blogSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
-import groupSaga from 'src/components/groupDialog/logic/groupSaga'
+import groupSaga from 'src/components/group/logic/groupSaga'
 
 function * rootSaga () {
   yield all([

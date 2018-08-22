@@ -16,6 +16,7 @@ import BlogSidebar from 'src/components/blog/blogSidebar'
 import { Route, withRouter } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
+import Group from 'src/components/group'
 
 class App extends Component {
   constructor (props) {
@@ -70,6 +71,7 @@ class App extends Component {
     // const showIconsInMinimizeDashboard = true
 
     return (
+      // <Group />
       <div className='app__root' >
         <SplitPane
           split='vertical'
@@ -88,6 +90,7 @@ class App extends Component {
             <Route path='/spacedirectory' component={Spaces} />
             <Route path='/userSettings' component={User} />
             <Route path='/spaces/:id' component={SpaceContainer} />
+            <Route path='/groups' component={Group} />
           </DashboardMain>
         </SplitPane>
       </div>
