@@ -1,6 +1,7 @@
 @import 'globalStyles/variables.scss';
 .group-container{
     width: 100%;
+    overflow: scroll;
     .group-header{
         display: flex;
         flex-direction: row;

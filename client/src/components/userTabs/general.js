@@ -95,6 +95,7 @@ export class ProfileFields extends Component {
     const { t, i18n } = this.props
     const changeLanguage = lng => {
       i18n.changeLanguage(lng)
+      localStorage.setItem('language', lng)
     }
     return (
       <div className='profile-fields-wrapper'>
