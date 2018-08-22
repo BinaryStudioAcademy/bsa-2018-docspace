@@ -36,6 +36,10 @@ before_deploy:
   - gcloud --quiet components update beta
   - gcloud --quiet components update kubectl
 
+branches:
+  only:
+  - develop
+
 deploy:
   - provider: script
     script: bash ./deploy-staging.sh
