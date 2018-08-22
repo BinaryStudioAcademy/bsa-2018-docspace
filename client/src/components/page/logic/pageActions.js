@@ -136,6 +136,21 @@ export const cancelPageByIdRequst = () => ({
   type: actionTypes.CANCEL_PAGE_BY_ID_REQUEST
 })
 
+// SEND DOC FILE
+export const sendDocFileRequest = (fileAndSpaceId) => ({
+  type: actionTypes.SEND_DOC_FILE_REQUEST,
+  payload: { spaceId: fileAndSpaceId.spaceId, file: fileAndSpaceId.file }
+})
+
+export const sendDocFileSuccess = (htmlFile) => ({
+  type: actionTypes.SEND_DOC_FILE_SUCCESS,
+  payload: htmlFile
+})
+
+export const sendDocFileError = (error) => ({
+  type: actionTypes.SEND_DOC_ERROR,
+  payload: error
+})
 // EXPORT
 export const exportPageToPdf = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_PDF,

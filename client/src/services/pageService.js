@@ -2,7 +2,6 @@ import html2pdf from 'html2pdf.js'
 import htmlDocx from 'html-docx-js/dist/html-docx'
 import fileSaver from 'file-saver'
 import { callWebApi } from 'src/helpers/requestHelper'
-
 class PageService {
   getPages = () => {
     const args = { endpoint: '/api/pages', method: 'GET' }
@@ -44,26 +43,35 @@ class PageService {
     return apiResult
   }
 
-  exportPageToPdf = (page) => {
-    const { content, _id } = page
-    const options = {
-      margin: 1,
-      filename: `${_id}.pdf`,
-      html2canvas: {
-        logging: false
-      }
+  async sendDocFile (file) {
+    console.log('before sending', file)
+    let fd = new FormData()
+    fd.append('docfile', file)
+    const result = await fetch('/convert', { method: 'POST',
+      body: fd })
+      .then(res => res.json())
+      .catch(err => console.log(err))
+    return result
+  }
+exportPageToPdf = (page) => {
+  const { content, _id } = page
+  const options = {
+    margin: 1,
+    filename: `${_id}.pdf`,
+    html2canvas: {
+      logging: false
     }
-
-    return html2pdf().from(content).set(options).save()
   }
 
-  exportPageToWord = (page) => {
-    const { content, _id } = page
-    const html = `<!DOCTYPE html><head></head><body>${content}</body>`
-    const converted = htmlDocx.asBlob(html)
-
-    fileSaver.saveAs(converted, `${_id}.docx`)
-  }
+  return html2pdf().from(content).set(options).save()
 }
 
+exportPageToWord = (page) => {
+  const { content, _id } = page
+  const html = `<!DOCTYPE html><head></head><body>${content}</body>`
+  const converted = htmlDocx.asBlob(html)
+
+  fileSaver.saveAs(converted, `${_id}.docx`)
+}
+}
 export default new PageService()

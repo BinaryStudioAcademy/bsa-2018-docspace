@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
-
 import DropdownMenu from 'src/components/common/dropdownMenu'
 
 import './spaceHeaderButtons.css'
@@ -24,7 +23,7 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport } = this.props
+    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport, onWordImport } = this.props
     const dropdownMenuItems = [
       {
         name: t('Export_to_PDF'),
@@ -33,6 +32,10 @@ class SpaceHeaderButtons extends Component {
       {
         name: t('Export_to_Word'),
         onClick: () => onWordExport()
+      },
+      {
+        name: t('Import Word'),
+        onClick: () => onWordImport()
       }
     ]
 
@@ -88,7 +91,8 @@ SpaceHeaderButtons.propTypes = {
   children: PropTypes.element,
   type: PropTypes.string,
   hideEditBtn: PropTypes.bool,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  onWordImport: PropTypes.func
 }
 
 SpaceHeaderButtons.defaultProps = {

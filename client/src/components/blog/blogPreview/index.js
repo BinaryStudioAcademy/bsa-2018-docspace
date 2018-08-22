@@ -11,7 +11,7 @@ import './blog.css'
 
 class Blog extends Component {
   handleCreateBlogPage = () => {
-    this.props.actions.createBlogPageRequest({ blogId: this.props.blog._id })
+    this.props.actions.createBlogPageRequest({ blogId: this.props.blog._id }, this.props.space._id)
   }
 
   render () {
