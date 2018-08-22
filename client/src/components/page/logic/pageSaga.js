@@ -111,6 +111,20 @@ function * getPage (action) {
   }
 }
 
+function * sendFile (action) {
+  try {
+    const htmlFile = yield PageService.sendDocFile(action.payload.file)
+    console.log(`saga`, action)
+    const newPage = yield PageService.createPage({spaceId: action.payload.spaceId, title: 'Default title', content: htmlFile.html})
+    console.log(newPage)
+    console.log(`saga`, htmlFile)
+    yield put(actions.createPageSuccess(newPage))
+    // Go to the editor
+    yield put(push(`/spaces/${newPage.spaceId}/pages/${newPage._id}/edit`))
+  } catch (e) {
+    yield put(actions.sendDocFileError(e))
+  }
+}
 function * exportPageToPdf (action) {
   try {
     yield PageService.exportPageToPdf(action.payload)
@@ -133,11 +147,10 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
   yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
-
   yield takeEvery(actionTypes.CREATE_BLOG_PAGE_REQUEST, createBlogPage)
   yield takeEvery(actionTypes.DELETE_BLOG_PAGE_REQUEST, deleteBlogPage)
   yield takeEvery(actionTypes.UPDATE_BLOG_PAGE_REQUEST, updateBlogPage)
-
+  yield takeEvery(actionTypes.SEND_DOC_FILE_REQUEST, sendFile)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
 }
