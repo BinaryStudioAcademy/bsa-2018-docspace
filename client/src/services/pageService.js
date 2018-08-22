@@ -1,3 +1,6 @@
+import html2pdf from 'html2pdf.js'
+import htmlDocx from 'html-docx-js/dist/html-docx'
+import fileSaver from 'file-saver'
 import { callWebApi } from 'src/helpers/requestHelper'
 
 class PageService {
@@ -39,6 +42,27 @@ class PageService {
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
+  }
+
+  exportPageToPdf = (page) => {
+    const { content, _id } = page
+    const options = {
+      margin: 1,
+      filename: `${_id}.pdf`,
+      html2canvas: {
+        logging: false
+      }
+    }
+
+    return html2pdf().from(content).set(options).save()
+  }
+
+  exportPageToWord = (page) => {
+    const { content, _id } = page
+    const html = `<!DOCTYPE html><head></head><body>${content}</body>`
+    const converted = htmlDocx.asBlob(html)
+
+    fileSaver.saveAs(converted, `${_id}.docx`)
   }
 }
 
