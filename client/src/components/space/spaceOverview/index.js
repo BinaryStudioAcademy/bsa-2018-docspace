@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, sendDocFileRequest, createPageRequest } from 'src/components/page/logic/pageActions'
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewHeader from './spaceOverviewHeader'
 
@@ -18,6 +18,18 @@ class SpaceOverview extends Component {
     this.props.actions.deleteSpaceRequest(this.props.space._id)
   }
 
+  handleCallSystemDialogWindow = () => {
+    this.refs.fileUploader.click()
+  }
+
+  handleChoosenFile = (e) => {
+    if (e.target.files[0]) {
+      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+    } else {
+      console.log('cancel')
+    }
+  }
+
   render () {
     const {homePage, space} = this.props
     return (
@@ -26,6 +38,7 @@ class SpaceOverview extends Component {
           space={space}
           handleEditBtnClick={this.handleEditBtnClick}
           handleDeleteSpace={this.handleDeleteSpace}
+          onWordImport={this.handleCallSystemDialogWindow}
         />
         {
           homePage &&
@@ -33,6 +46,7 @@ class SpaceOverview extends Component {
             <PageContent content={homePage.content} />
           </div>
         }
+        <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
       </React.Fragment>
     )
   }
@@ -52,7 +66,7 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deleteSpaceRequest
+        getPageByIdRequest, deleteSpaceRequest, sendDocFileRequest, createPageRequest
       }
       , dispatch)
   }

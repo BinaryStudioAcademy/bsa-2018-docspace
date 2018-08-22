@@ -1,5 +1,4 @@
 import { callWebApi } from 'src/helpers/requestHelper'
-
 class PageService {
   getPages = () => {
     const args = { endpoint: '/api/pages', method: 'GET' }
@@ -39,6 +38,17 @@ class PageService {
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
+  }
+
+  async sendDocFile (file) {
+    console.log('before sending', file)
+    let fd = new FormData()
+    fd.append('docfile', file)
+    const result = await fetch('/convert', { method: 'POST',
+      body: fd })
+      .then(res => res.json())
+      .catch(err => console.log(err))
+    return result
   }
 }
 

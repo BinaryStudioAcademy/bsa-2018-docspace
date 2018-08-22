@@ -72,10 +72,26 @@ function * getPage (action) {
   }
 }
 
+function * sendFile (action) {
+  try {
+    const htmlFile = yield PageService.sendDocFile(action.payload.file)
+    console.log(`saga`, action)
+    const newPage = yield PageService.createPage({spaceId: action.payload.spaceId, title: 'Default title', content: htmlFile.html})
+    console.log(newPage)
+    console.log(`saga`, htmlFile)
+    yield put(actions.createPageSuccess(newPage))
+    // Go to the editor
+    yield put(push(`/spaces/${newPage.spaceId}/pages/${newPage._id}/edit`))
+  } catch (e) {
+    yield put(actions.sendDocFileError(e))
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
   yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
+  yield takeEvery(actionTypes.SEND_DOC_FILE_REQUEST, sendFile)
 }

@@ -22,6 +22,11 @@ const initialState = {
       ]
     }
   },
+  htmlFile: {
+    html: '',
+    succesful: false,
+    errors: []
+  },
   isFetching: false
 }
 
@@ -57,13 +62,28 @@ function byId (state = initialState.byId, action) {
   }
 }
 
+function getHTML (state = initialState.htmlFile, action) {
+  switch (action.type) {
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
+      return {...action.payload}
+    case actionTypes.SEND_DOC_ERROR:
+      return {...state}
+    default: return state
+  }
+}
+
 function isFetching (state = initialState.isFetching, action) {
   switch (action.type) {
     case actionTypes.GET_PAGE_BY_ID_REQUEST:
+    case actionTypes.SEND_DOC_FILE_REQUEST:
       return true
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.GET_PAGE_BY_ID_ERROR:
     case actionTypes.CANCEL_PAGE_BY_ID_REQUEST:
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
+    case actionTypes.SEND_DOC_ERROR:
+    case actionTypes.CREATE_PAGE_SUCCESS:
+    case actionTypes.CREATE_PAGE_ERROR:
       return false
     default:
       return state
@@ -73,6 +93,7 @@ function isFetching (state = initialState.isFetching, action) {
 export default combineReducers({
   all,
   byId,
+  getHTML,
   isFetching
 })
 
@@ -89,6 +110,10 @@ export const pageByIdFromRoute = (state) => {
 }
 export const isPagesFetching = ({ pages }) => {
   return pages.isFetching
+}
+
+export const getDocFileInHTML = ({pages}) => {
+  return pages.getHTML
 }
 // DELETE THIS LATER!
 // export const spaceHomepageByIdFromRoute = (state) => {
