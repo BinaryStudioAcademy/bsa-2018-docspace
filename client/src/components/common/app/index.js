@@ -31,10 +31,10 @@ class App extends Component {
   changeSize (size) {
     this.setState({
       isOpened: size > 70,
-      showIcons: size > 90,
-      showLabels: size > 200,
-      showSpaceIcons: size > 140,
-      showSpaceLabels: size > 195
+      showIcons: size > 100,
+      showLabels: size > 145,
+      showSpaceIcons: size > 110,
+      showSpaceLabels: size > 155
     })
   }
 

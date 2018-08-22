@@ -9,7 +9,7 @@ const SpaceSidebarButtons = (props) => {
   const { spaceId } = props
 
   return (
-    <div className='tabs-wrapper'>
+    <div className='full-sidebar'>
       <div className='logo'>
         <img src={spaceLogo} alt='space logo' />
       </div>

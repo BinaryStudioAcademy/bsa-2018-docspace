@@ -58,7 +58,7 @@ class MinSidebar extends Component {
     const logo = this.props.isGray ? grayLogo : whiteLogo
 
     return (
-      <div className='icon-buttons-wrapper' >
+      <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
         <div className='top-icons'>
           <NavLink to={'/spacedirectory'}>

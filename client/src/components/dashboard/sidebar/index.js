@@ -7,22 +7,24 @@ import './sidebar.css'
 import './minSidebar/minSideBar.css'
 import './button/button.css'
 
-const DashboardSidebar = (props) => (
-  <div showLabels={props.showLabels} className='sidebar-blue-schema' >
-    <div className='sidebar-container'>
-      {props.isOpened &&
-        <div className='sidebar-wrapper'>
-          <MinSidebar />
-          <FullSidebar showLabels={props.showLabels} showIcons={props.showIcons} />
-        </div>
-      }
-      {!props.isOpened &&
-        <div className='minimize-dashboard-wrapper'>
-          <MinSidebar sidebarAction={this.closeLabeledWindow} tabs={props.tabs} /></div>
+const DashboardSidebar = (props) => {
+  const className = props.isOpened ? 'sidebar' : 'sidebar minimized'
+
+  return (
+    <div className={className}>
+      {
+        props.isOpened
+          ? (
+            <React.Fragment>
+              <MinSidebar />
+              <FullSidebar showLabels={props.showLabels} showIcons={props.showIcons} />
+            </React.Fragment>
+          )
+          : <MinSidebar sidebarAction={this.closeLabeledWindow} tabs={props.tabs} isGray />
       }
     </div>
-  </div>
-)
+  )
+}
 
 DashboardSidebar.propTypes = {
   tabs: PropTypes.element,
