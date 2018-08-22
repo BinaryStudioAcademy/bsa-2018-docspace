@@ -1,0 +1,35 @@
+.group{
+    width: 100%;  
+    td.group-modal-label{
+        padding-right: 20px;
+        padding-bottom: 10px;
+    }
+    .group-modal-label{
+        text-align: right;
+        vertical-align: bottom;
+        span{
+            color: red;
+            font-size: 18px;
+    }
+  }
+  .modal-footer{
+    display: flex;
+    align-items: center;
+  }
+}
+#name, #description{
+    width: 70%;
+}
+.modal-footer-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+  }
+.modal-footer-group button{
+    border: none;
+    margin: 0 5px;
+}
+.modal-header{
+    text-align: center;
+}
