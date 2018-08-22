@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import PageHeader from './pageHeader'
+import PageHeader from 'src/components/common/pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -53,6 +53,12 @@ class Page extends Component {
     console.log('deleting')
     this.props.actions.deletePageRequest(this.props.page)
   }
+  exportPageToPdf = () => {
+    this.props.actions.exportPageToPdf(this.props.page)
+  }
+  exportPageToWord = () => {
+    this.props.actions.exportPageToWord(this.props.page)
+  }
   handleCallSystemDialogWindow = () => {
     this.refs.fileUploader.click()
   }
@@ -75,6 +81,8 @@ class Page extends Component {
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
           onWordImport={this.handleCallSystemDialogWindow}
+          onPdfExport={this.exportPageToPdf}
+          onWordExport={this.exportPageToWord}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -136,6 +144,8 @@ Page.propTypes = {
   addComment: PropTypes.func,
   deleteCommentRequest: PropTypes.func,
   editCommentRequest: PropTypes.func,
+  exportPageToPdf: PropTypes.func,
+  exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
   isFetching: PropTypes.bool,
@@ -172,7 +182,11 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deletePageRequest, sendDocFileRequest
+        getPageByIdRequest,
+        deletePageRequest,
+        exportPageToPdf,
+        exportPageToWord,
+        sendDocFileRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

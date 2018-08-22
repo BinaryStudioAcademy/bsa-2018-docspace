@@ -1,0 +1,44 @@
+@import 'globalStyles/variables.scss';
+
+.blog-pages-list {
+  font-size: 15px;
+  
+  &-title {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 500;
+    padding-top: 10px;
+  }
+
+  &-year {
+    padding-left: 2rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.3rem;
+    font-size: 14px;
+  }
+
+  &-item {
+    display: flex;
+    padding: 5px 0 5px 20px;
+    text-decoration: none;
+    color: $grayDark;
+
+    &:hover {
+      color: $black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    &.current {
+      font-weight: bold;
+      color: $black;
+    }
+
+    &-name {
+      margin-left: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

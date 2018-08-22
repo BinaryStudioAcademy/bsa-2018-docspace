@@ -8,12 +8,20 @@ export const getAllCommentsRequest = (commentsId) => ({
   }
 })
 
-export const allCommentsFetched = (comments) => ({
-  type: commentsActionTypes.GET_ALL_COMMENTS_SUCCESS,
-  payload: {
-    comments: comments
+export const allCommentsFetched = (comments) => {
+  const commentsWithCorrectTime = comments.map((comment) => {
+    comment.createdAt = new Date(comment.createdAt)
+
+    return comment
+  })
+
+  return {
+    type: commentsActionTypes.GET_ALL_COMMENTS_SUCCESS,
+    payload: {
+      comments: commentsWithCorrectTime
+    }
   }
-})
+}
 
 export const getAllCommentsFailure = () => ({
   type: commentsActionTypes.GET_ALL_COMMENTS_ERROR
@@ -29,12 +37,18 @@ export const addCommentRequest = (comment, page) => ({
   }
 })
 
-export const addCommentSuccessfully = (comment) => ({
-  type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
-  payload: {
-    comment: comment
+export const addCommentSuccessfully = (comment) => {
+  const commentWithCorrectTime = comment
+
+  commentWithCorrectTime.createdAt = new Date(comment.createdAt)
+
+  return {
+    type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
+    payload: {
+      comment: commentWithCorrectTime
+    }
   }
-})
+}
 
 export const addCommentFailure = () => ({
   type: commentsActionTypes.CREATE_COMMENT_ERROR

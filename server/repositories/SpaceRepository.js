@@ -28,6 +28,7 @@ class SpaceRepository extends GeneralRepository {
           name: 1,
           description: 1,
           ownerId: 1,
+          blogId: 1,
           categories: {
             _id: 1,
             name: 1
@@ -115,16 +116,6 @@ class SpaceRepository extends GeneralRepository {
     ])
   }
 
-  update (id, data) {
-    return super.update(id, data)
-      .then(() => this.getById(id))
-  }
-
-  create (data) {
-    return super.create(data)
-      .then(space => this.getById(space._id))
-  }
-
   updateCategory (id, categoryId) {
     return super.update(id, {'$addToSet': {'categories': categoryId}})
   }
@@ -135,6 +126,18 @@ class SpaceRepository extends GeneralRepository {
 
   getCountCategory (id) {
     return this.model.find({'categories': {'$in': [id]}}).count()
+  }
+
+  updateHistory (id, historyId) {
+    return super.update(id, {'$push': {'history': historyId}})
+  }
+
+  deleteOneHistory (id, historyId) {
+    return super.update(id, {'$pull': {'history': historyId}})
+  }
+
+  deleteAllHistory (id) {
+    return super.update(id, {'$set': {'history': []}})
   }
 }
 

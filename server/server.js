@@ -6,7 +6,6 @@ const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
 const passport = require('passport')
-
 const app = express()
 const port = process.env.PORT || 3001
 require('./config/passport')()
@@ -40,4 +39,4 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+app.listen(port, () => console.log(`Listening on port  ${port}`))

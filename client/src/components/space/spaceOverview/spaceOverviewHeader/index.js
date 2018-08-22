@@ -5,10 +5,17 @@ import PropTypes from 'prop-types'
 
 import './spaceOverviewHeader.css'
 
-const SpaceOverviewHeader = ({ space, t, handleEditBtnClick, handleDeleteSpace, onWordImport }) => (
+const SpaceOverviewHeader = ({ space, t, handleEditBtnClick, handleDeleteSpace, onPdfExport, onWordExport, onWordImport }) => (
   <div className='space-header'>
     <div className='space-header-name'>{space.name}</div>
-    <SpaceHeaderButtons type='space' hideEditBtn={!space.homePage} onEdit={handleEditBtnClick} onWordImport={onWordImport}>
+    <SpaceHeaderButtons
+      type='space'
+      hideEditBtn={!space.homePage}
+      onEdit={handleEditBtnClick}
+      onPdfExport={onPdfExport}
+      onWordExport={onWordExport}
+      onWordImport={onWordImport}
+    >
       <div
         className='space-button'
         onClick={handleDeleteSpace}
@@ -24,7 +31,9 @@ SpaceOverviewHeader.propTypes = {
   space: PropTypes.object,
   handleEditBtnClick: PropTypes.func,
   handleDeleteSpace: PropTypes.func,
-  onWordImport: PropTypes.func
+  onWordImport: PropTypes.func,
+  onPdfExport: PropTypes.func,
+  onWordExport: PropTypes.func
 }
 
 export default translate('translations')(SpaceOverviewHeader)

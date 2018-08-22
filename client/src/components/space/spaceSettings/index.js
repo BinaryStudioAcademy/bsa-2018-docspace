@@ -8,7 +8,6 @@ import SpaceSettingsTab from './settings'
 import { Route, NavLink } from 'react-router-dom'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import './spaceSettings.css'
-import CategoriesAddTab from './categories'
 
 const TABS = [
   {
@@ -20,11 +19,6 @@ const TABS = [
     name: 'settings',
     path: '/settings',
     component: SpaceSettingsTab
-  },
-  {
-    name: 'categories',
-    path: '/categories',
-    component: CategoriesAddTab
   }
 ]
 
