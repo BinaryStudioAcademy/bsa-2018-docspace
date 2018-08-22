@@ -15,6 +15,7 @@ const Input = (props) => (
     value={props.value}
     disabled={props.disabled}
     autoComplete={props.autoComplete}
+    id={props.id}
   />
 )
 
@@ -27,7 +28,8 @@ Input.propTypes = {
   autoComplete: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  id: PropTypes.string
 }
 
 export default Input

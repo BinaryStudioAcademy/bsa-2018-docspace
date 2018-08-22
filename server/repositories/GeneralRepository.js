@@ -4,7 +4,11 @@ class GeneralRepository {
   }
 
   getAll () {
-    return this.model.find()
+    return this.getAllByCriteria({})
+  }
+
+  getAllByCriteria (criteria) {
+    return this.model.find(criteria)
   }
 
   getById (id) {
@@ -25,10 +29,6 @@ class GeneralRepository {
 
   delete (id) {
     return this.model.deleteOne({ _id: id })
-  }
-
-  deleteByCondition (condition) {
-    return this.model.deleteMany(condition)
   }
 }
 

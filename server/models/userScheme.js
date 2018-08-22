@@ -20,7 +20,9 @@ const userSchema = new mongoose.Schema({
     validate: [validateEmail, 'Please fill a valid email address']
   },
   login: { type: String, required: true, match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: { unique: true } },
-  password: String
+  password: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 }, {
   versionKey: false
 })

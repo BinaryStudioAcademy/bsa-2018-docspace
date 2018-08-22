@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -54,6 +54,14 @@ class Page extends Component {
     this.props.actions.deletePageRequest(this.props.page)
   }
 
+  exportPageToPdf = () => {
+    this.props.actions.exportPageToPdf(this.props.page)
+  }
+
+  exportPageToWord = () => {
+    this.props.actions.exportPageToWord(this.props.page)
+  }
+
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
@@ -64,6 +72,8 @@ class Page extends Component {
           t={t}
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
+          onPdfExport={this.exportPageToPdf}
+          onWordExport={this.exportPageToWord}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -124,6 +134,8 @@ Page.propTypes = {
   addComment: PropTypes.func,
   deleteCommentRequest: PropTypes.func,
   editCommentRequest: PropTypes.func,
+  exportPageToPdf: PropTypes.func,
+  exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
   isFetching: PropTypes.bool
@@ -159,7 +171,10 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deletePageRequest
+        getPageByIdRequest,
+        deletePageRequest,
+        exportPageToPdf,
+        exportPageToWord
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewHeader from './spaceOverviewHeader'
 
@@ -18,6 +18,14 @@ class SpaceOverview extends Component {
     this.props.actions.deleteSpaceRequest(this.props.space._id)
   }
 
+  exportPageToPdf = () => {
+    this.props.actions.exportPageToPdf(this.props.homePage)
+  }
+
+  exportPageToWord = () => {
+    this.props.actions.exportPageToWord(this.props.homePage)
+  }
+
   render () {
     const {homePage, space} = this.props
     return (
@@ -26,6 +34,8 @@ class SpaceOverview extends Component {
           space={space}
           handleEditBtnClick={this.handleEditBtnClick}
           handleDeleteSpace={this.handleDeleteSpace}
+          onPdfExport={this.exportPageToPdf}
+          onWordExport={this.exportPageToWord}
         />
         {
           homePage &&
@@ -52,7 +62,10 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deleteSpaceRequest
+        getPageByIdRequest,
+        deleteSpaceRequest,
+        exportPageToPdf,
+        exportPageToWord
       }
       , dispatch)
   }

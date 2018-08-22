@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
-
+import Categories from './categories'
 import './editSpaceDetailsForm.css'
 import logo from 'src/resources/logo.png'
 
@@ -9,13 +9,13 @@ class EditSpaceDetailsForm extends Component {
   constructor (props) {
     super(props)
     const {space} = this.props
-    // this.state = {
-    //   name: space.name,
-    //   description: space.description,
-    //   categories: space.categories.map(category => category.name).join(', '),
-    //   logo: space.logo,
-    //   homePage: space.homePage
-    // }
+    this.state = {
+      name: space.name,
+      description: space.description,
+      logo: space.logo,
+      homePage: space.homePage,
+      pages: space.pages
+    }
     this.state = { ...space }
   }
 
@@ -40,15 +40,16 @@ class EditSpaceDetailsForm extends Component {
     //   name: this.state.name,
     //   description: this.state.description
     // }
-    const changedSpace = { ...this.props.space, ...this.state }
+    const changedSpace = { ...this.state, categories: this.props.space.categories }
 
     this.props.updateSpace(changedSpace)
     this.props.goBackToDetails()
   }
 
   render () {
-    const {name, description, homePage, pages} = this.state
-    const { t } = this.props
+    const { name, description, homePage, pages } = this.state
+    const { t, createCategory, deleteCategory } = this.props
+    const { categories, _id: spaceId } = this.props.space
 
     return (
       <form className='edit-space-details-form'>
@@ -77,7 +78,12 @@ class EditSpaceDetailsForm extends Component {
             onChange={({target}) => this.handleFieldChange(target)}
           />
         </div>
-
+        <Categories
+          categories={categories}
+          createCategory={createCategory}
+          deleteCategory={deleteCategory}
+          spaceId={spaceId}
+        />
         {/*
         <div className='field-group'>
           <label>{t('Home_page')}</label>
@@ -109,8 +115,8 @@ class EditSpaceDetailsForm extends Component {
 
         <div className='btn-group'>
           <label />
-          <button type='submit' onClick={this.handleSave}> {t('Save')} </button>
-          <button onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
+          <button className='save-btn' type='submit' onClick={this.handleSave}> {t('Save')} </button>
+          <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
         </div>
       </form>
 
@@ -122,6 +128,8 @@ EditSpaceDetailsForm.propTypes = {
   t: PropTypes.func.isRequired,
   goBackToDetails: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
+  createCategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
   space: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
