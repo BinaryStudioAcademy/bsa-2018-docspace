@@ -21,7 +21,6 @@ import { withRouter } from 'react-router-dom'
 
 import fakeImg from 'src/resources/logo.svg'
 import './blogPost.css'
-// import '../comments//comments/comments.css'
 
 class Page extends Component {
   constructor (props) {
