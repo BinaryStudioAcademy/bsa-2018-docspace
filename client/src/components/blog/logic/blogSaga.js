@@ -6,8 +6,6 @@ import BlogService from 'src/services/blogService'
 function * getBlog (action) {
   try {
     const blog = yield BlogService.getBlog(action.payload)
-    console.log('IN SAGA')
-    console.log(blog)
     yield put(actions.getBlogSuccess(blog))
   } catch (e) {
     console.log(e)
