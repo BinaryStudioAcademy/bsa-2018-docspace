@@ -1,48 +1,80 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
+import DropdownMenu from 'src/components/common/dropdownMenu'
+
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn, onDelete }) => {
-  return (
-    <div className='buttons-container'>
+class SpaceHeaderButtons extends Component {
+  constructor () {
+    super()
+
+    this.state = {
+      isMenuOpened: false
+    }
+  }
+
+  onMenu = () => {
+    this.setState((state) => {
+      return {
+        isMenuOpened: !state.isMenuOpened
+      }
+    })
+  }
+
+  render () {
+    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, onDelete, onPdfExport, onWordExport } = this.props
+    const dropdownMenuItems = [
       {
-        !hideEditBtn &&
-        <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
-          <i className='fas fa-pen' />
+        name: t('Export_to_PDF'),
+        onClick: () => onPdfExport()
+      },
+      {
+        name: t('Export_to_Word'),
+        onClick: () => onWordExport()
+      }
+    ]
+
+    return (
+      <div className='buttons-container'>
+        {
+          !hideEditBtn &&
+          <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
+            <i className='fas fa-pen' />
+          </div>
+        }
+        {
+          type === 'blog' || type === 'page'
+            ? (
+              <div className='buttons-item' title={t('Save_for_later')} onClick={onSave}>
+                <i className='far fa-star' />
+              </div>
+            )
+            : null
+        }
+        <div className='buttons-item' title={t('Watch')}onClick={onWatch}>
+          <i className='fas fa-eye' />
         </div>
-      }
-      {
-        type === 'blog' || type === 'page'
-          ? (
-            <div className='buttons-item' title={t('Save_for_later')} onClick={onSave}>
-              <i className='far fa-star' />
-            </div>
-          )
-          : null
-      }
-      <div className='buttons-item' title={t('Watch')}onClick={onWatch}>
-        <i className='fas fa-eye' />
-      </div>
-      <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
-        <i className='fas fa-share-square' />
-      </div>
-      {/*
-      TEMP HIDDEN
-      <div className='buttons-item' onClick={onMenu}>
-        <i className='fas fa-ellipsis-h' />
-      </div> */}
-      {/* TEMP ADDED FOR DELETING PAGE */}
-      {
-        type === 'page' &&
-        <div className='buttons-item' onClick={onDelete} >
-          <i className='fas fa-trash' />
+        <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
+          <i className='fas fa-share-square' />
         </div>
-      }
-      {children}
-    </div>
-  )
+        <DropdownMenu
+          icon='fas fa-ellipsis-h'
+          type='buttons-item'
+          menuItems={dropdownMenuItems}
+        />
+        {/* TEMP ADDED FOR DELETING PAGE */}
+        {
+          type === 'page' &&
+          <div className='buttons-item' onClick={onDelete} >
+            <i className='fas fa-trash' />
+          </div>
+        }
+        {children}
+      </div>
+    )
+  }
 }
 
 SpaceHeaderButtons.propTypes = {
@@ -50,7 +82,8 @@ SpaceHeaderButtons.propTypes = {
   onEdit: PropTypes.func,
   onWatch: PropTypes.func,
   onShare: PropTypes.func,
-  onMenu: PropTypes.func,
+  onPdfExport: PropTypes.func,
+  onWordExport: PropTypes.func,
   onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
@@ -62,7 +95,8 @@ SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
   onWatch: () => false,
   onShare: () => false,
-  onMenu: () => false,
+  onPdfExport: () => false,
+  onWordExport: () => false,
   onSave: () => false,
   onDelete: () => false,
   children: null,

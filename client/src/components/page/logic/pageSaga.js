@@ -111,6 +111,22 @@ function * getPage (action) {
   }
 }
 
+function * exportPageToPdf (action) {
+  try {
+    yield PageService.exportPageToPdf(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
+function * exportPageToWord (action) {
+  try {
+    yield PageService.exportPageToWord(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
@@ -121,4 +137,7 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.CREATE_BLOG_PAGE_REQUEST, createBlogPage)
   yield takeEvery(actionTypes.DELETE_BLOG_PAGE_REQUEST, deleteBlogPage)
   yield takeEvery(actionTypes.UPDATE_BLOG_PAGE_REQUEST, updateBlogPage)
+
+  yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
+  yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
 }

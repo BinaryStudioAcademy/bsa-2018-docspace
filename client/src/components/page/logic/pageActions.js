@@ -126,3 +126,14 @@ export const deletePageError = () => ({
 export const cancelPageByIdRequst = () => ({
   type: actionTypes.CANCEL_PAGE_BY_ID_REQUEST
 })
+
+// EXPORT
+export const exportPageToPdf = (page) => ({
+  type: actionTypes.EXPORT_PAGE_TO_PDF,
+  payload: page
+})
+
+export const exportPageToWord = (page) => ({
+  type: actionTypes.EXPORT_PAGE_TO_WORD,
+  payload: page
+})

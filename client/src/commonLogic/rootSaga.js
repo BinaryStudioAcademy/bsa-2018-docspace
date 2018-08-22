@@ -11,6 +11,7 @@ import pageSaga from 'src/components/page/logic/pageSaga'
 import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import blogSaga from 'src/components/blog/logic/blogSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
+import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
 
 function * rootSaga () {
@@ -20,6 +21,7 @@ function * rootSaga () {
     fork(userSaga),
     fork(commentSaga),
     fork(blogSaga),
+    fork(activitySaga),
     fork(groupSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
