@@ -4,6 +4,10 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 module.exports = {
   findAll: (req, res) => {
     HistoryRepository.getAll()
+      .sort('-date')
+      .populate('spaceId', 'name')
+      .populate('pageId', 'title')
+      .populate('commentId', 'text')
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
@@ -65,7 +69,6 @@ module.exports = {
   },
 
   add: async (req, res) => {
-    console.log('BODY', req.body)
     let history = await HistoryRepository.create({userId: req.user._id, date: Date.now(), ...req.body})
       .then(history => history)
       .catch((err) => {

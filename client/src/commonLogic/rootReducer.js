@@ -7,8 +7,11 @@ import { setNewPasswordReducer } from 'src/components/auth/setNewPassword/logic/
 import userReducers from 'src/components/containers/user/logic/userReducer'
 import spaceReducer from 'src/components/space/spaceContainer/logic/spaceReducer'
 import pageReducer from 'src/components/page/logic/pageReducer'
+import blogReducer from 'src/components/blog/logic/blogReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
 import commentReducer from '../components/page/commentsLogic/commentsReducer'
+import { activityReducer } from 'src/components/dashboard/main/activity/logic/activityReducer'
+import groupsReducer from 'src/components/group/logic/groupsReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -16,8 +19,11 @@ const baseReducer = combineReducers({
   user: userReducers,
   pages: pageReducer,
   spaces: spaceReducer,
+  blog: blogReducer,
+  groups: groupsReducer,
   verification: verificationReducer,
   comments: commentReducer,
+  activity: activityReducer,
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
   routing

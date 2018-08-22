@@ -57,12 +57,22 @@
     "Space_details": "Деталі простору",
     "None": "Порожньо",
     "Done": "Готово",
+    "Export_to_PDF": "Експорт у PDF",
+    "Export_to_Word": "Експорт у Word",
     "passwords_are_not_equal": "Паролі не рівні",
     "is_return_to_log_In_?": "Повернутися на логін ?",
     "forgot_password_?": "Забули пароль ?",
     "send_recovery_link": "Надіслати посилання для відновлення",
     "create_new_password": "Створити новий пароль",
     "sign_up_for_account": "Зареєструватися",
-    "already_have_an_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти"
+    "already_have_an_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти",
+    "choose language": "Оберіть мову: ",
+    "Ukrainian": "Українська",
+    "English": "Англійська",
+    "Groups": "Групи",
+    "Create group": "Створити групу",
+    "Group name contains": "Назва групи містить",
+    "Create": "Створити",
+    "Close": "Закрити"
   }
 }

@@ -49,7 +49,7 @@ function * getSpace (action) {
     // If true, then we just update info about the space. In other case - add new space to store.
 
     if (spaces[space._id]) {
-      yield put(actions.updateSpaceSuccess(space))
+      yield put(actions.getSpaceSuccess(space))
     } else {
       yield put(actions.getSpaceSuccess(space))
     }

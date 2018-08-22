@@ -20,7 +20,12 @@ function * createComment (action) {
     const newComments = [...action.payload.page.commentsArr]
     newComments.push(comment)
     yield put(actions.addCommentSuccessfully(newComments))
-    yield put(pageAction.updatePageRequest(action.payload.page))
+
+    if (action.payload.page.spaceId) {
+      yield put(pageAction.updatePageRequest(action.payload.page))
+    } else {
+      yield put(pageAction.updateBlogPageRequest(action.payload.page))
+    }
   } catch (e) {
     yield put(actions.addCommentFailure())
   }
@@ -29,7 +34,12 @@ function * createComment (action) {
 function * editComment (action) {
   try {
     yield commentService.editComment(action.payload.comment._id, action.payload.comment)
-    yield put(pageAction.updatePageRequest(action.payload.page))
+
+    if (action.payload.page.spaceId) {
+      yield put(pageAction.updatePageRequest(action.payload.page))
+    } else {
+      yield put(pageAction.updateBlogPageRequest(action.payload.page))
+    }
   } catch (e) {
     yield put(actions.editCommentFailure())
   }
@@ -40,7 +50,12 @@ function * deleteComment (action) {
     yield commentService.deleteComment(action.payload.comment._id)
     const commentsRemoved = action.payload.page.comments.filter(_id => _id !== action.payload.comment._id)
     action.payload.page.comments = commentsRemoved
-    yield put(pageAction.updatePageRequest(action.payload.page))
+
+    if (action.payload.page.spaceId) {
+      yield put(pageAction.updatePageRequest(action.payload.page))
+    } else {
+      yield put(pageAction.updateBlogPageRequest(action.payload.page))
+    }
   } catch (e) {
     yield put(actions.deleteCommentFailure())
   }

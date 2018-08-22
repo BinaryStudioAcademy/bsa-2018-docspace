@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import './contentSide.css'
+import './avtivitySidebar.css'
 import welcome from './welcome.png'
 import CreateSpaceButton from 'src/components/common/createSpaceButton'
 
-class ContentSide extends Component {
+class ActivitySidebar extends Component {
   render () {
     return (
       <div className='dashboard-content-side' >
@@ -22,4 +22,4 @@ class ContentSide extends Component {
   }
 }
 
-export default ContentSide
+export default ActivitySidebar

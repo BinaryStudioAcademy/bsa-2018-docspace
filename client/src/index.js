@@ -17,6 +17,7 @@ import Login from './components/auth/login'
 import ResetPassword from './components/auth/reset'
 import NewPassword from './components/auth/setNewPassword'
 import PageEditorContainer from 'src/components/pageEditorContainer'
+import BlogPostEditor from 'src/components/blog/blogPostEditor'
 
 sagaMiddleware.run(rootSaga)
 
@@ -29,7 +30,8 @@ ReactDOM.render(
           <Route path='/login' component={Login} />
           <Route path='/forgot' component={ResetPassword} />
           <Route path='/reset/:token' component={NewPassword} />
-          <Route path='/spaces/:id/pages/:id/edit' exact component={PageEditorContainer} />
+          <Route path='/spaces/:space_id/pages/:page_id/edit' exact component={PageEditorContainer} />
+          <Route path='/spaces/:space_id/blog/:page_id/edit' exact component={BlogPostEditor} />
           <Route path='/' component={RequiredAuth(App)} />
         </Switch>
       </ConnectedRouter>
