@@ -57,6 +57,8 @@
     "Space_details": "Деталі простору",
     "None": "Порожньо",
     "Done": "Готово",
+    "Export_to_PDF": "Експорт у PDF",
+    "Export_to_Word": "Експорт у Word",
     "passwords_are_not_equal": "Паролі не рівні",
     "is_return_to_log_In_?": "Повернутися на логін ?",
     "forgot_password_?": "Забули пароль ?",

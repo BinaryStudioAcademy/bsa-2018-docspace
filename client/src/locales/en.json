@@ -56,6 +56,8 @@
     "Space_details": "Space Details",
     "None": "None",
     "Done": "Done",
+    "Export_to_PDF": "Export to PDF",
+    "Export_to_Word": "Export to Word",
     "passwords_are_not_equal": "Passwords are not equal",
     "is_return_to_log_in_?": "Is return to Log In ?",
     "forgot_password_?": "Forgot password ?",

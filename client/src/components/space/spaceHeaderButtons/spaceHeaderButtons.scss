@@ -5,6 +5,17 @@
     display: flex;
     align-items: center;
     color: $grayButtons;
+
+    .menu-wrapper {
+      position: relative;
+
+      .menu-container {
+        border: 1px red solid;
+        position: absolute;
+        width: 100px;
+        right: 0;
+      }
+    }
   }
 
   &-item{
@@ -21,8 +32,8 @@
       vertical-align: center;
       color: #6c788f;
       margin-left: 5px;
-     
-      
+
+
       .space-page-header & i{
         width:30px;
         height: 20px;
@@ -30,7 +41,7 @@
       }
     }
 
-    &:hover {
+    &:hover, &.activated {
       cursor: pointer;
       background: $grayBackground;
       border: 1px solid $grayButtons;
