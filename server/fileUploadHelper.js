@@ -1,12 +1,13 @@
 const AWS = require('aws-sdk')
-// const fs = require('fs');
-// const multerS3 = require('multer-s3'
+// const multerS3 = require('multer-s3') //use multerS3 or multer for uploading files
 require('dotenv').config()
+
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY
 })
-const bucketName = 'docspace'
+
+const bucketName = 'bsa-docspace'
 const data = {
   'some key': 'some value'
 }
@@ -20,9 +21,11 @@ module.exports = {
     }
 
     s3.upload(params, function (s3Err, data) {
-      if (s3Err) throw s3Err
-      console.log(`File uploaded successfully at ${data.Location}`)
+      if (s3Err) {
+        console.log(s3Err)
+      } else {
+        console.log(`File uploaded successfully at ${data.Location}`)
+      }
     })
-  },
-  downloadFile: () => {}
+  }
 }
