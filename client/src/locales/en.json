@@ -62,6 +62,14 @@
     "send_recovery_link": "Send recovery link",
     "create_new_password": "Create new password",
     "sign_up_for_account": "Sign up for account",
-    "already_have_an_Docspace_account?_log_in": "Already have an Docspace account? Log in"
+    "already_have_an_Docspace_account?_log_in": "Already have an Docspace account? Log in",
+    "choose language": "Choose language: ",
+    "Ukrainian": "Ukrainian",
+    "English": "English",
+    "Groups": "Groups",
+    "Create group": "Create group",
+    "Group name contains": "Group name contains",
+    "Create": "Create",
+    "Close": "Close"
   }
 }
