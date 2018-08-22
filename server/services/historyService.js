@@ -7,6 +7,7 @@ module.exports = {
       .sort('-date')
       .populate('spaceId', 'name')
       .populate('pageId', 'title')
+      .populate('commentId', 'text')
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
