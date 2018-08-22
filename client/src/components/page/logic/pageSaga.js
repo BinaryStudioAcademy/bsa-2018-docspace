@@ -72,10 +72,28 @@ function * getPage (action) {
   }
 }
 
+function * exportPageToPdf (action) {
+  try {
+    yield PageService.exportPageToPdf(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
+function * exportPageToWord (action) {
+  try {
+    yield PageService.exportPageToWord(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
   yield takeEvery(actionTypes.DELETE_PAGE_REQUEST, deletePage)
   yield takeEvery(actionTypes.UPDATE_PAGE_REQUEST, updatePage)
   yield takeEvery(actionTypes.GET_PAGE_BY_ID_REQUEST, getPage)
+  yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
+  yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
 }
