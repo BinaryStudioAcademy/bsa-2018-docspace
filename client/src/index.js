@@ -15,6 +15,7 @@ import App from './components/common/app/index'
 import Signup from './components/auth/signup'
 import Login from './components/auth/login'
 import PageEditorContainer from 'src/components/pageEditorContainer'
+import BlogPostEditor from 'src/components/blog/blogPostEditor'
 
 sagaMiddleware.run(rootSaga)
 
@@ -25,7 +26,8 @@ ReactDOM.render(
         <Switch>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
-          <Route path='/spaces/:id/pages/:id/edit' exact component={PageEditorContainer} />
+          <Route path='/spaces/:space_id/pages/:page_id/edit' exact component={PageEditorContainer} />
+          <Route path='/spaces/:space_id/blog/:page_id/edit' exact component={BlogPostEditor} />
           <Route path='/' component={RequiredAuth(App)} />
         </Switch>
       </ConnectedRouter>

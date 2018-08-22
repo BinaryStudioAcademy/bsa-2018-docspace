@@ -10,25 +10,38 @@ import './blogPagesList.css'
 
 const BlogPagesList = (props) => {
   const { pages, spaceId, actions } = props
+
+  let pagesList = []
+  const years = {}
+
+  pages.sort((page1, page2) => new Date(page2.createdAt) - new Date(page1.createdAt))
+    .forEach(page => {
+      let year = (new Date(page.createdAt)).getFullYear()
+      if (!years[year]) {
+        years[year] = true
+        pagesList.push(
+          <div className='blog-pages-list-year' key={year}> {year} </div>
+        )
+      }
+      pagesList.push(
+        <NavLink
+          className='blog-pages-list-item'
+          activeClassName='current'
+          key={page._id}
+          to={`/spaces/${spaceId}/blog/${page._id}`}
+          onClick={() => actions.getPageByIdRequest(page._id)}
+        >
+          <div className='blog-pages-list-item-name'>{page.title}</div>
+        </NavLink>
+      )
+    })
+
+  console.log(pagesList)
+
   return (
     <div className='blog-pages-list'>
       <div>
-        {
-          pages.map((page) => {
-            return (
-              <NavLink
-                className='blog-pages-list-item'
-                activeClassName='current'
-                key={page._id}
-                to={`/spaces/${spaceId}/pages/${page._id}`}
-                onClick={() => actions.getPageByIdRequest(page._id)}
-              >
-                <div className='blog-pages-list-item-icon'>•</div>
-                <div className='blog-pages-list-item-name'>{page.title}</div>
-              </NavLink>
-            )
-          })
-        }
+        { pagesList }
       </div>
     </div>
   )

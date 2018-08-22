@@ -141,3 +141,9 @@
       right: -2px; }
     .page-editor-wrp .additional-icons img {
       height: 2.14285714em; }
+
+.jodit_container {
+  margin: 0 auto; }
+
+.jodit_container:not(.jodit_inline) .jodit_workplace {
+  border: none; }

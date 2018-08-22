@@ -45,7 +45,7 @@ class BlogSidebar extends Component {
                               {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Blog')}</div>}
                             </NavLink>
                           </div>
-                          { isFetching
+                          { isFetching || !blog
                             ? <div className='space-sidebar-loader'>
                               <div className='sweet-loading'>
                                 <MoonLoader
@@ -81,18 +81,14 @@ BlogSidebar.propTypes = {
 }
 
 BlogSidebar.defaultProps = {
-  space: {},
-  blog: {
-    pages: [
-      {}
-    ]
-  }
+  space: {}
 }
 
 const mapStateToProps = (state) => {
   return {
     space: spaceById(state),
-    isFetching: isSpacesFetching(state)
+    isFetching: isSpacesFetching(state),
+    blog: state.blog
   }
 }
 

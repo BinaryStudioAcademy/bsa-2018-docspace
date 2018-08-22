@@ -30,6 +30,7 @@ const spaceSchema = new mongoose.Schema({
 {
   versionKey: false
 })
+
 const SpaceModel = mongoose.model('Space', spaceSchema)
 
 module.exports = SpaceModel
