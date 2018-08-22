@@ -14,6 +14,7 @@
         "prepush": "yarn pretest"
     },
     "dependencies": {
+        "aws-sdk": "^2.298.0",
         "babel-eslint": "^8.2.6",
         "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
