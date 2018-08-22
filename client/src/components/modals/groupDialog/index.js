@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createGroupRequest } from '../../group/logic/groupsAction'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import './groupModal.css'
 
@@ -19,15 +21,17 @@ class GroupDialog extends Component {
     this.createGroup = this.createGroup.bind(this)
   }
   renderHeader = () => {
-    return <h2 className='modal-header'>Create group</h2>
+    const {t} = this.props
+    return <h2 className='modal-header'>{t('Create group')}</h2>
   }
 
   renderContent = () => {
+    const {t} = this.props
     return <table className='group'>
       <tbody>
         <tr>
-          <td className='group-modal-label'><label htmlFor='name'>Name<span>*</span></label></td>
-          <td><Input label='Name'
+          <td className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></td>
+          <td><Input label={t('Name')}
             value={this.state.name}
             onChange={({target}) => this.handleChange(target)}
             name='name'
@@ -35,8 +39,8 @@ class GroupDialog extends Component {
           /></td>
         </tr>
         <tr>
-          <td className='group-modal-label'><label htmlFor='description'>Description</label></td>
-          <td><Input label='Description'
+          <td className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></td>
+          <td><Input label={t('Description')}
             value={this.state.description}
             onChange={({target}) => this.handleChange(target)}
             name='description'
@@ -62,14 +66,15 @@ class GroupDialog extends Component {
   }
 
   renderFooter = () => {
+    const {t} = this.props
     const idDisabled = !this.state.name
     return <div className='modal-footer-group'>
       <button
         className='accept-button'
         onClick={this.createGroup}
         disabled={idDisabled}
-      >Create</button>
-      <button onClick={this.props.cancelModal}>Close</button>
+      >{t('Create')}</button>
+      <button onClick={this.props.cancelModal}>{t('Close')}</button>
     </div>
   }
 
@@ -85,7 +90,8 @@ class GroupDialog extends Component {
 GroupDialog.propTypes = {
   user: PropTypes.object,
   actions: PropTypes.func,
-  cancelModal: PropTypes.func
+  cancelModal: PropTypes.func,
+  t: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -105,4 +111,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupDialog)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupDialog)))

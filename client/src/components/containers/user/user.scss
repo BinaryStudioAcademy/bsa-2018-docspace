@@ -530,3 +530,20 @@
 .Resizer {
   z-index: 1;
 }
+
+.language-choise{
+  color: $blueText;
+  margin: 20px 0;
+}
+button.language-choise-button{
+  color: $blueText;
+  background: transparent;
+  border: 1px solid $blueText;
+  cursor: pointer;
+  margin: 0 0 0 15px;
+  padding: 5px 15px;
+}
+button.language-choise-button:hover{
+  color: $blue;
+  border-color: $blue;
+}

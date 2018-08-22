@@ -65,6 +65,14 @@
     "send_recovery_link": "Надіслати посилання для відновлення",
     "create_new_password": "Створити новий пароль",
     "sign_up_for_account": "Зареєструватися",
-    "already_have_an_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти"
+    "already_have_an_Docspace_account?_log_in": "Вже маєш власний акаунт ? Увійти",
+    "choose language": "Оберіть мову: ",
+    "Ukrainian": "Українська",
+    "English": "Англійська",
+    "Groups": "Групи",
+    "Create group": "Створити групу",
+    "Group name contains": "Назва групи містить",
+    "Create": "Створити",
+    "Close": "Закрити"
   }
 }
