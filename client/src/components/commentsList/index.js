@@ -12,7 +12,7 @@ class CommentsList extends Component {
 
   sortComments () {
     this.props.comments.sort((a, b) => {
-      return a.createdAt > b.createdAt ? -1 : 1
+      return a.createdAt > b.createdAt ? 1 : -1
     })
   }
   getComments (comments) {
@@ -23,7 +23,6 @@ class CommentsList extends Component {
       return flatArray
     }
   }
-
   componentWillReceiveProps (nextProps) {
     if (this.props.comments !== nextProps.comments) {
       this.setState({commentTree: this.getComments(nextProps.comments)})
@@ -31,6 +30,7 @@ class CommentsList extends Component {
   }
 
   render () {
+    console.log(this.state)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}
@@ -43,6 +43,7 @@ class CommentsList extends Component {
         firstName={this.props.firstName}
         lastName={this.props.lastName}
       />)
+
     return (
       <div className='comments-list-wrapper'>
         {commentsList}

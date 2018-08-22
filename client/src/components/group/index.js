@@ -58,7 +58,6 @@ class Group extends Component {
 
   render () {
     const { t } = this.props
-    console.log(this.props)
     return (
       <div className='group-container'>
         {this.state.modalIsOpened && <GroupDialog cancelModal={this.closeModal} />}
