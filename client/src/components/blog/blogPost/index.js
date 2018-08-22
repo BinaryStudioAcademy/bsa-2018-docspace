@@ -5,22 +5,22 @@ import PageHeader from 'src/components/common/pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
+import { isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deleteBlogPageRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
+
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 
-import * as commentsActions from './commentsLogic/commentsActions'
+import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/components/page/commentsLogic/commentsActions'
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 
 import fakeImg from 'src/resources/logo.svg'
-import './page.css'
-import '../comments//comments/comments.css'
+import './blogPost.css'
 
 class Page extends Component {
   constructor (props) {
@@ -29,37 +29,30 @@ class Page extends Component {
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
   }
+
   componentDidMount () {
     !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
+
   addNewComment (obj) {
-    this.props.addComment(obj, this.props.page)
+    this.props.actions.addCommentRequest(obj, this.props.page)
   }
 
   editComment (obj) {
-    this.props.editCommentRequest(obj, this.props.page)
+    this.props.actions.editCommentRequest(obj, this.props.page)
   }
 
   deleteComment (obj) {
-    this.props.deleteCommentRequest(obj.target.props.comment, this.props.page)
+    this.props.actions.deleteCommentRequest(obj.target.props.comment, this.props.page)
   }
 
   handleEditPageClick = () => {
     const {space, page} = this.props
-    this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
+    this.props.history.push(`/spaces/${space._id}/blog/${page._id}/edit`)
   }
 
   handleDeletePage = () => {
-    console.log('deleting')
-    this.props.actions.deletePageRequest(this.props.page)
-  }
-
-  exportPageToPdf = () => {
-    this.props.actions.exportPageToPdf(this.props.page)
-  }
-
-  exportPageToWord = () => {
-    this.props.actions.exportPageToWord(this.props.page)
+    this.props.actions.deleteBlogPageRequest(this.props.page)
   }
 
   render () {
@@ -72,8 +65,6 @@ class Page extends Component {
           t={t}
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
-          onPdfExport={this.exportPageToPdf}
-          onWordExport={this.exportPageToWord}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -86,14 +77,17 @@ class Page extends Component {
             </div>
           </div>
           : <div className='page-container'>
-            <PageTitle text={page.title} />
-            <PageInfo
-              avatar={fakeImg}
-              firstName={firstName}
-              lastName={lastName}
-              date={page.created ? page.created.date : ''}
-            />
-            <PageContent content={page.content} />
+            <div className='page-body-wrp'>
+              <PageTitle text={page.title} />
+              <PageInfo
+                avatar={fakeImg}
+                firstName={firstName}
+                lastName={lastName}
+                date={page.created ? page.created.date : ''}
+              />
+              <PageContent content={page.content} />
+            </div>
+
             <div className='comments-section'>
               {this.props.page.commentsArr.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
@@ -131,24 +125,12 @@ Page.propTypes = {
   t: PropTypes.func,
   actions: PropTypes.object,
   match: PropTypes.object,
-  addComment: PropTypes.func,
-  deleteCommentRequest: PropTypes.func,
-  editCommentRequest: PropTypes.func,
-  exportPageToPdf: PropTypes.func,
-  exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
   isFetching: PropTypes.bool
 }
 
 Page.defaultProps = {
-  page: {
-    title: '',
-    created: {
-      date: 'it is a date! TRUST ME'
-    },
-    content: ''
-  },
 
   user: {
     avatar: fakeImg,
@@ -157,9 +139,9 @@ Page.defaultProps = {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   return {
-    page: pageByIdFromRoute(state),
+    page: state.pages.byId[props.match.params.page_id],
     user: state.verification.user,
     comments: state.comments,
     space: spaceById(state),
@@ -172,14 +154,12 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         getPageByIdRequest,
-        deletePageRequest,
-        exportPageToPdf,
-        exportPageToWord
+        deleteBlogPageRequest,
+        addCommentRequest,
+        deleteCommentRequest,
+        editCommentRequest
       }
-      , dispatch),
-    addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
-    deleteCommentRequest: bindActionCreators(commentsActions.deleteCommentRequest, dispatch),
-    editCommentRequest: bindActionCreators(commentsActions.editCommentRequest, dispatch)
+      , dispatch)
   }
 }
 

@@ -3,6 +3,7 @@
 const joditEditorConfig = {
   readonly: false,
   height: '100%',
+  width: '100%',
   allowResizeY: true,
   allowResizeX: true,
   uploader: {
