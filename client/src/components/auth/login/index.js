@@ -60,7 +60,8 @@ class Login extends Component {
       return <Redirect to='/forgot' />
     }
     if (successful) {
-      return <Redirect to='/activity' />
+      // only for demo. change to '/'
+      return <Redirect to='/activity/allupdates' />
     }
     return (
       <Fragment>

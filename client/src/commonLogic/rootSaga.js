@@ -10,6 +10,7 @@ import verificationWatcher from 'src/components/auth/verification/logic/verifica
 import pageSaga from 'src/components/page/logic/pageSaga'
 import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
+import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
 
 function * rootSaga () {
@@ -18,6 +19,7 @@ function * rootSaga () {
     fork(pageSaga),
     fork(userSaga),
     fork(commentSaga),
+    fork(activitySaga),
     fork(groupSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
