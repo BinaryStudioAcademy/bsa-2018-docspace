@@ -73,7 +73,6 @@ export const updatePageSuccess = (updatedPage) => {
 
   pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
     comment.createdAt = new Date(comment.createdAt)
-
     return comment
   })
 
@@ -88,10 +87,20 @@ export const updateBlogPageRequest = (newPage) => ({
   payload: newPage
 })
 
-export const updateBlogPageSuccess = (updatedPage) => ({
-  type: actionTypes.UPDATE_BLOG_PAGE_SUCCESS,
-  payload: updatedPage
-})
+// Create date from string... TODO: move this somewheare else. It's not good. Maybe, in saga
+export const updateBlogPageSuccess = (updatedPage) => {
+  const pageWithCorrectCommentTime = updatedPage
+
+  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+    comment.createdAt = new Date(comment.createdAt)
+    return comment
+  })
+
+  return {
+    type: actionTypes.UPDATE_BLOG_PAGE_SUCCESS,
+    payload: pageWithCorrectCommentTime
+  }
+}
 
 export const updatePageError = () => ({
   type: actionTypes.UPDATE_PAGE_ERROR
