@@ -15,6 +15,7 @@
     .dashboard-activity-nav-bar{
       display: flex;
       margin: 14px 0;
+      min-height: 25px;
       list-style: none;
       box-shadow: 0px 3px 0px 0px #ccc;
       a.active-link {
