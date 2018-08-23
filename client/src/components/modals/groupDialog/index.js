@@ -134,7 +134,12 @@ class GroupDialog extends Component {
     console.log(this.state)
     return (
       <React.Fragment>
-        <Modal renderHeader={this.renderHeader} renderContent={this.renderContent} renderFooter={this.renderFooter} />
+        <Modal
+          renderHeader={this.renderHeader}
+          renderContent={this.renderContent}
+          renderFooter={this.renderFooter}
+          closeModal={this.props.cancelModal}
+        />
       </React.Fragment>
     )
   }
