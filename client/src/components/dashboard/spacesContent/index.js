@@ -11,12 +11,44 @@ import { Link } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
 
 class SpacesContent extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      filterField: ''
+    }
+  }
   componentDidMount () {
     this.props.actions.getSpacesRequest()
   }
-
-  render () {
-    const list = this.props.spaces.map((item, index) => {
+  handleFilterField = (e) => {
+    this.setState({filterField: e.target.value})
+  }
+  renderSortedSpaces = () => {
+    const filteredValue = this.state.filterField.toLocaleLowerCase()
+    const filteredSpaces = this.props.spaces.filter(space => {
+      console.log(space)
+      if (!space.categories.length) {
+        if (~space.name.toLocaleLowerCase().indexOf(filteredValue)) { // ~ means if found
+          return true
+        } else {
+          return false
+        }
+      }
+      return space.categories.some(categorie => {
+        if (!categorie.name) {
+          return true
+        }
+        if (!categorie.name.length) {
+          return true
+        }
+        if (~categorie.name.toLocaleLowerCase().indexOf(filteredValue)) { // ~ means if found
+          return true
+        } else {
+          return false
+        }
+      })
+    })
+    const spaces = filteredSpaces.map((item, index) => {
       const spaceItem = (
         <tr key={index} className='space-item'>
           <td className='space-image'>
@@ -56,15 +88,18 @@ class SpacesContent extends Component {
       } if (this.props.activeTab === 'Archived Spaces') {
         return spaceItem
       }
-
       return null
     })
+    return spaces
+  }
+
+  render () {
     const { isFetching } = this.props
     return (
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>
           <h2>{this.props.activeTab}</h2>
-          <DashboardInput placeholder='Filter' />
+          <DashboardInput placeholder='Filter' onChange={this.handleFilterField} />
         </div>
         { isFetching
           ? <div className='body-spaces-loader'>
@@ -87,7 +122,7 @@ class SpacesContent extends Component {
                 </tr>
               </thead>
               <tbody>
-                {list}
+                {this.renderSortedSpaces()}
               </tbody>
             </table>
           </div>
