@@ -537,18 +537,7 @@
   color: $blueText;
   margin: 20px 0;
 }
-.language-choise .dropdown-menu-wrapper{
+.language-choise select{
+  padding: 0 5px;
   margin-left: 10px;
-}
-button.language-choise-button{
-  color: $blueText;
-  background: transparent;
-  border: 1px solid $blueText;
-  cursor: pointer;
-  margin: 0 0 0 15px;
-  padding: 5px 15px;
-}
-button.language-choise-button:hover{
-  color: $blue;
-  border-color: $blue;
 }
