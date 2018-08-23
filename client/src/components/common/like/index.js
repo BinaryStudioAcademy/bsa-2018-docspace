@@ -8,36 +8,49 @@ class Like extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isCurrentUserLike: this.findUser()
+      isCurrentUserLike: this.findUser(this.props),
+      message: ''
     }
     this.changeLikeState = this.changeLikeState.bind(this)
-    this.sortLikes()
-    this.message = this.getMessage()
+    this.getMessage = this.getMessage.bind(this)
+    this.state.message = this.getMessage(this.props)
   }
 
   changeLikeState () {
     this.setState((prevState) => {
       return {isCurrentUserLike: !prevState.isCurrentUserLike}
-    })
+    }, this.aaa)
   }
 
-  findUser () {
-    for (let i = 0; i < this.props.likes.length; i++) {
-      if (this.props.likes[i].id === this.props.user) {
+  findUser (nextProps) {
+    for (let i = 0; i < nextProps.likes.length; i++) {
+      if (nextProps.likes[i]._id === nextProps.user) {
         return true
       }
     }
     return false
   }
 
+  aaa () {
+    this.props.likePage(this.state.isCurrentUserLike)
+  }
+
   sortLikes () {
     this.props.likes.sort((a) => {
-      return a.id === this.props.user ? 1 : -1
+      return a.id === this.props.user ? -1 : 1
     })
   }
 
-  getMessage () {
-    const {t, likes} = this.props
+  componentWillReceiveProps (nextProps) {
+    console.log(nextProps)
+    if (this.props !== nextProps) {
+      this.setState({isCurrentUserLike: this.findUser(nextProps), message: this.getMessage(nextProps)})
+    }
+  }
+
+  getMessage (nextProps) {
+    this.sortLikes()
+    const {t, likes} = nextProps
     let message
     if (!likes.length) {
       return t('Be_the_first_who_like_it')
@@ -48,7 +61,8 @@ class Like extends Component {
       const count = Math.min(likeLength, maxNumber)
       message += this.state.isCurrentUserLike && count ? ', ' : ''
       for (let i = 0; i < count; i++) {
-        message += i === count - 1 ? likes[i].name + '' : likes[i].name + ', '
+        const name = likes[i].firstName + ' ' + likes[i].lastName
+        message += i === count - 1 ? name + '' : name + ', '
       }
       message += likes.length > 3 ? t('and_0_ other_people', { count: likes.length - 3 }) : ''
       message += ' ' + t('already_like_it')
@@ -63,7 +77,7 @@ class Like extends Component {
           <i className={`fas fa-thumbs-up ${this.state.isCurrentUserLike ? 'active-like' : 'unactive-like '}`} />
         </button>
         <span>
-          {this.message}
+          {this.state.message}
         </span>
       </div>
     )
@@ -73,7 +87,8 @@ class Like extends Component {
 export default translate('translations')(Like)
 
 Like.propTypes = {
-  t: PropTypes.func,
+  // t: PropTypes.func,
   likes: PropTypes.array,
-  user: PropTypes.string
+  user: PropTypes.string,
+  likePage: PropTypes.func
 }

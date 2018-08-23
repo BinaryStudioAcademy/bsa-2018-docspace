@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import * as actionTypes from './pageActionTypes'
+// import * as likesActionTypes from '../likesLogic/likesActionTypes'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
@@ -36,6 +37,8 @@ function byId (state = initialState.byId, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
+    // case likesActionTypes.PUT_LIKE_SUCCESS:
+    // case likesActionTypes.DELETE_LIKE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:

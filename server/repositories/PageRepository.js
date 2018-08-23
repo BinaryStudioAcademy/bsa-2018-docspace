@@ -16,6 +16,14 @@ class PageRepository extends GeneralRepository {
           foreignField: '_id',
           as: 'commentsArr'
         }
+      },
+      {
+        '$lookup': {
+          from: 'users',
+          localField: 'usersLikes',
+          foreignField: '_id',
+          as: 'usersLikesRef'
+        }
       }
     ])
   }

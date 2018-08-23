@@ -13,9 +13,11 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
+import {putLikeRequest, deleteLikeRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
+// import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 
@@ -44,96 +46,109 @@ class Page extends Component {
     this.props.deleteCommentRequest(obj.target.props.comment, this.props.page)
   }
 
-  handleEditPageClick = () => {
-    const {space, page} = this.props
-    this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
-  }
+ handleEditPageClick = () => {
+   const {space, page} = this.props
+   this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
+ }
 
-  handleDeletePage = () => {
-    console.log('deleting')
-    this.props.actions.deletePageRequest(this.props.page)
-  }
-  exportPageToPdf = () => {
-    this.props.actions.exportPageToPdf(this.props.page)
-  }
-  exportPageToWord = () => {
-    this.props.actions.exportPageToWord(this.props.page)
-  }
-  handleCallSystemDialogWindow = () => {
-    this.refs.fileUploader.click()
-  }
-  handleChoosenFile = (e) => {
-    if (e.target.files[0]) {
-      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
-    } else {
-      console.log('cancel')
-    }
-  }
+ handleDeletePage = () => {
+   console.log('deleting')
+   this.props.actions.deletePageRequest(this.props.page)
+ }
+ exportPageToPdf = () => {
+   this.props.actions.exportPageToPdf(this.props.page)
+ }
+ exportPageToWord = () => {
+   this.props.actions.exportPageToWord(this.props.page)
+ }
+ handleCallSystemDialogWindow = () => {
+   this.refs.fileUploader.click()
+ }
+ handleChoosenFile = (e) => {
+   if (e.target.files[0]) {
+     this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+   } else {
+     console.log('cancel')
+   }
+ }
 
-  render () {
-    const { firstName, lastName, _id } = this.props.user
-    const { page, t, space, isFetching } = this.props
-    console.log(`render`, this.props.contentDoc)
-    console.log(this.props)
-    return (
-      <React.Fragment>
-        <PageHeader
-          space={space}
-          t={t}
-          handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
-          onWordImport={this.handleCallSystemDialogWindow}
-          onPdfExport={this.exportPageToPdf}
-          onWordExport={this.exportPageToWord}
-        />
-        { isFetching || !this.props.page
-          ? <div className='page-loader'>
-            <div className='sweet-loading'>
-              <MoonLoader
-                sizeUnit={'px'}
-                size={32}
-                color={'#123abc'}
-              />
-            </div>
-          </div>
-          : <div className='page-container'>
-            <PageTitle text={page.title} />
-            <PageInfo
-              avatar={fakeImg}
-              firstName={firstName}
-              lastName={lastName}
-              date={page.created ? page.created.date : ''}
-            />
-            <PageContent content={page.content} />
-            <div className='comments-section'>
-              {this.props.page.commentsArr.length
-                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
-                : <h2>{t('add_comments')}</h2>
-              }
-              <CommentsList
-                comments={this.props.page.commentsArr}
-                deleteComment={this.deleteComment}
-                editComment={this.editComment}
-                addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
-                userId={_id}
+ likePage = (obj) => {
+   console.log(obj)
+   obj
+     ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
+     : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+ }
 
-              />
-              <AddComment
-                firstName={firstName}
-                lastName={lastName}
-                addNewComment={this.addNewComment}
-                userId={_id}
-                t={t}
-              />
-            </div>
-            <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
-          </div>
-        }
-      </React.Fragment>
-    )
-  }
+ render () {
+   const { firstName, lastName, _id } = this.props.user
+   const { page, t, space, isFetching } = this.props
+   console.log(`render`, this.props.contentDoc)
+   console.log(this.props)
+   return (
+     <React.Fragment>
+       <PageHeader
+         space={space}
+         t={t}
+         handleEditPageClick={this.handleEditPageClick}
+         handleDeletePage={this.handleDeletePage}
+         onWordImport={this.handleCallSystemDialogWindow}
+         onPdfExport={this.exportPageToPdf}
+         onWordExport={this.exportPageToWord}
+       />
+       { isFetching || !this.props.page
+         ? <div className='page-loader'>
+           <div className='sweet-loading'>
+             <MoonLoader
+               sizeUnit={'px'}
+               size={32}
+               color={'#123abc'}
+             />
+           </div>
+         </div>
+         : <div className='page-container'>
+           <PageTitle text={page.title} />
+           <PageInfo
+             avatar={fakeImg}
+             firstName={firstName}
+             lastName={lastName}
+             date={page.created ? page.created.date : ''}
+           />
+           <PageContent content={page.content} />
+           {/* <Like
+             t={t}
+             user={this.props.user._id}
+             likes={this.props.page.usersLikesRef || []}
+             likePage={this.likePage}
+           /> */}
+           <div className='comments-section'>
+             {this.props.page.commentsArr.length
+               ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+               : <h2>{t('add_comments')}</h2>
+             }
+             <CommentsList
+               comments={this.props.page.commentsArr}
+               deleteComment={this.deleteComment}
+               editComment={this.editComment}
+               addNewComment={this.addNewComment}
+               firstName={firstName}
+               lastName={lastName}
+               userId={_id}
+
+             />
+             <AddComment
+               firstName={firstName}
+               lastName={lastName}
+               addNewComment={this.addNewComment}
+               userId={_id}
+               t={t}
+             />
+           </div>
+           <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
+         </div>
+       }
+     </React.Fragment>
+   )
+ }
 }
 
 Page.propTypes = {
@@ -193,7 +208,9 @@ function mapDispatchToProps (dispatch) {
         deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
-        sendDocFileRequest
+        sendDocFileRequest,
+        deleteLikeRequest,
+        putLikeRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
