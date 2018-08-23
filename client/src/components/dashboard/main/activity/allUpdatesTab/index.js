@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const getRightProps = (content) => {
+  if (!content.spaceId) {
+    return null
+  }
   switch (content.action) {
     case 'CREATE_SPACE_SUCCESS':
       return {
