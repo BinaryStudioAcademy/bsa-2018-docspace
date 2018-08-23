@@ -20,7 +20,7 @@ export default class PermissionTableHead extends Component {
         </tr>
         <tr className='permissions-table-header-columns-actions'>
           <td />
-          {columns.map(columnName => <th >{columnName}</th>)}
+          {columns.map((columnName, index) => <th key={index}> {columnName} </th>)}
         </tr>
       </thead>
     )

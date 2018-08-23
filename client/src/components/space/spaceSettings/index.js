@@ -20,9 +20,6 @@ const TABS = [
     name: 'permissions',
     path: '/permissions',
     component: SpacePermissionsTab
-  },
-  {
-
   }
 ]
 

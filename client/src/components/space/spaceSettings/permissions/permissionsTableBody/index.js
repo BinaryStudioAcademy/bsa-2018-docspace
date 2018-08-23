@@ -11,12 +11,13 @@ export default class PermissionsTableBody extends Component {
           items.map(item => {
             const restrictions = restrictionsByItemsId[item._id]
             return (
-              <PermissionsTableRow
+              <PermissionsTableRow key={item._id}
                 isEditing={isEditing}
                 item={item}
                 restrictionsHash={restrictions}
                 handleChangePermission={handleChangePermission}
                 restictionsCategory={restictionsCategory}
+                handleToggleAllCLick={this.props.handleToggleAllCLick}
               />
             )
           })
@@ -31,5 +32,6 @@ PermissionsTableBody.propTypes = {
   items: PropTypes.array.isRequired,
   restrictionsByItemsId: PropTypes.object,
   restictionsCategory: PropTypes.string,
-  handleChangePermission: PropTypes.func.isRequired
+  handleChangePermission: PropTypes.func.isRequired,
+  handleToggleAllCLick: PropTypes.func.isRequired
 }
