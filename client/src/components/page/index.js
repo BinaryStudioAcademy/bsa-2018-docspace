@@ -74,7 +74,6 @@ class Page extends Component {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     console.log(`render`, this.props.contentDoc)
-    console.log(this.props)
     return (
       <React.Fragment>
         <PageHeader
@@ -106,7 +105,7 @@ class Page extends Component {
             />
             <PageContent content={page.content} />
             <div className='comments-section'>
-              {this.props.page.commentsArr.length
+              {this.props.page && this.props.page.commentsArr.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
