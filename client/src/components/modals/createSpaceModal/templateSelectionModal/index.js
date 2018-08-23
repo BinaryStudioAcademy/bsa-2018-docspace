@@ -48,6 +48,7 @@ export default class TemplateSelectionModal extends Component {
          items={this.props.spaceTemplates}
          selectedItem={this.props.selectedTemplate}
          handleSelectItem={this.props.handleSelectTemplate}
+         handleDoubleClickOnItem={this.props.selectTemplateAngGoToNextStep}
        />
      )
    }
@@ -70,5 +71,6 @@ TemplateSelectionModal.propTypes = {
   handleFilter: PropTypes.func.isRequired,
   handleNextClick: PropTypes.func.isRequired,
   handleSelectTemplate: PropTypes.func.isRequired,
-  spaceTemplates: PropTypes.arrayOf(PropTypes.object)
+  spaceTemplates: PropTypes.arrayOf(PropTypes.object),
+  selectTemplateAngGoToNextStep: PropTypes.func
 }
