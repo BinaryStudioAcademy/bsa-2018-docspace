@@ -1,4 +1,5 @@
 .group{
+    overflow: scroll;
     width: 100%;  
     td.group-modal-label{
         padding-right: 20px;
@@ -17,7 +18,7 @@
     align-items: center;
   }
 }
-#name, #description{
+#name, #description, #user{
     width: 70%;
 }
 .modal-footer-group{
@@ -30,6 +31,15 @@
     border: none;
     margin: 0 5px;
 }
-.modal-header{
+.modal-header-group{
     text-align: center;
+}
+.group-user-wrapper{
+    margin-top: 10px;
+}
+.groups-user-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

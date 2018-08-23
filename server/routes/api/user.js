@@ -3,6 +3,8 @@ const userService = require('../../services/userService')
 
 router.get('/', userService.findAll)
 
+router.get('/name/:name', userService.getByName)
+
 router.get('/:id', userService.findOne)
 
 router.post('/', userService.add)
