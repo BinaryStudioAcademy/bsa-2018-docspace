@@ -84,6 +84,7 @@ class WizardSpaceModal extends Component {
         renderHeader={this.renderModalHeader}
         renderFooter={this.renderModalFooter}
         renderContent={this.renderModalContent}
+        closeModal={this.props.closeModal}
       />
     )
   }
