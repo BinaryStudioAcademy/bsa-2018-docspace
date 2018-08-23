@@ -37,6 +37,13 @@ export default class CreateSpaceModal extends Component {
     })
   }
 
+  selectTemplateAngGoToNextStep = (template) => {
+    this.setState({
+      selectedTemplate: template,
+      firstStep: false
+    })
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -49,6 +56,7 @@ export default class CreateSpaceModal extends Component {
               spaceTemplates={this.state.spaceTemplates}
               selectedTemplate={this.state.selectedTemplate}
               handleFilter={this.handleFilter}
+              selectTemplateAngGoToNextStep={this.selectTemplateAngGoToNextStep}
             />
             : <WizardSpaceModal
               selectedTemplate={this.state.selectedTemplate}
