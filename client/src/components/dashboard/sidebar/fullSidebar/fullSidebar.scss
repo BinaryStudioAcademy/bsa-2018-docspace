@@ -6,6 +6,7 @@
   flex-direction: column;
   background-color: $greyBlog;
   min-width: 0;
+  overflow: hidden;
 
   .docspace-logo-label {
     margin: 15px 0 20.5px 8px;
