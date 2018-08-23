@@ -13,9 +13,11 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
+import {putLikeRequest, deleteLikeRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
+// import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 
@@ -69,10 +71,19 @@ class Page extends Component {
       console.log('cancel')
     }
   }
+
+  likePage = (obj) => {
+    console.log(obj)
+    obj
+      ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
+      : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+  }
+
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     console.log(`render`, this.props.contentDoc)
+    console.log(this.props)
     return (
       <React.Fragment>
         <PageHeader
@@ -103,6 +114,12 @@ class Page extends Component {
               date={page.created ? page.created.date : ''}
             />
             <PageContent content={page.content} />
+            {/* <Like
+              t={t}
+              user={this.props.user._id}
+              likes={this.props.page.usersLikesRef || []}
+              likePage={this.likePage}
+            /> */}
             <div className='comments-section'>
               {this.props.page.commentsArr.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
@@ -113,8 +130,8 @@ class Page extends Component {
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
-                // firstName={firstName}
-                // lastName={lastName}
+                firstName={firstName}
+                lastName={lastName}
                 userId={_id}
 
               />
@@ -191,7 +208,9 @@ function mapDispatchToProps (dispatch) {
         deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
-        sendDocFileRequest
+        sendDocFileRequest,
+        deleteLikeRequest,
+        putLikeRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

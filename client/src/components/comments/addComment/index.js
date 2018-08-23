@@ -128,6 +128,6 @@ AddComment.propTypes = {
   _id: PropTypes.string,
   ReplyComment: PropTypes.func,
   parentId: PropTypes.string,
-  style: PropTypes.string
+  style: PropTypes.object
 }
 export default translate('translations')(AddComment)

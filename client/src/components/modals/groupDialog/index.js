@@ -4,9 +4,11 @@ import Input from 'src/components/common/input'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createGroupRequest } from '../../group/logic/groupsAction'
+import { getAllUserGroupsRequest, cleanMatchingUser } from './logic/matchingUserActions'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
+import _ from 'lodash'
 
 import './groupModal.css'
 
@@ -15,40 +17,88 @@ class GroupDialog extends Component {
     super(props)
     this.state = {
       name: '',
-      description: ''
+      description: '',
+      user: '',
+      usersInGroup: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.createGroup = this.createGroup.bind(this)
   }
   renderHeader = () => {
     const {t} = this.props
-    return <h2 className='modal-header'>{t('Create group')}</h2>
+    return <h2 className='modal-header-group'>{t('Create group')}</h2>
+  }
+  search = _.debounce(target => {
+    this.state.user ? this.props.actions.getAllUserGroupsRequest(this.state.user) : this.props.actions.cleanMatchingUser()
+  }, 1000);
+
+  onChange (target) {
+    this.handleChange(target)
+    this.search(target)
   }
 
   renderContent = () => {
     const {t} = this.props
-    return <table className='group'>
-      <tbody>
-        <tr>
-          <td className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></td>
-          <td><Input label={t('Name')}
-            value={this.state.name}
-            onChange={({target}) => this.handleChange(target)}
-            name='name'
-            id='name'
-          /></td>
-        </tr>
-        <tr>
-          <td className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></td>
-          <td><Input label={t('Description')}
-            value={this.state.description}
-            onChange={({target}) => this.handleChange(target)}
-            name='description'
-            id='description'
-          /></td>
-        </tr>
-      </tbody>
-    </table>
+    // this.getUsers()
+    return <React.Fragment>
+      <table className='group'>
+        <tbody>
+          <tr>
+            <td className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></td>
+            <td><Input label={t('Name')}
+              value={this.state.name}
+              onChange={({target}) => this.handleChange(target)}
+              name='name'
+              id='name'
+              inputType='text'
+            /></td>
+          </tr>
+          <tr>
+            <td className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></td>
+            <td><Input label={t('Description')}
+              value={this.state.description}
+              onChange={({target}) => this.handleChange(target)}
+              name='description'
+              id='description'
+              inputType='text'
+            /></td>
+          </tr>
+          <tr>
+            <td className='group-modal-label'><label htmlFor='user'>{t('User')}</label></td>
+            <td>
+              <Input label={t('User')}
+                value={this.state.user}
+                onChange={({target}) => this.onChange(target)}
+                name='user'
+                id='user'
+                inputType='text'
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div className='groups-user-group'>
+        {this.renderUsers()}
+      </div>
+    </React.Fragment>
+  }
+
+  renderUsers = () => {
+    let usersTable
+    this.props.matchingUsers !== []
+      ? usersTable = this.props.matchingUsers.map((user, i) =>
+        user._id !== this.props.user._id && <div className='group-user-wrapper' key={i}>
+          <span>{user.name}</span>
+          <span><button onClick={() => { this.addUsersInGroup(user._id) }}>Додати</button></span>
+        </div>
+      ) : usersTable = ''
+    return usersTable
+  }
+
+  addUsersInGroup = (id) => {
+    this.setState(prevState => ({
+      usersInGroup: [...prevState.usersInGroup, id]
+    }))
   }
 
   handleChange = (target) => {
@@ -56,11 +106,13 @@ class GroupDialog extends Component {
   }
 
   createGroup = () => {
+    const members = [...this.state.usersInGroup, this.props.user._id]
     const group = {
-      members: [this.props.user._id],
+      members: members,
       title: this.state.name,
       description: this.state.description
     }
+    console.log(group)
     this.props.actions.createGroupRequest(group)
     this.props.cancelModal()
   }
@@ -79,6 +131,7 @@ class GroupDialog extends Component {
   }
 
   render () {
+    console.log(this.state)
     return (
       <React.Fragment>
         <Modal renderHeader={this.renderHeader} renderContent={this.renderContent} renderFooter={this.renderFooter} />
@@ -89,15 +142,17 @@ class GroupDialog extends Component {
 
 GroupDialog.propTypes = {
   user: PropTypes.object,
-  actions: PropTypes.func,
+  actions: PropTypes.object,
   cancelModal: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
+  matchingUsers: PropTypes.array
 }
 
 const mapStateToProps = (state) => {
   return {
     groups: state.groups,
-    user: state.verification.user
+    user: state.verification.user,
+    matchingUsers: state.matchingUsers
   }
 }
 
@@ -105,7 +160,9 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        createGroupRequest
+        createGroupRequest,
+        getAllUserGroupsRequest,
+        cleanMatchingUser
       }
       , dispatch)
   }
