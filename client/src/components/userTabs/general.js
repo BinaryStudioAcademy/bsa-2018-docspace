@@ -4,6 +4,7 @@ import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
 import Errors from 'src/components/common/error'
 import { translate } from 'react-i18next'
+import Dropdown from 'src/components/common/dropdownMenu'
 
 export class ProfileFields extends Component {
   constructor (props) {
@@ -97,6 +98,17 @@ export class ProfileFields extends Component {
       i18n.changeLanguage(lng)
       localStorage.setItem('language', lng)
     }
+
+    const dropdownMenuItems = [
+      {
+        name: t('Ukrainian'),
+        onClick: () => changeLanguage('uk')
+      },
+      {
+        name: t('English'),
+        onClick: () => changeLanguage('en')
+      }
+    ]
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -145,15 +157,10 @@ export class ProfileFields extends Component {
         </div>
         <div className='language-choise'>
           <span>{t('choose language')}</span>
-          <Button
-            value={t('Ukrainian')}
-            onClick={() => changeLanguage('uk')}
-            nameClass='language-choise-button'
-          />
-          <Button
-            value={t('English')}
-            onClick={() => changeLanguage('en')}
-            nameClass='language-choise-button'
+          <Dropdown
+            icon='fas fa-ellipsis-h'
+            type='buttons-item'
+            menuItems={dropdownMenuItems}
           />
         </div>
       </div>
