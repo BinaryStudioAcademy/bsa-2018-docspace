@@ -69,10 +69,12 @@ class Page extends Component {
       console.log('cancel')
     }
   }
+
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     console.log(`render`, this.props.contentDoc)
+    console.log(this.props)
     return (
       <React.Fragment>
         <PageHeader
@@ -112,6 +114,11 @@ class Page extends Component {
                 comments={this.props.page.commentsArr}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
+                addNewComment={this.addNewComment}
+                firstName={firstName}
+                lastName={lastName}
+                userId={_id}
+
               />
               <AddComment
                 firstName={firstName}
