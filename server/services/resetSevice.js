@@ -19,11 +19,11 @@ module.exports = {
           user.save()
             .then(user => {
               let transporter = nodemailer.createTransport({
-                host: 'smtp.ethereal.email',
+                host: 'smtp.gmail.com',
                 port: 587,
                 auth: {
-                  user: 'tfmviw7qoixoq4kq@ethereal.email',
-                  pass: 'cugj96yyYbectx2RHf'
+                  user: '2015vmr.nazar@gmail.com',
+                  pass: 'koldun228'
                 }
               })
               let mailOptions = {
