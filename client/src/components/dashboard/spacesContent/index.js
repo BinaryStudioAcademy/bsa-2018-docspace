@@ -35,6 +35,9 @@ class SpacesContent extends Component {
         }
       }
       return space.categories.some(categorie => {
+        if (!categorie.name) {
+          return true
+        }
         if (!categorie.name.length) {
           return true
         }
