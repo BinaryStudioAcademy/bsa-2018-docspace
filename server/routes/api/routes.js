@@ -24,6 +24,6 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/comments', verifyJWTMiddleware, comment)
   app.use('/api/blog', verifyJWTMiddleware, blog)
   app.use('/reset', reset)
-  app.use('/api/groups', group)
+  app.use('/api/groups', verifyJWTMiddleware, group)
   app.use('/api/history', verifyJWTMiddleware, history)
 }

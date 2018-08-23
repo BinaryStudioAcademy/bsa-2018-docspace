@@ -12,6 +12,7 @@ import {verificationReducer} from 'src/components/auth/verification/logic/verifi
 import commentReducer from '../components/page/commentsLogic/commentsReducer'
 import { activityReducer } from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
+import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -21,6 +22,7 @@ const baseReducer = combineReducers({
   spaces: spaceReducer,
   blog: blogReducer,
   groups: groupsReducer,
+  matchingUsers: matchingUsersReducer,
   verification: verificationReducer,
   comments: commentReducer,
   activity: activityReducer,
