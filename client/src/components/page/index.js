@@ -105,12 +105,12 @@ class Page extends Component {
             />
             <PageContent content={page.content} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.commentsArr.length
+              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr}
+                comments={this.props.page.commentsArr || []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
