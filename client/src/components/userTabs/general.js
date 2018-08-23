@@ -4,7 +4,6 @@ import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
 import Errors from 'src/components/common/error'
 import { translate } from 'react-i18next'
-import Dropdown from 'src/components/common/dropdownMenu'
 
 export class ProfileFields extends Component {
   constructor (props) {
@@ -13,7 +12,8 @@ export class ProfileFields extends Component {
       email: '',
       login: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      language: localStorage.getItem('language') || 'en'
     }
     this.renderEmail = this.renderEmail.bind(this)
     this.renderLogin = this.renderLogin.bind(this)
@@ -97,18 +97,9 @@ export class ProfileFields extends Component {
     const changeLanguage = lng => {
       i18n.changeLanguage(lng)
       localStorage.setItem('language', lng)
+      this.setState({language: lng})
     }
 
-    const dropdownMenuItems = [
-      {
-        name: t('Ukrainian'),
-        onClick: () => changeLanguage('uk')
-      },
-      {
-        name: t('English'),
-        onClick: () => changeLanguage('en')
-      }
-    ]
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -157,11 +148,10 @@ export class ProfileFields extends Component {
         </div>
         <div className='language-choise'>
           <span>{t('choose language')}</span>
-          <Dropdown
-            icon='fas fa-ellipsis-h'
-            type='buttons-item'
-            menuItems={dropdownMenuItems}
-          />
+          <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
+            <option value='en'>{t('English')}</option>
+            <option value='uk'>{t('Ukrainian')}</option>
+          </select>
         </div>
       </div>
     )
