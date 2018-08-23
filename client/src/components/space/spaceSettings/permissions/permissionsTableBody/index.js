@@ -1,0 +1,35 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import PermissionsTableRow from '../permissionsTableRow'
+
+export default class PermissionsTableBody extends Component {
+  render () {
+    const { items, restrictionsByItemsId, restictionsCategory, handleChangePermission, isEditing } = this.props
+    return (
+      <tbody>
+        {
+          items.map(item => {
+            const restrictions = restrictionsByItemsId[item._id]
+            return (
+              <PermissionsTableRow
+                isEditing={isEditing}
+                item={item}
+                restrictionsHash={restrictions}
+                handleChangePermission={handleChangePermission}
+                restictionsCategory={restictionsCategory}
+              />
+            )
+          })
+        }
+      </tbody>
+    )
+  }
+}
+
+PermissionsTableBody.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  items: PropTypes.array.isRequired,
+  restrictionsByItemsId: PropTypes.object,
+  restictionsCategory: PropTypes.string,
+  handleChangePermission: PropTypes.func.isRequired
+}

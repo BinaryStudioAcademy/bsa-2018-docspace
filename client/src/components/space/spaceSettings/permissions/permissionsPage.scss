@@ -1,0 +1,11 @@
+@import 'src/globalStyles/variables.scss';
+.space-permissions-page{
+    padding: 2rem;
+    .permissions-table {
+        border-collapse: collapse;
+        border: 1px solid #ccc; 
+        width: 100%;
+        color: #333;
+        font-size:14px;
+    }
+}

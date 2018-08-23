@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewTab from './overview'
-import SpaceSettingsTab from './settings'
+// import SpaceSettingsTab from './settings'
 import { Route, NavLink } from 'react-router-dom'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
+import SpacePermissionsTab from './permissions'
 import './spaceSettings.css'
 
 const TABS = [
@@ -16,9 +17,12 @@ const TABS = [
     component: SpaceOverviewTab
   },
   {
-    name: 'settings',
-    path: '/settings',
-    component: SpaceSettingsTab
+    name: 'permissions',
+    path: '/permissions',
+    component: SpacePermissionsTab
+  },
+  {
+
   }
 ]
 

@@ -1,0 +1,41 @@
+@import 'src/globalStyles/variables.scss';
+
+.permissions-table-row{
+
+    border-bottom: 1px solid #ccc; 
+
+    &-ceil:first-of-type{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        padding: 5px;
+        border: none;
+    }
+
+    &-ceil{
+        min-height: 40px;
+        text-align: center;
+        border: 1px solid #ccc; 
+         border-collapse: collapse;
+
+        i.fa-check-circle{
+            color: green
+        }
+        i.fa-times-circle{
+            color: red;
+        }
+    }
+
+    .toggle-all-permission-btn{
+        color: $blue;
+        padding: 3px;
+        &:hover, &:focus {
+          text-decoration: underline;
+          cursor: pointer
+        }
+
+    }
+}
+
