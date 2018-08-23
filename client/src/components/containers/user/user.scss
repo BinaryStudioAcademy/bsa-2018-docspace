@@ -532,8 +532,13 @@
 }
 
 .language-choise{
+  display: flex;
+  align-items: center;
   color: $blueText;
   margin: 20px 0;
+}
+.language-choise .dropdown-menu-wrapper{
+  margin-left: 10px;
 }
 button.language-choise-button{
   color: $blueText;
