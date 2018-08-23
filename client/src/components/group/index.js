@@ -34,8 +34,8 @@ class Group extends Component {
     })
       : this.props.groups
 
-    const table = groups.map(group =>
-      <tr>
+    const table = groups.map((group, i) =>
+      <tr key={i}>
         <td><NavLink to='#'>{group.title}</NavLink></td>
         <td />
         <td>{group.description}</td>
@@ -58,7 +58,6 @@ class Group extends Component {
 
   render () {
     const { t } = this.props
-    console.log(this.props)
     return (
       <div className='group-container'>
         {this.state.modalIsOpened && <GroupDialog cancelModal={this.closeModal} />}
@@ -70,6 +69,7 @@ class Group extends Component {
           <Input label={t('Group name contains')}
             onChange={({target}) => this.handleChange(target)}
             value={this.state.filterField}
+            inputType='text'
           />
         </div>
         <div className='group-body-container'>
@@ -93,7 +93,7 @@ class Group extends Component {
 
 Group.propTypes = {
   user: PropTypes.object,
-  actions: PropTypes.obj,
+  actions: PropTypes.object,
   groups: PropTypes.array,
   t: PropTypes.func
 

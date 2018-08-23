@@ -3,6 +3,9 @@
 .dashboard-activity {
   display: flex;
   height: 100%;
+  .dashboard-activity-header {
+    padding: 8px;
+  }
   .content-header {
     padding: 4px 8px;
   }
@@ -13,8 +16,8 @@
     flex-direction: column;
     width: 70%;
     .dashboard-activity-nav-bar{
-      display: flex;
-      margin: 14px 0;
+      margin: 20px 0;
+      padding: 4px 0;
       list-style: none;
       box-shadow: 0px 3px 0px 0px #ccc;
       a.active-link {

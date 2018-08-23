@@ -16,6 +16,14 @@ class GroupService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+
+  getMatchingUsers = (keyword) => {
+    const args = {endpoint: `/api/user/name/${keyword}`, method: 'GET'}
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 }
 
 export const groupService = new GroupService()

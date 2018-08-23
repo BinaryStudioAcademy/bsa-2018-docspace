@@ -71,6 +71,8 @@ module.exports = {
     }
 
     SpaceRepository.update(id, req.body)
+      .populate('categories', 'name')
+      .populate('pages', 'title')
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
