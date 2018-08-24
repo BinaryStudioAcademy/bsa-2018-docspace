@@ -42,9 +42,10 @@ class WizardSpaceModal extends Component {
   }
 
   renderModalHeader = () => {
+    const { name } = this.props.selectedTemplate
     return (
       <h2 className='modal-header' >
-        {`Create a ${this.props.selectedTemplate.name}`}
+        { name === 'empty space' ? `Create an ${name}` : `Create a ${name}`}
       </h2>
     )
   }
@@ -83,6 +84,7 @@ class WizardSpaceModal extends Component {
         renderHeader={this.renderModalHeader}
         renderFooter={this.renderModalFooter}
         renderContent={this.renderModalContent}
+        closeModal={this.props.closeModal}
       />
     )
   }

@@ -1,5 +1,8 @@
 .group{
-    width: 100%;  
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;  
     td.group-modal-label{
         padding-right: 20px;
         padding-bottom: 10px;
@@ -7,17 +10,37 @@
     .group-modal-label{
         text-align: right;
         vertical-align: bottom;
+        width:20%;
+        padding-right: 10px;
         span{
             color: red;
             font-size: 18px;
     }
   }
+  .group-dialog-row{
+      width: 100%;
+      display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+
+  }
+  .group-modal-input{
+    width: 70%;  
+  }
+  .group-modal-input input{
+      margin: 0;
+  }
   .modal-footer{
     display: flex;
     align-items: center;
   }
+  button{
+    margin: 0 5px 0 0;  
+  }
 }
-#name, #description{
+#name, #description, #user{
     width: 70%;
 }
 .modal-footer-group{
@@ -30,6 +53,19 @@
     border: none;
     margin: 0 5px;
 }
-.modal-header{
+.modal-header-group{
     text-align: center;
 }
+.group-user-wrapper{
+    margin-top: 10px;
+}
+.groups-user-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left; 
+    padding-top: 10px;
+}
+// .modal-body{
+//     overflow: ; 
+// }
