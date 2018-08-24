@@ -14,12 +14,14 @@
         "prepush": "yarn pretest"
     },
     "dependencies": {
+        "aws-sdk": "^2.298.0",
         "babel-eslint": "^8.2.6",
         "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
         "cookie-parser": "^1.4.3",
         "cross-env": "^5.2.0",
+        "dotenv": "^6.0.0",
         "eslint-config-loopback": "^11.0.0",
         "express": "^4.16.2",
         "express-session": "^1.15.6",
