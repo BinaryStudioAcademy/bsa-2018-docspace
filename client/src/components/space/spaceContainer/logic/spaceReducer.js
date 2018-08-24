@@ -93,7 +93,7 @@ function isFetching (state = initialState.isFetching, action) {
     default:
       return state
   }
-};
+}
 
 export default combineReducers({
   all,

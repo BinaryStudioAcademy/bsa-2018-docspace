@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   avatar: String,
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  spaces: [Schema.Types.ObjectId],
+  spaces: [{type: Schema.Types.ObjectId}],
   email: {
     type: String,
     trim: true,

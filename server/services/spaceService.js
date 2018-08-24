@@ -1,5 +1,7 @@
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
+const UserRepository = require('../repositories/UserRepository')
+
 module.exports = {
   findAll: (req, res) => {
     SpaceRepository.getAll()
@@ -46,10 +48,14 @@ module.exports = {
 
     BlogRepository.create({})
       .then(blog => {
-        console.log(blog)
+        console.log(req.user._id)
         const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
-          .then(space => res.json(space))
+          .then(space => {
+            UserRepository.addSpaceToUser({userId: req.user._id, spaceId: space._id})
+              .then(() => res.json(space))
+              .catch(err => console.log(err))
+          })
           .catch((err) => {
             console.log(err)
             res.status(400).end()
