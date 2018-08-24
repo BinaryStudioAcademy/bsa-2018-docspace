@@ -48,7 +48,6 @@ module.exports = {
 
     BlogRepository.create({})
       .then(blog => {
-        console.log(req.user._id)
         const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
