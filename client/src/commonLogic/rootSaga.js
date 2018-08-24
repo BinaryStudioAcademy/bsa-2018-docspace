@@ -13,6 +13,7 @@ import blogSaga from 'src/components/blog/logic/blogSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
 import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
+import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
 
 function * rootSaga () {
   yield all([
@@ -23,6 +24,7 @@ function * rootSaga () {
     fork(blogSaga),
     fork(activitySaga),
     fork(groupSaga),
+    fork(matchingUsersSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
     verificationWatcher(),

@@ -76,7 +76,10 @@ class SpaceDetails extends Component {
 
 SpaceDetails.propTypes = {
   t: PropTypes.func.isRequired,
-  space: PropTypes.shape
+  space: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.stringgi
+  })
 }
 
 export default translate('translations')(SpaceDetails)

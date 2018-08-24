@@ -5,9 +5,9 @@ const sideBarTabs = ['All People', 'People with Personal Spaces']
 
 class People extends Component {
   state = {
-    active: ''
+    active: 'All People'
   }
-  updateData = (tab) => {
+  handleClickNavTab = (tab) => {
     this.setState({ active: tab })
   }
   render () {
@@ -18,7 +18,7 @@ class People extends Component {
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>
-            <SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} />
+            <SpacesSideBar menuTabs={sideBarTabs} handleClickNavTab={this.handleClickNavTab} activeTab={this.state.active} />
           </div>
           <div />
         </div>

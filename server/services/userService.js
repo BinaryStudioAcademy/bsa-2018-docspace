@@ -221,5 +221,27 @@ module.exports = {
         }
         res.status(500).send({error: msg || err.message})
       })
+  },
+
+  getByName: (req, res) => {
+    UserRepository.getByName(req.params.name)
+      .then(users => {
+        if (!users) {
+          return res.status(404).send({
+            message: 'user not found with id ' + req.params.id
+          })
+        }
+        res.send(users)
+      }).catch(err => {
+        if (err.kind === 'ObjectId') {
+          return res.status(404).send({
+            message: 'user not found with id ' + req.params.id
+          })
+        }
+
+        return res.status(500).send({
+          message: 'Error retrieving user with id ' + req.params.id
+        })
+      })
   }
 }

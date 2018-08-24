@@ -36,7 +36,7 @@ module.exports = {
   },
   add: (req, res) => {
     const Group = new scheme.Group({
-      members: [req.body.members],
+      members: req.body.members,
       title: req.body.title,
       description: req.body.description
     })

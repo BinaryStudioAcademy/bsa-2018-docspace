@@ -12,7 +12,8 @@ export class ProfileFields extends Component {
       email: '',
       login: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      language: localStorage.getItem('language') || 'en'
     }
     this.renderEmail = this.renderEmail.bind(this)
     this.renderLogin = this.renderLogin.bind(this)
@@ -96,7 +97,9 @@ export class ProfileFields extends Component {
     const changeLanguage = lng => {
       i18n.changeLanguage(lng)
       localStorage.setItem('language', lng)
+      this.setState({language: lng})
     }
+
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -145,16 +148,10 @@ export class ProfileFields extends Component {
         </div>
         <div className='language-choise'>
           <span>{t('choose language')}</span>
-          <Button
-            value={t('Ukrainian')}
-            onClick={() => changeLanguage('uk')}
-            nameClass='language-choise-button'
-          />
-          <Button
-            value={t('English')}
-            onClick={() => changeLanguage('en')}
-            nameClass='language-choise-button'
-          />
+          <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
+            <option value='en'>{t('English')}</option>
+            <option value='uk'>{t('Ukrainian')}</option>
+          </select>
         </div>
       </div>
     )
