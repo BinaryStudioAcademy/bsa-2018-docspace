@@ -16,11 +16,11 @@ const spaceSchema = new mongoose.Schema({
     required: true
   },
   description: String,
-  categories: [Schema.Types.ObjectId],
+  categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
   homePageId: Schema.Types.ObjectId,
   blogId: Schema.Types.ObjectId,
-  pages: [Schema.Types.ObjectId],
-  history: [Schema.Types.ObjectId],
+  pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
+  history: [{type: Schema.Types.ObjectId, ref: 'History'}],
   rights: {
     users: [Schema.Types.ObjectId],
     groups: [Schema.Types.ObjectId],
@@ -30,6 +30,7 @@ const spaceSchema = new mongoose.Schema({
 {
   versionKey: false
 })
+
 const SpaceModel = mongoose.model('Space', spaceSchema)
 
 module.exports = SpaceModel

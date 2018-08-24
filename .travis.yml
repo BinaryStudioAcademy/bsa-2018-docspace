@@ -1,0 +1,48 @@
+# Use node_js environnement
+language: node_js
+node_js:
+  - "8"
+
+# Cache Gcloud SDK between commands
+cache:
+  yarn: true
+  directories:
+    - "$HOME/google-cloud-sdk/"
+
+# Install services
+services:
+  - docker
+
+script:
+  - echo "skipping tests"
+
+# Set env vars
+env:
+    global:
+    - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - PROJECT_ID="docspace-214009"
+    - CLUSTER_NAME=docspace-cluster
+    - CLOUDSDK_COMPUTE_ZONE=us-central1-a
+    - DOCKER_IMAGE_NAME=docspace
+    - KUBE_DEPLOYMENT_NAME=docspace-web
+    - KUBE_DEPLOYMENT_CONTAINER_NAME=docspace-web
+    - NODE_ENV=CI
+
+before_deploy:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash >/dev/null; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update beta
+  - gcloud --quiet components update kubectl
+
+branches:
+  only:
+  - demo-2
+
+deploy:
+  - provider: script
+    script: bash ./deploy-staging.sh
+    skip_cleanup: true
+    on:
+      branch: demo-2

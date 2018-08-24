@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './label.css'
+// import './label.css'
 // To hide close button use this.props.closeButtonHide
 class Label extends Component {
     state = {

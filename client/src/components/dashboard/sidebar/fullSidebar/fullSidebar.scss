@@ -1,8 +1,23 @@
-.tabs-wrapper {
-  .nav-button.minimize-button:first-of-type {
-    margin-top: 3rem;
-  }
-  .nav-button.minimize-button{
-    width: 100%;
+@import "src/globalStyles/variables.scss";
+
+.full-sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $greyBlog;
+  min-width: 0;
+
+  .docspace-logo-label {
+    margin: 15px 0 20.5px 8px;
+    color: $blueText;
+    padding: 0;
+    margin-top: 35px;
+    font-family: 'Carme', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
   }
 }

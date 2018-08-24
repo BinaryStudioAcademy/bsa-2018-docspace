@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import './spaceDetails.css'
 import spaceLogo from 'src/resources/logo.png'
@@ -46,12 +47,17 @@ class SpaceDetails extends Component {
             <td>{t('Created_by')}</td>
             <td> <span className='link'>{name}</span></td>
           </tr>
-          {/*
-          TEMPORALLY HIDE FOR DEMO
           <tr>
             <td>{t('Categoies')}</td>
-            <td />
-          </tr> */}
+            <td >
+              {space.categories.length
+                ? space.categories.map((category, index) =>
+                  <Link key={index} to='#' className='space-category'>
+                    {category.name}
+                  </Link>)
+                : `(${t('None')})` }
+            </td>
+          </tr>
           <tr>
             <td>{t('Description')}</td>
             <td>{space.description}</td>
@@ -70,7 +76,10 @@ class SpaceDetails extends Component {
 
 SpaceDetails.propTypes = {
   t: PropTypes.func.isRequired,
-  space: PropTypes.object.isRequired
+  space: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.stringgi
+  })
 }
 
 export default translate('translations')(SpaceDetails)

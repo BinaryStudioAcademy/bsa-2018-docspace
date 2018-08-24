@@ -3,19 +3,52 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import DashboardInput from '../input'
 import PropTypes from 'prop-types'
-import { allSpaces } from '../../space/spaceContainer/logic/spaceReducer'
+import { allSpaces, isSpacesFetching } from '../../space/spaceContainer/logic/spaceReducer'
 import { getSpacesRequest } from '../../space/spaceContainer/logic/spaceActions'
 import './spacesContent.css'
 import logo from './space-logo.png'
 import { Link } from 'react-router-dom'
+import { MoonLoader } from 'react-spinners'
 
 class SpacesContent extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      filterField: ''
+    }
+  }
   componentDidMount () {
     this.props.actions.getSpacesRequest()
   }
-
-  render () {
-    const list = this.props.spaces.map((item, index) => {
+  handleFilterField = (e) => {
+    this.setState({filterField: e.target.value})
+  }
+  renderSortedSpaces = () => {
+    const filteredValue = this.state.filterField.toLocaleLowerCase()
+    const filteredSpaces = this.props.spaces.filter(space => {
+      console.log(space)
+      if (!space.categories.length) {
+        if (~space.name.toLocaleLowerCase().indexOf(filteredValue)) { // ~ means if found
+          return true
+        } else {
+          return false
+        }
+      }
+      return space.categories.some(categorie => {
+        if (!categorie.name) {
+          return true
+        }
+        if (!categorie.name.length) {
+          return true
+        }
+        if (~categorie.name.toLocaleLowerCase().indexOf(filteredValue)) { // ~ means if found
+          return true
+        } else {
+          return false
+        }
+      })
+    })
+    const spaces = filteredSpaces.map((item, index) => {
       const spaceItem = (
         <tr key={index} className='space-item'>
           <td className='space-image'>
@@ -29,7 +62,7 @@ class SpacesContent extends Component {
           <td className='space-description'>{item.description}</td>
           <td>
             {
-              item.categories.map(category => <a href='' className='space-label'>{category.name}</a>)
+              item.categories.map((category, index) => <a href='' key={index} className='space-label'>{category.name}</a>)
             }
           </td>
           <td>
@@ -37,7 +70,6 @@ class SpacesContent extends Component {
           </td>
         </tr>
       )
-
       if (this.props.activeTab === 'All Spaces') {
         // Checking permission ?
         // if ((item.rights !== undefined) && (((item.rights).users) !== undefined)) {
@@ -56,35 +88,54 @@ class SpacesContent extends Component {
       } if (this.props.activeTab === 'Archived Spaces') {
         return spaceItem
       }
-
       return null
     })
+    return spaces
+  }
+
+  render () {
+    const { isFetching } = this.props
     return (
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>
           <h2>{this.props.activeTab}</h2>
-          <DashboardInput placeholder='Filter' />
+          <DashboardInput placeholder='Filter' onChange={this.handleFilterField} />
         </div>
-        <div className={'body-spaces-content'}><table className='table-paces'>
-          <thead className='list-header'>
-            <tr>
-              <td className='column-heading name-heading' colSpan='2'>Space</td>
-              <td className='column-heading desc-heading'>Description</td>
-              <td className='column-heading labels-heading'>Categories</td>
-              <td className='column-heading icon-column-heading' />
-            </tr>
-          </thead>
-          <tbody>
-            {list}
-          </tbody>
-        </table></div>
+        { isFetching
+          ? <div className='body-spaces-loader'>
+            <div className='sweet-loading'>
+              <MoonLoader
+                sizeUnit={'px'}
+                size={32}
+                color={'#123abc'}
+              />
+            </div>
+          </div>
+          : <div className={'body-spaces-content'}>
+            <table className='table-paces'>
+              <thead className='list-header'>
+                <tr>
+                  <td className='column-heading name-heading' colSpan='2'>Space</td>
+                  <td className='column-heading desc-heading'>Description</td>
+                  <td className='column-heading labels-heading'>Categories</td>
+                  <td className='column-heading icon-column-heading' />
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderSortedSpaces()}
+              </tbody>
+            </table>
+          </div>
+        }
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  spaces: allSpaces(state)
+  spaces: allSpaces(state),
+  isFetching: isSpacesFetching(state),
+  state: state
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -94,7 +145,8 @@ const mapDispatchToProps = dispatch => ({
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
   actions: PropTypes.object,
-  activeTab: PropTypes.string
+  activeTab: PropTypes.string,
+  isFetching: PropTypes.bool
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpacesContent)

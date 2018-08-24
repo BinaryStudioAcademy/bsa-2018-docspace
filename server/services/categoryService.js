@@ -1,5 +1,5 @@
 const CategoryRepository = require('../repositories/CategoryRepository')
-const scheme = require('../models/categoryScheme')
+const SpaceRepository = require('../repositories/SpaceRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -14,7 +14,6 @@ module.exports = {
   },
 
   findOne: (req, res) => {
-    console.log(req)
     CategoryRepository.getById(req.params.id)
       .then(category => {
         if (!category) {
@@ -35,50 +34,31 @@ module.exports = {
       })
   },
 
-  add: (req, res) => {
-    CategoryRepository.get({name: req.body.name})
-      .then(category => {
-        if (!category) {
-          category = new scheme.Category({
-            name: req.body.name
-          })
-          category.spaces.push(req.body.spaceId)
-        } else if (category.spaces.indexOf(req.body.spaceId) !== -1) {
-          return res.status(200).send({message: 'This space already has such category'})
-        } else {
-          category.spaces.push(req.body.spaceId)
-        }
-        category.save()
-          .then(category => {
-            res.send(category)
-          })
-          .catch(err => {
-            res.status(500).send({
-              message: err.message || 'Some error occurred while creating the category.'
-            })
-          })
-      })
-      .catch(err => console.log(err))
+  add: async (req, res) => {
+    let category = await CategoryRepository.get({name: req.body.categoryName})
+      .then(category => category)
+      .catch(err => err)
+    if (!category) {
+      category = await CategoryRepository.create({name: req.body.categoryName})
+        .then(category => category)
+        .catch(err => err)
+    }
+    SpaceRepository.updateCategory(req.body.spaceId, category._id)
+      .populate('categories')
+      .populate('pages')
+      .then(populatedSpace => res.json(populatedSpace))
+      .catch(err => err)
   },
 
-  findOneAndDelete: (req, res) => {
-    CategoryRepository.delete(req.params.id)
-      .then(category => {
-        if (!category) {
-          return res.status(404).send({
-            message: 'category not found with id ' + req.params.id
-          })
-        }
-        res.send({message: 'category deleted successfully!'})
-      }).catch(err => {
-        if (err.kind === 'ObjectId' || err.name === 'NotFound') {
-          return res.status(404).send({
-            message: 'category not found with id ' + req.params.id
-          })
-        }
-        return res.status(500).send({
-          message: 'Could not delete category with id ' + req.params.id
-        })
-      })
+  findOneAndDelete: async (req, res) => {
+    let numberCategoryInSpaces = await SpaceRepository.getCountCategory(req.params.id)
+    if (numberCategoryInSpaces <= 1) {
+      CategoryRepository.delete(req.params.id)
+    }
+    SpaceRepository.deleteCategory(req.body.spaceId, req.params.id)
+      .populate('categories')
+      .populate('pages')
+      .then(populatedSpace => res.json(populatedSpace))
+      .catch(err => err)
   }
 }
