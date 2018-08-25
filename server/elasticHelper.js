@@ -1,10 +1,23 @@
-// const elasticsearch = require('elasticsearch');
-// const client = new elasticsearch.Client({
-//   host: 'localhost:9200',
-//   log: 'trace'
-// })
+module.exports = {
+  checkConnection (client) {
+    client.cluster.health({}, function (error) {
+      if (error) {
+        console.trace('elasticsearch cluster is down!')
+      } else {
+        console.log('All is well')
+      }
+    })
+  },
 
-// module.exports = {
-//   uploadFile: () => {
-//   }
-// }
+  createIndex (client, name) {
+    client.indices.create({
+      index: name
+    }, (err, resp, status) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`created index ${name}`, resp)
+      }
+    })
+  }
+}
