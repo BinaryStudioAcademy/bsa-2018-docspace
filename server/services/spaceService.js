@@ -1,5 +1,7 @@
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
+const UserRepository = require('../repositories/UserRepository')
+
 module.exports = {
   findAll: (req, res) => {
     SpaceRepository.getAll()
@@ -46,10 +48,17 @@ module.exports = {
 
     BlogRepository.create({})
       .then(blog => {
-        console.log(blog)
         const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
+        console.log(spaceWithOwnerAndEmptyBlog.ownerId)
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
-          .then(space => res.json(space))
+          .then(space => {
+            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
+              .then((user) => {
+                console.log(user)
+                return res.json(space)
+              })
+              .catch(err => console.log(err))
+          })
           .catch((err) => {
             console.log(err)
             res.status(400).end()
@@ -90,8 +99,29 @@ module.exports = {
       return res.end('Invalid id')
     }
 
-    SpaceRepository.delete(id)
-      .then(data => res.json(data))
+    SpaceRepository.getById(id)
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+          return res.end()
+        }
+        UserRepository.getById(data[0].owner._id)
+          .then(user => {
+            if (data[0].owner._id.equals(user._id)) {
+              UserRepository.deleteSpace(user._id, data[0]._id)
+                .then(user => console.log(user))
+                .catch(err => console.log(err))
+            }
+            SpaceRepository.delete(id)
+              .then(data => res.json(data))
+              .catch((err) => {
+                console.log(err)
+                res.status(400)
+                res.end()
+              })
+          })
+          .catch(err => console.log(err))
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)

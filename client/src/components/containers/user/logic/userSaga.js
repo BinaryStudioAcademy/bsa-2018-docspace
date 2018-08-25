@@ -2,9 +2,17 @@ import { takeLatest, put, all, call } from 'redux-saga/effects'
 import * as actionTypes from './userActionTypes'
 import { userService } from 'src/services/userService'
 
+function * getUser (action) {
+  try {
+    const response = yield userService.getUser(action.payload)
+    yield put({ type: actionTypes.GET_USER_SUCCESS, response })
+  } catch (err) {
+    yield put({ type: actionTypes.GET_USER_ERROR, err })
+  }
+}
+
 function * updUser (action) {
   const response = yield userService.updateUser(action.payload)
-  console.log(response)
   if (!response.success) {
     yield put({ type: actionTypes.UPDATE_USER_FAILED, response })
   } else {
@@ -29,6 +37,7 @@ function * checkUserPassword (action) {
 export default function * selectionsSaga () {
   yield all([
     takeLatest(actionTypes.UPDATE_USER, updUser),
-    takeLatest(actionTypes.CHECK_USER_PASSWORD, checkUserPassword)
+    takeLatest(actionTypes.CHECK_USER_PASSWORD, checkUserPassword),
+    takeLatest(actionTypes.GET_USER_REQUEST, getUser)
   ])
 }
