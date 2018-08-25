@@ -91,7 +91,7 @@ module.exports = {
       })
   },
   findOneAndDelete: (req, res) => {
-    PageRepository.delete(req.params.id)
+    PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {
         if (!page) {
           return res.status(404).send({

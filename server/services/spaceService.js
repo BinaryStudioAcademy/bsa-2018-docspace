@@ -90,7 +90,7 @@ module.exports = {
       return res.end('Invalid id')
     }
 
-    SpaceRepository.delete(id)
+    SpaceRepository.update(id, {'isDeleted': true})
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
