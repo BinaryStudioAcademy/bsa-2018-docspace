@@ -93,7 +93,6 @@ module.exports = {
   findOneAndDelete: (req, res) => {
     PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {
-        console.log('DELETED PAGE', page)
         if (page[0].blogId) {
           BlogRepository.deletePageFromBlog(page[0].blogId, page[0]._id)
             .then(() => {
