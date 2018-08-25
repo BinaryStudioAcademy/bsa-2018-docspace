@@ -14,7 +14,7 @@ const pageSchema = new mongoose.Schema({
   },
   comments: [Schema.Types.ObjectId],
   usersLikes: [Schema.Types.ObjectId],
-  isDeleted: Boolean
+  isDeleted: {type: Boolean, default: false}
 },
 { versionKey: false, timestamps: true }
 )
