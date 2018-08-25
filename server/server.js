@@ -12,7 +12,6 @@ require('./config/passport')()
 
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: true, limit: '50mb'}))
-app.use('/convert', require('./routes/uploadFiles/uploadFilesRoutes'))
 
 app.use(
   session({
