@@ -1,5 +1,5 @@
 FROM node:8
-
+ENV NODE_PATH ./
 WORKDIR /docspace
 
 COPY package.json yarn.lock /docspace/

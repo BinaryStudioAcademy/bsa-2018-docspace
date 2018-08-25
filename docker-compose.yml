@@ -9,7 +9,6 @@ services:
     environment:
      - NODE_ENV=production
      - PORT=8080
-     - NODE_PATH=./
      - ES_HOST=elasticsearch
 
   elasticsearch:
