@@ -15,6 +15,9 @@ class SpaceRepository extends GeneralRepository {
   getAll () {
     return this.model.aggregate([
       {
+        $match: { isDeleted: false }
+      },
+      {
         $lookup: {
           from: 'categories',
           localField: 'categories',

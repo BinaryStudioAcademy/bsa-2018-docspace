@@ -4,6 +4,14 @@ const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
 class PageRepository extends GeneralRepository {
+  getAll () {
+    return this.model.aggregate([
+      {
+        $match: { isDeleted: false }
+      }
+    ])
+  }
+
   getById (id) {
     return this.model.aggregate([
       {
