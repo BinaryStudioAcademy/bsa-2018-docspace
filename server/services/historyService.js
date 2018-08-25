@@ -5,8 +5,16 @@ module.exports = {
   findAll: (req, res) => {
     HistoryRepository.getAll()
       .sort('-date')
-      .populate('spaceId', 'name')
-      .populate('pageId', 'title')
+      .populate({
+        path: 'spaceId',
+        select: 'name isDeleted'
+      })
+      .populate({
+        path: 'pageId',
+        select: 'title isDeleted'})
+      .populate({
+        path: 'commentId',
+        select: 'text isDeleted'})
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
