@@ -29,7 +29,7 @@ const getRightProps = (content) => {
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'New page created',
-        isDeleted: content.spaceId.isDeleted
+        isDeleted: content.pageId.isDeleted
       }
     case 'UPDATE_PAGE_SUCCESS':
       return {
@@ -38,7 +38,7 @@ const getRightProps = (content) => {
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'Update page',
-        isDeleted: content.spaceId.isDeleted
+        isDeleted: content.pageId.isDeleted
       }
     case 'CREATE_COMMENT_SUCCESS':
       return {
@@ -47,7 +47,7 @@ const getRightProps = (content) => {
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-comment',
         action: `New comment ${content.commentId.text}`,
-        isDeleted: content.spaceId.isDeleted
+        isDeleted: content.commentId.isDeleted
       }
     case 'EDIT_COMMENT_SUCCESS':
       return {
@@ -56,7 +56,7 @@ const getRightProps = (content) => {
         path: '#',
         icon: 'fas fa-comment',
         action: `Comment edited ${content.commentId.text}`,
-        isDeleted: content.spaceId.isDeleted
+        isDeleted: content.commentId.isDeleted
       }
     default:
       return null
