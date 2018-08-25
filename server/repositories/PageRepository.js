@@ -7,7 +7,7 @@ class PageRepository extends GeneralRepository {
   getAll () {
     return this.model.aggregate([
       {
-        $match: { isDeleted: false }
+        '$match': { isDeleted: false }
       }
     ])
   }
