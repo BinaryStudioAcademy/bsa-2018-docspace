@@ -9,7 +9,7 @@ import { getUser } from 'src/components/containers/user/logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-const sideBarTabs = ['All Spaces', 'Site Spaces', 'Personal Spaces', 'My Spaces', 'Archived Spaces']
+const sideBarTabs = ['All Spaces', 'Personal Spaces', 'My Spaces', 'Archived Spaces']
 class DashboardSpacesBody extends Component {
   constructor (props) {
     super(props)
@@ -23,7 +23,7 @@ class DashboardSpacesBody extends Component {
     this.props.actions.getUser(this.props.userId)
   }
   handleClickNavTab = (tab) => {
-    if (tab === 'All Spaces' || tab === 'Site Spaces') {
+    if (tab === 'All Spaces') {
       this.setState({spaces: this.props.spaces})
     }
     if (tab === 'Personal Spaces' || tab === 'My Spaces' || tab === 'Archived Spaces') {
