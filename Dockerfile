@@ -1,5 +1,9 @@
 FROM node:8
+
+ENV NODE_ENV production
+ENV PORT 8080
 ENV NODE_PATH ./
+
 WORKDIR /docspace
 
 COPY package.json yarn.lock /docspace/
