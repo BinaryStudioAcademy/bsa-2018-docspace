@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getSpacesRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import { allSpaces } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { createPageRequest } from 'src/components/page/logic/pageActions'
 import { templates } from './logic/constants/templates'
 import PageFactory from './logic/pageFactory'
 import './createPageModal.css'
@@ -18,19 +17,18 @@ class CreatePageModal extends Component {
     this.state = {
       templates: templates,
       selectedTemplate: null,
-      selectedSpaceId: null
+      selectedSpace: null
     }
   }
 
   // TODO: add more templates and methods to PageFactory
   handlecreateClick = () => {
-    const {selectedSpaceId, selectedTemplate} = this.state
-    const templatedPage = PageFactory.createTemplatePageForSpace(selectedSpaceId, selectedTemplate.name)
-    this.props.actions.createPageRequest(templatedPage)
+    const selectedTemplate = this.state.selectedTemplate
+    const selectedSpace = JSON.parse(this.state.selectedSpace)
+    PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name)
   }
 
   componentDidMount () {
-    // request for all spaces.
     this.props.actions.getSpacesRequest()
   }
 
@@ -50,17 +48,17 @@ class CreatePageModal extends Component {
     })
   }
 
-  handleSelectSpace = (id) => {
+  handleSelectSpace = (space) => {
     this.setState({
-      selectedSpaceId: id
+      selectedSpace: space
     })
   }
 
   handleSelectAndSendTemplate = () => {
-    const {selectedSpaceId, selectedTemplate} = this.state
-    const disableSend = !selectedSpaceId || !selectedTemplate
+    const {selectedSpace, selectedTemplate} = this.state
+    const disableSend = !selectedSpace || !selectedTemplate
     if (!disableSend) {
-      const templatedPage = PageFactory.createTemplatePageForSpace(selectedSpaceId, selectedTemplate.name)
+      const templatedPage = PageFactory.createTemplatePageForSpace(selectedSpace, selectedTemplate.name)
       this.props.actions.createPageRequest(templatedPage)
     }
   }
@@ -85,7 +83,7 @@ class CreatePageModal extends Component {
 
   renderModalFooter = () => {
     // todo: change next btn color  whe it's disabled
-    const disableNextButton = !this.state.selectedTemplate || !this.state.selectedSpaceId
+    const disableNextButton = !this.state.selectedTemplate || !this.state.selectedSpace
     return (
       <div className='modal-footer'>
         <button
@@ -116,7 +114,7 @@ class CreatePageModal extends Component {
              <option value='none' disabled hidden>Choose here</option>
              {
                this.props.spaces.map((space, index) => (
-                 <option value={space._id} key={index}>
+                 <option value={JSON.stringify(space)} key={index}>
                    {space.name}
                  </option>
                ))
@@ -139,6 +137,7 @@ class CreatePageModal extends Component {
          renderHeader={this.renderModalHeader}
          renderFooter={this.renderModalFooter}
          renderContent={this.renderModalContent}
+         closeModal={this.props.closeModal}
        />
      )
    }
@@ -154,7 +153,7 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getSpacesRequest, createPageRequest
+        getSpacesRequest
       }
       , dispatch)
   }

@@ -14,7 +14,8 @@
 }
 
 .modal-window{
-    position: fixed;
+     z-index: 2000;
+    // position: fixed;
     background-color: #fff;
     border-radius: 5px;
     width: 80%;

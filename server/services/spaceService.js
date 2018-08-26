@@ -1,5 +1,5 @@
 const SpaceRepository = require('../repositories/SpaceRepository')
-
+const BlogRepository = require('../repositories/BlogRepository')
 module.exports = {
   findAll: (req, res) => {
     SpaceRepository.getAll()
@@ -44,14 +44,20 @@ module.exports = {
       return res.end('Invalid data')
     }
 
-    const spaceWithOwner = { ...req.body, ownerId: req.user._id }
-
-    SpaceRepository.create(spaceWithOwner)
-      .then(data => res.json(data[0]))
-      .catch((err) => {
+    BlogRepository.create({})
+      .then(blog => {
+        console.log(blog)
+        const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
+        SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
+          .then(space => res.json(space))
+          .catch((err) => {
+            console.log(err)
+            res.status(400).end()
+          })
+      })
+      .catch(err => {
         console.log(err)
-        res.status(400)
-        res.end()
+        res.status(400).end()
       })
   },
 
@@ -65,7 +71,9 @@ module.exports = {
     }
 
     SpaceRepository.update(id, req.body)
-      .then(data => res.json(data[0]))
+      .populate('categories', 'name')
+      .populate('pages', 'title')
+      .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
         res.status(400)

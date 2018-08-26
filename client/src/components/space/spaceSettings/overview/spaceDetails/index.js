@@ -55,7 +55,7 @@ class SpaceDetails extends Component {
                   <Link key={index} to='#' className='space-category'>
                     {category.name}
                   </Link>)
-                : `(${t('None')})` } [<Link to={this.props.pathToCategories}>Edit</Link>]
+                : `(${t('None')})` }
             </td>
           </tr>
           <tr>
@@ -76,8 +76,10 @@ class SpaceDetails extends Component {
 
 SpaceDetails.propTypes = {
   t: PropTypes.func.isRequired,
-  pathToCategories: PropTypes.string.isRequired,
-  space: PropTypes.shape
+  space: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.stringgi
+  })
 }
 
 export default translate('translations')(SpaceDetails)

@@ -1,8 +1,9 @@
 const express = require('express')
 const session = require('express-session')
-const bodyParser = require('body-parser')
 const MongoStore = require('connect-mongo')(session)
-const mongooseConnection = require('./db/dbConnect').connection
+const connections = require('./db/connections')
+const mongoose = connections.mongoose
+const elasticClient = connections.elasticClient
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
@@ -11,8 +12,13 @@ const app = express()
 const port = process.env.PORT || 3001
 require('./config/passport')()
 
-app.use(bodyParser.json({limit: '50mb'}))
-app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
+app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({extended: true, limit: '50mb'}))
+app.use('/convert', require('./routes/uploadFiles/uploadFilesRoutes'))
+
+const elasticHelper = require('./elasticHelper')
+// elasticHelper.checkConnection(elasticClient)
+// elasticHelper.createIndex(elasticClient, 'page')
 
 app.use(
   session({
@@ -20,7 +26,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-      mongooseConnection: mongooseConnection
+      mongooseConnection: mongoose.connection
     })
   })
 )

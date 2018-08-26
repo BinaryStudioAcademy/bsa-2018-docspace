@@ -1,6 +1,7 @@
 const PageRepository = require('../repositories/PageRepository')
-
+// var mammoth = require('mammoth')
 const SpaceRepository = require('../repositories/SpaceRepository')
+const BlogRepository = require('../repositories/BlogRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -41,14 +42,25 @@ module.exports = {
   add: (req, res) => {
     PageRepository.create(req.body)
       .then(page => {
-        SpaceRepository.addPageToSpace(page)
-          .then((space) => {
-            return res.json(page)
-          })
-          .catch(err => {
-            console.log(err)
-            res.status(500).send(err.message)
-          })
+        if (page.blogId) {
+          BlogRepository.addPageToBlog(page)
+            .then((space) => {
+              return res.json(page)
+            })
+            .catch(err => {
+              console.log(err)
+              res.status(500).send(err.message)
+            })
+        } else {
+          SpaceRepository.addPageToSpace(page)
+            .then((space) => {
+              return res.json(page)
+            })
+            .catch(err => {
+              console.log(err)
+              res.status(500).send(err.message)
+            })
+        }
       }).catch(err => {
         console.log(err)
         res.status(500).send({

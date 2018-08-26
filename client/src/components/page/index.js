@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import PageHeader from './pageHeader'
+import PageHeader from 'src/components/common/pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
-
 import * as commentsActions from './commentsLogic/commentsActions'
-
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 import '../comments//comments/comments.css'
@@ -25,6 +22,9 @@ import '../comments//comments/comments.css'
 class Page extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      isShowImportModal: true
+    }
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
@@ -53,10 +53,27 @@ class Page extends Component {
     console.log('deleting')
     this.props.actions.deletePageRequest(this.props.page)
   }
+  exportPageToPdf = () => {
+    this.props.actions.exportPageToPdf(this.props.page)
+  }
+  exportPageToWord = () => {
+    this.props.actions.exportPageToWord(this.props.page)
+  }
+  handleCallSystemDialogWindow = () => {
+    this.refs.fileUploader.click()
+  }
+  handleChoosenFile = (e) => {
+    if (e.target.files[0]) {
+      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+    } else {
+      console.log('cancel')
+    }
+  }
 
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    console.log(`render`, this.props.contentDoc)
     return (
       <React.Fragment>
         <PageHeader
@@ -64,6 +81,9 @@ class Page extends Component {
           t={t}
           handleEditPageClick={this.handleEditPageClick}
           handleDeletePage={this.handleDeletePage}
+          onWordImport={this.handleCallSystemDialogWindow}
+          onPdfExport={this.exportPageToPdf}
+          onWordExport={this.exportPageToWord}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -85,14 +105,19 @@ class Page extends Component {
             />
             <PageContent content={page.content} />
             <div className='comments-section'>
-              {this.props.page.commentsArr.length
+              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr}
+                comments={this.props.page.commentsArr || []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
+                addNewComment={this.addNewComment}
+                firstName={firstName}
+                lastName={lastName}
+                userId={_id}
+
               />
               <AddComment
                 firstName={firstName}
@@ -102,6 +127,7 @@ class Page extends Component {
                 t={t}
               />
             </div>
+            <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
         }
       </React.Fragment>
@@ -124,9 +150,12 @@ Page.propTypes = {
   addComment: PropTypes.func,
   deleteCommentRequest: PropTypes.func,
   editCommentRequest: PropTypes.func,
+  exportPageToPdf: PropTypes.func,
+  exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  contentDoc: PropTypes.object
 }
 
 Page.defaultProps = {
@@ -159,7 +188,11 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deletePageRequest
+        getPageByIdRequest,
+        deletePageRequest,
+        exportPageToPdf,
+        exportPageToWord,
+        sendDocFileRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

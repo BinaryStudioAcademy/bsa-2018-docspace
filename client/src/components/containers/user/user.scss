@@ -530,3 +530,14 @@
 .Resizer {
   z-index: 1;
 }
+
+.language-choise{
+  display: flex;
+  align-items: center;
+  color: $blueText;
+  margin: 20px 0;
+}
+.language-choise select{
+  padding: 0 5px;
+  margin-left: 10px;
+}

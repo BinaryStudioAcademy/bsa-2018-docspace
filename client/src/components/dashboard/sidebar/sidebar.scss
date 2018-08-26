@@ -1,51 +1,21 @@
 @import "src/globalStyles/variables.scss";
 @import url('https://fonts.googleapis.com/css?family=Carme');
 
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $primaryColor;
 
-.sidebar-container{
-  .sidebar-wrapper{
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    text-align: left;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: $primaryColor;
+  a {
+    text-decoration: none;
   }
-  .icon-buttons-wrapper {
-    padding: 0 5px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  h1 {
-      margin: 15px 0 20.5px 8px;
-  }
-  .tabs-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
 
-    a, a:visited, a:active, a:hover{
-      text-decoration: none;
-      color: white;
-    }
-    .nav-button-only-icons {
-      align-self: center;
-      width: 40px;
-      height: 40px;
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:first-of-type {
-        margin-top: 20px;
-      }
-    }
-  }
-  .minimize-dashboard-wrapper {
+  &.minimized {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -53,37 +23,10 @@
     margin: 0;
     height: 100%;
     width: 70px;
-  }
-
-  &.space-minimized {
-    .icon-buttons-wrapper {
-      width: 100%;
-
-      .icon-navigation-wrapper {
-        flex: 1;
-        margin-top: 20px;
-
-        .tabs-wrapper {
-          .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            img {
-              max-width: 46px;
-              border-radius: 5px;
-              margin: 5px 0;
-            }
-          }
-        }
-      }
-    }
+    background-color: $greyBlog;
   }
 }
 
-.sidebar-container {
-  height: 100%;
-}
 .Resizer {
   min-width: 2px;
   cursor: col-resize;
@@ -91,74 +34,5 @@
 
   &:hover {
     background-color: $blue;
-  }
-}
-.sidebar-blue-schema {
-  height: 100%;
-  .sidebar-wrapper, .minimize-dashboard-wrapper {
-  background-color: $primaryColor;
-  }
-  .top-icons {
-    a, a:visited, a:active, a:hover {
-      text-decoration: none;
-      color: white;
-    }
-  }
-  .nav-button {
-    > i, {
-      color: white;
-      cursor: pointer;
-    }
-  }
-  .tabs-wrapper {
-    a, a:visited, a:active, a:hover {
-      text-decoration: none;
-      color: white;
-    }
-  }
-  .nav-button:hover {
-      background-color: $primalHover;
-  }
-  #docspace-logo-label {
-      color: white;
-      padding: 0;
-      margin-top: 35px;
-      font-family: 'Carme', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 2.4px;
-  }
-  .Resizer {
-      background-color: $primaryColor
-  }
-}
-
-
-.sidebar-grey-schema{
-  .nav-button-selected {
-    background-color: $greyHover;
-  }
-  .sidebar-wrapper, .minimize-dashboard-wrapper {
-    background-color: $greyBlog;
-
-    .top-icons img:hover {
-      background-color: $greyHover;
-    }
-  }
-  h1{
-    color: $blueText;
-  }
-  .Resizer{
-    background-color: $greyBlog
-  }
-  .icon-buttons-wrapper{
-    .nav-button-only-icons:hover,
-    .nav-button:hover{
-      background-color: $greyHover;
-    }
-
-    i, a, a:visited, a:active, a:hover {
-      text-decoration: none;
-      color: $grayDark;
-    }
   }
 }

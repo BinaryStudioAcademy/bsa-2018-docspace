@@ -18,6 +18,7 @@ export class AddComment extends Component {
     this.setActiveTextAreaStateOnFocus = this.setActiveTextAreaStateOnFocus.bind(this)
     this.cancelSendText = this.cancelSendText.bind(this)
     this.handleText = this.handleText.bind(this)
+    this.createComment = this.createComment.bind(this)
   }
 
   createComment = () => {
@@ -127,6 +128,6 @@ AddComment.propTypes = {
   _id: PropTypes.string,
   ReplyComment: PropTypes.func,
   parentId: PropTypes.string,
-  style: PropTypes.string
+  style: PropTypes.object
 }
 export default translate('translations')(AddComment)
