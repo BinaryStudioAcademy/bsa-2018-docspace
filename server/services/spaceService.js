@@ -1,6 +1,7 @@
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
+const PageRepository = require('../repositories/PageRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -90,7 +91,7 @@ module.exports = {
       })
   },
 
-  findOneAndDelete: (req, res) => {
+  findOneAndDelete: async (req, res) => {
     const id = req.params.id
 
     if (id.length === 0) {
@@ -112,8 +113,15 @@ module.exports = {
                 .then(user => console.log(user))
                 .catch(err => console.log(err))
             }
-            SpaceRepository.delete(id)
-              .then(data => res.json(data))
+            const deletedSpace = SpaceRepository.update(id, { '$set': { 'isDeleted': true } })
+              .then(space => space)
+              .catch((err) => {
+                console.log(err)
+                res.status(400)
+                res.end()
+              })
+            PageRepository.updateMany({spaceId: deletedSpace._id}, { '$set': { 'isDeleted': true } })
+              .then(() => res.json(deletedSpace))
               .catch((err) => {
                 console.log(err)
                 res.status(400)

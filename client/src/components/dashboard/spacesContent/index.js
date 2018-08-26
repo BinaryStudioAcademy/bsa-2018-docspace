@@ -16,6 +16,10 @@ class SpacesContent extends Component {
   handleFilterField = (e) => {
     this.setState({filterField: e.target.value})
   }
+  handleFilterFieldByClick = (e) => {
+    e.preventDefault()
+    this.setState({filterField: e.target.innerText})
+  }
   renderSortedSpaces = () => {
     const filteredValue = this.state.filterField.toLocaleLowerCase()
     const filteredSpaces = this.props.spaces.filter(space => {
@@ -50,7 +54,7 @@ class SpacesContent extends Component {
           <td className='space-description'>{space.description}</td>
           <td>
             {
-              space.categories.map((category, index) => <a href='' key={index} className='space-label'>{category.name}</a>)
+              space.categories.map((category, index) => <a onClick={this.handleFilterFieldByClick} href='' key={index} className='space-label'>{category.name}</a>)
             }
           </td>
           <td>
@@ -70,7 +74,7 @@ class SpacesContent extends Component {
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>
           <h2>{this.props.activeTab}</h2>
-          <DashboardInput placeholder='Filter' onChange={this.handleFilterField} />
+          <DashboardInput dashboardValue={this.state.filterField} ref='filterInput' placeholder='Filter' onChange={this.handleFilterField} />
         </div>
         { isFetching
           ? <div className='body-spaces-loader'>

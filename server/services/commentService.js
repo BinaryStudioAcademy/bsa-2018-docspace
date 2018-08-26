@@ -5,6 +5,7 @@ module.exports = {
   findAllCommentsForPage: (req, res) => {
     CommentRepository.getByArray(req.body.commentsId)
       .then(comments => {
+        comments = comments.filter(comment => !comment.isDeleted)
         res.status(200)
         res.send(comments)
       })
@@ -76,7 +77,7 @@ module.exports = {
       })
   },
   findOneAndDelete: (req, res) => {
-    CommentRepository.delete(req.params.id)
+    CommentRepository.update(req.params.id, {'isDeleted': true})
       .then(comment => {
         if (!comment) {
           res.status(404).send({

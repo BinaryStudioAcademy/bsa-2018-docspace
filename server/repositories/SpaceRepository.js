@@ -8,8 +8,19 @@ class SpaceRepository extends GeneralRepository {
   addPageToSpace (page) {
     return super.update(page.spaceId, {'$addToSet': {'pages': page._id}})
   }
+
+  deletePageFromSpace (spaceId, pageId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $pull: { 'pages': pageId } }
+    )
+  }
+
   getAll () {
     return this.model.aggregate([
+      {
+        $match: { isDeleted: false }
+      },
       {
         $lookup: {
           from: 'categories',
