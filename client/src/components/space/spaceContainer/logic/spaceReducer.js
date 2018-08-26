@@ -93,7 +93,7 @@ function isFetching (state = initialState.isFetching, action) {
     default:
       return state
   }
-};
+}
 
 export default combineReducers({
   all,
@@ -113,4 +113,7 @@ export const spaceById = (state) => {
 
   return state.spaces.byId[id]
 }
+
+export const getUserId = ({verification}) => verification.user._id
+
 export const isSpacesFetching = ({ spaces }) => spaces.isFetching

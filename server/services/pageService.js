@@ -43,7 +43,7 @@ module.exports = {
       .then(page => {
         if (page.blogId) {
           BlogRepository.addPageToBlog(page)
-            .then((space) => {
+            .then(() => {
               return res.json(page)
             })
             .catch(err => {
@@ -52,7 +52,7 @@ module.exports = {
             })
         } else {
           SpaceRepository.addPageToSpace(page)
-            .then((space) => {
+            .then(() => {
               return res.json(page)
             })
             .catch(err => {
@@ -90,17 +90,28 @@ module.exports = {
       })
   },
   findOneAndDelete: (req, res) => {
-    PageRepository.delete(req.params.id)
+    PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {
-        if (!page) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
+        if (page[0].blogId) {
+          BlogRepository.deletePageFromBlog(page[0].blogId, page[0]._id)
+            .then(() => {
+              return res.json(page)
+            })
+            .catch(err => {
+              console.log(err)
+              res.status(500).send(err.message)
+            })
+        } else {
+          SpaceRepository.deletePageFromSpace(page[0].spaceId, page[0]._id)
+            .then((space) => {
+              console.log(space)
+              return res.json(page)
+            })
+            .catch(err => {
+              console.log(err)
+              res.status(500).send(err.message)
+            })
         }
-        // WARNING : Here we need to delete page id from related space. !!!!
-        // For this we can create new method in SpaceRepo and pass to it page.spaceId  and  req.params.id
-        // (method PageRepository.delete must return deleted page, so we can't use deleteOne as now. We should use findOneAndRemove())
-        res.send({message: 'page deleted successfully!'})
       }).catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {

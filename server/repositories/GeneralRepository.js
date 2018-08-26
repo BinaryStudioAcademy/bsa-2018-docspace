@@ -27,6 +27,10 @@ class GeneralRepository {
     return this.model.findOneAndUpdate({ _id: id }, data, {new: true})
   }
 
+  updateMany (filter, data) {
+    return this.model.updateMany(filter, data)
+  }
+
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }

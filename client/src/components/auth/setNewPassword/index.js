@@ -23,7 +23,7 @@ class NewPassword extends Component {
   handleFieldChange = ({ target }) => {
     this.setState({[target.name]: target.value})
   }
-  isSubmitAllowed = () => this.state.newPassword && this.state.repeatNewPassword
+  isSubmitAllowed = () => this.state.newPassword && this.state.repeatNewPassword && this.state.repeatNewPassword.length > 6
   handleSubmit = (event) => {
     event.preventDefault()
     const { newPassword, repeatNewPassword } = this.state
