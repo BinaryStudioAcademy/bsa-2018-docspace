@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const BlogSchema = new mongoose.Schema({
-  pages: [ Schema.Types.ObjectId ]
+  pages: [{type: Schema.Types.ObjectId, ref: 'Page'}]
 },
 {
   versionKey: false

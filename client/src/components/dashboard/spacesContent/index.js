@@ -26,7 +26,6 @@ class SpacesContent extends Component {
   renderSortedSpaces = () => {
     const filteredValue = this.state.filterField.toLocaleLowerCase()
     const filteredSpaces = this.props.spaces.filter(space => {
-      console.log(space)
       if (!space.categories.length) {
         if (~space.name.toLocaleLowerCase().indexOf(filteredValue)) { // ~ means if found
           return true
