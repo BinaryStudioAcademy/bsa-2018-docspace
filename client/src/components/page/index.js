@@ -73,7 +73,6 @@ class Page extends Component {
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
-    console.log(`render`, this.props.contentDoc)
     return (
       <React.Fragment>
         <PageHeader
@@ -154,8 +153,7 @@ Page.propTypes = {
   exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool,
-  contentDoc: PropTypes.object
+  isFetching: PropTypes.bool
 }
 
 Page.defaultProps = {

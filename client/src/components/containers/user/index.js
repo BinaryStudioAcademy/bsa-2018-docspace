@@ -241,7 +241,6 @@ class User extends Component {
     const { firstName, lastName } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
-    console.log(isFetching)
     return (
       <div className='main-wrapper'>
         <div className='profile-page-header'>
