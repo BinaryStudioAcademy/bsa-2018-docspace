@@ -12,6 +12,13 @@ class BlogRepository extends GeneralRepository {
     )
   }
 
+  deletePageFromBlog (blogId, pageId) {
+    return this.model.update(
+      { _id: blogId },
+      { $pull: { 'pages': pageId } }
+    )
+  }
+
   getById (id) {
     return this.model.aggregate([
       {
@@ -32,7 +39,8 @@ class BlogRepository extends GeneralRepository {
           pages: {
             _id: 1,
             title: 1,
-            createdAt: 1
+            createdAt: 1,
+            isDeleted: 1
           }
         }
       },

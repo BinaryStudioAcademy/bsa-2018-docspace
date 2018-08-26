@@ -12,8 +12,18 @@ class SpaceRepository extends GeneralRepository {
     )
   }
 
+  deletePageFromSpace (spaceId, pageId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $pull: { 'pages': pageId } }
+    )
+  }
+
   getAll () {
     return this.model.aggregate([
+      {
+        $match: { isDeleted: false }
+      },
       {
         $lookup: {
           from: 'categories',
