@@ -13,3 +13,5 @@ COPY server /docspace/server/
 RUN cd client && yarn cache clean && yarn add --force node-sass@latest
 
 CMD ["yarn", "prod"]
+
+EXPOSE 8080
