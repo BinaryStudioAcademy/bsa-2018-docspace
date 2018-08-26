@@ -199,19 +199,9 @@ PermissionsPage.defaultProps = {
           add: true,
           delete: true
         },
-        attachments: {
-          add: false,
-          delete: true
-        },
         space: {
           export: true,
           administate: true
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: true
         }
       }
     },
@@ -234,19 +224,9 @@ PermissionsPage.defaultProps = {
           add: true,
           delete: true
         },
-        attachments: {
-          add: true,
-          delete: true
-        },
         space: {
           export: true,
           administate: true
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: true
         }
       }
     }
@@ -271,19 +251,9 @@ PermissionsPage.defaultProps = {
           add: true,
           delete: true
         },
-        attachments: {
-          add: true,
-          delete: true
-        },
         space: {
           export: true,
           administate: false
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: false
         }
       }
     }
@@ -306,19 +276,9 @@ PermissionsPage.defaultProps = {
         add: true,
         delete: true
       },
-      attachments: {
-        add: true,
-        delete: true
-      },
       space: {
         export: true,
         administate: false
-      },
-      restrictions: {
-        edit: true
-      },
-      mail: {
-        delete: false
       }
     }
 

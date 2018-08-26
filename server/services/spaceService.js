@@ -105,5 +105,9 @@ module.exports = {
         res.status(400)
         res.end()
       })
+  },
+
+  getSpacePermissions: (req, res) => {
+
   }
 }

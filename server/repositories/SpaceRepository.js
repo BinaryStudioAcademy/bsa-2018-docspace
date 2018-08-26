@@ -149,6 +149,65 @@ class SpaceRepository extends GeneralRepository {
   deleteAllHistory (id) {
     return super.update(id, {'$set': {'history': []}})
   }
+
+  getPermissions (spaceId) {
+    return this.model.aggregate([
+      { $match: { _id: ObjectId(spaceId) } },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.user',
+          foreignField: '_id',
+          as: 'usersPermissions'
+        }
+      },
+      {
+        $lookup: {
+          from: '$usersPermissions.userId',
+          localField: '$usersPermissions.userId',
+          foreignField: '_id',
+          as: '$usersPermissions.user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.groups',
+          foreignField: '_id',
+          as: 'groupsPermissions'
+        }
+      },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.anonymous',
+          foreignField: '_id',
+          as: 'anonymousPermissions'
+        }
+      }
+    ])
+  }
+
+  addGroupPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.groups': permissionsId } }
+    )
+  }
+
+  addUserPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.users': permissionsId } }
+    )
+  }
+
+  addAnonymousPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $set: { 'permissions.anonymous': permissionsId } }
+    )
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

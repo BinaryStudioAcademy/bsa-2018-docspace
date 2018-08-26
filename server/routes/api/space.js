@@ -1,9 +1,18 @@
 const router = require('express').Router()
 const spaceService = require('../../services/spaceService')
+const permissionsService = require('../../services/permissionsService')
 
 router.get('/', spaceService.findAll)
 
 router.get('/:id', spaceService.findOne)
+
+router.get('/:id/permissions', permissionsService.getSpacePermissions)
+
+router.post('/:space_id/groups_permissions', permissionsService.addGroupPermissions)
+
+router.post('/:space_id/users_permissions', permissionsService.addUserPermissions)
+
+router.post('/:space_id/anonymous_permissions', permissionsService.addAnonymousPermissions)
 
 router.post('/', spaceService.add)
 
