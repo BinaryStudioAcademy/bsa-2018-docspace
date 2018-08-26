@@ -3,6 +3,7 @@
 .dashboard-spaces {
   width: 100%;
   padding: 20px;
+  overflow-y: auto;
   .spaces-header {
     padding: 8px;
     display: flex;

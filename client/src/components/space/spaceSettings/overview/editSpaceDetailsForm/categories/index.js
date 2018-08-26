@@ -19,10 +19,11 @@ class Categories extends Component {
 
   handleCreateCategory = () => {
     const { categoryName } = this.state
-    if (this.hasCategory(categoryName)) {
+    const categoryNameLowerCase = categoryName.toLocaleLowerCase()
+    if (this.hasCategory(categoryNameLowerCase)) {
       return
     }
-    this.props.createCategory({spaceId: this.props.spaceId, categoryName})
+    this.props.createCategory({spaceId: this.props.spaceId, categoryName: categoryNameLowerCase})
     this.setState({categoryName: ''})
   }
 

@@ -85,6 +85,15 @@
 .update-items {
   padding: 10px;
   .content-card {
+    .disabled-link {
+      pointer-events: none;
+    }
+    .content-card-deleted {
+      color: #ee7d7d;
+      &:hover::after {
+       content: attr(data-title);
+      }
+    }
     #content-icon {
       font-size: 16px;
     }

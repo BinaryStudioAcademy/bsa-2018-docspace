@@ -36,9 +36,8 @@ class ResetPassword extends Component {
   }
   render () {
     const { email, redirectToLogin } = this.state
-    const { message, successful } = this.props.reset
+    const { message } = this.props.reset
     const { t } = this.props
-    console.log(`render`, message, successful)
     if (redirectToLogin) {
       return <Redirect to='/login' />
     }

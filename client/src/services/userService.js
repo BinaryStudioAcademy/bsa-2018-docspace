@@ -1,6 +1,14 @@
 import { callWebApi } from 'src/helpers/requestHelper'
 
 class UserService {
+  getUser (id) {
+    const args = { endpoint: `/api/user/${id}`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
   updateUser (user) {
     const args = { endpoint: `/api/user/${user.id}/setting`, method: 'PUT', body: JSON.stringify(user) }
     const apiResult = callWebApi(args)
