@@ -4,7 +4,7 @@ import './templateList.css'
 
 class TemplateList extends React.Component {
   handleDoubleClick (item) {
-    this.props.handleDoubleClickOnItem && this.props.handleDoubleClickOnItem(item)
+    this.props.handleSelectAndSendItem && this.props.handleSelectAndSendItem(item)
   }
 
   render () {
@@ -46,7 +46,7 @@ TemplateList.propTypes = {
 
   selectedItem: PropTypes.object,
   handleSelectItem: PropTypes.func.isRequired,
-  handleDoubleClickOnItem: PropTypes.func
+  handleSelectAndSendItem: PropTypes.func
 }
 
 export default TemplateList

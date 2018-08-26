@@ -1,5 +1,12 @@
 import * as actionTypes from './userActionTypes'
 
+export const getUser = (id) => {
+  return {
+    type: actionTypes.GET_USER_REQUEST,
+    payload: id
+  }
+}
+
 export const updateUser = (user) => {
   return {
     type: actionTypes.UPDATE_USER,

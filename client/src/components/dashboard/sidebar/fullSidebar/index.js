@@ -25,7 +25,7 @@ class FullSidebar extends Component {
               <Button
                 title={this.props.showLabels ? t('Your_work') : null}
                 path='/works' type={navButtonClass}
-                icon='fa  fa-clipboard'
+                icon='fa fa-clipboard'
               />
               <Button
                 title={this.props.showLabels ? t('Spaces') : null}
