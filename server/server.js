@@ -3,7 +3,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const connections = require('./db/connections')
 const mongoose = connections.mongoose
-const elasticClient = connections.elasticClient
+// const elasticClient = connections.elasticClient
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
 const path = require('path')
@@ -15,7 +15,7 @@ require('./config/passport')()
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: true, limit: '50mb'}))
 
-const elasticHelper = require('./elasticHelper')
+// const elasticHelper = require('./elasticHelper')
 // elasticHelper.checkConnection(elasticClient)
 // elasticHelper.createIndex(elasticClient, 'page')
 
