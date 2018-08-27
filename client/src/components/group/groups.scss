@@ -1,7 +1,9 @@
 @import 'globalStyles/variables.scss';
+.dashboard-admin{
+    overflow-y:auto;
+}
 .group-container{
     width: 100%;
-    overflow: scroll;
     .group-header{
         display: flex;
         flex-direction: row;
@@ -72,5 +74,16 @@
     }
     a, a:hover, a:active{
         color: #1c80ff;
+    }
+    table .group-delete{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        color: #333;
     }
 }

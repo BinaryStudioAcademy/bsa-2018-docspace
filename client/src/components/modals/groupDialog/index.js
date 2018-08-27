@@ -40,6 +40,7 @@ class GroupDialog extends Component {
   renderContent = () => {
     const {t} = this.props
     // this.getUsers()
+    console.log(this.state)
     return <React.Fragment>
       <div className='group'>
         <div className='group-dialog-row'>
@@ -77,7 +78,9 @@ class GroupDialog extends Component {
         <div className='group-dialog-row'>
           <div className='group-modal-label' />
           <div className='group-modal-input'>
-            {this.renderUsers()}
+            <div>
+              {this.renderUsers()}
+            </div>
           </div>
         </div>
       </div>
@@ -89,7 +92,7 @@ class GroupDialog extends Component {
     this.props.matchingUsers !== []
       ? usersTable = this.props.matchingUsers.map((user, i) =>
         user._id !== this.props.user._id &&
-        <button key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
+        <button onClick={() => { this.addUsersInGroup(user._id) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
       ) : usersTable = ''
     return usersTable
   }
