@@ -5,6 +5,9 @@ class UserRepository extends GeneralRepository {
   getByToken (token) {
     return this.model.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
   }
+  addSpaceToUser (UserAndSpaceIds) {
+    return super.update(UserAndSpaceIds.userId, {$push: { spaces: UserAndSpaceIds.spaceId }})
+  }
   getByName (nameContains) {
     return this.model.aggregate(
       [
@@ -15,6 +18,9 @@ class UserRepository extends GeneralRepository {
         {$match: {name: { $regex: nameContains }}}
       ]
     )
+  }
+  deleteSpace (id, spaceId) {
+    return super.update(id, {'$pull': {'spaces': spaceId}})
   }
 }
 

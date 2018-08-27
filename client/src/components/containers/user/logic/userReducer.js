@@ -8,6 +8,10 @@ const initialState = {
   isFetching: false
 }
 
+const initialStateGetUser = {
+  user: {}
+}
+
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_USER_SUCCESS:
@@ -59,7 +63,10 @@ function isFetching (state = initialState.isFetching, action) {
   switch (action.type) {
     case actionTypes.UPDATE_USER:
     case actionTypes.CHECK_USER_PASSWORD:
+    case actionTypes.GET_USER_REQUEST:
       return true
+    case actionTypes.GET_USER_SUCCESS:
+    case actionTypes.GET_USER_ERROR:
     case actionTypes.UPDATE_USER_SUCCESS:
     case actionTypes.UPDATE_USER_FAILED:
     case actionTypes.CHECK_USER_PASSWORD_SUCCESS:
@@ -69,13 +76,25 @@ function isFetching (state = initialState.isFetching, action) {
       return state
   }
 }
+const getUser = (state = initialStateGetUser.user, action) => {
+  switch (action.type) {
+    case actionTypes.GET_USER_SUCCESS:
+    {
+      return action.response
+    }
+    default: return state
+  }
+}
 
 export default combineReducers({
   userReducer,
   checkingReducer,
+  getUser,
   isFetching
 })
-
+export const getUserSpaces = ({user}) => {
+  return user.getUser.spaces
+}
 export const userById = ({ user }) => user.userReducer
 export const isUserFetching = ({ user }) => {
   return user.isFetching

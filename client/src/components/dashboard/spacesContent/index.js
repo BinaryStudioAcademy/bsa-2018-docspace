@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import DashboardInput from '../input'
 import PropTypes from 'prop-types'
-import { allSpaces, isSpacesFetching } from '../../space/spaceContainer/logic/spaceReducer'
-import { getSpacesRequest } from '../../space/spaceContainer/logic/spaceActions'
 import './spacesContent.css'
 import logo from './space-logo.png'
 import { NavLink } from 'react-router-dom'
@@ -16,9 +12,6 @@ class SpacesContent extends Component {
     this.state = {
       filterField: ''
     }
-  }
-  componentDidMount () {
-    this.props.actions.getSpacesRequest()
   }
   handleFilterField = (e) => {
     this.setState({filterField: e.target.value})
@@ -113,22 +106,9 @@ class SpacesContent extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  spaces: allSpaces(state),
-  isFetching: isSpacesFetching(state),
-  state: state
-})
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({getSpacesRequest}, dispatch)
-})
-
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
-  actions: PropTypes.object,
-  activeTab: PropTypes.string,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  activeTab: PropTypes.string
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(SpacesContent)
+export default SpacesContent

@@ -10,6 +10,7 @@ services:
      - NODE_ENV=production
      - PORT=8080
      - ES_HOST=elasticsearch
+     - NODE_PATH=./
 
   elasticsearch:
     container_name: elasticsearch

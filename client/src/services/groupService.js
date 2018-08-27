@@ -24,6 +24,30 @@ class GroupService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+
+  findById = (id) => {
+    const args = {endpoint: `/api/groups/${id}`, method: 'GET'}
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
+  updateGroup = (newGroup) => {
+    const args = {endpoint: `/api/groups/${newGroup._id}`, method: 'PUT', body: JSON.stringify(newGroup)}
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
+  deleteGroup = (id) => {
+    const args = {endpoint: `/api/groups/${id}`, method: 'DELETE'}
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 }
 
 export const groupService = new GroupService()

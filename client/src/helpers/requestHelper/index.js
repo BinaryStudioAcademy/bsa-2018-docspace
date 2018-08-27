@@ -4,11 +4,15 @@ export async function callWebApi (args) {
 }
 
 function getFetchArgs (args) {
-  const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`
-  }
+  const headers = !args.hasOwnHeaders
+    ? {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    : {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
   const { body, method } = args
 
   return {

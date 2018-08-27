@@ -8,6 +8,11 @@ function groupsReducer (state = initialState, action) {
       return action.payload
     case actionTypes.CREATE_GROUP_SUCCESS:
       return [ ...state, action.payload ]
+    case actionTypes.GET_GROUP_SUCCESS:
+    case actionTypes.UPDATE_GROUP_SUCCESS:
+      return action.payload
+    case actionTypes.DELETE_GROUP_SUCCESS:
+      return state.filter(group => group._id !== action.payload._id)
     default: return state
   }
 }

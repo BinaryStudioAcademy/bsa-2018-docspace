@@ -20,7 +20,8 @@ const login = (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        login: user.login
+        login: user.login,
+        avatar: user.avatar
       }
       // return res.json({ success: true, message: 'authentication succeeded', user: user, token: token })
       return res.json({ success: true, message: 'authentication succeeded', user, token })
@@ -36,7 +37,8 @@ const loggedIn = (req, res) => {
       firstName: req.user.firstName,
       lastName: req.user.lastName,
       email: req.user.email,
-      login: req.user.login
+      login: req.user.login,
+      avatar: req.user.avatar
     }
     return res.json({ isLoggedIn: true, message: user })
   } else {
