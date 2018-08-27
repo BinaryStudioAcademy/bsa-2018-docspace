@@ -3,11 +3,29 @@ const scheme = require('../models/groupScheme')
 
 module.exports = {
   findAll: (req, res) => {
+    console.log('GET ALL')
     GroupRepository.getAllForUser(req.params.id)
       .then(group => {
         if (!group) {
           res.status(404).send({
             message: 'Cannot find groups for user'
+          })
+        }
+        res.status(200)
+        res.send(group)
+      })
+      .catch(err => {
+        res.status(500)
+        console.log(err)
+      })
+  },
+  findById: (req, res) => {
+    console.log('GET BY ID')
+    GroupRepository.getById(req.params.id)
+      .then(group => {
+        if (!group) {
+          res.status(404).send({
+            message: 'Cannot find group with id ' + req.params.id
           })
         }
         res.status(200)
