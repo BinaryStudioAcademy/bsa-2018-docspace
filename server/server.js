@@ -11,6 +11,7 @@ const passport = require('passport')
 const app = express()
 const port = process.env.PORT || 3001
 const clientPort = process.env.PORT || 3000
+const io = require('socket.io')
 require('./config/passport')()
 
 app.use(express.json({limit: '50mb'}))
@@ -54,4 +55,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.listen(port, () => console.log(`Listening on port  ${port}`))
+const server = app.listen(port, () => console.log(`Listening on port  ${port}`))
+
+require('./sockets/initSocketEvents')(io(server))

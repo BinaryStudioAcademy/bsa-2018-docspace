@@ -24,6 +24,21 @@ class UserService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+
+  sendAvatarFile (file, userId) {
+    console.log('before sending', file)
+    let fd = new FormData()
+    fd.append('avatar', file)
+    fd.append('userId', JSON.stringify({userId}))
+    const args = { endpoint: `/api/upload/avatar`, method: 'POST', body: fd, hasOwnHeaders: true }
+    const apiResult = callWebApi(args)
+      .then(res => {
+        console.log('HERE', res)
+        return res.json()
+      })
+      .catch(err => console.log(err))
+    return apiResult
+  }
 }
 
 export const userService = new UserService()
