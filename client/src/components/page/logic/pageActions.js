@@ -142,9 +142,9 @@ export const sendDocFileRequest = (fileAndSpaceId) => ({
   payload: { spaceId: fileAndSpaceId.spaceId, file: fileAndSpaceId.file }
 })
 
-export const sendDocFileSuccess = (htmlFile) => ({
+export const sendDocFileSuccess = (pagefile) => ({
   type: actionTypes.SEND_DOC_FILE_SUCCESS,
-  payload: htmlFile
+  payload: pagefile
 })
 
 export const sendDocFileError = (error) => ({

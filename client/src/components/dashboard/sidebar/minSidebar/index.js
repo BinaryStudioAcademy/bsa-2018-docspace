@@ -34,8 +34,8 @@ const dropdownMenuItems = {
   ],
   burger: [
     {
-      name: 'Groups',
-      path: '/groups'
+      name: 'Administration',
+      path: '/admin'
     }
   ]
 }

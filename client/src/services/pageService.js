@@ -44,10 +44,10 @@ class PageService {
   }
 
   async sendDocFile (file) {
-    console.log('before sending', file)
     let fd = new FormData()
-    fd.append('docfile', file)
-    const result = await fetch('/convert', { method: 'POST',
+    fd.append('docfile', file.content)
+    fd.append('docfileDescription', JSON.stringify({title: file.title.split('.')[0], spaceId: file.spaceId})) // split extension from name example.docx -> example
+    const result = await fetch('/api/uploadFiles/convertWordToHTML', { method: 'POST',
       body: fd })
       .then(res => res.json())
       .catch(err => console.log(err))

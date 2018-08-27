@@ -26,6 +26,7 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
       return [ ...state, action.payload._id ]
 
     default: return state
@@ -44,6 +45,7 @@ function byId (state = initialState.byId, action) {
 
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
