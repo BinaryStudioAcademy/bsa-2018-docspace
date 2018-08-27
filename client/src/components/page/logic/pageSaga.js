@@ -113,14 +113,10 @@ function * getPage (action) {
 
 function * sendFile (action) {
   try {
-    const htmlFile = yield PageService.sendDocFile(action.payload.file)
-    console.log(`saga`, action)
-    const newPage = yield PageService.createPage({spaceId: action.payload.spaceId, title: 'Default title', content: htmlFile.html})
-    console.log(newPage)
-    console.log(`saga`, htmlFile)
-    yield put(actions.createPageSuccess(newPage))
+    const sendFile = yield PageService.sendDocFile({spaceId: action.payload.spaceId, title: action.payload.file.name, content: action.payload.file})
+    yield put(actions.sendDocFileSuccess(sendFile))
     // Go to the editor
-    yield put(push(`/spaces/${newPage.spaceId}/pages/${newPage._id}/edit`))
+    yield put(push(`/spaces/${sendFile.spaceId}/pages/${sendFile._id}/edit`))
   } catch (e) {
     yield put(actions.sendDocFileError(e))
   }
