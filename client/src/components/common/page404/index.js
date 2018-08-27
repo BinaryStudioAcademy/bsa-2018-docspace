@@ -10,7 +10,7 @@ class Page404 extends Component {
         <div className='page404-main-wrapper'>
           <div className='page404-part-label'>
             <div className='page404-header-oops'>
-              O<span className='page404-hdr-snd-letter'>o</span>ops!
+              Ooops!
             </div>
             <div className='page404-label-error'>
               We can't seem to find the page you're looking for.
