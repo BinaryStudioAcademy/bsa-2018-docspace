@@ -15,7 +15,9 @@ class SpaceRepository extends GeneralRepository {
       { $pull: { 'pages': pageId } }
     )
   }
-
+  getNotDeletedSpaces () {
+    return this.model.find({isDeleted: false}).distinct('_id')
+  }
   getAll () {
     return this.model.aggregate([
       {
