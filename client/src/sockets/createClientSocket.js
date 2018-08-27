@@ -4,8 +4,5 @@ export default (socketEndpointPort) => {
   const currentLocation = new URL(window.location.href)
   const socketEndpoint = `${currentLocation.protocol}//${currentLocation.hostname}:${socketEndpointPort}`
 
-  return io(socketEndpoint, {
-    forceNew: true
-
-  })
+  return io(socketEndpoint)
 }
