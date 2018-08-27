@@ -6,6 +6,10 @@ class HistoryRepository extends GeneralRepository {
   deleteAllHistoryInCriteria (criteriaId) {
     return this.deleteMany({criteriaId})
   }
+
+  getUserHistory (id) {
+    return this.getAllByCriteria({userId: id})
+  }
 }
 
 module.exports = new HistoryRepository(scheme.History)
