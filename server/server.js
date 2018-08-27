@@ -19,7 +19,7 @@ app.use('/convert', require('./routes/uploadFiles/uploadFilesRoutes'))
 
 // const elasticHelper = require('./elasticHelper')
 // elasticHelper.checkConnection(elasticClient)
-// elasticHelper.createIndex(elasticClient, 'page')
+elasticHelper.createIndex(elasticClient, 'page')
 
 app.use(
   session({

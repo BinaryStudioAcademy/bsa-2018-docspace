@@ -21,7 +21,7 @@ const config = {
   },
   elasticsearch: {
     production: {
-      host: process.env.ES_HOST,
+      host: '35.232.38.159',
       port: 9200
     },
     default: {
