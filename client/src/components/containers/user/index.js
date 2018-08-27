@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { updateUser, checkPassword, sendAvatarRequest } from './logic/userActions'
+import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest } from './logic/userActions'
 import { isUserFetching } from './logic/userReducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
 import { ProfileFields } from 'src/components/userTabs/general'
 import { PrivateFields } from 'src/components/userTabs/private'
-import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
+import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWorkContainer'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
@@ -40,6 +40,10 @@ class User extends Component {
     this.renderEditButtons = this.renderEditButtons.bind(this)
     this.renderMainInfo = this.renderMainInfo.bind(this)
     this.renderRecentWorks = this.renderRecentWorks.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.actions.getUserUpdatesRequest(this.props.userId)
   }
 
   handlePassword (currentPassword, newPassword) {
@@ -139,7 +143,7 @@ class User extends Component {
         <div className='profile-name-avatar'>
           <div className='profile-avatar-wrapper'>
             <button className='avatar-btn'>
-              <img src={avatar || defaultAvatar} className='profile-avatar-cover-btn' />
+              <img src={avatar || defaultAvatar} className='profile-avatar-cover-btn' alt='avatar' />
             </button>
             <div className='profile-avatar-hover' onClick={this.handleAvatarChoose}>
               <input type='file' ref='avatarUploader' accept='image/*' style={{display: 'none'}} onChange={this.handleChoosenFile} />
@@ -225,26 +229,7 @@ class User extends Component {
     return (
       <div className='recent-work-list-wrapper'>
         <h2 className='recent-work-list-wrapper-header'><span>{t('work')}</span></h2>
-        <ul className='recent-work-list-items'>
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'Web application'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'Mobile application'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
-            nameOfItem={'Blog about adding new features'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-        </ul>
+        <RecentWorkListContainer userHistory={this.props.userHistory} />
       </div>
     )
   }
@@ -278,11 +263,13 @@ User.propTypes = {
   userSettings: PropTypes.object,
   match: PropTypes.object,
   isFetching: PropTypes.bool,
+  userHistory: PropTypes.array,
   params: PropTypes.array,
   id: PropTypes.string,
   history: PropTypes.object,
   t: PropTypes.func,
   i18n: PropTypes.object,
+  userId: PropTypes.string,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -300,13 +287,14 @@ const mapStateToProps = (state) => {
     resultOfChecking: state.user.checkingReducer,
     isFetching: isUserFetching(state),
     userId: state.verification.user._id,
-    userAvatar: state.verification.user.avatar
+    userAvatar: state.verification.user.avatar,
+    userHistory: state.user.userHistory
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest }, dispatch)
+    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest }, dispatch)
   }
 }
 

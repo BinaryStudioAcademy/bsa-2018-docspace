@@ -22,6 +22,16 @@ function * historyPageFlow (action) {
   }
 }
 
+function * historyBlogFlow (action) {
+  try {
+    const { spaceId, _id: pageId } = action.payload
+    let history = yield call(HistoryService.createHistory, {spaceId, pageId, action: action.type})
+    yield put({ type: actionTypes.HISTORY_BLOG_SAVE_SUCCESS, payload: history })
+  } catch (error) {
+    yield put({ type: actionTypes.HISTORY_BLOG_SAVE_ERROR, error })
+  }
+}
+
 function * historyCommentFlow (action) {
   try {
     let history = yield call(HistoryService.createHistory, {commentId: action.payload._id, action: action.type})
@@ -34,6 +44,7 @@ function * historyCommentFlow (action) {
 function * historyWatcher () {
   yield takeEvery(Object.values(allUserActionTypes.spaceActions), historySpaceFlow)
   yield takeEvery(Object.values(allUserActionTypes.pageActions), historyPageFlow)
+  yield takeEvery(Object.values(allUserActionTypes.blogActions), historyBlogFlow)
   yield takeEvery(Object.values(allUserActionTypes.commentActions), historyCommentFlow)
 }
 

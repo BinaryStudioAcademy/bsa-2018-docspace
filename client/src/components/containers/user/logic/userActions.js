@@ -35,3 +35,8 @@ export const sendAvatarError = (error) => ({
   type: actionTypes.SEND_AVATAR_ERROR,
   payload: error
 })
+
+export const getUserUpdatesRequest = (userId) => ({
+  type: actionTypes.GET_USER_UPDATES_REQUEST,
+  payload: userId
+})

@@ -36,8 +36,6 @@ const BlogPagesList = (props) => {
       )
     })
 
-  console.log(pagesList)
-
   return (
     <div className='blog-pages-list'>
       <div>
