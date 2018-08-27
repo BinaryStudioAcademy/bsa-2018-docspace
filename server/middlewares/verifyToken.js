@@ -13,7 +13,8 @@ module.exports = passport => (req, res, next) => {
       firstName: authUser.firstName,
       lastName: authUser.lastName,
       email: authUser.email,
-      login: authUser.login
+      login: authUser.login,
+      avatar: authUser.avatar
     }
     req.user = user
     next()

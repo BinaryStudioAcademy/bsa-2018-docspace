@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const getRightProps = (content) => {
-  if (!content.spaceId || !content.pageId) {
-    return null
-  }
   switch (content.action) {
     case 'CREATE_SPACE_SUCCESS':
       return {
@@ -13,7 +10,8 @@ const getRightProps = (content) => {
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/overview`,
         icon: 'fas fa-folder',
-        action: 'New space created'
+        action: 'New space created',
+        isDeleted: content.spaceId.isDeleted
       }
     case 'UPDATE_SPACE_SUCCESS':
       return {
@@ -21,7 +19,8 @@ const getRightProps = (content) => {
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/overview`,
         icon: 'fas fa-folder',
-        action: 'Update space'
+        action: 'Update space',
+        isDeleted: content.spaceId.isDeleted
       }
     case 'CREATE_PAGE_SUCCESS':
       return {
@@ -29,7 +28,8 @@ const getRightProps = (content) => {
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
-        action: 'New page created'
+        action: 'New page created',
+        isDeleted: content.pageId.isDeleted
       }
     case 'UPDATE_PAGE_SUCCESS':
       return {
@@ -37,15 +37,17 @@ const getRightProps = (content) => {
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
-        action: 'Update page'
+        action: 'Update page',
+        isDeleted: content.pageId.isDeleted
       }
     case 'CREATE_COMMENT_SUCCESS':
       return {
         name: content.pageId.title,
         time: new Date(content.date).toLocaleString(),
-        path: '#',
+        path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-comment',
-        action: `New comment ${content.commentId.text}`
+        action: `New comment ${content.commentId.text}`,
+        isDeleted: content.commentId.isDeleted
       }
     case 'EDIT_COMMENT_SUCCESS':
       return {
@@ -53,21 +55,33 @@ const getRightProps = (content) => {
         time: new Date(content.date).toLocaleString(),
         path: '#',
         icon: 'fas fa-comment',
-        action: `Comment edited ${content.commentId.text}`
+        action: `Comment edited ${content.commentId.text}`,
+        isDeleted: content.commentId.isDeleted
       }
     default:
       return null
   }
 }
 
-const ContentCard = (props) => (
-  <div className='content-card'>
-    <i id='content-icon' className={`${props.content.icon}`} />
-    <Link to={props.content.path} className='content-card-name'>{props.content.name}</Link>
-    <p className='content-card-action'>{props.content.action}</p>
-    <p className='content-card-time' >{props.content.time}</p>
-  </div>
-)
+const ContentCard = (props) => {
+  const { icon, path, name, action, time, isDeleted } = props.content
+  const disabledLink = isDeleted ? 'disabled-link' : ''
+  return (
+    <div className='content-card'>
+      <i id='content-icon' className={`${icon}`} />
+      <Link to={path} className={`content-card-name ${disabledLink}`}>
+        {name}
+      </Link>
+      {isDeleted
+        ? <span data-title='deleted' className='content-card-deleted'>
+          <i className='far fa-trash-alt' />
+        </span>
+        : null}
+      <p className='content-card-action'>{action}</p>
+      <p className='content-card-time' >{time}</p>
+    </div>
+  )
+}
 
 const AllUpdatesTab = (props) => {
   if (props.allUpdates.length) {
@@ -102,14 +116,14 @@ ContentCard.propTypes = {
     name: PropTypes.string,
     time: PropTypes.string,
     path: PropTypes.string,
-    action: PropTypes.string
-  })
+    action: PropTypes.string,
+    isDeleted: PropTypes.bool})
 }
 
 AllUpdatesTab.propTypes = {
   userAvatar: PropTypes.string,
-  userName: PropTypes.string,
-  allUpdates: PropTypes.array
+  userName: PropTypes.string.isRequired,
+  allUpdates: PropTypes.array.isRequired
 }
 
 export default AllUpdatesTab
