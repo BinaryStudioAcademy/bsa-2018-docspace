@@ -8,24 +8,15 @@ const s3 = new AWS.S3({
 })
 
 const bucketName = 'bsa-docspace'
-const data = {
-  'some key': 'some value'
-}
 
 module.exports = {
-  uploadFile: () => {
+  uploadFile: (buffer, name, type) => {
     const params = {
       Bucket: bucketName,
-      Key: 'simple.file',
-      Body: JSON.stringify(data, null, 2)
+      Key: `${name}`,
+      ContentType: type,
+      Body: buffer
     }
-
-    s3.upload(params, function (s3Err, data) {
-      if (s3Err) {
-        console.log(s3Err)
-      } else {
-        console.log(`File uploaded successfully at ${data.Location}`)
-      }
-    })
+    return s3.upload(params).promise()
   }
 }
