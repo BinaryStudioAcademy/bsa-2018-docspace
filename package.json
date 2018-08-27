@@ -42,7 +42,8 @@
         "passport-local": "^1.0.0",
         "passport-local-token": "^1.0.1",
         "path": "^0.12.7",
-        "react-spinners": "^0.4.4"
+        "react-spinners": "^0.4.4",
+        "socket.io": "^2.1.1"
     },
     "devDependencies": {
         "babel-eslint": "^8.2.6",

@@ -34,10 +34,22 @@ function * checkUserPassword (action) {
   }
 }
 
+function * sendAvatarFile (action) {
+  try {
+    const response = yield userService.sendAvatarFile(action.payload.file, action.payload.userId)
+    console.log(`saga`, action)
+    console.log(`saga AVATAR`, response)
+    yield put({ type: actionTypes.UPDATE_USER_SUCCESS, response })
+  } catch (error) {
+    yield put({ type: actionTypes.UPDATE_USER_FAILED, error })
+  }
+}
+
 export default function * selectionsSaga () {
   yield all([
     takeLatest(actionTypes.UPDATE_USER, updUser),
     takeLatest(actionTypes.CHECK_USER_PASSWORD, checkUserPassword),
+    takeLatest(actionTypes.SEND_AVATAR_REQUEST, sendAvatarFile),
     takeLatest(actionTypes.GET_USER_REQUEST, getUser)
   ])
 }

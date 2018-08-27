@@ -50,12 +50,10 @@ module.exports = {
     BlogRepository.create({})
       .then(blog => {
         const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
-        console.log(spaceWithOwnerAndEmptyBlog.ownerId)
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
             UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
-              .then((user) => {
-                console.log(user)
+              .then(() => {
                 return res.json(space)
               })
               .catch(err => console.log(err))
@@ -100,36 +98,24 @@ module.exports = {
       return res.end('Invalid id')
     }
 
-    SpaceRepository.getById(id)
-      .then((data) => {
-        if (data.length === 0) {
-          res.status(404)
-          return res.end()
-        }
-        UserRepository.getById(data[0].owner._id)
+    const deletedSpace = await SpaceRepository.update(id, { '$set': { 'isDeleted': true } })
+      .then(space => {
+        UserRepository.getById(space.ownerId)
           .then(user => {
-            if (data[0].owner._id.equals(user._id)) {
-              UserRepository.deleteSpace(user._id, data[0]._id)
-                .then(user => console.log(user))
-                .catch(err => console.log(err))
-            }
-            const deletedSpace = SpaceRepository.update(id, { '$set': { 'isDeleted': true } })
-              .then(space => space)
-              .catch((err) => {
-                console.log(err)
-                res.status(400)
-                res.end()
-              })
-            PageRepository.updateMany({spaceId: deletedSpace._id}, { '$set': { 'isDeleted': true } })
-              .then(() => res.json(deletedSpace))
-              .catch((err) => {
-                console.log(err)
-                res.status(400)
-                res.end()
-              })
+            UserRepository.deleteSpace(user._id, id)
+              .then(user => user)
+              .catch(err => console.log(err))
           })
           .catch(err => console.log(err))
+        return space
       })
+      .catch((err) => {
+        console.log(err)
+        res.status(400)
+        res.end()
+      })
+    PageRepository.updateMany({spaceId: deletedSpace._id}, { '$set': { 'isDeleted': true } })
+      .then(() => res.json(deletedSpace))
       .catch((err) => {
         console.log(err)
         res.status(400)

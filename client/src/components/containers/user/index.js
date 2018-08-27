@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { updateUser, checkPassword } from './logic/userActions'
+import { updateUser, checkPassword, sendAvatarRequest } from './logic/userActions'
 import { isUserFetching } from './logic/userReducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,6 +12,7 @@ import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkList
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
+import defaultAvatar from '../../../assets/user.png'
 
 import './user.css'
 
@@ -101,6 +102,18 @@ class User extends Component {
     })
   }
 
+  handleAvatarChoose = () => {
+    this.refs.avatarUploader.click()
+  }
+
+  handleChoosenFile = (e) => {
+    if (e.target.files[0]) {
+      this.props.actions.sendAvatarRequest(e.target.files[0], this.props.userSettings.user._id)
+    } else {
+      console.log('cancel')
+    }
+  }
+
   renderAddPhoto (t) {
     return (
       <div className='profile-header-add-photo' onClick={this.managePhoto}>
@@ -114,7 +127,7 @@ class User extends Component {
     )
   }
 
-  renderHeaderCenter (t, firstName, lastName) {
+  renderHeaderCenter (t, firstName, lastName, avatar) {
     return (
       <div className='profile-page-center'>
         <a className='profile-link-All-People' onClick={this.handleAllPeople}>
@@ -126,9 +139,10 @@ class User extends Component {
         <div className='profile-name-avatar'>
           <div className='profile-avatar-wrapper'>
             <button className='avatar-btn'>
-              <span className='profile-avatar-cover-btn' >''</span>
+              <img src={avatar || defaultAvatar} className='profile-avatar-cover-btn' />
             </button>
-            <div className='profile-avatar-hover'>
+            <div className='profile-avatar-hover' onClick={this.handleAvatarChoose}>
+              <input type='file' ref='avatarUploader' accept='image/*' style={{display: 'none'}} onChange={this.handleChoosenFile} />
               <i className='fa fa-camera profile-avatar-camera' aria-hidden='true' style={{color: 'white', fontSize: '24px'}} />
             </div>
           </div>
@@ -238,7 +252,7 @@ class User extends Component {
   render () {
     const { t, i18n, isFetching } = this.props
     const { user } = this.props.userSettings
-    const { firstName, lastName } = user
+    const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
     return (
@@ -246,7 +260,7 @@ class User extends Component {
         <div className='profile-page-header'>
           { this.renderAddPhoto(t) }
           <ManagePhoto display={this.handleManagePhoto} t={t} />
-          { this.renderHeaderCenter(t, firstName, lastName)}
+          { this.renderHeaderCenter(t, firstName, lastName, avatar)}
         </div>
         <div className='profile-page-center-content'>
           { this.renderClock() }
@@ -284,13 +298,15 @@ const mapStateToProps = (state) => {
       ? state.user.userReducer
       : state.verification,
     resultOfChecking: state.user.checkingReducer,
-    isFetching: isUserFetching(state)
+    isFetching: isUserFetching(state),
+    userId: state.verification.user._id,
+    userAvatar: state.verification.user.avatar
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateUser, checkPassword }, dispatch)
+    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest }, dispatch)
   }
 }
 

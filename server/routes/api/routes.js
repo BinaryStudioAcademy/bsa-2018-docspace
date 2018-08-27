@@ -12,6 +12,7 @@ const blog = require('./blog')
 const group = require('./group')
 const history = require('./history')
 const uploadFiles = require('./uploadFile')
+const upload = require('./upload')
 
 module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/signup', signup)
@@ -28,4 +29,5 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/groups', verifyJWTMiddleware, group)
   app.use('/api/history', verifyJWTMiddleware, history)
   app.use('/api/uploadFiles', uploadFiles)
+  app.use('/api/upload', verifyJWTMiddleware, upload)
 }

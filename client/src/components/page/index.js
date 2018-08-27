@@ -29,9 +29,11 @@ class Page extends Component {
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
   }
+
   componentDidMount () {
     !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
+
   addNewComment (obj) {
     this.props.addComment(obj, this.props.page)
   }
@@ -50,18 +52,21 @@ class Page extends Component {
   }
 
   handleDeletePage = () => {
-    console.log('deleting')
     this.props.actions.deletePageRequest(this.props.page)
   }
+
   exportPageToPdf = () => {
     this.props.actions.exportPageToPdf(this.props.page)
   }
+
   exportPageToWord = () => {
     this.props.actions.exportPageToWord(this.props.page)
   }
+
   handleCallSystemDialogWindow = () => {
     this.refs.fileUploader.click()
   }
+
   handleChoosenFile = (e) => {
     if (e.target.files[0]) {
       this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
