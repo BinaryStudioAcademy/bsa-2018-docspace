@@ -242,6 +242,9 @@ class User extends Component {
   }
 
   render () {
+    if (this.props.isNotFound.hasOwnProperty('isNotFound') && this.props.match.params.login !== this.props.userLogin) {
+      return <Redirect to='/page404' />
+    }
     const { t, i18n, isFetching } = this.props
     const { firstName, lastName, avatar } = this.props.compareUser
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
@@ -295,14 +298,12 @@ const mapStateToProps = (state) => {
       : state.verification,
     resultOfChecking: state.user.checkingReducer,
     isFetching: isUserFetching(state),
-    userId: state.verification.user._id,
     userLogin: state.verification.user.login,
     userAvatar: state.verification.user.avatar,
     userHistory: state.user.userHistory,
     isNotFound: state.user.getUser,
     compareUser: state.user.getUser._doc ? state.user.getUser._doc : state.verification.user,
-    resultOfComparing: state.user.getUser.resultOfComparing,
-    state: state
+    resultOfComparing: state.user.getUser.resultOfComparing
   }
 }
 

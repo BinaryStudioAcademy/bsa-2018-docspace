@@ -1,13 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import PinguinImg from 'src/resources/icons/error404_3.png'
-import { NavLink, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 
 import './page404.css'
 class Page404 extends Component {
   render () {
-    const { login } = this.props.userLogin || ''
     return (
       <Fragment>
         <div className='page404-main-wrapper'>
@@ -28,7 +25,7 @@ class Page404 extends Component {
                   <NavLink to={`/spacedirectory`}>Spaces</NavLink>
                 </li>
                 <li className='page404-helpful-link'>
-                  <NavLink to={`/users/${login}`}>Home page</NavLink>
+                  <NavLink to={`/users/${this.props.userInSession.login}`}>Home page</NavLink>
                 </li>
               </ul>
             </div>
@@ -39,14 +36,4 @@ class Page404 extends Component {
     )
   }
 }
-
-Page404.propTypes = {
-  userLogin: PropTypes.object
-}
-const mapStateToProps = (state) => {
-  return {
-    userLogin: state.verification.user
-  }
-}
-
-export default connect(mapStateToProps, null)(Page404)
+export default Page404

@@ -18,7 +18,6 @@ import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
-import Page404 from 'src/components/common/page404'
 
 class App extends Component {
   constructor (props) {

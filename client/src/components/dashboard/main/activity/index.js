@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, NavLink, Redirect } from 'react-router-dom'
+import { Route, NavLink, Redirect, Switch } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -47,6 +47,7 @@ class Activity extends Component {
               </NavLink>
             )}
           </div>
+          <Switch>
           <Route path='/activity' exact render={() => <Redirect to='activity/allupdates' />} />
           {TABS.map(({ name, path, component: TabComponent }) =>
             <Route
@@ -55,6 +56,8 @@ class Activity extends Component {
               render={() => <TabComponent {...this.props} />}
             />
           )}
+          <Redirect to='/page404' />
+          </Switch>
         </div>
         <ActivitySidebar />
       </div>
