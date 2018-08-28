@@ -24,6 +24,7 @@ export default (content) => {
       return {
         user: {...content.userId},
         name: content.pageId.title,
+        title: content.spaceId.name,
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
@@ -34,10 +35,33 @@ export default (content) => {
       return {
         user: {...content.userId},
         name: content.pageId.title,
+        title: content.spaceId.name,
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'Update page',
+        isDeleted: content.pageId.isDeleted
+      }
+    case 'CREATE_BLOG_PAGE_SUCCESS':
+      return {
+        user: {...content.userId},
+        name: content.pageId.title,
+        title: content.spaceId.name,
+        time: new Date(content.date).toLocaleString(),
+        path: `/spaces/${content.spaceId._id}/blog/${content.pageId._id}`,
+        icon: 'fas fa-rss-square',
+        action: 'Create blog',
+        isDeleted: content.pageId.isDeleted
+      }
+    case 'UPDATE_BLOG_PAGE_SUCCESS':
+      return {
+        user: {...content.userId},
+        name: content.pageId.title,
+        title: content.spaceId.name,
+        time: new Date(content.date).toLocaleString(),
+        path: `/spaces/${content.spaceId._id}/blog/${content.pageId._id}`,
+        icon: 'fas fa-rss-square',
+        action: 'Update blog',
         isDeleted: content.pageId.isDeleted
       }
     case 'CREATE_COMMENT_SUCCESS':

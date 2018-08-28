@@ -40,9 +40,7 @@ const verifyJWTMiddleware = require('./middlewares/verifyToken')(passport)
 apiRoutes(app, verifyJWTMiddleware)
 app.get('/*', function (req, res, next) {
   res.status(404)
-  console.log(process.env.PORT)
   const currentHost = req.headers.host
-  console.log(`http://${currentHost.split(':')[0]}:${clientPort}/page404`)
   res.redirect(`http://${currentHost.split(':')[0]}:${clientPort}/page404`)
 })
 

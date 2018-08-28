@@ -41,13 +41,16 @@ class User extends Component {
     this.renderMainInfo = this.renderMainInfo.bind(this)
     this.renderRecentWorks = this.renderRecentWorks.bind(this)
   }
-  componentWillMount () {
-    this.props.actions.compareUserRequest(this.props.userLogin, this.props.match.params.login)
-  }
   componentDidMount () {
+    this.props.actions.compareUserRequest(this.props.userLogin, this.props.match.params.login)
     this.props.actions.getUserUpdatesRequest(this.props.match.params.login)
   }
-
+  componentWillReceiveProps (nextProps) {
+    if (this.props.match.params.login !== nextProps.match.params.login) {
+      this.props.actions.compareUserRequest(this.props.userLogin, nextProps.match.params.login)
+      this.props.actions.getUserUpdatesRequest(nextProps.match.params.login)
+    }
+  }
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
       email: this.props.userSettings.user.email,
@@ -246,7 +249,8 @@ class User extends Component {
       return <Redirect to='/page404' />
     }
     const { t, i18n, isFetching } = this.props
-    const { firstName, lastName, avatar } = this.props.compareUser
+    const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
+    const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
     return (
@@ -260,7 +264,7 @@ class User extends Component {
           { this.renderClock() }
           <hr />
           { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
-          { this.renderMainInfo(t, i18n, errorsUser, this.props.compareUser, successful, errors, this.props.resultOfComparing) }
+          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
           { this.renderRecentWorks(t) }
         </div>
       </div>
