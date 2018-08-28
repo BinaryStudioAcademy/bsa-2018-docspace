@@ -11,19 +11,6 @@ import PropTypes from 'prop-types'
 import './activity.css'
 import ActivitySidebar from './activitySidebar'
 
-const TABS = [
-  {
-    name: 'All updates',
-    path: '/allupdates',
-    component: AllUpdatesTab
-  },
-  {
-    name: 'Popular',
-    path: '/popular',
-    component: PopularTab
-  }
-]
-
 class Activity extends Component {
   componentDidMount () {
     this.props.getAllUserUpdates(this.props.userId)
@@ -31,6 +18,18 @@ class Activity extends Component {
 
   render () {
     const { t, match } = this.props
+    const TABS = [
+      {
+        name: t('All updates'),
+        path: '/allupdates',
+        component: AllUpdatesTab
+      },
+      {
+        name: t('Popular'),
+        path: '/popular',
+        component: PopularTab
+      }
+    ]
     return (
       <div className='dashboard-activity'>
         <div className='dashboard-activity-body'>

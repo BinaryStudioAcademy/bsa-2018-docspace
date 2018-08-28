@@ -20,7 +20,7 @@ class SpaceDetails extends Component {
       <table className='space-details-table'>
         <tbody>
           <tr>
-            <td className='avatar-label-cell'>Space logo</td>
+            <td className='avatar-label-cell'>{t('Space_logo')}</td>
             <td className='avatar-cell'>
               <img id='space-logo' className='field-value space-avatar' src={spaceLogo} alt='space-logo' />
             </td>
@@ -48,7 +48,7 @@ class SpaceDetails extends Component {
             <td> <span className='link'>{name}</span></td>
           </tr>
           <tr>
-            <td>{t('Categoies')}</td>
+            <td>{t('Categories')}</td>
             <td >
               {space.categories.length
                 ? space.categories.map((category, index) =>

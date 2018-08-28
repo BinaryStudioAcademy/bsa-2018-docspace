@@ -1,20 +1,22 @@
 import React, {Component} from 'react'
 import './people.css'
 import SpacesSideBar from '../../spacesSidebar'
-const sideBarTabs = ['All People', 'People with Personal Spaces']
+import { translate } from 'react-i18next'
 
 class People extends Component {
   state = {
-    active: 'All People'
+    active: this.props.t('All People')
   }
   handleClickNavTab = (tab) => {
     this.setState({ active: tab })
   }
   render () {
+    const {t} = this.props
+    const sideBarTabs = [t('All People'), t('People with Personal Spaces')]
     return (
       <div className='dashboard-spaces'>
         <div className='spaces-header'>
-          <h1>People Directory</h1>
+          <h1>{t('People Directory')}</h1>
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>
@@ -28,4 +30,4 @@ class People extends Component {
   }
 }
 
-export default People
+export default translate('translations')(People)
