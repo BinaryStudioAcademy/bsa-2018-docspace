@@ -4,7 +4,12 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 module.exports = {
   findAll: (req, res) => {
     HistoryRepository.getAll()
+      .limit(50)
       .sort('-date')
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar login'
+      })
       .populate({
         path: 'spaceId',
         select: 'name isDeleted'
@@ -16,6 +21,46 @@ module.exports = {
         path: 'commentId',
         select: 'text isDeleted'})
       .then(data => res.json(data))
+      .catch((err) => {
+        console.log(err)
+        res.status(400)
+        res.end()
+      })
+  },
+
+  findCurrentUserHistory: (req, res) => {
+    const userId = req.params.id
+    if (userId.length === 0) {
+      res.status(400)
+
+      return res.end('Invalid id')
+    }
+    HistoryRepository.getCurrentUserHistory(userId)
+      .limit(50)
+      .sort('-date')
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar'
+      })
+      .populate({
+        path: 'spaceId',
+        select: 'name isDeleted'
+      })
+      .populate({
+        path: 'pageId',
+        select: 'title isDeleted'})
+      .populate({
+        path: 'commentId',
+        select: 'text isDeleted'})
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+
+          return res.end()
+        }
+
+        res.json(data)
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
