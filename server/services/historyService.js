@@ -1,5 +1,6 @@
 const HistoryRepository = require('../repositories/HistoryRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
+const UserRepository = require('../repositories/UserRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -50,35 +51,37 @@ module.exports = {
   },
 
   findUserHistory: (req, res) => {
-    const userId = req.params.id
-    if (userId.length === 0) {
+    const userLogin = req.params.login
+    if (userLogin.length === 0) {
       res.status(400)
 
-      return res.end('Invalid id')
+      return res.end('Invalid Login')
     }
-    HistoryRepository.getUserHistory(userId)
-      .sort('-date')
-      .populate({
-        path: 'pageId',
-        select: 'title isDeleted'
+    UserRepository.getByLogin(userLogin)
+      .then(user => {
+        HistoryRepository.getUserHistory(user[0]._id)
+          .sort('-date')
+          .populate({
+            path: 'pageId',
+            select: 'title isDeleted'
+          })
+          .populate({
+            path: 'spaceId',
+            select: 'name isDeleted'
+          })
+          .then((data) => {
+            if (data.length === 0) {
+              return res.json([])
+            }
+            return res.json(data)
+          })
+          .catch((err) => {
+            console.log(err)
+            res.status(400)
+            res.end()
+          })
       })
-      .populate({
-        path: 'spaceId',
-        select: 'name isDeleted'
-      })
-      .then((data) => {
-        if (data.length === 0) {
-          res.status(404)
-          return res.end()
-        }
-
-        return res.json(data)
-      })
-      .catch((err) => {
-        console.log(err)
-        res.status(400)
-        res.end()
-      })
+      .catch(err => console.log(err))
   },
 
   findAllInSpace: (req, res) => {

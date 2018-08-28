@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest } from './logic/userActions'
+import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest } from './logic/userActions'
 import { isUserFetching } from './logic/userReducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,9 +10,9 @@ import { ProfileFields } from 'src/components/userTabs/general'
 import { PrivateFields } from 'src/components/userTabs/private'
 import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWorkContainer'
 import { translate } from 'react-i18next'
-import { withRouter } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
 import defaultAvatar from '../../../assets/user.png'
+import { Redirect, withRouter } from 'react-router-dom'
 
 import './user.css'
 
@@ -41,9 +41,11 @@ class User extends Component {
     this.renderMainInfo = this.renderMainInfo.bind(this)
     this.renderRecentWorks = this.renderRecentWorks.bind(this)
   }
-
+  componentWillMount () {
+    this.props.actions.compareUserRequest(this.props.userLogin, this.props.match.params.login)
+  }
   componentDidMount () {
-    this.props.actions.getUserUpdatesRequest(this.props.userId)
+    this.props.actions.getUserUpdatesRequest(this.props.match.params.login)
   }
 
   handlePassword (currentPassword, newPassword) {
@@ -118,20 +120,21 @@ class User extends Component {
     }
   }
 
-  renderAddPhoto (t) {
-    return (
-      <div className='profile-header-add-photo' onClick={this.managePhoto}>
-        <div className='add-photo-content'>
-          <button className='add-photo-button'>
-            <img src={Camera} alt='camera' className='add-photo-img' />
-            <span className='add-photo-label'>{t('add_cover_photo')}</span>
-          </button>
+  renderAddPhoto (t, resultOfComparing) {
+    return resultOfComparing
+      ? (
+        <div className='profile-header-add-photo' onClick={this.managePhoto}>
+          <div className='add-photo-content'>
+            <button className='add-photo-button'>
+              <img src={Camera} alt='camera' className='add-photo-img' />
+              <span className='add-photo-label'>{t('add_cover_photo')}</span>
+            </button>
+          </div>
         </div>
-      </div>
-    )
+      ) : null
   }
 
-  renderHeaderCenter (t, firstName, lastName, avatar) {
+  renderHeaderCenter (t, firstName, lastName, avatar, resultOfComparing) {
     return (
       <div className='profile-page-center'>
         <a className='profile-link-All-People' onClick={this.handleAllPeople}>
@@ -145,7 +148,7 @@ class User extends Component {
             <button className='avatar-btn'>
               <img src={avatar || defaultAvatar} className='profile-avatar-cover-btn' alt='avatar' />
             </button>
-            <div className='profile-avatar-hover' onClick={this.handleAvatarChoose}>
+            <div className={resultOfComparing ? 'profile-avatar-hover' : ''} onClick={resultOfComparing ? this.handleAvatarChoose : undefined}>
               <input type='file' ref='avatarUploader' accept='image/*' style={{display: 'none'}} onChange={this.handleChoosenFile} />
               <i className='fa fa-camera profile-avatar-camera' aria-hidden='true' style={{color: 'white', fontSize: '24px'}} />
             </div>
@@ -172,16 +175,19 @@ class User extends Component {
     )
   }
 
-  renderEditButtons (t, isFetching) {
+  renderEditButtons (t, isFetching, resultOfComparing) {
     return (
       <div className='profile-edit-buttons'>
         <div className='edit-manage-btn'>
           <div className='manage-btn'>
             <button onClick={this.changeGeneral}>{t('general')}</button>
           </div>
-          <div className='manage-btn'>
-            <button onClick={this.changePrivate}>{t('private')}</button>
-          </div>
+          { resultOfComparing
+            ? <div className='manage-btn'>
+              <button onClick={this.changePrivate}>{t('private')}</button>
+            </div>
+            : null
+          }
         </div>
         { isFetching
           ? <div className='sweet-loading'>
@@ -202,7 +208,7 @@ class User extends Component {
     )
   }
 
-  renderMainInfo (t, i18n, errorsUser, user, successful, errors) {
+  renderMainInfo (t, i18n, errorsUser, user, successful, errors, resultOfComparing) {
     return (
       !this.state.isShowGeneral
         ? <PrivateFields
@@ -219,6 +225,7 @@ class User extends Component {
           editMode={this.editMode}
           user={user}
           errors={errorsUser}
+          resultOfComparing={resultOfComparing}
           t={t}
           i18n={i18n}
         />
@@ -236,22 +243,21 @@ class User extends Component {
 
   render () {
     const { t, i18n, isFetching } = this.props
-    const { user } = this.props.userSettings
-    const { firstName, lastName, avatar } = user
+    const { firstName, lastName, avatar } = this.props.compareUser
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
     return (
       <div className='main-wrapper'>
         <div className='profile-page-header'>
-          { this.renderAddPhoto(t) }
+          { this.renderAddPhoto(t, this.props.resultOfComparing) }
           <ManagePhoto display={this.handleManagePhoto} t={t} />
-          { this.renderHeaderCenter(t, firstName, lastName, avatar)}
+          { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
         </div>
         <div className='profile-page-center-content'>
           { this.renderClock() }
           <hr />
-          { this.renderEditButtons(t, isFetching) }
-          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors) }
+          { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
+          { this.renderMainInfo(t, i18n, errorsUser, this.props.compareUser, successful, errors, this.props.resultOfComparing) }
           { this.renderRecentWorks(t) }
         </div>
       </div>
@@ -269,7 +275,10 @@ User.propTypes = {
   history: PropTypes.object,
   t: PropTypes.func,
   i18n: PropTypes.object,
-  userId: PropTypes.string,
+  resultOfComparing: PropTypes.bool,
+  userLogin: PropTypes.string,
+  compareUser: PropTypes.object,
+  isNotFound: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -287,14 +296,19 @@ const mapStateToProps = (state) => {
     resultOfChecking: state.user.checkingReducer,
     isFetching: isUserFetching(state),
     userId: state.verification.user._id,
+    userLogin: state.verification.user.login,
     userAvatar: state.verification.user.avatar,
-    userHistory: state.user.userHistory
+    userHistory: state.user.userHistory,
+    isNotFound: state.user.getUser,
+    compareUser: state.user.getUser._doc ? state.user.getUser._doc : state.verification.user,
+    resultOfComparing: state.user.getUser.resultOfComparing,
+    state: state
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest }, dispatch)
+    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest }, dispatch)
   }
 }
 

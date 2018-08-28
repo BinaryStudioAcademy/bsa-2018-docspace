@@ -4,7 +4,7 @@ import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { store, sagaMiddleware } from './commonLogic/store'
 import rootSaga from './commonLogic/rootSaga'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import history from './commonLogic/history'
 import { I18nextProvider } from 'react-i18next'
@@ -17,7 +17,7 @@ import ResetPassword from './components/auth/reset'
 import NewPassword from './components/auth/setNewPassword'
 import PageEditorContainer from 'src/components/pageEditorContainer'
 import BlogPostEditor from 'src/components/blog/blogPostEditor'
-import Page404 from './components/common/page404'
+import Page404 from 'src/components/common/page404'
 
 sagaMiddleware.run(rootSaga)
 
@@ -32,7 +32,7 @@ ReactDOM.render(
           <Route path='/reset/:token' component={NewPassword} />
           <Route path='/spaces/:space_id/pages/:page_id/edit' exact component={PageEditorContainer} />
           <Route path='/spaces/:space_id/blog/:page_id/edit' exact component={BlogPostEditor} />
-          <Route path='/page404' component={Page404} />
+          <Route path='/page404' component={RequiredAuth(Page404)} />
           <Route path='/' component={RequiredAuth(App)} />
         </Switch>
       </ConnectedRouter>

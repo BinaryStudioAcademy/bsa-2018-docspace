@@ -13,11 +13,12 @@ import SpaceContainer from 'src/components/space/spaceContainer'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
 import BlogSidebar from 'src/components/blog/blogSidebar'
 
-import { Route, Redirect, withRouter } from 'react-router-dom'
+import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
+import Page404 from 'src/components/common/page404'
 
 class App extends Component {
   constructor (props) {
@@ -84,15 +85,18 @@ class App extends Component {
             this.renderSidebarDependOnLocation()
           }
           <DashboardMain>
-            <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
-            <Route path='/works' component={Work} />
-            <Route path='/activity' component={Activity} />
-            <Route path='/people' component={People} />
-            <Route path='/spacedirectory' component={Spaces} />
-            <Route path='/userSettings' component={User} />
-            <Route path='/spaces/:id' component={SpaceContainer} />
-            <Route path='/group/:id' exact component={GroupPage} />
-            <Route path='/admin' component={Administration} />
+            <Switch>
+              <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
+              <Route path='/works' component={Work} />
+              <Route path='/activity' component={Activity} />
+              <Route path='/people' component={People} />
+              <Route path='/spacedirectory' component={Spaces} />
+              <Route path='/users/:login' component={User} />
+              <Route path='/spaces/:id' component={SpaceContainer} />
+              <Route path='/group/:id' exact component={GroupPage} />
+              <Route path='/admin' component={Administration} />
+              <Redirect to={'/page404'} />
+            </Switch>
           </DashboardMain>
         </SplitPane>
       </div>

@@ -139,13 +139,16 @@ export class ProfileFields extends Component {
         {!!this.props.errors.length && (
           <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
         )}
-        <div className='edit-btn'>
-          <Button
-            icon={this.renderLabelButton().icon}
-            value={this.renderLabelButton().value}
-            onClick={this.handleSubmitDataUser}
-          />
-        </div>
+        {this.props.resultOfComparing
+          ? <div className='edit-btn'>
+            <Button
+              icon={this.renderLabelButton().icon}
+              value={this.renderLabelButton().value}
+              onClick={this.handleSubmitDataUser}
+            />
+          </div>
+          : null
+        }
         <div className='language-choise'>
           <span>{t('choose language')}</span>
           <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
@@ -168,6 +171,7 @@ ProfileFields.propTypes = {
   editMode: PropTypes.func,
   errors: PropTypes.array,
   t: PropTypes.func,
+  resultOfComparing: PropTypes.bool,
   i18n: PropTypes.object
 }
 export default translate('translations')(ProfileFields)
