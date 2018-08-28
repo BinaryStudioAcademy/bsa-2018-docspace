@@ -1,21 +1,27 @@
 import React from 'react'
 import './work.css'
 import Input from '../../input'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
-const Work = () => (
+const Work = (props) => (
   <div className='dashboard-work' >
     <div className='work-header'>
-      <h1>Work</h1>
-      <Input placeholder='Filter' className='work-filter' autoComplete={false} />
+      <h1>{props.t('Your_work')}</h1>
+      <Input placeholder={props.t('filter')} className='work-filter' autoComplete={false} />
     </div>
     <div className='work-body'>
       <ul>
-        <li>Recently worked on</li>
-        <li>Recently visited</li>
-        <li>Saved for later</li>
+        <li>{props.t('Recently worked on')}</li>
+        <li>{props.t('Recently visited')}</li>
+        <li>{props.t('Saved for later')}</li>
       </ul>
     </div>
   </div>
 )
 
-export default Work
+Work.propTypes = {
+  t: PropTypes.func
+}
+
+export default translate('translations')(Work)

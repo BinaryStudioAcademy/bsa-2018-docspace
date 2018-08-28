@@ -125,5 +125,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Group)
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Group)))

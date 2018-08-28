@@ -16,3 +16,7 @@ export default i18n.init({
     wait: true
   }
 })
+
+export function getT () {
+  return i18n.getFixedT(null, 'translations')
+}

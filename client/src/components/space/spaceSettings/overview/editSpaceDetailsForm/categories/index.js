@@ -35,7 +35,7 @@ class Categories extends Component {
   isAllowedSubmit = () => !this.state.categoryName.length
 
   render () {
-    const { categories } = this.props
+    const { categories, t } = this.props
     return (
       <React.Fragment>
         <div className='categories-labels-editor'>
@@ -57,7 +57,7 @@ class Categories extends Component {
         <div className='field-group'>
           <label>Categories</label>
           <Input placeholder={this.props.t('Enter_category')} inputType='text' name='category-input' onChange={this.handleChangeName} value={this.state.categoryName} />
-          <button type='submit' className='add-btn' disabled={this.isAllowedSubmit()} onClick={this.handleCreateCategory}>Add</button>
+          <button type='submit' className='add-btn' disabled={this.isAllowedSubmit()} onClick={this.handleCreateCategory}>{t('Add')}</button>
         </div>
       </React.Fragment>
     )
