@@ -18,12 +18,14 @@ import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 import '../comments//comments/comments.css'
+import WarningModal from 'src/components/modals/warningModal'
 
 class Page extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isShowImportModal: true
+      isShowImportModal: true,
+      showModal: false
     }
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
@@ -67,6 +69,10 @@ class Page extends Component {
     this.refs.fileUploader.click()
   }
 
+  toggleModal = () => {
+    this.setState({showModal: !this.state.showModal})
+  }
+
   handleChoosenFile = (e) => {
     if (e.target.files[0]) {
       this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
@@ -78,16 +84,26 @@ class Page extends Component {
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const warningTextForPageDelete = (
+      <div className='page-delete-warning'>
+        <p>{`Are you sure you want to send this page to the trash?`}</p>
+        <p>Please note:</p>
+        <p>
+          {`Removing a page moves it into the trash. You can speak to your space administrator to have it recovered.
+        This page is a child of space - ${space.name}`}
+        </p>
+      </div>
+    )
     return (
       <React.Fragment>
         <PageHeader
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
           onWordImport={this.handleCallSystemDialogWindow}
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
+          toggleModal={this.toggleModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -134,6 +150,13 @@ class Page extends Component {
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
         }
+        {this.state.showModal &&
+        <WarningModal
+          deleteMethod={this.handleDeletePage}
+          warningHeader={t('Delete_page')}
+          warningText={warningTextForPageDelete}
+          closeModal={this.toggleModal}
+        />}
       </React.Fragment>
     )
   }

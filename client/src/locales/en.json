@@ -75,6 +75,7 @@
     "Close": "Close",
     "Import_File": "Import File",
     "Confirm": "Confirm",
-    "Delete_space": "Delete space"
+    "Delete_space": "Delete space",
+    "Delete_page": "Delete page"
   }
 }

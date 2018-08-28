@@ -43,7 +43,7 @@ WarningModal.propTypes = {
   t: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   warningHeader: PropTypes.string.isRequired,
-  warningText: PropTypes.string.isRequired,
+  warningText: PropTypes.object.isRequired,
   deleteMethod: PropTypes.func.isRequired
 
 }
