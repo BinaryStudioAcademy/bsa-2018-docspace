@@ -1,17 +1,14 @@
-import React, { Component } from 'react'
-import './buttonDashboard.css'
+import React from 'react'
+import './button.css'
 import PropTypes from 'prop-types'
-class Button extends Component {
-  render () {
-    return (
-      <button className={'buttonDashboard'}
-        onClick={this.props.onClick}
-      >
-        {this.props.content}
-      </button>
-    )
-  }
-}
+
+const Button = (props) => (
+  <button className={'buttonDashboard'}
+    onClick={props.onClick}
+  >
+    {props.content}
+  </button>
+)
 
 Button.propTypes = {
   content: PropTypes.string,

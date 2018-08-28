@@ -1,31 +1,49 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-
-import SpaceHeader from 'src/components/space/spaceHeader'
 import SpaceContent from 'src/components/space/spaceContent'
-import SpaceSidebar from 'src/components/space/spaceSidebar'
 import SpaceSettings from 'src/components/space/spaceSettings'
+import SpaceOverwiew from 'src/components/space/spaceOverview'
 import Page from 'src/components/page'
 import Blog from 'src/components/blog'
+import * as actions from './logic/spaceActions'
+import { spaceById } from './logic/spaceReducer'
 
 import './space.css'
 
 class SpaceContainer extends Component {
+  componentWillMount () {
+    const id = this.props.location.pathname.split('/')[2]
+
+    if (!this.props.space || this.props.space._id !== id || !this.props.space.pages) {
+      this.props.getSpace(id)
+    }
+  }
+
+  renderSpaceOverview = () => (
+    <SpaceOverwiew
+      homePage={this.props.space.homePage}
+      space={this.props.space}
+      history={this.props.history}
+    />
+  )
+
   render () {
+    const {space} = this.props
+    if (!space) return null
+    const id = this.props.location.pathname.split('/')[2]
+
     return (
       <div className='space'>
-        <SpaceSidebar spaceName={this.props.space.name} pages={this.props.space.pages} />
         <SpaceContent>
-          <SpaceHeader />
-          <Route path='/spaces/:id' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
-          <Route path='/spaces' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
-          <Route path='/spaces/:id/overview' component={Page} />
-          <Route path='/spaces/:id/blog' component={Blog} />
-          <Route path='/spaces/:id/settings' component={SpaceSettings} />
-          <Route path='/spaces/:id/pages/:id' component={Page} />
-          <Route path='/spaces/:id/pages' render={() => <Redirect to='/spaces/5b6beec45aa931280c4fdb29/overview' />} exact />
+          <Route path='/spaces/:space_id' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
+          <Route path='/spaces/:space_id/pages' render={() => <Redirect to={`/spaces/${id}/overview`} />} exact />
+          <Route path='/spaces/:space_id/overview' render={this.renderSpaceOverview} />
+          <Route path='/spaces/:space_id/blog' component={Blog} />
+          <Route path='/spaces/:space_id/settings' component={SpaceSettings} />
+          <Route path='/spaces/:space_id/pages/:page_id' component={Page} />
         </SpaceContent>
       </div>
     )
@@ -33,17 +51,22 @@ class SpaceContainer extends Component {
 }
 
 SpaceContainer.propTypes = {
-  space: PropTypes.object
-}
-
-SpaceContainer.defaultProps = {
-  space: {}
+  location: PropTypes.object.isRequired,
+  space: PropTypes.object,
+  getSpace: PropTypes.func,
+  history: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
   return {
-    space: state.spaces.byId['5b6beec45aa931280c4fdb29']
+    space: spaceById(state)
   }
 }
 
-export default connect(mapStateToProps)(SpaceContainer)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSpace: bindActionCreators(actions.getSpaceRequest, dispatch)
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SpaceContainer))

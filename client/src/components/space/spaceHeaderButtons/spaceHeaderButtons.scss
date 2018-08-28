@@ -3,11 +3,24 @@
 .buttons {
   &-container {
     display: flex;
+    align-items: center;
     color: $grayButtons;
+
+    .menu-wrapper {
+      position: relative;
+
+      .menu-container {
+        border: 1px red solid;
+        position: absolute;
+        width: 100px;
+        right: 0;
+      }
+    }
   }
 
   &-item{
-    height: 28px;
+    box-sizing: border-box;
+    height: 33px;
     width: 38px;
     font-size: 13px;
     text-align: center;
@@ -15,11 +28,20 @@
     border: 1px solid $white;
 
     &.restrictions {
-      color: #777;
+      text-align: center;
+      vertical-align: center;
+      color: #6c788f;
       margin-left: 5px;
+
+
+      .space-page-header & i{
+        width:30px;
+        height: 20px;
+        margin: 0;
+      }
     }
 
-    &:hover {
+    &:hover, &.activated {
       cursor: pointer;
       background: $grayBackground;
       border: 1px solid $grayButtons;

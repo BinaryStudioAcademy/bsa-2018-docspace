@@ -1,0 +1,93 @@
+@import 'globalStyles/variables.scss';
+
+.header__spaces__content {
+  display: block;
+  flex-direction: row;
+  padding-top: 2%;
+  padding-bottom: 3%;
+  padding-left: 15%;
+}
+.header__spaces__content > h2 {
+  margin-top: 3%;
+  font-weight: 400;
+  float: left;
+}
+.header__spaces__content > .inputDashboard {
+  position: relative;
+  margin-top: 3%;
+  margin-left: 25%;
+}
+.spaces__content__body {
+  width: 100%;
+}
+.link_view {
+  display: block;
+  padding: 5px 10px;
+}
+.link_view > img {
+  border-radius:3px;
+  width: 32px;
+}
+.space-item .space-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 186px;
+  padding: 15px 3px;
+}
+.space-item .space-label {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #3572b0;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  padding: 1px 5px;
+  margin: 0 5px 0 0;
+  text-align: left;
+  text-decoration: none;
+}
+.space-item-link {
+  text-decoration: none;
+  color: $blue;
+  &:active, &:visited {
+    color: $blue;
+  }
+}
+.list__header > tr {
+  display: table-row;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+.space__item:hover {
+  background-color: #eaecef;
+}
+.column-heading {
+  text-align: left;
+  display:table-cell;
+
+}
+.table_spaces {
+  margin-left: 3%;
+  margin-right: 3%;
+  width: 94%;
+  display: table;
+  border-collapse: collapse;
+}
+.fa-info-circle {
+  color: #707070;
+}
+.fa-info-circle:hover {
+  color: black;
+}
+.body-spaces-loader {
+  display: flex;
+  height: 100%;
+  align-self: center;
+}
+.sweet-loading {
+  align-self: center;
+}

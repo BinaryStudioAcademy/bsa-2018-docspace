@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import signupRequest from './logic/signupActions'
-import Input from 'src/components/common/input'
-import Errors from 'src/components/common/error'
+import Input from '../../common/input'
+import Errors from '../../common/error'
+import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
+import { translate } from 'react-i18next'
 
 import './signup.css'
 
@@ -58,25 +60,27 @@ class Signup extends Component {
       login
     } = this.state
     const { requesting, errors } = this.props.signup
-
+    const { t } = this.props
     if (redirectToLogin) {
       return <Redirect to='/login' />
     }
     return (
-      <div className='auth__main'>
-        <div className='auth__content'>
-          <div className='auth__header'>
-            <img className='header__logo' src='' alt='logo' />
-            <h2>Sign up for your account</h2>
+      <div className='auth-main'>
+        <div className='auth-content'>
+          <div className='auth-header'>
+            <div className='header-logo'>
+              <img className='header-logo-img' src={logoInCircle} alt='logo' />
+              <p className='header-logo-label'>DOCSPACE</p>
+            </div>
+            <h2>{t('sign_up_for_account')}</h2>
           </div>
-          <form className='auth__signup' onSubmit={this.handleSubmit}>
+          <form className='auth-signup' onSubmit={this.handleSubmit}>
             <Input
               inputType='email'
               name='email'
               label='Enter email adress'
               value={email}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='text'
@@ -84,7 +88,6 @@ class Signup extends Component {
               label='Enter full name'
               value={fullName}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='text'
@@ -92,7 +95,6 @@ class Signup extends Component {
               label='Enter nickname'
               value={login}
               onChange={this.handleFieldChange}
-              autoComplete
             />
             <Input
               inputType='password'
@@ -100,7 +102,6 @@ class Signup extends Component {
               label='Create password'
               value={password}
               onChange={this.handleFieldChange}
-              autoComplete={false}
             />
             <Input
               inputType='submit'
@@ -108,14 +109,14 @@ class Signup extends Component {
               name='button'
               value='Sign up'
             />
-            <div className='auth__notifications'>
+            <div className='auth-notifications'>
               {!requesting && !!errors.length && (
                 <Errors message='Failure to signup due to:' errors={errors} />
 
               )}
             </div>
-            <p className='auth__footer' onClick={this.handleRedirectToLogin}>
-              Already have an Docspace account? Log in
+            <p className='auth-footer' onClick={this.handleRedirectToLogin}>
+              {t('already_have_an_Docspace_account?_log_in')}
             </p>
           </form>
         </div>
@@ -131,7 +132,8 @@ Signup.propTypes = {
     successful: PropTypes.bool,
     messages: PropTypes.array,
     errors: PropTypes.array
-  })
+  }),
+  t: PropTypes.func
 }
 Signup.defaultProps = {
   signup: {
@@ -150,4 +152,4 @@ const mapDispatchToProps = dispatch => ({
   signupRequest: bindActionCreators(signupRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup)))

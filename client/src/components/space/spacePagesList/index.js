@@ -1,22 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
+import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import './spacePagesList.css'
 
-const SpacePagesList = ({ pages }) => {
+const SpacePagesList = (props) => {
+  const { pages, spaceId, t, actions } = props
   return (
     <div className='pages-list'>
       <div className='pages-list-title'>
-        Pages
+        {t('pages')}
       </div>
       <div>
         {
           pages.map((page) => {
             return (
-              <NavLink className='pages-list-item' key={page.id} to={`/spaces/5b6beec45aa931280c4fdb29/pages/${page.id}`} activeClassName='current'>
+              <NavLink
+                className='pages-list-item'
+                activeClassName='current'
+                key={page._id}
+                to={`/spaces/${spaceId}/pages/${page._id}`}
+                onClick={() => actions.getPageByIdRequest(page._id)}
+              >
                 <div className='pages-list-item-icon'>•</div>
-                <div className='pages-list-item-name'>{page.name}</div>
+                <div className='pages-list-item-name'>{page.title}</div>
               </NavLink>
             )
           })
@@ -27,11 +38,25 @@ const SpacePagesList = ({ pages }) => {
 }
 
 SpacePagesList.propTypes = {
-  pages: PropTypes.array
+  t: PropTypes.func.isRequired,
+  actions: PropTypes.object,
+  pages: PropTypes.array,
+  spaceId: PropTypes.string
 }
 
 SpacePagesList.defaultProps = {
-  pages: []
+  pages: [],
+  spaceId: ''
 }
 
-export default SpacePagesList
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        getPageByIdRequest
+      }
+      , dispatch)
+  }
+}
+
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(SpacePagesList)))

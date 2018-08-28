@@ -1,0 +1,89 @@
+@import 'globalStyles/variables.scss';
+.dashboard-admin{
+    overflow-y:auto;
+}
+.group-container{
+    width: 100%;
+    .group-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 35px;
+    }
+    .group-header h2{
+        margin: 0;
+    }
+    .groups-button{
+        box-sizing: border-box;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 3.01px;
+        color: #333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: inherit;
+        font-size: 14px;
+        font-variant: normal;
+        font-weight: 400;
+        height: 2.14285714em;
+        line-height: 1.42857143;
+        margin: 0;
+        padding: 4px 10px;
+        text-decoration: none;
+        vertical-align: baseline;
+        white-space: nowrap;
+    }
+    .group-filter-container{
+        background-color: $greyBlog;
+        border-bottom: 1px solid $lightGrey;
+        border-top: 1px solid $lightGrey;
+        padding: 10px 35px;
+        display: flex;
+        align-items: center;
+    }
+    .group-filter-container input{
+        margin: 0;
+        width: 250px;
+        border: 1px solid $lightGrey;
+    }
+    .group-body-container{
+        padding: 35px;
+    }
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table .name{
+        width: 30%;
+    }
+    table .tags{
+        width: 30%;
+    }
+    table .description{
+        width: 40%;
+    }
+    td {
+        border-bottom: 1px solid #ddd;
+        text-overflow: ellipsis;
+        height: 35px;
+    }
+    th{
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    a, a:hover, a:active{
+        color: #1c80ff;
+    }
+    table .group-delete{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        color: #333;
+    }
+}

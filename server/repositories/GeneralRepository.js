@@ -4,7 +4,11 @@ class GeneralRepository {
   }
 
   getAll () {
-    return this.model.find()
+    return this.getAllByCriteria({})
+  }
+
+  getAllByCriteria (criteria) {
+    return this.model.find(criteria)
   }
 
   getById (id) {
@@ -21,6 +25,10 @@ class GeneralRepository {
 
   update (id, data) {
     return this.model.findOneAndUpdate({ _id: id }, data, {new: true})
+  }
+
+  updateMany (filter, data) {
+    return this.model.updateMany(filter, data)
   }
 
   delete (id) {

@@ -1,63 +1,76 @@
+@import "src/globalStyles/variables.scss";
 
-.sidebar-container{
-  .minimize-dashboard-wrapper {
+.min-sidebar {
+  padding: 0 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .top-icons {
     display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    text-align: left;
-    margin: 0;
-    height: 100%;
-    width: 70px;
-    .icon-buttons-wrapper{
-      width: 100%;
-    }
-    .icon-navigation-wrapper {
-      height: 45%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .top-icons{
-      height: 20%;
-    }
-    .bottom-icons{
-      height: 30%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 40px;
+      margin: 29px auto 15px;
+
+      &:hover {
+        background-color: #08367C;
+        border-radius: 50%;
+      }
     }
   }
-  .sidebar-wrapper{
-    .top-icons{
-      height: 40%;
-      margin-top: 10px;
-    }
-    .bottom-icons{
-      height: 55%;
-    }
+
+  .icon-navigation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
   .bottom-icons {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
   }
-  .icon-buttons-wrapper{
-    .nav-button{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+}
+
+.sidebar.minimized .min-sidebar {
+  width: 100%;
+
+  .top-icons img:hover {
+    background-color: $greyHover;
+  }
+
+  .nav-button {
+    color: $grayDark;
+
+    &:hover {
+      background-color: $greyHover;
     }
-    .nav-button{
-      a{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      i{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  }
+
+  .icon-navigation-wrapper {
+    flex: 1;
+    margin-top: 20px;
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        max-width: 46px;
+        border-radius: 5px;
+        margin: 5px 0;
+
+        &:hover {
+          background-color: $greyHover;
+        }
       }
     }
   }
 }
-

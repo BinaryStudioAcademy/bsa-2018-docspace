@@ -4,7 +4,8 @@ const initialState = {
   requesting: false,
   successful: false,
   messages: [],
-  errors: []
+  errors: [],
+  user: null
 }
 
 export const loginReducer = (state = initialState, action) => {
@@ -14,15 +15,17 @@ export const loginReducer = (state = initialState, action) => {
         requesting: true,
         successful: false,
         messages: [{ body: 'Logging in...', time: new Date() }],
-        errors: []
+        errors: [],
+        user: null
       }
 
     case actionTypes.LOGIN_SUCCESS:
       return {
         errors: [],
-        messages: [action.response],
+        messages: [action.response.message],
         requesting: false,
-        successful: true
+        successful: true,
+        user: action.response.user
       }
 
     case actionTypes.LOGIN_ERROR:
@@ -33,7 +36,8 @@ export const loginReducer = (state = initialState, action) => {
         }]),
         messages: [],
         requesting: false,
-        successful: false
+        successful: false,
+        user: null
       }
 
     default:

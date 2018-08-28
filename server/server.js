@@ -1,24 +1,25 @@
 const express = require('express')
 const session = require('express-session')
-const bodyParser = require('body-parser')
 const MongoStore = require('connect-mongo')(session)
-const mongooseConnection = require('./db/dbConnect').connection
+const connections = require('./db/connections')
+const mongoose = connections.mongoose
+// const elasticClient = connections.elasticClient
 const apiRoutes = require('./routes/api/routes')
 const sessionSecret = require('./config/session').secret
+const path = require('path')
 const passport = require('passport')
-
-require('./config/passport')()
-
 const app = express()
 const port = process.env.PORT || 3001
+const clientPort = process.env.PORT || 3000
+const io = require('socket.io')
+require('./config/passport')()
 
-// Express only serves static assets in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
-}
+app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({extended: true, limit: '50mb'}))
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+// const elasticHelper = require('./elasticHelper')
+// elasticHelper.checkConnection(elasticClient)
+// elasticHelper.createIndex(elasticClient, 'page')
 
 app.use(
   session({
@@ -26,7 +27,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-      mongooseConnection: mongooseConnection
+      mongooseConnection: mongoose.connection
     })
   })
 )
@@ -34,6 +35,25 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-apiRoutes(app)
+const verifyJWTMiddleware = require('./middlewares/verifyToken')(passport)
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+apiRoutes(app, verifyJWTMiddleware)
+app.use(function (req, res, next) {
+  res.status(404)
+  const currentHost = req.headers.host
+  if (req.accepts('html')) {
+    res.redirect(`http://${currentHost.split(':')[0]}:${clientPort}/page404`)
+    return null
+  }
+})
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')))
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+  })
+}
+
+const server = app.listen(port, () => console.log(`Listening on port  ${port}`))
+
+require('./sockets/initSocketEvents')(io(server))

@@ -1,0 +1,48 @@
+@import 'globalStyles/variables.scss';
+
+.space-settings-page{
+  font-size: 14px;
+
+  & h1{
+    color: #333;
+    font-weight: normal;
+    margin: 0.6rem;
+    text-transform: none;
+  }
+
+  & img {
+    border-radius: 5px;
+  }
+
+  h2.space-settings-page-header{
+    font-weight: normal;
+    font-size: 28px;
+    color:$black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    padding: 25px 30px 30px 50px;
+  }
+  .nav-bar{
+    display: flex;
+    margin: 0;
+    padding:0;
+    border-bottom: 1px solid $grayLight;
+    .nav-bar-tab{
+      padding: 9px 10px;
+      cursor: pointer;
+      color: #333;
+      text-transform: capitalize;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .active-link{
+      border-bottom: 3px solid #205081;
+      font-weight: bold;
+    }
+  }
+}
+

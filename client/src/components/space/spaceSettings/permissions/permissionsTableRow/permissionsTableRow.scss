@@ -1,0 +1,50 @@
+@import 'src/globalStyles/variables.scss';
+
+.permissions-table-row{
+
+    border-bottom: 1px solid #ccc; 
+
+    &-ceil:first-of-type{
+        display:flex;
+        flex-direction: column;
+       
+        justify-content: center;
+        text-align: left;
+        padding: 5px;
+        border: none;
+        width: 120px;
+    }
+
+    &-ceil{
+        min-height: 40px;
+        text-align: center;
+        border: 1px solid #ccc; 
+         border-collapse: collapse;
+
+        i.fa-check-circle{
+            color: green
+        }
+        i.fa-times-circle{
+            color: red;
+        }
+    }
+
+    .toggle-all-permission-btn{
+
+        input{
+            display: none;
+        }
+
+        label{
+            color: $blue;
+            padding: 3px;
+            &:hover{
+            text-decoration: underline;
+            cursor: pointer
+            }
+        }
+       
+
+    }
+}
+

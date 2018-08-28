@@ -1,0 +1,16 @@
+@import 'globalStyles/variables.scss';
+
+.blog-header {
+  display: flex;
+  padding: 25px 30px 30px 50px;
+  justify-content: space-between;
+
+  &-title {
+    font-size: 28px;
+    color:$black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+}

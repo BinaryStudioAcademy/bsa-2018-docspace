@@ -1,0 +1,29 @@
+@import 'globalStyles/variables.scss';
+
+.space-page-header {
+  display: flex;
+  padding: 25px 30px 30px 50px;
+  justify-content: space-between;
+
+  .title{
+
+    .space-name-link {
+      color: $gray;
+      font-size: 17px ;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        color: $blue
+      }
+    }
+
+    i{
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+

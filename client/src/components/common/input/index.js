@@ -7,12 +7,15 @@ const Input = (props) => (
   <input
     type={props.inputType}
     placeholder={props.label}
-    className={`auth__input ${props.name}`}
+    className={`input ${props.name}`}
     onChange={props.onChange}
-    autoComplete={props.autoComplete}
+    onFocus={props.onFocus}
+    onClick={props.onClick}
     name={props.name}
     value={props.value}
     disabled={props.disabled}
+    autoComplete={props.autoComplete}
+    id={props.id}
   />
 )
 
@@ -20,10 +23,13 @@ Input.propTypes = {
   inputType: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func,
-  autoComplete: PropTypes.bool,
+  onFocus: PropTypes.func,
+  onClick: PropTypes.func,
+  autoComplete: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  id: PropTypes.string
 }
 
 export default Input

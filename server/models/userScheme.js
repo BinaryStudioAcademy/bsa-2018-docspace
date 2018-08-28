@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   avatar: String,
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  spaces: [Schema.Types.ObjectId],
+  spaces: [{type: Schema.Types.ObjectId}],
   email: {
     type: String,
     trim: true,
@@ -20,18 +20,31 @@ const userSchema = new mongoose.Schema({
     validate: [validateEmail, 'Please fill a valid email address']
   },
   login: { type: String, required: true, match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: { unique: true } },
-  password: String
+  password: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 }, {
   versionKey: false
 })
 
 userSchema.pre('save', async function () {
   let user = this
-  console.log('IN MIDL')
   const saltRounds = 10
   user.password = await bcrypt.hash(user.password, saltRounds)
     .then(hashPassword => hashPassword)
     .catch(err => err)
+})
+
+userSchema.pre('findOneAndUpdate', async function () {
+  if (!this.getUpdate().login) {
+    let query = this
+    const saltRounds = 10
+    await query.findOne()
+      .then((user) => {
+        this.getUpdate().password = bcrypt.hashSync(this.getUpdate().password, saltRounds)
+      })
+      .catch(err => err)
+  }
 })
 
 userSchema.methods.comparePassword = function (candidatePassword) {

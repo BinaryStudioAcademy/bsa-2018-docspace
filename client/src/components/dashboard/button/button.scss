@@ -1,0 +1,38 @@
+.buttonDashboard {
+  box-sizing: border-box;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-variant: normal;
+  font-weight: normal;
+  height: 2.14285714em;
+  line-height: 1.42857143;
+  margin: 0;
+  padding: 4px 10px;
+  text-decoration: none;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.buttonDashboard:hover {
+
+  border: 1px solid #8a8a8a;
+  background-color: #d6d6d6;
+}
+.buttonDashboard:active {
+  background: #dfdfdf;
+  background: linear-gradient(#dfdfdf, #e3e3e3);
+  border: solid 1px #959595;
+  box-shadow: inset 0 10px 15px 0 #c4c4c4;
+  top:2px;}
+.buttonDashboard:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}
+.spaces__header .buttonDashboard{
+  margin-right: 20px;
+}

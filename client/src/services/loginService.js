@@ -1,15 +1,22 @@
+import { callWebApi } from 'src/helpers/requestHelper'
+
 class LoginService {
   login (data) {
-    return fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+    const args = { endpoint: '/api/login', method: 'POST', body: JSON.stringify(data) }
+    const apiResult = callWebApi(args)
       .then(res => res.json())
-      .then(user => user)
-      .catch(err => console.log(`Can't get text: ${err}`))
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+  verification () {
+    const args = { endpoint: '/api/autologin', method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+  logout () {
+    localStorage.removeItem('token')
   }
 }
 

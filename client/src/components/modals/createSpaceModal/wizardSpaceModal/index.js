@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
-// TODO : implement form validation, createSpace request
+// TODO : implement form validation
 
 class WizardSpaceModal extends Component {
   constructor (props) {
@@ -27,13 +27,9 @@ class WizardSpaceModal extends Component {
   handleCreateSpace = () => {
     const spaceObj = SpaceFatcory.createByFieldsAndTemplateName(this.state, this.props.selectedTemplate.name)
     this.props.actions.createSpaceRequest(spaceObj)
-
-    console.log(this.state)
   }
 
   handleFieldChange = (field) => {
-    // TODO : service, that create a space by template type and then call createSpaceRequest
-    // console.log(this.state)
     this.setState({
       [field.name]: field.value
     })
@@ -46,15 +42,15 @@ class WizardSpaceModal extends Component {
   }
 
   renderModalHeader = () => {
+    const { name } = this.props.selectedTemplate
     return (
       <h2 className='modal-header' >
-        {`Create an ${this.props.selectedTemplate.name}`}
+        { name === 'empty space' ? `Create an ${name}` : `Create a ${name}`}
       </h2>
     )
   }
 
   renderModalFooter = () => {
-    console.log('render')
     return (
       <div className='modal-footer'>
         <button onClick={this.props.handleBackClick}>
@@ -88,6 +84,7 @@ class WizardSpaceModal extends Component {
         renderHeader={this.renderModalHeader}
         renderFooter={this.renderModalFooter}
         renderContent={this.renderModalContent}
+        closeModal={this.props.closeModal}
       />
     )
   }

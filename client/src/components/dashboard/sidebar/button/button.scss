@@ -1,18 +1,26 @@
 @import "src/globalStyles/variables.scss";
 
-.sidebar-container{
+.sidebar {
   .nav-button{
+    height: 40px;
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
+    margin-bottom: 5px;
     list-style: none;
-    i{
-      padding: 10px;
-      font-size: 20px;
+    justify-content: center;
+    margin-right: 20px;
+
+    span {
+      padding: 7px 12px 7px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      > i {
+        margin-right: 15px;
+        width: 14px;
+      }
     }
-  }
-  .active{
-    background-color: $primalHover;
   }
   .round-button{
     display:flex;
@@ -21,9 +29,11 @@
     text-align: center;
     border-radius:100%;
     padding:0;
-    margin:0 10px 5px 10px;
+    margin:0 0 5px 0;
     height: 50px;
     width: 50px;
+    color: white;
+
     a{
       border-radius: 50%;
       height: 40px;
@@ -37,14 +47,17 @@
     text-align: center;
     text-align: center;
     padding:0;
-    margin:0 10px 5px 10px;
     height: 50px;
     width: 50px;
     a{
-      height: 40px;
-      width: 40px;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
+
 
   .full-button{
     width: 98%;
@@ -58,17 +71,75 @@
       width: 100%
     }
   }
-  .tabs-wrapper{
-    .nav-button{
-    i, p{
-      display: inline-flex;
-      float: left
+
+  .min-sidebar {
+    .nav-button-selected {
+      background-color: $greyHover;
     }
-    i{
-      width: 30px
+
+    .nav-button {
+      align-items: center;
+      height: 40px;
+      width: 40px;
+      color: white;
+      cursor: pointer;
+
+      &-only-icons {
+        color: white;
+        cursor: pointer;
+      }
+
+      &:hover {
+        background-color: $primalHover;
+      }
+
+      a, i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
-    width: 90%;
-    margin-left: 1%;
   }
-}
+
+  .full-sidebar {
+    .nav-button {
+      color: $grayDark;
+
+      &:hover {
+        background-color: $greyHover;
+      }
+
+      &-selected {
+        background-color: $greyHover;
+        color: $primaryColor;
+      }
+
+      &-only-icons {
+        align-self: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $grayDark;
+
+        &:first-of-type {
+          margin-top: 20px;
+        }
+
+        &:hover {
+          background-color: $greyHover;
+        }
+      }
+
+      &.minimize-button {
+        width: 100%;
+
+        &:first-of-type {
+          margin-top: 3rem;
+        }
+      }
+    }
+  }
 }

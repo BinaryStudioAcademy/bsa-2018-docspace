@@ -1,24 +1,84 @@
-import Button from '../button'
 import React, {Component} from 'react'
+import { NavLink } from 'react-router-dom'
+
 import './minSideBar.css'
 import PropTypes from 'prop-types'
+import DropdownMenu from 'src/components/common/dropdownMenu'
+import CreatePageModal from 'src/components/modals/createPageModal'
 
-export default class MinSidebar extends Component {
+import whiteLogo from 'src/assets/logo-penguin-docspace.png'
+import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
+
+const dropdownMenuItems = {
+  avatar: [
+    {
+      name: 'Profile',
+      path: '/userSettings'
+    },
+    {
+      name: 'LogOut',
+      path: '/login'
+    }
+  ],
+  help: [
+    {
+      name: 'Help',
+      path: '#'
+    }
+  ],
+  notifications: [
+    {
+      name: 'Notifications',
+      path: '#'
+    }
+  ],
+  burger: [
+    {
+      name: 'Administration',
+      path: '/admin'
+    }
+  ]
+}
+
+class MinSidebar extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      showPageModal: false
+    }
+  }
+
+  toggleModal = () => {
+    this.setState({
+      showPageModal: !this.state.showPageModal
+    })
+  }
+
   render () {
+    const logo = this.props.isGray ? grayLogo : whiteLogo
+
     return (
-      <div className='icon-buttons-wrapper' >
+      <div className='min-sidebar' >
+        {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
         <div className='top-icons'>
-          <Button path='/' type='round-button' icon='fa fa-plus' />
-          <Button path='/' type='round-button' icon='fa fa-search' />
+          <NavLink to={'/spacedirectory'}>
+            <img src={logo} alt='DocSpace logo' />
+          </NavLink>
+          <span className='toggle-search-btn round-button nav-button' >
+            <i className='fa fa-search' />
+          </span>
+          <span className='toggle-add-page-modal-btn round-button nav-button' onClick={this.toggleModal} >
+            <i className='fa fa-plus' />
+          </span>
         </div>
         <div className='icon-navigation-wrapper'>
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <Button path='/' type='round-button' icon='fa fa-bell' />
-          <Button path='/' type='round-button' icon='fa fa-bars' />
-          <Button path='/' type='round-button' icon='fa fa-question' />
-          <Button path='/' type='round-button' icon='fa fa-user' />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={170} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={130} />
+          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={dropdownMenuItems.help} menuHeight={80} />
+          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={40} />
         </div>
       </div>
     )
@@ -26,5 +86,13 @@ export default class MinSidebar extends Component {
 }
 
 MinSidebar.propTypes = {
-  tabs: PropTypes.element
+  tabs: PropTypes.element,
+  isGray: PropTypes.bool
 }
+
+MinSidebar.defaultProps = {
+  tabs: null,
+  isGray: false
+}
+
+export default MinSidebar

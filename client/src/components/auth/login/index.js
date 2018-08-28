@@ -1,11 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import loginRequest from './logic/loginActions'
-import Input from 'src/components/common/input'
-import Errors from 'src/components/common/error'
+import Input from '../../common/input'
+import Errors from '../../common/error'
+import SplashScreen from 'src/components/splashScreen'
+import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
+import { Redirect, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import './login.css'
 
@@ -14,6 +17,7 @@ class Login extends Component {
     super(props)
     this.state = {
       redirectToSignup: false,
+      redirectToReset: false,
       email: '',
       password: ''
     }
@@ -22,6 +26,12 @@ class Login extends Component {
   handleRedirectToSignUp = () => {
     this.setState({
       redirectToSignup: !this.state.redirectToSignup
+    })
+  }
+
+  handleRedirectToReset = () => {
+    this.setState({
+      redirectToReset: !this.state.redirectToReset
     })
   }
 
@@ -40,28 +50,39 @@ class Login extends Component {
   isSubmitAllowed = () => this.state.email && this.state.password;
 
   render () {
-    const { redirectToSignup, email, password } = this.state
-    const { requesting, errors } = this.props.login
-
+    const { redirectToSignup, redirectToReset, email, password } = this.state
+    const { requesting, errors, successful } = this.props.login
+    const { t } = this.props
     if (redirectToSignup) {
       return <Redirect to='/signup' />
     }
+    if (redirectToReset) {
+      return <Redirect to='/forgot' />
+    }
+    if (successful) {
+      // only for demo. change to '/'
+      return <Redirect to='/activity/allupdates' />
+    }
     return (
       <Fragment>
-        <div className='auth__main'>
-          <div className='auth__content'>
-            <div className='auth__header'>
-              <img className='header__logo' src='' alt='logo' />
+        <div className='auth-main'>
+          <div className='auth-content'>
+            <div className='auth-header'>
+              <div className='header-logo'>
+                <img className='header-logo-img' src={logoInCircle} alt='logo' />
+                <p className='header-logo-label'>DOCSPACE</p>
+              </div>
               <h2>Log in to your account</h2>
             </div>
-            <form className='auth__login' onSubmit={this.handleSubmit}>
+            { requesting && <SplashScreen /> }
+            <form className='auth-login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'
                 name='email'
                 label='Enter email'
                 value={email}
                 onChange={this.handleFieldChange}
-                autoComplete
+                autoComplete='on'
               />
               <Input
                 inputType='password'
@@ -69,7 +90,7 @@ class Login extends Component {
                 label='Enter password'
                 value={password}
                 onChange={this.handleFieldChange}
-                autoComplete={false}
+                autoComplete='off'
               />
               <Input
                 inputType='submit'
@@ -77,13 +98,14 @@ class Login extends Component {
                 name='button'
                 value='Login'
               />
-              <div className='auth__notifications'>
+              <div className='auth-notifications'>
                 {!requesting && !!errors.length && (
                   <Errors message='Failure to login due to:' errors={errors} />
 
                 )}
               </div>
-              <p className='auth__footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
+              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>{t('sign_up_for_account')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToReset}>{t('forgot_password_?')}</p>
             </form>
           </div>
         </div>
@@ -99,7 +121,8 @@ Login.propTypes = {
     successful: PropTypes.bool,
     messages: PropTypes.array,
     errors: PropTypes.array
-  })
+  }),
+  t: PropTypes.func
 }
 Login.defaultProps = {
   login: {
@@ -118,4 +141,4 @@ const mapDispatchToProps = dispatch => ({
   loginRequest: bindActionCreators(loginRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)))
