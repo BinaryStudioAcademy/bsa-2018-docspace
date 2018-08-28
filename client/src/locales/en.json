@@ -73,6 +73,8 @@
     "Group name contains": "Group name contains",
     "Create": "Create",
     "Close": "Close",
-    "Import_File": "Import File"
+    "Import_File": "Import File",
+    "Confirm": "Confirm",
+    "Delete_space": "Delete space"
   }
 }

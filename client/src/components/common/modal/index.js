@@ -23,13 +23,13 @@ class Modal extends React.Component {
   }
 
   render () {
-    const { renderContent, renderHeader, renderFooter } = this.props
+    const { renderContent, renderHeader, renderFooter, minHeight } = this.props
     return (
       <PortalLayer>
         <div className='modal-backdrop'>
           <div className='modal-window' ref={this.setWrapperRef} >
             { renderHeader() }
-            <div className='modal-body'>
+            <div className='modal-body' style={{minHeight}}>
               { renderContent() }
             </div>
             { renderFooter() }
@@ -44,6 +44,7 @@ Modal.propTypes = {
   renderContent: PropTypes.func.isRequired,
   renderFooter: PropTypes.func.isRequired,
   renderHeader: PropTypes.func.isRequired,
+  minHeight: PropTypes.string,
   closeModal: PropTypes.func
 }
 
