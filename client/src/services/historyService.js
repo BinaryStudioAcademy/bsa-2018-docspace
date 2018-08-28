@@ -16,7 +16,6 @@ class HistoryService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
-
   getCurrentUserHistory = (userId) => {
     const args = { endpoint: `/api/history/current-user/${userId}`, method: 'GET' }
     const apiResult = callWebApi(args)
