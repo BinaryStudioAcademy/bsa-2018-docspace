@@ -1,4 +1,4 @@
-@import 'globalStyles/variables.scss';
+@import "globalStyles/variables.scss";
 
 .dashboard-activity {
   display: flex;
@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: column;
     width: 70%;
-    .dashboard-activity-nav-bar{
+    .dashboard-activity-nav-bar {
       margin: 20px 0;
       padding: 4px 0;
       list-style: none;
@@ -34,95 +34,42 @@
         &:hover {
           color: rgb(0, 82, 204);
         }
-
       }
     }
   }
 
-.dashboard-content-side {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 35%;
-  box-shadow: -1px 0px #d1d1d1;
-  img {
-    width: 100px;
-  }
-  .side-header {
-    display: flex;
-    width: 100%;
-    padding-bottom: 40.2px;
-    padding-top: 3px;
-    margin-bottom: 20px;
-    justify-content: center;
-    button {
-      align-self: center
-    }
-  }
-  .side-main {
+  .dashboard-content-side {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    p {
-      margin: 10px 0 0;
+    width: 35%;
+    box-shadow: -1px 0px #d1d1d1;
+    img {
+      width: 100px;
+    }
+    .side-header {
+      display: flex;
+      width: 100%;
+      padding-bottom: 40.2px;
+      padding-top: 3px;
+      margin-bottom: 20px;
+      justify-content: center;
+      button {
+        align-self: center;
+      }
+    }
+    .side-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        margin: 10px 0 0;
+      }
     }
   }
-}
 }
 .update-items-list {
   display: flex;
   overflow: auto;
-}
-.current-user-info {
-  text-align: center;
-}
-.current-user-info #user-avatar {
-  font-size: 48px;
-  color: $blueLight;
-}
-
-.update-items {
-  padding: 10px;
-  .content-card {
-    .disabled-link {
-      pointer-events: none;
-    }
-    .content-card-deleted {
-      color: #ee7d7d;
-      &:hover::after {
-       content: attr(data-title);
-      }
-    }
-    #content-icon {
-      font-size: 16px;
-    }
-    .fa-folder {
-      color: #762ea2;
-    }
-    .fa-rss-square {
-      color: orange;
-    }
-    .fa-file-alt {
-      color: $blue;
-    }
-    i, .content-card-name, .content-card-time {
-      padding: 5px;
-    }
-    a.content-card-name {
-      color: $blueLink;
-      text-decoration: none;
-      &:visited, &:active {
-        @extend a.content-card-name
-      }
-
-    }
-    .content-card-time, .content-card-action {
-      color: $grey;
-    }
-    .content-card-action {
-      padding-left: 10px ;
-    }
-  }
-
 }

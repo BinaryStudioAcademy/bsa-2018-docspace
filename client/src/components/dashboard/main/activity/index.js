@@ -1,21 +1,26 @@
 import React, { Component } from 'react'
 import { Route, NavLink, Redirect, Switch } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as actions from './logic/activityActions'
 import AllUpdatesTab from './allUpdatesTab'
 import PopularTab from './popularTab'
 import PropTypes from 'prop-types'
-
-import './activity.css'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from './logic/activityActions'
+import MyUpdatesTab from './myUpdatesTab'
 import ActivitySidebar from './activitySidebar'
+import './activity.css'
 
 const TABS = [
   {
     name: 'All updates',
     path: '/allupdates',
     component: AllUpdatesTab
+  },
+  {
+    name: 'My updates',
+    path: '/myupdates',
+    component: MyUpdatesTab
   },
   {
     name: 'Popular',
@@ -26,9 +31,9 @@ const TABS = [
 
 class Activity extends Component {
   componentDidMount () {
-    this.props.getAllUserUpdates(this.props.userId)
+    this.props.getAllUserUpdates()
+    this.props.getCurrentUserUpdates(this.props.userId)
   }
-
   render () {
     const { t, match } = this.props
     return (
@@ -69,7 +74,8 @@ Activity.propTypes = {
   t: PropTypes.func,
   match: PropTypes.object,
   userId: PropTypes.string,
-  getAllUserUpdates: PropTypes.func
+  getAllUserUpdates: PropTypes.func,
+  getCurrentUserUpdates: PropTypes.func
 }
 
 Activity.defaultProps = {
@@ -78,15 +84,18 @@ Activity.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
+    allUpdates: state.activity.allHistory.allUpdates,
+    currentUserUpdates: state.activity.currentUserHistory.currentUserUpdates,
     userId: state.verification.user._id,
     userName: `${state.verification.user.firstName} ${state.verification.user.lastName}`,
-    allUpdates: state.activity.allUpdates
+    userAvatar: state.verification.user.avatar
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAllUserUpdates: bindActionCreators(actions.getAllUserUpdatesRequest, dispatch)
+    getAllUserUpdates: bindActionCreators(actions.getAllUserUpdatesRequest, dispatch),
+    getCurrentUserUpdates: bindActionCreators(actions.getCurrentUserUpdatesRequest, dispatch)
   }
 }
 

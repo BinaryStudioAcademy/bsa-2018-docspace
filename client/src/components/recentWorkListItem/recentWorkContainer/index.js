@@ -1,6 +1,6 @@
 import React from 'react'
 import RecentWorkListItem from 'src/components/recentWorkListItem'
-import {getRightProps} from 'src/components/dashboard/main/activity/allUpdatesTab'
+import getRightProps from 'src/components/dashboard/main/activity/chooseContentHelper'
 
 const RecentWorkListContainer = ({userHistory}) => {
   if (userHistory.length) {
