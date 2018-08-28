@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const getRightProps = (content) => {
+export const getRightProps = (content) => {
   switch (content.action) {
     case 'CREATE_SPACE_SUCCESS':
       return {
@@ -25,6 +25,7 @@ const getRightProps = (content) => {
     case 'CREATE_PAGE_SUCCESS':
       return {
         name: content.pageId.title,
+        title: content.spaceId.name,
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
@@ -34,10 +35,31 @@ const getRightProps = (content) => {
     case 'UPDATE_PAGE_SUCCESS':
       return {
         name: content.pageId.title,
+        title: content.spaceId.name,
         time: new Date(content.date).toLocaleString(),
         path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
         icon: 'fas fa-file-alt',
         action: 'Update page',
+        isDeleted: content.pageId.isDeleted
+      }
+    case 'CREATE_BLOG_PAGE_SUCCESS':
+      return {
+        name: content.pageId.title,
+        title: content.spaceId.name,
+        time: new Date(content.date).toLocaleString(),
+        path: `/spaces/${content.spaceId._id}/blog/${content.pageId._id}`,
+        icon: 'fas fa-rss-square',
+        action: 'Create blog',
+        isDeleted: content.pageId.isDeleted
+      }
+    case 'UPDATE_BLOG_PAGE_SUCCESS':
+      return {
+        name: content.pageId.title,
+        title: content.spaceId.name,
+        time: new Date(content.date).toLocaleString(),
+        path: `/spaces/${content.spaceId._id}/blog/${content.pageId._id}`,
+        icon: 'fas fa-rss-square',
+        action: 'Update blog',
         isDeleted: content.pageId.isDeleted
       }
     case 'CREATE_COMMENT_SUCCESS':

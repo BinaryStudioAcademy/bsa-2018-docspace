@@ -400,49 +400,41 @@
 }
 
 .recent-work-list-wrapper {
-  margin-top: 40px;
+  margin: 40px 0px;
   width: 100%;
   max-width: 944px;
   text-align: start;
 }
 
-.recent-work-list-wrapper-header {
+h2.recent-work-list-wrapper-header {
   font-size: 1.14em;
   font-style: inherit;
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.006em;
-  margin-top: 24px;
   color: #172b4d;
-  margin: 32px 0 10px;
+  margin-bottom: 10px;
 }
 
-.recent-work-list-items {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 24px;
-}
-
-.recent-work-list-items .recent-work-list-item {
-  width: 100%;
-  list-style: none;
+.recent-work-list-item:hover {
+  background-color: #e7f1fb;
+  border-radius: 3px;
 }
 
 .recent-work-list-item .recent-work-link {
   display: flex;
   padding: 10px;
   text-decoration: none;
-}
-
-.recent-work-list-item .recent-work-link:hover {
-  background-color: #fafbfc;
-  border-radius: 3px;
+  align-items: center;
 }
 
 .recent-work-link .recent-work-icon {
   margin: 2px 16px 0 0;
   width: 16px;
   height: 16px;
+  color: black;
+  opacity: .8;
+  font-size: 20px;
 }
 
 .recent-work-link .recent-work-name {
@@ -453,6 +445,11 @@
   color: #172b4d;
   flex-basis: 65%;
   padding-right: 20px;
+}
+
+.recent-work-name .recent-work-name-action {
+  font-size: 10px;
+  letter-spacing: .5px;
 }
 
 .recent-work-name-of-container {
