@@ -45,12 +45,12 @@ export const createPageSuccess = (page) => ({
 
 export const createBlogPageRequest = (page, spaceId) => ({
   type: actionTypes.CREATE_BLOG_PAGE_REQUEST,
-  payload: page,
+  payload: {...page, spaceId: spaceId},
+  spaceId: spaceId
   // This field we need for redirect to '/spaces/:space_id/blog/:page_id'
   // If we create blog page outside of some space ( at app root, for example),
   // we can't get spaceId. From server we receive page without spaceId. just blogId.
   // So, I suggest pass spaceId directly with action to target saga. In this way, we can redirect to target path
-  spaceId
 })
 
 export const createBlogPageSuccess = (blogPage) => ({
@@ -82,9 +82,9 @@ export const updatePageSuccess = (updatedPage) => {
   }
 }
 
-export const updateBlogPageRequest = (newPage) => ({
+export const updateBlogPageRequest = (newPage, spaceId) => ({
   type: actionTypes.UPDATE_BLOG_PAGE_REQUEST,
-  payload: newPage
+  payload: {...newPage, spaceId}
 })
 
 // Create date from string... TODO: move this somewheare else. It's not good. Maybe, in saga
