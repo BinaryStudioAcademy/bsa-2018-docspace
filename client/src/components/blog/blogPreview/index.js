@@ -55,7 +55,8 @@ Blog.propTypes = {
     _id: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)
   }),
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  t: PropTypes.func
 }
 
 export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(Blog))

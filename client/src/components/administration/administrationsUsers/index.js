@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import InviteUsers from './inviteUsers'
 import Input from 'src/components/common/input'
 import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 class AdministrationUsers extends Component {
   constructor (props) {
@@ -86,5 +87,8 @@ class AdministrationUsers extends Component {
   }
 }
 
-export default translate('translations')(AdministrationUsers)
+AdministrationUsers.propTypes = {
+  t: PropTypes.func
+}
 
+export default translate('translations')(AdministrationUsers)

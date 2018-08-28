@@ -109,6 +109,7 @@ class SpacesContent extends Component {
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
   isFetching: PropTypes.bool,
-  activeTab: PropTypes.string
+  activeTab: PropTypes.string,
+  t: PropTypes.func
 }
 export default SpacesContent

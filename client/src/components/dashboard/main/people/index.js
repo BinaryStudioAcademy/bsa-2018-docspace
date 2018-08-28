@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './people.css'
 import SpacesSideBar from '../../spacesSidebar'
 import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 class People extends Component {
   state = {
@@ -28,6 +29,10 @@ class People extends Component {
 
     )
   }
+}
+
+People.propTypes = {
+  t: PropTypes.func
 }
 
 export default translate('translations')(People)

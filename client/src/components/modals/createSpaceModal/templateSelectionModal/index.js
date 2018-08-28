@@ -72,5 +72,6 @@ TemplateSelectionModal.propTypes = {
   handleNextClick: PropTypes.func.isRequired,
   handleSelectTemplate: PropTypes.func.isRequired,
   spaceTemplates: PropTypes.arrayOf(PropTypes.object),
-  selectTemplateAngGoToNextStep: PropTypes.func
+  selectTemplateAngGoToNextStep: PropTypes.func,
+  t: PropTypes.func
 }

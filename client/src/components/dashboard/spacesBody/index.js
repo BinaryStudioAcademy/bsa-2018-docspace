@@ -73,7 +73,8 @@ DashboardSpacesBody.propTypes = {
   isFetching: PropTypes.bool,
   actions: PropTypes.object,
   userId: PropTypes.string,
-  userSpaces: PropTypes.array
+  userSpaces: PropTypes.array,
+  t: PropTypes.func
 }
 
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardSpacesBody)))

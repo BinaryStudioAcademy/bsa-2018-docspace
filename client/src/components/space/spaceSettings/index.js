@@ -53,7 +53,8 @@ const SpaceSettings = (props) => {
 SpaceSettings.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string
-  })
+  }),
+  t: PropTypes.func
 }
 
 SpaceSettings.defaultProps = {

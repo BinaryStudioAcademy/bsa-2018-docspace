@@ -2,6 +2,7 @@ import React from 'react'
 import './work.css'
 import Input from '../../input'
 import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 const Work = (props) => (
   <div className='dashboard-work' >
@@ -18,5 +19,9 @@ const Work = (props) => (
     </div>
   </div>
 )
+
+Work.propTypes = {
+  t: PropTypes.func
+}
 
 export default translate('translations')(Work)

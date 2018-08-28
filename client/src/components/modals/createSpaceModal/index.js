@@ -72,7 +72,8 @@ class CreateSpaceModal extends Component {
 }
 
 CreateSpaceModal.propTypes = {
-  toggleModal: PropTypes.func.isRequired
+  toggleModal: PropTypes.func.isRequired,
+  t: PropTypes.func
 }
 
 export default translate('translations')(CreateSpaceModal)

@@ -82,5 +82,6 @@ WizardModalBody.propTypes = {
   selectedTemplate: PropTypes.object,
   handleFieldChange: PropTypes.func.isRequired,
   handleCheckboxChange: PropTypes.func.isRequired,
-  isPrivateCheckboxChecked: PropTypes.bool
+  isPrivateCheckboxChecked: PropTypes.bool,
+  t: PropTypes.func
 }

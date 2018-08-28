@@ -101,7 +101,8 @@ WizardSpaceModal.propTypes = {
   handleBackClick: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     createSpaceRequest: PropTypes.func.isRequired
-  })
+  }),
+  t: PropTypes.func
 }
 
 function mapDispatchToProps (dispatch) {

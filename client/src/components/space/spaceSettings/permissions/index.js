@@ -176,7 +176,8 @@ export default class PermissionsPage extends Component {
 PermissionsPage.propTypes = {
   groups: PropTypes.array,
   users: PropTypes.array,
-  anonymous: PropTypes.object
+  anonymous: PropTypes.object,
+  t: PropTypes.func
 }
 
 PermissionsPage.defaultProps = {

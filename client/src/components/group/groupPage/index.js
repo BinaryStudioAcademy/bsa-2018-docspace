@@ -224,7 +224,8 @@ GroupPage.propTypes = {
   user: PropTypes.object,
   actions: PropTypes.object,
   match: PropTypes.object,
-  group: PropTypes.array
+  group: PropTypes.array,
+  t: PropTypes.func
 }
 
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupPage)))
