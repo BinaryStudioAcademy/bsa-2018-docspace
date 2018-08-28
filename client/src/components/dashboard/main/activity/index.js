@@ -53,15 +53,15 @@ class Activity extends Component {
             )}
           </div>
           <Switch>
-          <Route path='/activity' exact render={() => <Redirect to='activity/allupdates' />} />
-          {TABS.map(({ name, path, component: TabComponent }) =>
-            <Route
-              key={name}
-              path={`${match.path}${path}`}
-              render={() => <TabComponent {...this.props} />}
-            />
-          )}
-          <Redirect to='/page404' />
+            <Route path='/activity' exact render={() => <Redirect to='activity/allupdates' />} />
+            {TABS.map(({ name, path, component: TabComponent }) =>
+              <Route
+                key={name}
+                path={`${match.path}${path}`}
+                render={() => <TabComponent {...this.props} />}
+              />
+            )}
+            <Redirect to='/page404' />
           </Switch>
         </div>
         <ActivitySidebar />
