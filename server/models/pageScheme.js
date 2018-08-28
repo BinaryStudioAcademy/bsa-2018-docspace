@@ -4,7 +4,7 @@ const { Schema } = mongoose
 const pageSchema = new mongoose.Schema({
   title: String,
   content: String,
-  spaceId: Schema.Types.ObjectId,
+  spaceId: { type: Schema.Types.ObjectId, ref: 'Space' },
   blogId: Schema.Types.ObjectId,
   created: {
     date: {

@@ -35,7 +35,6 @@ class Activity extends Component {
     this.props.getCurrentUserUpdates(this.props.userId)
   }
   render () {
-    console.log('ACTIVITY', this.props)
     const { t, match } = this.props
     return (
       <div className='dashboard-activity'>

@@ -13,7 +13,7 @@ function * allUpdatesFlow (action) {
 
 function * currentUserUpdatesFlow (action) {
   try {
-    let currentUserHistory = yield call(HistoryService.getUserHistory, action.payload.userId)
+    let currentUserHistory = yield call(HistoryService.getCurrentUserHistory, action.payload.userId)
     yield put({ type: actionTypes.GET_CURRENT_USER_UPDATES_SUCCESS, currentUserHistory })
   } catch (error) {
     yield put({ type: actionTypes.GET_CURRENT_USER_UPDATES_ERROR, error })

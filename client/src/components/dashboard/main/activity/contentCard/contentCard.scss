@@ -2,6 +2,13 @@
 
 .content-card {
   display: flex;
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
   #user-avatar-icon {
     font-size: 35px;
   }
@@ -31,9 +38,13 @@
     color: $blue;
   }
   i,
+  .content-card-action,
   .content-card-name,
   .content-card-time {
     padding: 5px;
+  }
+  .content-card-name {
+    font-weight: 500;
   }
   a.content-card-name {
     color: $blueLink;
@@ -43,11 +54,11 @@
       @extend a.content-card-name;
     }
   }
+  .content-card-history-name {
+    font-weight: 500;
+  }
   .content-card-time,
   .content-card-action {
     color: $grey;
-  }
-  .content-card-action {
-    padding-left: 10px;
   }
 }

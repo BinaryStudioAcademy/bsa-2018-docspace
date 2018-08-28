@@ -10,12 +10,16 @@ const ContentCard = (props) => {
   return (
     <div className='content-card'>
       {props.showUser ? (user.avatar
-        ? <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
-        : <i id='user-avatar-icon' className='fas fa-user-circle' />)
+        ? <Link to={`/user/${user.login}`}>
+          <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
+        </Link>
+        : <Link to={`/user/${user.login}`}>
+          <i id='user-avatar-icon' className='fas fa-user-circle' />
+        </Link>)
         : null
       }
       <div className='content-card-history'>
-        {props.showUser ? <p>{`${user.firstName} ${user.lastName}`}</p> : null}
+        {props.showUser ? <Link to={`/user/${user.login}`}><p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link> : null}
         <i id='content-icon' className={`${icon}`} />
         <Link to={path} className={`content-card-name ${disabledLink}`}>
           {name}

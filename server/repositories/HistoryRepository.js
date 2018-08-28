@@ -7,8 +7,13 @@ class HistoryRepository extends GeneralRepository {
     return this.deleteMany({criteriaId})
   }
 
-  getUserHistory (id) {
+  getCurrentUserHistory (id) {
     return this.getAllByCriteria({userId: id})
+  }
+
+  getUserHistory (id) {
+    console.log('id at hist rep', id)
+    return this.model.find({userId: id, action: { $in: [/PAGE/, /BLOG/] }}).limit(8)
   }
 }
 

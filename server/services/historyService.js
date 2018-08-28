@@ -8,7 +8,7 @@ module.exports = {
       .sort('-date')
       .populate({
         path: 'userId',
-        select: 'firstName lastName avatar'
+        select: 'firstName lastName avatar login'
       })
       .populate({
         path: 'spaceId',
@@ -28,14 +28,14 @@ module.exports = {
       })
   },
 
-  findUserHistory: (req, res) => {
+  findCurrentUserHistory: (req, res) => {
     const userId = req.params.id
     if (userId.length === 0) {
       res.status(400)
 
       return res.end('Invalid id')
     }
-    HistoryRepository.getUserHistory(userId)
+    HistoryRepository.getCurrentUserHistory(userId)
       .limit(50)
       .sort('-date')
       .populate({
@@ -86,6 +86,38 @@ module.exports = {
         }
 
         res.json(data)
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400)
+        res.end()
+      })
+  },
+
+  findUserHistory: (req, res) => {
+    const userId = req.params.id
+    if (userId.length === 0) {
+      res.status(400)
+
+      return res.end('Invalid id')
+    }
+    HistoryRepository.getUserHistory(userId)
+      .sort('-date')
+      .populate({
+        path: 'pageId',
+        select: 'title isDeleted'
+      })
+      .populate({
+        path: 'spaceId',
+        select: 'name isDeleted'
+      })
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+          return res.end()
+        }
+
+        return res.json(data)
       })
       .catch((err) => {
         console.log(err)

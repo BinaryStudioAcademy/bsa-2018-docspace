@@ -6,7 +6,6 @@ import './myUpdatesTab.css'
 import { Link } from 'react-router-dom'
 
 const MyUpdatesTab = (props) => {
-  console.log(props)
   if (props.currentUserUpdates.length) {
     return (
       <div className='update-items-list'>
