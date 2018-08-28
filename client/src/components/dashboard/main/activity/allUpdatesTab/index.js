@@ -8,10 +8,7 @@ const AllUpdatesTab = (props) => (
     <div className='update-items'>
       {props.allUpdates.map((item, index) => {
         let content = getRightProps(item)
-        if (content) {
-          return <ContentCard key={index} showUser content={content} />
-        }
-        return null
+        return !!content && <ContentCard key={index} showUser content={content} />
       }
       )}
     </div>
