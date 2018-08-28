@@ -13,6 +13,6 @@ function * getSpacePermissions (action) {
   }
 }
 
-export default function * selectionsSaga () {
+export default function * permissionsSaga () {
   yield takeEvery(actionTypes.GET_SPACE_PERMISSIONS_REQUEST, getSpacePermissions)
 }

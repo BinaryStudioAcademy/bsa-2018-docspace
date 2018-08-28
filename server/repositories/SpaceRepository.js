@@ -155,19 +155,44 @@ class SpaceRepository extends GeneralRepository {
       {
         $lookup: {
           from: 'permissions',
-          localField: 'permissions.user',
+          localField: 'permissions.users',
           foreignField: '_id',
           as: 'usersPermissions'
         }
       },
+
       {
-        $lookup: {
-          from: '$usersPermissions.userId',
-          localField: '$usersPermissions.userId',
-          foreignField: '_id',
-          as: '$usersPermissions.user'
+        $unwind: {
+          path: '$usersPermissions',
+          preserveNullAndEmptyArrays: true
         }
       },
+
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'usersPermissions.userId',
+          foreignField: '_id',
+          as: 'usersPermissions.user'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$usersPermissions.user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$usersPermissions' },
+      // Group back to arrays
+      // {
+      //   $group: {
+      //     "_id": "$_id",
+      //     "usersPermissions": { "$push": "$usersPermissions" }
+      //   }
+      // },
+
       {
         $lookup: {
           from: 'permissions',
@@ -176,6 +201,33 @@ class SpaceRepository extends GeneralRepository {
           as: 'groupsPermissions'
         }
       },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'groups',
+          localField: 'groupsPermissions.groupId',
+          foreignField: '_id',
+          as: 'groupsPermissions.group'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions.group',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$groupsPermissions' },
+      // Group back to arrays
+
       {
         $lookup: {
           from: 'permissions',
@@ -183,7 +235,23 @@ class SpaceRepository extends GeneralRepository {
           foreignField: '_id',
           as: 'anonymousPermissions'
         }
+      },
+
+      {
+        $unwind: {
+          path: '$anonymousPermissions',
+          preserveNullAndEmptyArrays: true
+        } },
+
+      {
+        $group: {
+          '_id': '$_id',
+          'groupsPermissions': { '$addToSet': '$groupsPermissions' },
+          'usersPermissions': { '$addToSet': '$usersPermissions' },
+          'anonymousPermissions': { $first: '$anonymousPermissions' }
+        }
       }
+
     ])
   }
 

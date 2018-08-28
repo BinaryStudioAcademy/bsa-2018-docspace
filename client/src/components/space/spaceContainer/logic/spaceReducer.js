@@ -1,6 +1,7 @@
 import * as actionTypes from './spaceActionTypes'
 import { UPDATE_PAGE_SUCCESS, DELETE_PAGE_SUCCESS } from 'src/components/page/logic/pageActionTypes'
 import { combineReducers } from 'redux'
+import { GET_SPACE_PERMISSIONS_SUCCESS } from 'src/components/space/spaceSettings/permissions/logic/permissionsActionsTypes'
 
 const initialState = {
   all: [],
@@ -74,6 +75,19 @@ function byId (state = initialState.byId, action) {
       }
     }
 
+    case GET_SPACE_PERMISSIONS_SUCCESS: {
+      const { _id, anonymousPermissions, groupsPermissions, usersPermissions } = action.payload.spaceWithPermissions
+      return {
+        ...state,
+        [_id]: {
+          ...state[_id],
+          anonymousPermissions: anonymousPermissions || { },
+          groupsPermissions: groupsPermissions,
+          usersPermissions: usersPermissions
+        }
+      }
+    }
+
     default: return state
   }
 }
@@ -117,3 +131,16 @@ export const spaceById = (state) => {
 export const getUserId = ({verification}) => verification.user._id
 
 export const isSpacesFetching = ({ spaces }) => spaces.isFetching
+
+export const getSpacePermissionsForCurrentSpace = ({spaces}, spaceId) => {
+  console.log('in reducer')
+  const { usersPermissions, groupsPermissions, anonymousPermissions } = spaces.byId[spaceId]
+  if (!usersPermissions && !groupsPermissions && !anonymousPermissions) {
+    return null
+  }
+  return {
+    users: usersPermissions,
+    groups: groupsPermissions,
+    anonymous: anonymousPermissions
+  }
+}

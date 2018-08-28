@@ -62,7 +62,7 @@ SpaceSettings.defaultProps = {
   }
 }
 
-const mapStateToprops = (state) => {
+const mapStateToProps = (state) => {
   return {
     space: spaceById(state)
   }
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToprops, mapDispatchToProps)(SpaceSettings)
+export default connect(mapStateToProps, mapDispatchToProps)(SpaceSettings)

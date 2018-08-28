@@ -6,7 +6,7 @@ export default class PermissionsTableRow extends Component {
   renderCkecboxStatusIcon = (restrictionName) => {
     const [ action, entity ] = restrictionName.split(' ')
     const { item } = this.props
-    const clazz = item.permissions[entity][action] ? 'fas fa-check-circle' : 'fas fa-times-circle'
+    const clazz = item[entity][action] ? 'fas fa-check-circle' : 'fas fa-times-circle'
     return <i className={clazz} />
   }
 
@@ -29,7 +29,7 @@ export default class PermissionsTableRow extends Component {
     return (
       <tr className={'permissions-table-row'} >
         <td className='permissions-table-row-ceil'>
-          <span>{item.name} </span>
+          <span> {item.user ? item.user.login : item.group ? item.group.title : 'anonymous'} </span>
           {
             isEditing &&
               <div className='toggle-all-permission-btn'>
