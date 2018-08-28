@@ -10,7 +10,7 @@ const spaceSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isDeleted: Boolean,
+  isDeleted: {type: Boolean, default: false},
   ownerId: {
     type: Schema.Types.ObjectId,
     required: true

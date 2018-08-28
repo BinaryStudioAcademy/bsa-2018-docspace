@@ -14,12 +14,15 @@
         "prepush": "yarn pretest"
     },
     "dependencies": {
+        "aws-sdk": "^2.298.0",
         "babel-eslint": "^8.2.6",
         "bcrypt": "^3.0.0",
         "body-parser": "^1.18.3",
         "connect-mongo": "^2.0.1",
         "cookie-parser": "^1.4.3",
         "cross-env": "^5.2.0",
+        "dotenv": "^6.0.0",
+        "elasticsearch": "^15.1.1",
         "eslint-config-loopback": "^11.0.0",
         "express": "^4.16.2",
         "express-session": "^1.15.6",
@@ -39,7 +42,8 @@
         "passport-local": "^1.0.0",
         "passport-local-token": "^1.0.1",
         "path": "^0.12.7",
-        "react-spinners": "^0.4.4"
+        "react-spinners": "^0.4.4",
+        "socket.io": "^2.1.1"
     },
     "devDependencies": {
         "babel-eslint": "^8.2.6",

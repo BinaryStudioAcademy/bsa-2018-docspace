@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import './templateList.css'
 
 class TemplateList extends React.Component {
+  handleDoubleClick (item) {
+    this.props.handleSelectAndSendItem && this.props.handleSelectAndSendItem(item)
+  }
+
   render () {
     const items = this.props.items
     return (
@@ -15,7 +19,7 @@ class TemplateList extends React.Component {
                 className={`template${isSelected ? ' selected' : ''}`}
                 key={index}
                 onClick={() => this.props.handleSelectItem(item)}
-                onDoubleClick={() => this.props.handleSelectAndSendItem()}
+                onDoubleClick={() => this.handleDoubleClick(item)}
               >
                 <img className='template-preview' src={item.img} alt='template-preview' />
                 <div className='template-meta'>

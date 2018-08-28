@@ -40,45 +40,49 @@ class GroupDialog extends Component {
   renderContent = () => {
     const {t} = this.props
     // this.getUsers()
+    console.log(this.state)
     return <React.Fragment>
-      <table className='group'>
-        <tbody>
-          <tr>
-            <td className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></td>
-            <td><Input label={t('Name')}
-              value={this.state.name}
-              onChange={({target}) => this.handleChange(target)}
-              name='name'
-              id='name'
+      <div className='group'>
+        <div className='group-dialog-row'>
+          <div className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></div>
+          <div className='group-modal-input'><Input label={t('Name')}
+            value={this.state.name}
+            onChange={({target}) => this.handleChange(target)}
+            name='name'
+            id='name'
+            inputType='text'
+          /></div>
+        </div>
+        <div className='group-dialog-row'>
+          <div className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></div>
+          <div className='group-modal-input'><Input label={t('Description')}
+            value={this.state.description}
+            onChange={({target}) => this.handleChange(target)}
+            name='description'
+            id='description'
+            inputType='text'
+          /></div>
+        </div>
+        <div className='group-dialog-row'>
+          <div className='group-modal-label'><label htmlFor='user'>{t('User')}</label></div>
+          <div className='group-modal-input'>
+            <Input label={t('User')}
+              value={this.state.user}
+              onChange={({target}) => this.onChange(target)}
+              name='user'
+              id='user'
               inputType='text'
-            /></td>
-          </tr>
-          <tr>
-            <td className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></td>
-            <td><Input label={t('Description')}
-              value={this.state.description}
-              onChange={({target}) => this.handleChange(target)}
-              name='description'
-              id='description'
-              inputType='text'
-            /></td>
-          </tr>
-          <tr>
-            <td className='group-modal-label'><label htmlFor='user'>{t('User')}</label></td>
-            <td>
-              <Input label={t('User')}
-                value={this.state.user}
-                onChange={({target}) => this.onChange(target)}
-                name='user'
-                id='user'
-                inputType='text'
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div className='groups-user-group'>
-        {this.renderUsers()}
+            />
+          </div>
+        </div>
+        <div className='group-dialog-row'>
+          <div className='group-modal-label' />
+          <div className='group-modal-input'>
+            <div>
+              {this.renderUsers()}
+            </div>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   }
@@ -87,10 +91,8 @@ class GroupDialog extends Component {
     let usersTable
     this.props.matchingUsers !== []
       ? usersTable = this.props.matchingUsers.map((user, i) =>
-        user._id !== this.props.user._id && <div className='group-user-wrapper' key={i}>
-          <span>{user.name}</span>
-          <span><button onClick={() => { this.addUsersInGroup(user._id) }}>Додати</button></span>
-        </div>
+        user._id !== this.props.user._id &&
+        <button onClick={() => { this.addUsersInGroup(user._id) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
       ) : usersTable = ''
     return usersTable
   }
@@ -134,7 +136,12 @@ class GroupDialog extends Component {
     console.log(this.state)
     return (
       <React.Fragment>
-        <Modal renderHeader={this.renderHeader} renderContent={this.renderContent} renderFooter={this.renderFooter} />
+        <Modal
+          renderHeader={this.renderHeader}
+          renderContent={this.renderContent}
+          renderFooter={this.renderFooter}
+          closeModal={this.props.cancelModal}
+        />
       </React.Fragment>
     )
   }

@@ -27,6 +27,7 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
       return [ ...state, action.payload._id ]
 
     default: return state
@@ -36,6 +37,7 @@ function all (state = initialState.all, action) {
 function byId (state = initialState.byId, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
+    case actionTypes.UPDATE_PAGE_SUCCESS + '(EXTERNAL)':
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
     // case likesActionTypes.PUT_LIKE_SUCCESS:
     // case likesActionTypes.DELETE_LIKE_SUCCESS:
@@ -46,6 +48,7 @@ function byId (state = initialState.byId, action) {
 
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 

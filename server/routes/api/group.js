@@ -3,7 +3,7 @@ const groupService = require('../../services/groupService')
 
 router.get('/user/:id', groupService.findAll)
 
-router.get('/:title', groupService.findByTitle)
+router.get('/:id', groupService.findById)
 
 router.post('/', groupService.add)
 

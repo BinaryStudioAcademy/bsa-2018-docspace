@@ -55,11 +55,11 @@ class CreatePageModal extends Component {
   }
 
   handleSelectAndSendTemplate = () => {
-    const {selectedSpace, selectedTemplate} = this.state
+    const selectedTemplate = this.state.selectedTemplate
+    const selectedSpace = JSON.parse(this.state.selectedSpace)
     const disableSend = !selectedSpace || !selectedTemplate
     if (!disableSend) {
-      const templatedPage = PageFactory.createTemplatePageForSpace(selectedSpace, selectedTemplate.name)
-      this.props.actions.createPageRequest(templatedPage)
+      PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name)
     }
   }
 
@@ -137,6 +137,7 @@ class CreatePageModal extends Component {
          renderHeader={this.renderModalHeader}
          renderFooter={this.renderModalFooter}
          renderContent={this.renderModalContent}
+         closeModal={this.props.closeModal}
        />
      )
    }

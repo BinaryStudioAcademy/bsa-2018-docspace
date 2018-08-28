@@ -1,5 +1,12 @@
 import * as actionTypes from './userActionTypes'
 
+export const getUser = (id) => {
+  return {
+    type: actionTypes.GET_USER_REQUEST,
+    payload: id
+  }
+}
+
 export const updateUser = (user) => {
   return {
     type: actionTypes.UPDATE_USER,
@@ -13,3 +20,23 @@ export const checkPassword = (user) => {
     ...user
   })
 }
+
+export const sendAvatarRequest = (file, userId) => ({
+  type: actionTypes.SEND_AVATAR_REQUEST,
+  payload: {file, userId}
+})
+
+export const sendAvatarSuccess = (avatar) => ({
+  type: actionTypes.SEND_AVATAR_SUCCESS,
+  payload: avatar
+})
+
+export const sendAvatarError = (error) => ({
+  type: actionTypes.SEND_AVATAR_ERROR,
+  payload: error
+})
+
+export const getUserUpdatesRequest = (userId) => ({
+  type: actionTypes.GET_USER_UPDATES_REQUEST,
+  payload: userId
+})

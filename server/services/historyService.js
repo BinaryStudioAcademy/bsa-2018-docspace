@@ -5,8 +5,16 @@ module.exports = {
   findAll: (req, res) => {
     HistoryRepository.getAll()
       .sort('-date')
-      .populate('spaceId', 'name')
-      .populate('pageId', 'title')
+      .populate({
+        path: 'spaceId',
+        select: 'name isDeleted'
+      })
+      .populate({
+        path: 'pageId',
+        select: 'title isDeleted'})
+      .populate({
+        path: 'commentId',
+        select: 'text isDeleted'})
       .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
@@ -33,6 +41,38 @@ module.exports = {
         }
 
         res.json(data)
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400)
+        res.end()
+      })
+  },
+
+  findUserHistory: (req, res) => {
+    const userId = req.params.id
+    if (userId.length === 0) {
+      res.status(400)
+
+      return res.end('Invalid id')
+    }
+    HistoryRepository.getUserHistory(userId)
+      .sort('-date')
+      .populate({
+        path: 'pageId',
+        select: 'title isDeleted'
+      })
+      .populate({
+        path: 'spaceId',
+        select: 'name isDeleted'
+      })
+      .then((data) => {
+        if (data.length === 0) {
+          res.status(404)
+          return res.end()
+        }
+
+        return res.json(data)
       })
       .catch((err) => {
         console.log(err)

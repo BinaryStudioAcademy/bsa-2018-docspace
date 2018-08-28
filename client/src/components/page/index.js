@@ -31,9 +31,11 @@ class Page extends Component {
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
   }
+
   componentDidMount () {
     !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
+
   addNewComment (obj) {
     this.props.addComment(obj, this.props.page)
   }

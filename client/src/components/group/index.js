@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createGroupRequest, getAllUserGroupsRequest } from './logic/groupsAction'
+import { createGroupRequest, getAllUserGroupsRequest, deleteGroupRequest } from './logic/groupsAction'
 import Button from 'src/components/common/button'
 import Input from 'src/components/common/input'
 import { NavLink, withRouter } from 'react-router-dom'
@@ -27,7 +27,12 @@ class Group extends Component {
     this.props.actions.getAllUserGroupsRequest(this.props.user._id)
   }
 
+  deleteGroup = (group) => {
+    this.props.actions.deleteGroupRequest(group)
+  }
+
   renderTable = () => {
+    // const { match } = this.props
     const groups = this.state.filterField ? this.props.groups.filter(group => {
       const nameSearch = new RegExp(this.state.filterField)
       return group.title.search(nameSearch) + 1
@@ -36,9 +41,10 @@ class Group extends Component {
 
     const table = groups.map((group, i) =>
       <tr key={i}>
-        <td><NavLink to='#'>{group.title}</NavLink></td>
+        <td><NavLink to={`/group/${group._id}`}>{group.title}</NavLink></td>
         <td />
         <td>{group.description}</td>
+        <td><button className='group-delete' onClick={() => this.deleteGroup(group)}><i className='fas fa-times' /></button></td>
       </tr>
     )
     return table
@@ -79,6 +85,7 @@ class Group extends Component {
                 <th className='name'>{t('Name')}</th>
                 <th className='tags' />
                 <th className='description'>{t('Description')}</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -111,7 +118,8 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         createGroupRequest,
-        getAllUserGroupsRequest
+        getAllUserGroupsRequest,
+        deleteGroupRequest
       }
       , dispatch)
   }

@@ -13,8 +13,11 @@ module.exports = {
         if (!data[0]) {
           return res.status(404).end()
         }
-
-        return res.json(data[0])
+        data = {
+          _id: data[0]._id,
+          pages: data[0].pages.filter(page => !page.isDeleted)
+        }
+        return res.json(data)
       })
       .catch((err) => {
         console.log(err)

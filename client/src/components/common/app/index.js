@@ -16,7 +16,8 @@ import BlogSidebar from 'src/components/blog/blogSidebar'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
-import Group from 'src/components/group'
+import Administration from 'src/components/administration'
+import GroupPage from 'src/components/group/groupPage'
 
 class App extends Component {
   constructor (props) {
@@ -33,7 +34,7 @@ class App extends Component {
   changeSize (size) {
     this.setState({
       isOpened: size > 70,
-      showIcons: size > 100,
+      showIcons: size > 70,
       showLabels: size > 145,
       showSpaceIcons: size > 110,
       showSpaceLabels: size > 155
@@ -69,7 +70,6 @@ class App extends Component {
 
   render () {
     // const showIconsInMinimizeDashboard = true
-
     return (
       // <Group />
       <div className='app__root' >
@@ -91,7 +91,8 @@ class App extends Component {
             <Route path='/spacedirectory' component={Spaces} />
             <Route path='/userSettings' component={User} />
             <Route path='/spaces/:id' component={SpaceContainer} />
-            <Route path='/groups' component={Group} />
+            <Route path='/group/:id' exact component={GroupPage} />
+            <Route path='/admin' component={Administration} />
           </DashboardMain>
         </SplitPane>
       </div>

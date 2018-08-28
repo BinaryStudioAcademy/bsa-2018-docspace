@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const userRep = require('../repositories/UserRepository')
 var nodemailer = require('nodemailer')
-const hostname = require('../config/host').get(process.env.NODE_ENV)
+const clientPort = process.env.PORT || 3000
 
 module.exports = {
   forgot: (req, res) => {
@@ -19,11 +19,11 @@ module.exports = {
           user.save()
             .then(user => {
               let transporter = nodemailer.createTransport({
-                host: 'smtp.ethereal.email',
+                host: 'smtp.gmail.com',
                 port: 587,
                 auth: {
-                  user: 'tfmviw7qoixoq4kq@ethereal.email',
-                  pass: 'cugj96yyYbectx2RHf'
+                  user: '2015vmr.nazar@gmail.com',
+                  pass: 'koldun228'
                 }
               })
               let mailOptions = {
@@ -54,7 +54,8 @@ module.exports = {
   },
 
   redirectToForgotPass: (req, res) => {
-    return res.redirect(hostname.url + 'reset/' + req.params.token)
+    const currentHost = req.headers.host
+    return res.redirect(`http://${currentHost.split(':')[0]}:${clientPort}/reset/${req.params.token}`)
   },
 
   setNewPassword: (req, res) => {

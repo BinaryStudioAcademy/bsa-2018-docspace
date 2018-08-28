@@ -15,6 +15,7 @@ import historyWatcher from 'src/commonLogic/historySaga/historySaga'
 import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
 import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
+import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
 
 function * rootSaga () {
   yield all([
@@ -29,6 +30,7 @@ function * rootSaga () {
     fork(matchingUsersSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
+    fork(clientsActionsExchangeSaga),
     verificationWatcher(),
     signupWatcher(),
     loginWatcher(),
