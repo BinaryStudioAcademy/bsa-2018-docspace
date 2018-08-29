@@ -1,6 +1,6 @@
 import React from 'react'
 import RecentWorkListItem from 'src/components/recentWorkListItem'
-import {getRightProps} from 'src/components/dashboard/main/activity/allUpdatesTab'
+import getRightProps from 'src/components/dashboard/main/activity/chooseContentHelper'
 
 const RecentWorkListContainer = ({userHistory}) => {
   if (userHistory.length) {
@@ -8,7 +8,6 @@ const RecentWorkListContainer = ({userHistory}) => {
       <React.Fragment>
         {userHistory.map((item, index) => {
           let content = getRightProps(item)
-          console.log(content)
           return <RecentWorkListItem key={index} content={content} />
         })}
       </React.Fragment>
