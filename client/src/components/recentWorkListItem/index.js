@@ -13,7 +13,7 @@ const RecentWorkListItem = ({content}) => {
         <span className='recent-work-name'>{content.name}
           <span className='recent-work-name-action'> {content.action}</span>
           {content.isDeleted
-            ? <span className='recent-work-name-deleted'> <i className='far fa-trash-alt' aria-hidden='true' /> Deleted</span>
+            ? <span className='recent-work-name-deleted'> <i className='far fa-trash-alt' aria-hidden='true' /></span>
             : null}
         </span>
         <span className='recent-work-name-of-container'>{content.title}</span>

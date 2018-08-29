@@ -19,16 +19,15 @@ module.exports = {
           user.save()
             .then(user => {
               let transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 587,
+                service: 'Gmail',
                 auth: {
                   user: '2015vmr.nazar@gmail.com',
                   pass: 'koldun228'
                 }
               })
               let mailOptions = {
-                to: user.email,
                 from: 'DocSpaceTeam@docspace.com',
+                to: user.email,
                 subject: 'Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                   'Please click on the following link, or paste this into your browser to complete the process:\n\n' +

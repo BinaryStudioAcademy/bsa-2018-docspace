@@ -36,7 +36,12 @@ export const sendAvatarError = (error) => ({
   payload: error
 })
 
-export const getUserUpdatesRequest = (userId) => ({
+export const getUserUpdatesRequest = (userLogin) => ({
   type: actionTypes.GET_USER_UPDATES_REQUEST,
-  payload: userId
+  payload: userLogin
+})
+
+export const compareUserRequest = (currentUserLogin, RequestedUserLogin) => ({
+  type: actionTypes.COMPARE_USER_REQUEST,
+  payload: {currentUserLogin: currentUserLogin, RequestedUserLogin: RequestedUserLogin}
 })

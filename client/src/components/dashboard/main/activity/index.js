@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, NavLink, Redirect } from 'react-router-dom'
+import { Route, NavLink, Redirect, Switch } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import AllUpdatesTab from './allUpdatesTab'
 import PopularTab from './popularTab'

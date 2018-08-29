@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
-
+import { connect } from 'react-redux'
 import './minSideBar.css'
 import PropTypes from 'prop-types'
 import DropdownMenu from 'src/components/common/dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
-
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
 import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
 
@@ -13,7 +12,7 @@ const dropdownMenuItems = {
   avatar: [
     {
       name: 'Profile',
-      path: '/userSettings'
+      path: `/users`
     },
     {
       name: 'LogOut',
@@ -56,7 +55,7 @@ class MinSidebar extends Component {
 
   render () {
     const logo = this.props.isGray ? grayLogo : whiteLogo
-
+    dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
@@ -87,7 +86,8 @@ class MinSidebar extends Component {
 
 MinSidebar.propTypes = {
   tabs: PropTypes.element,
-  isGray: PropTypes.bool
+  isGray: PropTypes.bool,
+  userLogin: PropTypes.string
 }
 
 MinSidebar.defaultProps = {
@@ -95,4 +95,10 @@ MinSidebar.defaultProps = {
   isGray: false
 }
 
-export default MinSidebar
+const mapStateToProps = (state) => {
+  return {
+    userLogin: state.verification.user.login
+  }
+}
+
+export default connect(mapStateToProps, null)(MinSidebar)

@@ -139,20 +139,25 @@ export class ProfileFields extends Component {
         {!!this.props.errors.length && (
           <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
         )}
-        <div className='edit-btn'>
-          <Button
-            icon={this.renderLabelButton().icon}
-            value={this.renderLabelButton().value}
-            onClick={this.handleSubmitDataUser}
-          />
-        </div>
-        <div className='language-choise'>
-          <span>{t('choose language')}</span>
-          <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
-            <option value='en'>{t('English')}</option>
-            <option value='uk'>{t('Ukrainian')}</option>
-          </select>
-        </div>
+        {this.props.resultOfComparing
+          ? <React.Fragment>
+            <div className='edit-btn'>
+              <Button
+                icon={this.renderLabelButton().icon}
+                value={this.renderLabelButton().value}
+                onClick={this.handleSubmitDataUser}
+              />
+            </div>
+            <div className='language-choise'>
+              <span>{t('choose language')}</span>
+              <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
+                <option value='en'>{t('English')}</option>
+                <option value='uk'>{t('Ukrainian')}</option>
+              </select>
+            </div>
+          </React.Fragment>
+          : null
+        }
       </div>
     )
   }
@@ -168,6 +173,7 @@ ProfileFields.propTypes = {
   editMode: PropTypes.func,
   errors: PropTypes.array,
   t: PropTypes.func,
+  resultOfComparing: PropTypes.bool,
   i18n: PropTypes.object
 }
 export default translate('translations')(ProfileFields)

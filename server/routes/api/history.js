@@ -5,7 +5,9 @@ router.get('/', historyService.findAll)
 
 router.get('/:id', historyService.findOne)
 
-router.get('/user/:id', historyService.findUserHistory)
+router.get('/user/:login', historyService.findUserHistory)
+
+router.get('/current-user/:id', historyService.findCurrentUserHistory)
 
 router.get('/current-user/:id', historyService.findCurrentUserHistory)
 
