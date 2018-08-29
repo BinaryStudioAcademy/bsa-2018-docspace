@@ -4,25 +4,30 @@ import { translate } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import './spaceDetails.css'
-import spaceLogo from 'src/resources/logo.png'
 
 class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
-
+    const {spaceSettings} = space
+    console.log(`details`, space)
     let name = ''
 
     if (space.owner) {
       name = space.owner.firstName + ' ' + space.owner.lastName
     }
-
+    const icon = spaceSettings ? spaceSettings.icon : 'folder'
+    const color = spaceSettings ? spaceSettings.color : '#1c80ff'
     return (
       <table className='space-details-table'>
         <tbody>
           <tr>
             <td className='avatar-label-cell'>Space logo</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={spaceLogo} alt='space-logo' />
+              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+                <span className='icon-avatar' >
+                  <i className={`fa fa-${icon.toLowerCase()}`} />
+                </span>
+              </div>
             </td>
           </tr>
           <tr>

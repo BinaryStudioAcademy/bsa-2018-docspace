@@ -22,15 +22,13 @@ module.exports = {
 
       return res.end('Invalid id')
     }
-
     SpaceRepository.getById(id)
       .then((data) => {
         if (data.length === 0) {
           res.status(404)
-
           return res.end()
         }
-
+        console.log(data)
         res.json(data[0])
       })
       .catch((err) => {
@@ -46,14 +44,20 @@ module.exports = {
 
       return res.end('Invalid data')
     }
-
     BlogRepository.create({})
       .then(blog => {
-        const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
+        const spaceWithOwnerAndEmptyBlog = { ...req.body,
+          ownerId: req.user._id,
+          blogId: blog._id
+        }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
-            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
+            UserRepository.addSpaceToUser({
+              userId: spaceWithOwnerAndEmptyBlog.ownerId,
+              spaceId: space._id
+            })
               .then(() => {
+                console.log(`crt`, space)
                 return res.json(space)
               })
               .catch(err => console.log(err))
@@ -77,11 +81,13 @@ module.exports = {
 
       return res.end('Invalid id')
     }
-
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
-      .then(data => res.json(data))
+      .then(data => {
+        console.log(`anws`, data)
+        return res.json(data)
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)

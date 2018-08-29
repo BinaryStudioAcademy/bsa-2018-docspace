@@ -109,8 +109,8 @@ export default combineReducers({
 export const allSpaces = ({spaces}) => spaces.all.map(id => spaces.byId[id])
 
 export const spaceById = (state) => {
+  console.log(`selector`, state)
   const id = state.router.location.pathname.split('/')[2]
-
   return state.spaces.byId[id]
 }
 
