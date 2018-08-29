@@ -75,7 +75,6 @@ class SpacesContent extends Component {
 
   render () {
     const { isFetching } = this.props
-    console.log(this.props.spaces)
     return (
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>

@@ -43,6 +43,10 @@ const defaultIcons = [
   'battery-empty',
   'fax',
   'graduation-cap',
-  'users'
+  'users',
+  'globe',
+  'wrench',
+  'user-times',
+  'user-secret'
 ]
 export default defaultIcons

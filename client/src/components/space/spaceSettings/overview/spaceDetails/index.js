@@ -9,7 +9,6 @@ class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
     const {spaceSettings} = space
-    console.log(`details`, space)
     let name = ''
 
     if (space.owner) {

@@ -39,7 +39,6 @@ const spacesById = (state) => state.spaces.byId
 function * getSpace (action) {
   try {
     const space = yield SpaceService.getSpace(action.payload)
-    console.log(`get space`, space)
     const spaces = yield select(spacesById)
     // PROBLEM : First we load a list of all spaces by route 'spacedirectory', then we choose a space
     // and send action GET_SPACE_REQUEST. As result, after getiing space there is appear new space
@@ -61,7 +60,6 @@ function * getSpace (action) {
 
 function * createSpace (action) {
   try {
-    console.log('create Space', action.payload)
     const newSpace = yield SpaceService.createSpace(action.payload)
     yield put(actions.createSpaceSuccess(newSpace))
     yield put(push(`/spaces/${newSpace._id}/overview`))
@@ -75,7 +73,6 @@ function * updateSpace (action) {
   try {
     const target = action.payload
     const updated = yield SpaceService.updateSpace(target._id, target)
-    console.log(`saga`, updated)
     yield put(actions.updateSpaceSuccess(updated))
   } catch (e) {
     console.log(e)

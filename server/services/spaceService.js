@@ -28,7 +28,6 @@ module.exports = {
           res.status(404)
           return res.end()
         }
-        console.log(data)
         res.json(data[0])
       })
       .catch((err) => {
@@ -57,7 +56,6 @@ module.exports = {
               spaceId: space._id
             })
               .then(() => {
-                console.log(`crt`, space)
                 return res.json(space)
               })
               .catch(err => console.log(err))

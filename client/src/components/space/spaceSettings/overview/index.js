@@ -40,7 +40,6 @@ class SpaceOverviewTab extends Component {
   render () {
     const { isEditing } = this.state
     const { t } = this.props
-    console.log(`space overv tab`, this.props.space)
     return (
       <React.Fragment>
         <h3 className='space-details-header'> {t('Space_details')}

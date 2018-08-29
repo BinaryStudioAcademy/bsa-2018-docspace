@@ -70,7 +70,6 @@ class EditSpaceDetailsForm extends Component {
     //   name: this.state.name,
     //   description: this.state.description
     // }
-    console.log('before calling action', this.state)
     const changedSpace = {...this.state,
       categories: this.props.space.categories,
       spaceSettings: { icon: this.state.selectedIcon, color: this.state.selectedColor }

@@ -6,7 +6,6 @@ import './spaceSidebarButtons.css'
 
 const SpaceSidebarButtons = (props) => {
   const { spaceId, spaceSettings } = props
-  console.log(`spaceSidebar`, props)
   const icon = spaceSettings ? spaceSettings.icon : 'folder'
   const color = spaceSettings ? spaceSettings.color : '#1c80ff'
   return (
