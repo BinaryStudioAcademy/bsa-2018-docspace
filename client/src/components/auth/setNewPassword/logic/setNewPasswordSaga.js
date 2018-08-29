@@ -6,7 +6,6 @@ function * setNewPasswordFlow (action) {
   try {
     const { token, password } = action
     const response = yield call(resetService.setNewPassword, {token, password})
-    console.log(response)
     if (!response.succesful) {
       throw new Error(response.message)
     }

@@ -12,7 +12,6 @@ class HistoryRepository extends GeneralRepository {
   }
 
   getUserHistory (id) {
-    console.log('id at hist rep', id)
     return this.model.find({userId: id, action: { $in: [/PAGE/, /BLOG/] }}).limit(8)
   }
 }

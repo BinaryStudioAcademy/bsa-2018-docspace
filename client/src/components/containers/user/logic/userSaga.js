@@ -53,12 +53,22 @@ function * userFlow (action) {
   }
 }
 
+function * CompareUsers (action) {
+  try {
+    const response = yield userService.compareUsers(action.payload)
+    yield put({ type: actionTypes.COMPARE_USER_SUCCESS, response })
+  } catch (err) {
+    yield put({ type: actionTypes.COMPARE_USER_ERROR, err })
+  }
+}
+
 export default function * selectionsSaga () {
   yield all([
     takeLatest(actionTypes.UPDATE_USER, updUser),
     takeLatest(actionTypes.CHECK_USER_PASSWORD, checkUserPassword),
     takeLatest(actionTypes.SEND_AVATAR_REQUEST, sendAvatarFile),
     takeLatest(actionTypes.GET_USER_REQUEST, getUser),
-    takeLatest(actionTypes.GET_USER_UPDATES_REQUEST, userFlow)
+    takeLatest(actionTypes.GET_USER_UPDATES_REQUEST, userFlow),
+    takeLatest(actionTypes.COMPARE_USER_REQUEST, CompareUsers)
   ])
 }

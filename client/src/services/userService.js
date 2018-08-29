@@ -25,6 +25,14 @@ class UserService {
     return apiResult
   }
 
+  compareUsers (data) {
+    const args = { endpoint: `/api/user/compareUsers`, method: 'POST', body: JSON.stringify(data) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
   sendAvatarFile (file, userId) {
     console.log('before sending', file)
     let fd = new FormData()

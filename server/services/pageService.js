@@ -123,5 +123,17 @@ module.exports = {
           message: 'Could not delete page with id ' + req.params.id
         })
       })
+  },
+
+  search (req, res) {
+    PageRepository.search(req.body.input)
+      .then(result => {
+        // or return res,json(result.hits.hits)
+        return res.json(result)
+      })
+      .catch(err => {
+        console.log(err)
+        return res.status(400).end()
+      })
   }
 }

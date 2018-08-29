@@ -5,7 +5,6 @@ import {groupService} from 'src/services/groupService'
 
 function * getAllMatchingUser (action) {
   try {
-    console.log(action.payload)
     const users = yield groupService.getMatchingUsers(action.payload)
     yield put(actions.getAllUserGroupsSuccess(users))
   } catch (e) {
