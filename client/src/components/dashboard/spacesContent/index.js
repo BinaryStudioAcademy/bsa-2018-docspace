@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import DashboardInput from '../input'
 import PropTypes from 'prop-types'
 import './spacesContent.css'
-import logo from './space-logo.png'
 import { NavLink } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
 
@@ -38,12 +37,17 @@ class SpacesContent extends Component {
         }
       })
     })
-    const spaces = filteredSpaces.map((space, index) =>
-      (
+    const spaces = filteredSpaces.map((space, index) => {
+      const {icon, color} = space.spaceSettings ? space.spaceSettings : {icon: 'folder', color: 'red'}
+      return (
         <tr key={index} className='space-item'>
           <td className='space-image'>
             <NavLink className='link_view' to={`/spaces/${space._id}/overview`}>
-              <img src={logo} alt='' />
+              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+                <span className='icon-avatar' >
+                  <i className={`fa fa-${icon.toLowerCase()}`} />
+                </span>
+              </div>
             </NavLink>
           </td>
           <td>
@@ -64,6 +68,7 @@ class SpacesContent extends Component {
           </td>
         </tr>
       )
+    }
     )
     return spaces
   }
