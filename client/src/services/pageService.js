@@ -43,8 +43,8 @@ class PageService {
     return apiResult
   }
 
-  search = (input) => {
-    const args = { endpoint: `/api/pages/search`, method: 'POST', body: JSON.stringify({input}) }
+  search = (paramsObject) => {
+    const args = { endpoint: `/api/pages/search`, method: 'POST', body: JSON.stringify(paramsObject) }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
