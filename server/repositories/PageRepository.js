@@ -31,6 +31,16 @@ class PageRepository extends GeneralRepository {
     return super.update(id, data)
       .then(() => this.getById(id))
   }
+
+  search (input, cb) {
+    return this.model.search({
+      // query for match some input in field 'title' OR 'content'
+      multi_match: {
+        query: input,
+        fields: [ 'title', 'content' ]
+      }
+    })
+  }
 }
 
 module.exports = new PageRepository(PageModel)
