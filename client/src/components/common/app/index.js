@@ -94,7 +94,7 @@ class App extends Component {
               <Route path='/spaces/:id' component={SpaceContainer} />
               <Route path='/group/:id' exact component={GroupPage} />
               <Route path='/admin' component={Administration} />
-              <Redirect to={'/page404'} />
+              <Redirect to={'/'} />
             </Switch>
           </DashboardMain>
         </SplitPane>

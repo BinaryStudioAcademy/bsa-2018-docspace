@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, NavLink, Redirect, Switch } from 'react-router-dom'
+import { Route, NavLink, Redirect } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import AllUpdatesTab from './allUpdatesTab'
 import PopularTab from './popularTab'
@@ -52,17 +52,14 @@ class Activity extends Component {
               </NavLink>
             )}
           </div>
-          <Switch>
-            <Route path='/activity' exact render={() => <Redirect to='activity/allupdates' />} />
-            {TABS.map(({ name, path, component: TabComponent }) =>
-              <Route
-                key={name}
-                path={`${match.path}${path}`}
-                render={() => <TabComponent {...this.props} />}
-              />
-            )}
-            <Redirect to='/page404' />
-          </Switch>
+          <Route path='/activity' exact render={() => <Redirect to='activity/allupdates' />} />
+          {TABS.map(({ name, path, component: TabComponent }) =>
+            <Route
+              key={name}
+              path={`${match.path}${path}`}
+              render={() => <TabComponent {...this.props} />}
+            />
+          )}
         </div>
         <ActivitySidebar />
       </div>

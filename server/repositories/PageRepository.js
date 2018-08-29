@@ -27,9 +27,35 @@ class PageRepository extends GeneralRepository {
       }
     ])
   }
+
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))
+  }
+
+  advancedSearch (input) {
+    return this.model.search({
+      // query for match some input in field 'title' OR 'content'
+      multi_match: {
+        query: input,
+        fields: [ 'title', 'content' ]
+      }
+    })
+  }
+
+  deleteFromElasticAndReturnById (id) {
+    return new Promise((resolve, reject) => {
+      this.model.findOne({_id: id})
+        .then(page => {
+          page.unIndex(err => {
+            if (err) throw err
+            resolve(page)
+          })
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
 }
 
