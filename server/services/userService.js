@@ -136,7 +136,24 @@ module.exports = {
       })
       .catch(err => res.send(err))
   },
-
+  compareUsers: (req, res) => {
+    UserRepository.getByLogin(req.body.currentUserLogin)
+      .then(curUser => {
+        UserRepository.getByLogin(req.body.RequestedUserLogin)
+          .then(reqUser => {
+            if (!reqUser.length) {
+              return res.send({isNotFound: true})
+            }
+            if (reqUser[0].login === curUser[0].login) {
+              return res.send({...reqUser[0], resultOfComparing: true})
+            } else {
+              return res.send({...reqUser[0], resultOfComparing: false})
+            }
+          })
+          .catch(() => res.status(404))
+      })
+      .catch(err => console.log(err))
+  },
   findOneAndDelete: (req, res) => {
     UserRepository.delete(req.params.id)
       .then(user => {

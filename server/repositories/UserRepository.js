@@ -19,6 +19,9 @@ class UserRepository extends GeneralRepository {
       ]
     )
   }
+  getByLogin (login) {
+    return this.model.find({login: login})
+  }
   deleteSpace (id, spaceId) {
     return super.update(id, {'$pull': {'spaces': spaceId}})
   }

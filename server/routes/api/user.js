@@ -15,6 +15,8 @@ router.put('/:id/setting', userService.updateSettingData)
 
 router.post('/changePassword', userService.changePassword)
 
+router.post('/compareUsers', userService.compareUsers)
+
 router.delete('/:id', userService.findOneAndDelete)
 
 module.exports = router

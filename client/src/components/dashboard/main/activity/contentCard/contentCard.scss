@@ -1,0 +1,67 @@
+@import "globalStyles/variables.scss";
+
+.content-card {
+  display: flex;
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
+  #user-avatar-icon {
+    font-size: 35px;
+  }
+  .content-card-user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: contain;
+    padding: 0 8px;
+  }
+  .disabled-link {
+    pointer-events: none;
+  }
+  .content-card-deleted {
+    color: #ee7d7d;
+    &:hover::after {
+      content: attr(data-title);
+    }
+  }
+  #content-icon {
+    font-size: 16px;
+  }
+  .fa-folder {
+    color: #762ea2;
+  }
+  .fa-rss-square {
+    color: orange;
+  }
+  .fa-file-alt {
+    color: $blue;
+  }
+  i,
+  .content-card-action,
+  .content-card-name,
+  .content-card-time {
+    padding: 5px;
+  }
+  .content-card-name {
+    font-weight: 500;
+  }
+  a.content-card-name {
+    color: $blueLink;
+    text-decoration: none;
+    &:visited,
+    &:active {
+      @extend a.content-card-name;
+    }
+  }
+  .content-card-history-name {
+    font-weight: 500;
+  }
+  .content-card-time,
+  .content-card-action {
+    color: $grey;
+  }
+}

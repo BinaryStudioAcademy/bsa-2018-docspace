@@ -45,9 +45,7 @@ export default (ComposedComponent) => {
       isLoggedIn: state.verification.isLoggedIn,
       loading: state.verification.requesting,
       userInSession: state.verification.user,
-      user: state.login.user,
-      store: state
-
+      user: state.login.user
     }
   }
 

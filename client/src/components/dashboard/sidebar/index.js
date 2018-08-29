@@ -9,7 +9,6 @@ import './button/button.css'
 
 const DashboardSidebar = (props) => {
   const className = props.isOpened ? 'sidebar' : 'sidebar minimized'
-
   return (
     <div className={className}>
       {
