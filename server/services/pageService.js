@@ -134,13 +134,17 @@ module.exports = {
   },
 
   search (req, res) {
-    PageRepository.search(req.body.input)
-      .then(result => {
-        return res.json(result.hits.hits)
-      })
-      .catch(err => {
-        console.log(err)
-        return res.status(400).end()
-      })
+    if (req.body.advancedSearch) {
+      PageRepository.andvancedSearch(req.body.input)
+        .then(result => {
+          return res.json(result.hits.hits)
+        })
+        .catch(err => {
+          console.log(err)
+          return res.status(400).end()
+        })
+    } else {
+      // do other search, maybe PageRepository.searchByTitle(req.body.input)
+    }
   }
 }
