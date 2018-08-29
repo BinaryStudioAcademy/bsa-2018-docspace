@@ -76,6 +76,10 @@
     "Import_File": "Import File",
     "Confirm": "Confirm",
     "Delete_space": "Delete space",
-    "Delete_page": "Delete page"
+    "Delete_page": "Delete page",
+    "Warning_page_delete_short": "Are you sure you want to send this page to the trash? Please note:",
+    "Warning_page_delete_long": "Removing a page moves it into the trash. You can speak to your space administrator to have it recovered.",
+    "Warning_space_delete_short": "Deleting a space will delete all its content (including pages, comments, attachments and blogposts)",
+    "Warning_space_delete_long": "This operation cannot be undone. Once the space is deleted, it cannot be retrieved. It will be gone forever.Are you sure you want to delete this space?"
   }
 }
