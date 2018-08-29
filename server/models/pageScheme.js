@@ -74,9 +74,11 @@ PageModel.createMapping({
     }
   }
 }, function (err, mapping) {
-  // do neat things here
-  console.log('AFTER MAPPING !')
-  console.log(err)
+  if (err) {
+    console.log('ERROR WHILE MAPPING')
+    console.log(err)
+  }
+  console.log('MAPPING SUCCESS:')
   console.log(mapping)
 })
 
