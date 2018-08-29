@@ -246,7 +246,7 @@ class User extends Component {
 
   render () {
     if (this.props.isNotFound.hasOwnProperty('isNotFound') && this.props.match.params.login !== this.props.userLogin) {
-      return <Redirect to='/page404' />
+      return <Redirect to='/' />
     }
     const { t, i18n, isFetching } = this.props
     const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
