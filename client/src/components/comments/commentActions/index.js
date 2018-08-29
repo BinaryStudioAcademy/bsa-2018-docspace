@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
+import Like from 'src/components/common/like'
 
 import './commentActions.css'
 
-export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate}) => {
+export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes}) => {
+  console.log(likes)
   return (
     <div className='comment-actions-wrapper'>
       <ul className='comment-actions-list'>
@@ -17,9 +19,15 @@ export const CommentActions = ({onReplyComment, onEditComment, onDeleteComment, 
         <li className='comment-actions-item'>
           <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
         </li>
-        <li className='comment-actions-item'>
+        <Like
+          t={t}
+          user={user._id}
+          likes={likes || []}
+          likePage={onLikeComment}
+        />
+        {/* <li className='comment-actions-item'>
           <span className='comment-like' onClick={onLikeComment}>{t('like')}</span>
-        </li>
+        </li> */}
         <li className='comment-actions-item'>
           <span className='comment-time'>{creationDate}</span>
         </li>
@@ -34,6 +42,8 @@ CommentActions.propTypes = {
   onDeleteComment: PropTypes.func,
   onLikeComment: PropTypes.func,
   creationDate: PropTypes.string,
-  t: PropTypes.func
+  t: PropTypes.func,
+  user: PropTypes.obj,
+  likes: PropTypes.func
 }
 export default translate('translations')(CommentActions)

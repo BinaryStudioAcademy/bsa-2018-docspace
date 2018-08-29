@@ -2,6 +2,7 @@ import { takeEvery, put } from 'redux-saga/effects'
 import * as actionTypes from './likesActionTypes'
 import * as actions from './likesAction'
 import pageService from 'src/services/pageService'
+import {commentService} from 'src/services/commentService'
 
 function * putLike (action) {
   try {
@@ -22,9 +23,12 @@ function * putLike (action) {
 
 function * deleteLike (action) {
   try {
-    console.log('delete')
-    console.log(action.payload)
-    const deletedLike = action.payload.page.usersLikes.filter(likerId => likerId !== action.payload.userId)
+    // console.log('delete')
+    // console.log(action.payload)
+    console.log(action.payload.page)
+    const deletedLike = action.payload.page.usersLikes.filter(userLike => userLike !== action.payload.userId)
+    console.log(deletedLike)
+    console.log(action.payload.userId)
     action.payload.page.usersLikes = deletedLike
     console.log(action.payload.page)
     const updatedPage = yield pageService.updatePage(action.payload.page)
@@ -34,7 +38,37 @@ function * deleteLike (action) {
     console.log(e)
   }
 }
+
+function * putLikeOnComment (action) {
+  try {
+    // const users = yield groupService.getMatchingUsers(action.payload)
+    // yield put(actions.getAllUserGroupsSuccess(users))
+    console.log('put')
+    console.log(action.payload.comment)
+    action.payload.comment.userLikes.push(action.payload.userId)
+    yield commentService.editComment(action.payload.comment._id, action.payload.comment)
+    const updatedPage = yield pageService.updatePage(action.payload.page)
+    yield put(actions.putLikeSuccess(updatedPage))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+function * deleteLikeFromComment (action) {
+  try {
+    console.log(action.payload)
+    const deletedLike = action.payload.comment.userLikes.filter(userLike => userLike !== action.payload.userId)
+    action.payload.comment.userLikes = deletedLike
+    yield commentService.editComment(action.payload.comment._id, action.payload.comment)
+    const updatedPage = yield pageService.updatePage(action.payload.page)
+    yield put(actions.deleteLikeSuccess(updatedPage))
+  } catch (e) {
+    console.log(e)
+  }
+}
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.PUT_LIKE_REQUEST, putLike)
   yield takeEvery(actionTypes.DELETE_LIKE_REQUEST, deleteLike)
+  yield takeEvery(actionTypes.PUT_LIKE_ON_COMMENT_REQUEST, putLikeOnComment)
+  yield takeEvery(actionTypes.DELETE_LIKE_FROM_COMMENT_REQUEST, deleteLikeFromComment)
 }

@@ -8,8 +8,7 @@ class Like extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isCurrentUserLike: this.findUser(this.props),
-      message: ''
+      isCurrentUserLike: this.findUser(this.props)
     }
     this.changeLikeState = this.changeLikeState.bind(this)
     this.getMessage = this.getMessage.bind(this)
@@ -19,10 +18,11 @@ class Like extends Component {
   changeLikeState () {
     this.setState((prevState) => {
       return {isCurrentUserLike: !prevState.isCurrentUserLike}
-    }, this.aaa)
+    }, this.likeAction)
   }
 
   findUser (nextProps) {
+    // console.log(this.findUser)
     for (let i = 0; i < nextProps.likes.length; i++) {
       if (nextProps.likes[i]._id === nextProps.user) {
         return true
@@ -31,26 +31,29 @@ class Like extends Component {
     return false
   }
 
-  aaa () {
+  likeAction () {
     this.props.likePage(this.state.isCurrentUserLike)
   }
 
   sortLikes () {
     this.props.likes.sort((a) => {
-      return a.id === this.props.user ? -1 : 1
+      return a.id === this.props.user ? 1 : -1
     })
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
+    // console.log(nextProps)
     if (this.props !== nextProps) {
-      this.setState({isCurrentUserLike: this.findUser(nextProps), message: this.getMessage(nextProps)})
+      this.setState({isCurrentUserLike: this.findUser(nextProps)})
     }
   }
 
-  getMessage (nextProps) {
+  getMessage () {
     this.sortLikes()
-    const {t, likes} = nextProps
+    // this.setState({
+
+    // })
+    const { t, likes } = this.props
     let message
     if (!likes.length) {
       return t('Be_the_first_who_like_it')
@@ -71,13 +74,14 @@ class Like extends Component {
   }
 
   render () {
+    // console.log(this.props)
     return (
       <div className='like-wrapper'>
-        <button onClick={this.changeLikeState} >
+        <button className='like-button' onClick={this.changeLikeState} >
           <i className={`fas fa-thumbs-up ${this.state.isCurrentUserLike ? 'active-like' : 'unactive-like '}`} />
         </button>
         <span>
-          {this.state.message}
+          {this.getMessage()}
         </span>
       </div>
     )
@@ -87,7 +91,7 @@ class Like extends Component {
 export default translate('translations')(Like)
 
 Like.propTypes = {
-  // t: PropTypes.func,
+  t: PropTypes.func,
   likes: PropTypes.array,
   user: PropTypes.string,
   likePage: PropTypes.func

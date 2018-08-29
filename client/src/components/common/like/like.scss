@@ -7,6 +7,12 @@
         border: none;
         font-size:18px;
     }
+    button:target{
+        border: none;   
+    }
+    .like-button:target{
+        border: none;
+    }
     .unactive-like{
         color: $gray
     }

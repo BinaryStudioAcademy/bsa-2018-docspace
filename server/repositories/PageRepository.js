@@ -13,6 +13,7 @@ class PageRepository extends GeneralRepository {
   }
 
   getById (id) {
+    console.log('aaaa')
     return this.model.aggregate([
       {
         '$match': { _id: ObjectId(id) }
@@ -30,7 +31,38 @@ class PageRepository extends GeneralRepository {
           from: 'users',
           localField: 'usersLikes',
           foreignField: '_id',
-          as: 'usersLikesRef'
+          as: 'likes'
+        }
+      },
+      {
+        '$unwind': {
+          path: '$commentsArr',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        '$lookup': {
+          from: 'users',
+          localField: 'commentsArr.userLikes',
+          foreignField: '_id',
+          as: 'commentsArr.likes'
+        }
+      },
+      {
+        '$group': {
+          '_id': '$_id',
+          // 'commentsArr': { '$push': '$commentsLikes' },
+          // 'commentsArr.commentsLikes': { '$addToSet': '$commentsLikes' },
+          'commentsArr': {'$addToSet': '$commentsArr'},
+          // 'commentsArr': {'$addToSet': '$commentsLikes'},
+          'title': {'$first': '$title'},
+          'spaceId': {'$first': '$spaceId'},
+          'createdAt': {'$first': '$createdAt'},
+          'updatedAt': {'$first': '$updatedAt'},
+          'isDeleted': {'$first': '$isDeleted'},
+          'comments': {'$first': '$comments'},
+          'usersLikes': {'$first': '$usersLikes'},
+          'likes': {'$first': '$likes'}
         }
       }
     ])

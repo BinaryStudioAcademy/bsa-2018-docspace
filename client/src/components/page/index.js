@@ -13,11 +13,11 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
-import {putLikeRequest, deleteLikeRequest} from './likesLogic/likesAction'
+import {putLikeRequest, deleteLikeRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
-// import Like from 'src/components/common/like'
+import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 
@@ -74,18 +74,32 @@ class Page extends Component {
    }
  }
 
- likePage = (obj) => {
+ likeAction = (obj) => {
    console.log(obj)
-   obj
-     ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
-     : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+   this.likePage(obj, 'page')
+ }
+
+ likePage = (obj, type, ...args) => {
+   console.log(args)
+   if (type === 'page') {
+     obj
+       ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
+       : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+   } else {
+     obj
+       ? this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, args[0])
+       : this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, args[0])
+   }
+ }
+
+ likeComment = (obj, comment) => {
+   console.log(comment)
+   this.likePage(obj, 'comment', comment)
  }
 
  render () {
    const { firstName, lastName, _id } = this.props.user
    const { page, t, space, isFetching } = this.props
-   console.log(`render`, this.props.contentDoc)
-   console.log(this.props)
    return (
      <React.Fragment>
        <PageHeader
@@ -116,12 +130,12 @@ class Page extends Component {
              date={page.created ? page.created.date : ''}
            />
            <PageContent content={page.content} />
-           {/* <Like
+           <Like
              t={t}
              user={this.props.user._id}
-             likes={this.props.page.usersLikesRef || []}
-             likePage={this.likePage}
-           /> */}
+             likes={this.props.page.likes || []}
+             likePage={this.likeAction}
+           />
            <div className='comments-section'>
              {this.props.page.commentsArr.length
                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
@@ -135,7 +149,8 @@ class Page extends Component {
                firstName={firstName}
                lastName={lastName}
                userId={_id}
-
+               user={this.props.user}
+               likeAction={this.likeComment}
              />
              <AddComment
                firstName={firstName}
@@ -158,7 +173,8 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array
+    commentsArr: PropTypes.array,
+    likes: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -172,8 +188,7 @@ Page.propTypes = {
   exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool,
-  contentDoc: PropTypes.object
+  isFetching: PropTypes.bool
 }
 
 Page.defaultProps = {
@@ -212,7 +227,9 @@ function mapDispatchToProps (dispatch) {
         exportPageToWord,
         sendDocFileRequest,
         deleteLikeRequest,
-        putLikeRequest
+        putLikeRequest,
+        deleteLikeFromCommentRequest,
+        putLikeOnCommentRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
