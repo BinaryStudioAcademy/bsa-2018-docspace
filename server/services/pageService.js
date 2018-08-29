@@ -123,5 +123,28 @@ module.exports = {
           message: 'Could not delete page with id ' + req.params.id
         })
       })
+  },
+
+  findByCriteria: (req, res) => {
+    PageRepository.findByCriteria(req.params.criteria)
+      .then(page => {
+        if (!page[0]) {
+          return res.status(404).send({
+            message: 'page not found with id ' + req.params.id
+          })
+        }
+        res.send(page[0])
+      }).catch(err => {
+        console.log(err)
+        if (err.kind === 'ObjectId') {
+          return res.status(404).send({
+            message: 'page not found with id ' + req.params.id
+          })
+        }
+
+        return res.status(500).send({
+          message: 'Error retrieving page with id ' + req.params.id
+        })
+      })
   }
 }

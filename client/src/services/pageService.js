@@ -73,5 +73,13 @@ exportPageToWord = (page) => {
 
   fileSaver.saveAs(converted, `${_id}.docx`)
 }
+
+findByCriteria = (criteria) => {
+  const args = { endpoint: `/api/pages/filter/${criteria}`, method: 'GET' }
+  const apiResult = callWebApi(args)
+    .then(res => res.json())
+    .catch(err => console.log(`Error: ${err}`))
+  return apiResult
+}
 }
 export default new PageService()

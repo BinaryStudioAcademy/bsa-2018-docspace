@@ -1,0 +1,33 @@
+.search-modal{
+    z-index: 1000;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+}
+.search-modal-body{
+    width: 50%;
+    height: 100%;
+    background: #f5f5f5;
+    padding: 25px 15px;
+    button{
+        border: none;
+        background: transparent;
+    }
+    .search-field{
+        font-size: 20px;
+        border: none;
+        border-bottom: 1px solid grey;
+        background: #f5f5f5;
+    }
+    .search-field:focus{
+        border: none;
+        border-bottom: 1px solid blue;
+    }
+}

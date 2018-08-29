@@ -71,6 +71,10 @@ class PageRepository extends GeneralRepository {
     return super.update(id, data)
       .then(() => this.getById(id))
   }
+
+  findByCriteria (criteria) {
+    return this.model.find({title: { $regex: criteria, $options: 'i' }})
+  }
 }
 
 module.exports = new PageRepository(PageModel)
