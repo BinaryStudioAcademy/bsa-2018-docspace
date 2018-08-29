@@ -10,7 +10,6 @@ const path = require('path')
 const passport = require('passport')
 const app = express()
 const port = process.env.PORT || 3001
-const clientPort = process.env.PORT !== 3001 ? 3000 : process.env.PORT
 const io = require('socket.io')
 require('./config/passport')()
 
@@ -38,11 +37,6 @@ app.use(passport.session())
 const verifyJWTMiddleware = require('./middlewares/verifyToken')(passport)
 
 apiRoutes(app, verifyJWTMiddleware)
-app.get('/*', function (req, res, next) {
-  res.status(404)
-  const currentHost = req.headers.host
-  res.redirect(`http://${currentHost.split(':')[0]}:${clientPort}/page404`)
-})
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')))
