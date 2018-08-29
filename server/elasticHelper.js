@@ -19,5 +19,34 @@ module.exports = {
         console.log(`created index ${name}`, resp)
       }
     })
+  },
+
+  initMapping (client, indexName, documentType, bodySchema) {
+    return client.indices.putMapping({
+      index: indexName,
+      type: documentType,
+      body: bodySchema
+    })
+  },
+
+  addDocument (client, indexName, documentType, document) {
+    return client.index({
+      index: indexName,
+      type: documentType,
+      body: document
+    })
+  },
+
+  updateDocument (client, indexName, documentType, documentId, newFieldsOrUpdateScript) {
+    return client.update({
+      index: indexName,
+      type: documentType,
+      id: documentId,
+      body: newFieldsOrUpdateScript
+    })
+  },
+
+  search (client, index, body) {
+    return client.search({index: index, body: body})
   }
 }
