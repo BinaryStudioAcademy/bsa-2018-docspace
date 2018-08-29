@@ -33,7 +33,7 @@ class PageRepository extends GeneralRepository {
       .then(() => this.getById(id))
   }
 
-  search (input, cb) {
+  advancedSearch (input) {
     return this.model.search({
       // query for match some input in field 'title' OR 'content'
       multi_match: {

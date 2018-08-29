@@ -135,7 +135,7 @@ module.exports = {
 
   search (req, res) {
     if (req.body.advancedSearch) {
-      PageRepository.andvancedSearch(req.body.input)
+      PageRepository.advancedSearch(req.body.input)
         .then(result => {
           return res.json(result.hits.hits)
         })
