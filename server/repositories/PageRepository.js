@@ -27,6 +27,7 @@ class PageRepository extends GeneralRepository {
       }
     ])
   }
+
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))
@@ -39,6 +40,21 @@ class PageRepository extends GeneralRepository {
         query: input,
         fields: [ 'title', 'content' ]
       }
+    })
+  }
+
+  deleteFromElasticAndReturnById (id) {
+    return new Promise((resolve, reject) => {
+      this.model.findOne({_id: id})
+        .then(page => {
+          page.unIndex(err => {
+            if (err) throw err
+            resolve(page)
+          })
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   }
 }
