@@ -10,7 +10,7 @@ const MyUpdatesTab = (props) => {
     return (
       <div className='update-items-list'>
         <div className='current-user-info'>
-          <Link to='/userSettings'>
+          <Link to={`/users/${props.userLogin}`}>
             {props.userAvatar
               ? <img src={props.userAvatar} alt='avatar' className='current-user-img' />
               : <i id='user-avatar' className='fas fa-user-circle' />
@@ -37,7 +37,8 @@ const MyUpdatesTab = (props) => {
 MyUpdatesTab.propTypes = {
   userAvatar: PropTypes.string,
   userName: PropTypes.string.isRequired,
-  currentUserUpdates: PropTypes.array.isRequired
+  currentUserUpdates: PropTypes.array.isRequired,
+  userLogin: PropTypes.string.isRequired
 }
 
 export default MyUpdatesTab
