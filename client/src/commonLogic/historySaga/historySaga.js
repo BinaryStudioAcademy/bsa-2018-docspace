@@ -13,7 +13,6 @@ function * historySpaceFlow (action) {
 }
 
 function * historyPageFlow (action) {
-  console.log(action.payload)
   try {
     const { spaceId, _id: pageId, modifiedVersions, version } = action.payload
     const modifiedVersion = modifiedVersions.length ? modifiedVersions[modifiedVersions.length - 1].version : version
