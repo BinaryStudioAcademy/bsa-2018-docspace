@@ -125,7 +125,7 @@ class CreatePageModal extends Component {
            items={this.state.templates}
            selectedItem={this.state.selectedTemplate}
            handleSelectItem={this.handleSelectTemplate}
-           handleSelectAndSendItem={this.handleSelectAndSendTemplate}
+           handleDoubleClickOnItem={this.handleSelectAndSendTemplate}
          />
        </React.Fragment>
      )
