@@ -93,16 +93,16 @@ function * deleteBlogPage (action) {
     yield put(actions.deletePageError())
   }
 }
-
-const pagesById = (state) => state.pages.byId
+// remove cancel pageUpdate because of navigate to changes doesn't work
+// const pagesById = (state) => state.pages.byId
 
 function * getPage (action) {
   try {
-    const pages = yield select(pagesById)
-    if (pages[action.payload]) {
-      yield put(actions.cancelPageByIdRequst())
-      return
-    }
+    // const pages = yield select(pagesById)
+    // if (pages[action.payload.id] && !action.payload.version) {
+    //   yield put(actions.cancelPageByIdRequst())
+    //   return
+    // }
     const page = yield PageService.getPage(action.payload)
     yield commentsActions.allCommentsFetched(page.commentsArr)
     yield put(actions.getPageByIdSuccess(page))
