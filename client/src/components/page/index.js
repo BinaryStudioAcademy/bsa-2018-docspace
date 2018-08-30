@@ -18,6 +18,7 @@ import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 import '../comments//comments/comments.css'
+import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 class Page extends Component {
   constructor (props) {
@@ -52,10 +53,6 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
   }
 
-  handleDeletePage = () => {
-    this.props.actions.deletePageRequest(this.props.page)
-  }
-
   exportPageToPdf = () => {
     this.props.actions.exportPageToPdf(this.props.page)
   }
@@ -66,6 +63,12 @@ class Page extends Component {
 
   handleCallSystemDialogWindow = () => {
     this.refs.fileUploader.click()
+  }
+
+  handleOpenWarningModal = () => {
+    if (!this.props.match.params.version) {
+      this.props.actions.openWarningModal(true, this.props.page._id)
+    }
   }
 
   handleChoosenFile = (e) => {
@@ -86,10 +89,10 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
           onWordImport={this.handleCallSystemDialogWindow}
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
+          openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -144,6 +147,7 @@ class Page extends Component {
 
 Page.propTypes = {
   page: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
@@ -203,7 +207,8 @@ function mapDispatchToProps (dispatch) {
         deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
-        sendDocFileRequest
+        sendDocFileRequest,
+        openWarningModal
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

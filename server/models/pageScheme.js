@@ -65,10 +65,12 @@ const pageSchema = new mongoose.Schema({
 
 pageSchema.pre('findOneAndUpdate', async function () {
   let pageQuery = this
-  let newId = new mongoose.Types.ObjectId()
-  let { version, title, content, modifiedVersions } = pageQuery.getUpdate()
-  await modifiedVersions.push({_id: newId, version, title, content})
-  pageQuery.getUpdate().version += 1
+  let { version, title, content, modifiedVersions, isDeleted } = pageQuery.getUpdate()
+  if (!isDeleted) {
+    let newId = new mongoose.Types.ObjectId()
+    await modifiedVersions.push({_id: newId, version, title, content})
+    pageQuery.getUpdate().version += 1
+  }
 })
 
 pageSchema.plugin(mongoosastic, {

@@ -10,7 +10,18 @@
     width: 20%;
     text-align: right;
   }
-
+  .space-edit-avatar {
+    color: #ffffff;
+    background: #1c80ff;
+    padding: 7px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    width: 15px;
+    height: 20px;
+  }
 
   input, select, textarea{
     background: white;

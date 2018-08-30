@@ -110,7 +110,6 @@ export const allSpaces = ({spaces}) => spaces.all.map(id => spaces.byId[id])
 
 export const spaceById = (state) => {
   const id = state.router.location.pathname.split('/')[2]
-
   return state.spaces.byId[id]
 }
 

@@ -10,6 +10,7 @@ import Page from 'src/components/page'
 import Blog from 'src/components/blog'
 import * as actions from './logic/spaceActions'
 import { spaceById } from './logic/spaceReducer'
+import WarningModal from 'src/components/modals/warningModal'
 
 import './space.css'
 
@@ -31,7 +32,7 @@ class SpaceContainer extends Component {
   )
 
   render () {
-    const {space} = this.props
+    const {space, showModal} = this.props
     if (!space) return null
     const id = this.props.location.pathname.split('/')[2]
 
@@ -45,6 +46,7 @@ class SpaceContainer extends Component {
           <Route path='/spaces/:space_id/settings' component={SpaceSettings} />
           <Route path='/spaces/:space_id/pages/:page_id/:version?' component={Page} />
         </SpaceContent>
+        {showModal && <WarningModal />}
       </div>
     )
   }
@@ -54,12 +56,14 @@ SpaceContainer.propTypes = {
   location: PropTypes.object.isRequired,
   space: PropTypes.object,
   getSpace: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  showModal: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    showModal: state.warningModal.showModal
   }
 }
 
