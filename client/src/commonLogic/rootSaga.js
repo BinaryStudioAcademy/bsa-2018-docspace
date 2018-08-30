@@ -12,6 +12,7 @@ import commentSaga from 'src/components/page/commentsLogic/commentsSaga'
 import blogSaga from 'src/components/blog/logic/blogSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
 import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
+import workSaga from 'src/components/dashboard/main/work/logic/workSaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
 import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
 import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
@@ -24,6 +25,7 @@ function * rootSaga () {
     fork(commentSaga),
     fork(blogSaga),
     fork(activitySaga),
+    fork(workSaga),
     fork(groupSaga),
     fork(matchingUsersSaga),
     fork(resetSaga),

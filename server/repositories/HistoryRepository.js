@@ -14,6 +14,9 @@ class HistoryRepository extends GeneralRepository {
   getUserHistory (id) {
     return this.model.find({userId: id, action: { $in: [/PAGE/, /BLOG/] }}).limit(8)
   }
+  getUserWorks (id) {
+    return this.model.find({userId: id, action: { $in: [/UPDATE_PAGE/, /UPDATE_BLOG/] }})
+  }
 }
 
 module.exports = new HistoryRepository(scheme.History)
