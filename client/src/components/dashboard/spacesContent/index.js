@@ -38,7 +38,7 @@ class SpacesContent extends Component {
       })
     })
     const spaces = filteredSpaces.map((space, index) => {
-      const {icon, color} = space.spaceSettings ? space.spaceSettings : {icon: 'folder', color: 'red'}
+      const {icon, color} = space.spaceSettings ? space.spaceSettings : {icon: 'folder', color: '#1c80ff'}
       return (
         <tr key={index} className='space-item'>
           <td className='space-image'>
