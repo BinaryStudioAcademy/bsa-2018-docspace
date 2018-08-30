@@ -31,7 +31,8 @@ class Page extends Component {
   }
 
   componentDidMount () {
-    !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+    const {page_id: pageId, version} = this.props.match.params
+    !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
   }
 
   addNewComment (obj) {
@@ -76,8 +77,9 @@ class Page extends Component {
   }
 
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const user = page ? page.userModified : null
     return (
       <React.Fragment>
         <PageHeader
@@ -102,10 +104,11 @@ class Page extends Component {
           : <div className='page-container'>
             <PageTitle text={page.title} />
             <PageInfo
-              avatar={fakeImg}
-              firstName={firstName}
-              lastName={lastName}
-              date={page.created ? page.created.date : ''}
+              avatar={user ? user.avatar : avatar}
+              firstName={user ? user.firstName : firstName}
+              lastName={user ? user.lastName : lastName}
+              date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+              login={user ? user.login : login}
             />
             <PageContent content={page.content} />
             <div className='comments-section'>
@@ -167,7 +170,12 @@ Page.defaultProps = {
     created: {
       date: 'it is a date! TRUST ME'
     },
-    content: ''
+    content: '',
+    userModified: {
+      firstName: '',
+      lastName: '',
+      avatar: ''
+    }
   },
 
   user: {

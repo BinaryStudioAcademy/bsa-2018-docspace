@@ -46,10 +46,30 @@ const pageSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     es_indexed: true
-  }
+  },
+  version: {
+    type: Number,
+    default: 0,
+    es_indexed: false
+  },
+  modifiedVersions: [{
+    _id: {type: Schema.Types.ObjectId, ref: 'History'},
+    version: Number,
+    title: String,
+    content: String,
+    es_indexed: false
+  }]
 },
 { versionKey: false, timestamps: true }
 )
+
+pageSchema.pre('findOneAndUpdate', async function () {
+  let pageQuery = this
+  let newId = new mongoose.Types.ObjectId()
+  let { version, title, content, modifiedVersions } = pageQuery.getUpdate()
+  await modifiedVersions.push({_id: newId, version, title, content})
+  pageQuery.getUpdate().version += 1
+})
 
 pageSchema.plugin(mongoosastic, {
   esClient: elasticClient,
