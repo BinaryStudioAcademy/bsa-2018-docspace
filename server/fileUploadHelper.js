@@ -7,6 +7,8 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRET_KEY
 })
 
+console.log('AWS Key is availble: ', Boolean(process.env.AWS_ACCESS_KEY_ID))
+
 const bucketName = 'bsa-docspace'
 
 module.exports = {
