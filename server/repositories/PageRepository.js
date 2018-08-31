@@ -48,22 +48,12 @@ class PageRepository extends GeneralRepository {
           as: 'commentsArr.likes'
         }
       },
-      { '$unwind': '$commentsArr' },
-      {
-        '$lookup': {
-          from: 'users',
-          localField: 'commentsArr.userId',
-          foreignField: '_id',
-          as: 'commentsArr.user'
-        }
-      },
       {
         '$group': {
           '_id': '$_id',
           'commentsArr': {'$addToSet': '$commentsArr'},
           'title': {'$first': '$title'},
           'spaceId': {'$first': '$spaceId'},
-          'content': {'$first': '$content'},
           'createdAt': {'$first': '$createdAt'},
           'updatedAt': {'$first': '$updatedAt'},
           'isDeleted': {'$first': '$isDeleted'},
