@@ -51,10 +51,7 @@ class PageRepository extends GeneralRepository {
       {
         '$group': {
           '_id': '$_id',
-          // 'commentsArr': { '$push': '$commentsLikes' },
-          // 'commentsArr.commentsLikes': { '$addToSet': '$commentsLikes' },
           'commentsArr': {'$addToSet': '$commentsArr'},
-          // 'commentsArr': {'$addToSet': '$commentsLikes'},
           'title': {'$first': '$title'},
           'spaceId': {'$first': '$spaceId'},
           'createdAt': {'$first': '$createdAt'},
@@ -67,14 +64,70 @@ class PageRepository extends GeneralRepository {
       }
     ])
   }
+
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))
   }
 
-  findByCriteria (criteria) {
-    return this.model.find({title: { $regex: criteria, $options: 'i' }})
+  advancedSearch (input) {
+    return this.model.search({
+      // query for match some input in field 'title' OR 'content'
+      multi_match: {
+        query: input,
+        fields: [ 'title', 'content' ]
+      }
+    })
   }
+
+  deleteFromElasticAndReturnById (id) {
+    return new Promise((resolve, reject) => {
+      this.model.findOne({_id: id})
+        .then(page => {
+          page.unIndex(err => {
+            if (err) throw err
+            resolve(page)
+          })
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  }
+
+//   searchByTitle (filter) {
+//   //   return this.model.find({title: { $regex: filter, $options: 'i' }})
+//   //     .populate({ path: 'spaceId', select: '_id' })
+//   //     .populate({ path: 'spaceId', select: 'name' })
+//   // }
+//     return this.model.aggregate([
+//       {
+//         $match: {title: { $regex: filter, $options: 'i' }}
+//       },
+//       {
+//         $lookup: {
+//           from: 'spaces',
+//           localField: 'spaceId',
+//           foreignField: '_id',
+//           as: 'space'
+//         }
+//       },
+//       {
+//         $group: {
+//           '_id': '$space._id',
+//             'pageId': {'$addToSet': '$_id'},
+//             'title': {'$addToSet': '$title'}
+//           }
+//         }
+//     ])
+//   }
 }
 
+//   '$lookup': {
+//     from: 'comments',
+//     localField: 'comments',
+//     foreignField: '_id',
+//     as: 'commentsArr'
+//   }
+// },
 module.exports = new PageRepository(PageModel)

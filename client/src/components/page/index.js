@@ -100,6 +100,7 @@ class Page extends Component {
  render () {
    const { firstName, lastName, _id } = this.props.user
    const { page, t, space, isFetching } = this.props
+   console.log(this.props.page)
    return (
      <React.Fragment>
        <PageHeader

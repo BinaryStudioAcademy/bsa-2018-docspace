@@ -4,9 +4,9 @@ export const getMatchingPagesRequest = (keyword) => ({
   type: actionTypes.GET_MATCHING_PAGES_REQUEST,
   payload: keyword
 })
-export const getMatchingPagesSuccess = (pages) => ({
+export const getMatchingPagesSuccess = (results) => ({
   type: actionTypes.GET_MATCHING_PAGES_SUCCESS,
-  payload: pages
+  payload: results
 })
 export const getMatchingPagesError = () => ({
   type: actionTypes.GET_MATCHING_PAGES_ERROR

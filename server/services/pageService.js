@@ -16,6 +16,7 @@ module.exports = {
   },
 
   findOne: (req, res) => {
+    console.log('один')
     PageRepository.getById(req.params.id)
       .then(page => {
         if (!page[0]) {
@@ -92,26 +93,34 @@ module.exports = {
   findOneAndDelete: (req, res) => {
     PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {
-        if (page[0].blogId) {
-          BlogRepository.deletePageFromBlog(page[0].blogId, page[0]._id)
-            .then(() => {
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        } else {
-          SpaceRepository.deletePageFromSpace(page[0].spaceId, page[0]._id)
-            .then((space) => {
-              console.log(space)
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        }
+        PageRepository.deleteFromElasticAndReturnById(req.params.id)
+          .then(page => {
+            if (page.blogId) {
+              BlogRepository.deletePageFromBlog(page.blogId, page._id)
+                .then(() => {
+                  return res.json(page)
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.status(500).send(err.message)
+                })
+            } else {
+              SpaceRepository.deletePageFromSpace(page.spaceId, page._id)
+                .then((space) => {
+                  console.log(space)
+                  return res.json(page)
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.status(500).send(err.message)
+                })
+            }
+          })
+          .catch(err => {
+            console.log('Can not remove page from elasticsearch db')
+            console.log(err)
+            return res.status(400).end()
+          })
       }).catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {
@@ -125,26 +134,36 @@ module.exports = {
       })
   },
 
-  findByCriteria: (req, res) => {
-    PageRepository.findByCriteria(req.params.criteria)
-      .then(page => {
-        if (!page[0]) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        res.send(page[0])
-      }).catch(err => {
-        console.log(err)
-        if (err.kind === 'ObjectId') {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-
-        return res.status(500).send({
-          message: 'Error retrieving page with id ' + req.params.id
+  search (req, res) {
+    console.log('даніл')
+    if (req.body.advancedSearch) {
+      PageRepository.advancedSearch(req.body.input)
+        .then(result => {
+          return res.json(result.hits.hits)
         })
+        .catch(err => {
+          console.log(err)
+          return res.status(400).end()
+        })
+    } else {
+      // do other search, maybe PageRepository.searchByTitle(req.body.input)
+    }
+  },
+
+  searchByTitle: (req, res) => {
+    console.log('normal')
+    Promise.all(
+      [
+        PageRepository.searchByTitle(req.params.filter),
+        SpaceRepository.searchByTitle(req.params.filter)
+      ])
+      .then(([one, two]) => {
+        console.log(one)
+        console.log(two)
+        res.send(one.concat(two))
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 }
