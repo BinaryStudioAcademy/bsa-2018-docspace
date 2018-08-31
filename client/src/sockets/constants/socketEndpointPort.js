@@ -3,6 +3,6 @@
 // Think about it
 
 const serverPort = (process.env.NODE_ENV === 'production')
-  ? 8080
+  ? process.env.PORT
   : 3001
 export default serverPort

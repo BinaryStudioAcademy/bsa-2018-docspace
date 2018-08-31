@@ -1,8 +1,9 @@
 import io from 'socket.io-client'
 
 export default (socketEndpointPort) => {
-  // const currentLocation = new URL(window.location.href)
-  // const socketEndpoint = `${currentLocation.protocol}//${currentLocation.hostname}:${socketEndpointPort}`
+  const currentLocation = new URL(window.location.href)
 
-  return io()
+  return process.env.NODE_ENV === 'production'
+    ? io()
+    : io(`${currentLocation.protocol}${currentLocation.hostname}:3001`)
 }
