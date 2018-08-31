@@ -38,7 +38,7 @@ before_deploy:
 
 branches:
   only:
-  - develop
+  - demo-3
 
 deploy:
   - provider: script

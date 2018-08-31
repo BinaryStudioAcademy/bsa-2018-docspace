@@ -157,9 +157,7 @@
 }
 
 .profile-avatar-wrapper .profile-avatar-cover-btn {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: cover;
   border-radius: 50%;
   display: flex;
   flex: 1 1 100%;

@@ -5,7 +5,8 @@ export const spaceActions = {
 
 export const pageActions = {
   CREATE_PAGE_SUCCESS: 'CREATE_PAGE_SUCCESS',
-  UPDATE_PAGE_SUCCESS: 'UPDATE_PAGE_SUCCESS'
+  UPDATE_PAGE_SUCCESS: 'UPDATE_PAGE_SUCCESS',
+  UPDATE_PAGE_SUCCESS_EXTERNAL: 'UPDATE_PAGE_SUCCESS(EXTERNAL)'
 }
 
 export const blogActions = {
