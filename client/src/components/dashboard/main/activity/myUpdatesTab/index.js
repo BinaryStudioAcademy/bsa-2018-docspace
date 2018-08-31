@@ -6,17 +6,16 @@ import './myUpdatesTab.css'
 import { Link } from 'react-router-dom'
 
 const MyUpdatesTab = (props) => {
-  const {firstName, lastName, avatar} = props.user
   if (props.currentUserUpdates.length) {
     return (
       <div className='update-items-list'>
         <div className='current-user-info'>
-          <Link to='/userSettings'>
-            {avatar
-              ? <img src={avatar} alt='avatar' className='current-user-img' />
+          <Link to={`/users/${props.user.login}`}>
+            {props.user.avatar
+              ? <img src={props.user.avatar} alt='avatar' className='current-user-img' />
               : <i id='user-avatar' className='fas fa-user-circle' />
             }
-            <h3>{`${firstName} ${lastName}`}</h3>
+            <h3>{props.user.firstName} {props.user.lastName}</h3>
           </Link>
         </div>
         <div className='update-items'>
@@ -36,11 +35,7 @@ const MyUpdatesTab = (props) => {
 }
 
 MyUpdatesTab.propTypes = {
-  user: PropTypes.shape({
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired
-  }),
+  user: PropTypes.object.isRequired,
   currentUserUpdates: PropTypes.array.isRequired
 }
 
