@@ -13,6 +13,7 @@ class PageRepository extends GeneralRepository {
   }
 
   getById (id) {
+    console.log('aaaa')
     return this.model.aggregate([
       {
         '$match': { _id: ObjectId(id) }
@@ -23,6 +24,44 @@ class PageRepository extends GeneralRepository {
           localField: 'comments',
           foreignField: '_id',
           as: 'commentsArr'
+        }
+      },
+      {
+        '$lookup': {
+          from: 'users',
+          localField: 'usersLikes',
+          foreignField: '_id',
+          as: 'likes'
+        }
+      },
+      {
+        '$unwind': {
+          path: '$commentsArr',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        '$lookup': {
+          from: 'users',
+          localField: 'commentsArr.userLikes',
+          foreignField: '_id',
+          as: 'commentsArr.likes'
+        }
+      },
+      {
+        '$group': {
+          '_id': '$_id',
+          'commentsArr': {'$addToSet': '$commentsArr'},
+          'title': {'$first': '$title'},
+          'spaceId': {'$first': '$spaceId'},
+          'createdAt': {'$first': '$createdAt'},
+          'updatedAt': {'$first': '$updatedAt'},
+          'isDeleted': {'$first': '$isDeleted'},
+          'comments': {'$first': '$comments'},
+          'usersLikes': {'$first': '$usersLikes'},
+          'likes': {'$first': '$likes'},
+          'modifiedVersions': {'$first': '$modifiedVersions'},
+          'version': {'$first': '$version'}
         }
       }
     ])
@@ -57,6 +96,40 @@ class PageRepository extends GeneralRepository {
         })
     })
   }
+
+//   searchByTitle (filter) {
+//   //   return this.model.find({title: { $regex: filter, $options: 'i' }})
+//   //     .populate({ path: 'spaceId', select: '_id' })
+//   //     .populate({ path: 'spaceId', select: 'name' })
+//   // }
+//     return this.model.aggregate([
+//       {
+//         $match: {title: { $regex: filter, $options: 'i' }}
+//       },
+//       {
+//         $lookup: {
+//           from: 'spaces',
+//           localField: 'spaceId',
+//           foreignField: '_id',
+//           as: 'space'
+//         }
+//       },
+//       {
+//         $group: {
+//           '_id': '$space._id',
+//             'pageId': {'$addToSet': '$_id'},
+//             'title': {'$addToSet': '$title'}
+//           }
+//         }
+//     ])
+//   }
 }
 
+//   '$lookup': {
+//     from: 'comments',
+//     localField: 'comments',
+//     foreignField: '_id',
+//     as: 'commentsArr'
+//   }
+// },
 module.exports = new PageRepository(PageModel)

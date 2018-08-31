@@ -34,10 +34,11 @@ const pageSchema = new mongoose.Schema({
     userId: Schema.Types.ObjectId,
     es_indexed: false
   },
-  comments: {
-    type: [Schema.Types.ObjectId],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment',
     es_indexed: false
-  },
+  }],
   usersLikes: {
     type: [Schema.Types.ObjectId],
     es_indexed: false
@@ -68,6 +69,7 @@ pageSchema.pre('findOneAndUpdate', async function () {
   let { version, title, content, modifiedVersions, isDeleted } = pageQuery.getUpdate()
   if (!isDeleted) {
     let newId = new mongoose.Types.ObjectId()
+    console.log(version)
     await modifiedVersions.push({_id: newId, version, title, content})
     pageQuery.getUpdate().version += 1
   }

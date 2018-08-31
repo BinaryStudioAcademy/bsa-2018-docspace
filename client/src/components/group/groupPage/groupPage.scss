@@ -57,12 +57,19 @@
         white-space: nowrap;
         margin: 0;      
     }
+    button:hover{
+        background-color: #ccc;
+    }
     .accept-button{
         background: #0044a9;
         border-color: transparent;
         color: white;
         font-weight: bold;
         margin-right: 15px;
+        cursor: pointer;
+    }
+    .accept-button:hover{
+        background: #08367C;
     }
     button:focus{
         border: none;
@@ -81,5 +88,12 @@
     }
     .group-users-list button{
         margin: 5px 15px 0 0;
+    }
+    .fa-arrow-left{
+        font-size: 28px !important;
+        color: #333;
+    }
+    .fa-arrow-left:hover{
+        color: #42526E;
     }
 }

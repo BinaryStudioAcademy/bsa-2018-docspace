@@ -10,6 +10,7 @@ class CommentService {
     }
 
     createComment = (comment) => {
+      console.log(comment)
       const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify(comment)}
       const apiResult = callWebApi(args)
         .then(res => res.json())

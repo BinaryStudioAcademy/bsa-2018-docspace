@@ -96,6 +96,7 @@ module.exports = {
   findOneAndUpdate: (req, res) => {
     PageRepository.update(req.params.id, req.body)
       .then(page => {
+        console.log(page)
         if (!page) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
@@ -159,6 +160,7 @@ module.exports = {
   },
 
   search (req, res) {
+    console.log('даніл')
     if (req.body.advancedSearch) {
       PageRepository.advancedSearch(req.body.input)
         .then(result => {
@@ -171,5 +173,22 @@ module.exports = {
     } else {
       // do other search, maybe PageRepository.searchByTitle(req.body.input)
     }
+  },
+
+  searchByTitle: (req, res) => {
+    console.log('normal')
+    Promise.all(
+      [
+        PageRepository.searchByTitle(req.params.filter),
+        SpaceRepository.searchByTitle(req.params.filter)
+      ])
+      .then(([one, two]) => {
+        console.log(one)
+        console.log(two)
+        res.send(one.concat(two))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }

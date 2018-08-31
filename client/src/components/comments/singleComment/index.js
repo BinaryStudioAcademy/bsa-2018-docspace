@@ -37,11 +37,15 @@ export class Comment extends Component {
     this.props.deleteComment && this.props.deleteComment({target: this})
   }
 
-  onLikeComment () {
+  onLikeComment (obj) {
+    this.props.likeAction(obj, this.props.comment)
   }
 
   transformData () {
-    const { createdAt } = this.props.comment
+    let { createdAt } = this.props.comment
+    if (typeof createdAt === 'string') {
+      createdAt = new Date(createdAt)
+    }
     let hours = createdAt.getHours()
     let minutes = createdAt.getMinutes()
     let day = createdAt.getDate()
@@ -65,6 +69,7 @@ export class Comment extends Component {
   }
 
   render () {
+    // console.log(this.props)
     return (
       <React.Fragment>
         {this.state.editMode
@@ -94,7 +99,10 @@ export class Comment extends Component {
                 onLikeComment={this.onLikeComment}
                 editComment={this.props.editComment}
                 creationDate={this.transformData()}
+                likes={this.props.comment.likes}
                 t={this.props.t}
+                user={this.props.user}
+                likeAction={this.props.likeAction}
               />
             </div>
           </div>}
@@ -121,7 +129,8 @@ Comment.propTypes = {
   addNewComment: PropTypes.func,
   level: PropTypes.number,
   firstName: PropTypes.string,
-  lastName: PropTypes.string
-
+  lastName: PropTypes.string,
+  likeAction: PropTypes.func,
+  user: PropTypes.obj
 }
 export default translate('translations')(Comment)
