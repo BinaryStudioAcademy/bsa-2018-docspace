@@ -48,7 +48,7 @@ class SearchModal extends Component {
     const blogRender = blogsList.map(blog =>
       <div className='search-result-wrapper'>
         <NavLink onClick={this.props.closeModal}
-          to={`/spaces/${blog.spaceId._id}/blog/${blog._id}`}>
+          to={`/spaces/${blog.spaceId._id}/blogs/${blog._id}`}>
           <i className='fas fa-rss-square result-big-icon' />
           {blog.title}
         </NavLink>
@@ -58,7 +58,7 @@ class SearchModal extends Component {
     const PageRender = postList.map(page =>
       <div className='search-result-wrapper'>
         <NavLink onClick={this.props.closeModal}
-          to={`/spaces/${page.spaceId._id}/page/${page._id}`}>
+          to={`/spaces/${page.spaceId._id}/pages/${page._id}`}>
           <i className='fas fa-file-alt result-big-icon' />
           {page.title}
         </NavLink>
