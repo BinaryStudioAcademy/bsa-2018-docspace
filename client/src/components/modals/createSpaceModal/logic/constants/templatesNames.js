@@ -1,7 +1,10 @@
-const DOCUMENTATION_SPACE = 'documentation space'
-const KNOWLEDGE_BASE = 'knowledge base'
-const EMPTY_SPACE = 'empty space'
-const GROUP_SPACE = 'group space'
+import {getT} from 'src/config/i18n'
+
+const t = getT()
+const DOCUMENTATION_SPACE = t('documentation space')
+const KNOWLEDGE_BASE = t('knowledge base')
+const EMPTY_SPACE = t('empty space')
+const GROUP_SPACE = t('group space')
 
 export default {
   DOCUMENTATION_SPACE,

@@ -47,6 +47,8 @@ class Page extends Component {
   }
 
   deleteComment (obj) {
+    console.log(this.props.page)
+    console.log(obj.target.props.comment)
     this.props.deleteCommentRequest(obj.target.props.comment, this.props.page)
   }
 
