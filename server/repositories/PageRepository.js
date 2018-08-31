@@ -61,7 +61,8 @@ class PageRepository extends GeneralRepository {
           'usersLikes': {'$first': '$usersLikes'},
           'likes': {'$first': '$likes'},
           'modifiedVersions': {'$first': '$modifiedVersions'},
-          'version': {'$first': '$version'}
+          'version': {'$first': '$version'},
+          'content': {'$first': '$content'}
         }
       }
     ])
