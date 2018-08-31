@@ -11,6 +11,7 @@ export default (content) => {
         isDeleted: content.spaceId.isDeleted
       }
     case 'UPDATE_SPACE_SUCCESS':
+    case 'UPDATE_PAGE_SUCCESS(EXTERNAL)':
       return {
         user: {...content.userId},
         name: content.spaceId.name,

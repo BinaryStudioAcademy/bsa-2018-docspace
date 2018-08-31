@@ -67,7 +67,6 @@ class PageRepository extends GeneralRepository {
       }
     ])
   }
-
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))
