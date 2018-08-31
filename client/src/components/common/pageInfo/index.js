@@ -23,7 +23,7 @@ PageInfo.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   date: PropTypes.string,
-  login: PropTypes.login
+  login: PropTypes.string
 }
 
 PageInfo.defaultProps = {
