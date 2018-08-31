@@ -3,7 +3,7 @@ const pageService = require('../../services/pageService')
 
 router.get('/', pageService.findAll)
 
-router.get('/:id', pageService.findOne)
+router.post('/:id', pageService.findOne)
 
 router.post('/', pageService.add)
 
