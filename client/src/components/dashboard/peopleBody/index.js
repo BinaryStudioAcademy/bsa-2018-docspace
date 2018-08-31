@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {getAlUsersRequest} from './logic/allUsersActions'
 import PropTypes from 'prop-types'
+import './peopleBody.css'
 
 class PeopleBody extends Component {
   componentDidMount () {
@@ -20,9 +21,13 @@ class PeopleBody extends Component {
     )
     return (
       <React.Fragment>
-        <h1>People</h1>
         <table>
           <tbody>
+            <tr>
+              <th>Full name</th>
+              <th>Email</th>
+              <th>Login</th>
+            </tr>
             {usersList}
           </tbody>
         </table>

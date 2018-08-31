@@ -21,7 +21,8 @@ class People extends Component {
           <div className='spaces-sidebar'>
             <SpacesSideBar menuTabs={sideBarTabs} handleClickNavTab={this.handleClickNavTab} activeTab={this.state.active} />
           </div>
-          <div>
+          <div className='people-list-container' >
+            <h1>People</h1>
             <PeopleBody />
           </div>
         </div>
