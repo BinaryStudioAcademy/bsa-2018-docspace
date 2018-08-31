@@ -24,10 +24,30 @@ class PageRepository extends GeneralRepository {
           foreignField: '_id',
           as: 'commentsArr'
         }
+      },
+      { '$unwind': '$commentsArr' },
+      {
+        '$lookup': {
+          from: 'users',
+          localField: 'commentsArr.userId',
+          foreignField: '_id',
+          as: 'commentsArr.user'
+        }
+      },
+      {
+        $group: {
+          '_id': '$_id',
+          'spaceId': { '$first': '$spaceId' },
+          'title': { '$first': '$title' },
+          'isDeleted': { '$first': '$isDeleted' },
+          'content': { '$first': '$content' },
+          'createdAt': { '$first': '$createdAt' },
+          'updatedAt': { '$first': '$updatedAt' },
+          'commentsArr': { '$push': '$commentsArr' }
+        }
       }
     ])
   }
-
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))

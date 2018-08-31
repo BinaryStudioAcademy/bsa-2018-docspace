@@ -94,15 +94,15 @@ function * deleteBlogPage (action) {
   }
 }
 
-const pagesById = (state) => state.pages.byId
+// const pagesById = (state) => state.pages.byId
 
 function * getPage (action) {
   try {
-    const pages = yield select(pagesById)
-    if (pages[action.payload]) {
-      yield put(actions.cancelPageByIdRequst())
+    // const pages = yield select(pagesById)
+    /* if (pages[action.payload]) {
+      yield put(actions.cancelPageByIdRequst()) TEMP for demo
       return
-    }
+    } */
     const page = yield PageService.getPage(action.payload)
     yield commentsActions.allCommentsFetched(page.commentsArr)
     yield put(actions.getPageByIdSuccess(page))

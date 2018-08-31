@@ -4,6 +4,10 @@ const scheme = require('../models/commentScheme')
 module.exports = {
   findAllCommentsForPage: (req, res) => {
     CommentRepository.getByArray(req.body.commentsId)
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar'
+      })
       .then(comments => {
         comments = comments.filter(comment => !comment.isDeleted)
         res.status(200)

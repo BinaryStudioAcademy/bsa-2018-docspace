@@ -72,7 +72,8 @@ Activity.propTypes = {
   match: PropTypes.object,
   userId: PropTypes.string,
   getAllUserUpdates: PropTypes.func,
-  getCurrentUserUpdates: PropTypes.func
+  getCurrentUserUpdates: PropTypes.func,
+  getUser: PropTypes.func
 }
 
 Activity.defaultProps = {
@@ -84,9 +85,9 @@ const mapStateToProps = (state) => {
     allUpdates: state.activity.allHistory.allUpdates,
     currentUserUpdates: state.activity.currentUserHistory.currentUserUpdates,
     userId: state.verification.user._id,
-    userLogin: state.verification.user.login,
-    userName: `${state.verification.user.firstName} ${state.verification.user.lastName}`,
-    userAvatar: state.verification.user.avatar
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 

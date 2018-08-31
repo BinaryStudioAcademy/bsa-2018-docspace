@@ -117,3 +117,6 @@ export const userById = ({ user }) => user.userReducer
 export const isUserFetching = ({ user }) => {
   return user.isFetching
 }
+export const getUserData = ({user}) => {
+  return user.getUser
+}

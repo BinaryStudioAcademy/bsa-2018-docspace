@@ -23,6 +23,7 @@ module.exports = {
             message: 'page not found with id ' + req.params.id
           })
         }
+        console.log(`one page`, page)
         res.send(page[0])
       }).catch(err => {
         console.log(err)

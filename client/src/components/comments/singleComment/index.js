@@ -5,6 +5,7 @@ import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import AddComment from '../addComment'
+import { Link } from 'react-router-dom'
 
 import './singleComment.css'
 
@@ -79,10 +80,14 @@ export class Comment extends Component {
             parentId={this.props.comment.parentId}
           />
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <CommentAvatar UserAvatarLink={UserAvatarLink} />
+            <Link to={`/users/${this.props.comment.user[0].login}`}>
+              <CommentAvatar UserAvatarLink={this.props.comment.user[0].avatar ? this.props.comment.user[0].avatar : UserAvatarLink} />
+            </Link>
             <div className='comment-body'>
               <h4 className='comment-first-last-names'>
-                <a href=''>{this.props.comment.firstName} {this.props.comment.lastName}</a>
+                <Link to={`/users/${this.props.comment.user[0].login}`}>
+                  {this.props.comment.user[0].firstName} {this.props.comment.user[0].lastName}
+                </Link>
               </h4>
               <div className='comment-body-content'>
                 <p>{this.props.comment.text}</p>

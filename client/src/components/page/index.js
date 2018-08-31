@@ -78,6 +78,7 @@ class Page extends Component {
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -181,7 +182,9 @@ Page.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)

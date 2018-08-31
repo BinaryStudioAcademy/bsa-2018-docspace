@@ -27,7 +27,6 @@ export const verificationReducer = (state = initialState, action) => {
         isLoggedIn: false,
         user: null
       }
-
     case actionTypes.SAVE_USER_IN_SESSION:
       return {
         requesting: false,
