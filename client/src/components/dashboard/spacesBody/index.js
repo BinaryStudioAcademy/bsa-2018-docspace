@@ -8,36 +8,41 @@ import { getUserSpaces } from 'src/components/containers/user/logic/userReducer'
 import { getUser } from 'src/components/containers/user/logic/userActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 import PropTypes from 'prop-types'
-const sideBarTabs = ['All Spaces', 'Personal Spaces', 'My Spaces', 'Archived Spaces']
 class DashboardSpacesBody extends Component {
   constructor (props) {
     super(props)
+    const {t} = props
     this.state = {
-      active: 'All Spaces',
+      active: t('All Spaces'),
       spaces: []
     }
+    this.sideBarTabs = [ t('All Spaces'), t('Personal Spaces'), t('My Spaces'), t('Archived Spaces') ]
   }
   componentDidMount () {
     this.props.actions.getSpacesRequest()
     this.props.actions.getUser(this.props.userId)
   }
   handleClickNavTab = (tab) => {
-    if (tab === 'All Spaces') {
+    const {t} = this.props
+    if (tab === t('All Spaces')) {
       this.setState({spaces: this.props.spaces})
     }
-    if (tab === 'Personal Spaces' || tab === 'My Spaces' || tab === 'Archived Spaces') {
+    if (tab === t('Personal Spaces') || tab === t('My Spaces') || tab === t('Archived Spaces')) {
       const filteredSpaces = this.props.spaces.filter(space => this.props.userSpaces.some(userSpaceId => userSpaceId === space._id))
       this.setState({ spaces: filteredSpaces })
     }
     this.setState({ active: tab })
   }
   render () {
+    const {t} = this.props
     return (
       <div className={'spaces-body'}>
         <div className={'spaces-sidebar'}>
           <SpacesSideBar
-            menuTabs={sideBarTabs}
+            menuTabs={this.sideBarTabs}
             handleClickNavTab={this.handleClickNavTab}
             activeTab={this.state.active}
           />
@@ -45,7 +50,8 @@ class DashboardSpacesBody extends Component {
         <SpacesContent
           activeTab={this.state.active}
           isFetching={this.props.isFetching}
-          spaces={this.state.active !== 'All Spaces' ? this.state.spaces : this.props.spaces}
+          spaces={this.state.active !== t('All Spaces') ? this.state.spaces : this.props.spaces}
+          t={t}
         />
       </div>
     )
@@ -67,7 +73,8 @@ DashboardSpacesBody.propTypes = {
   isFetching: PropTypes.bool,
   actions: PropTypes.object,
   userId: PropTypes.string,
-  userSpaces: PropTypes.array
+  userSpaces: PropTypes.array,
+  t: PropTypes.func
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardSpacesBody)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardSpacesBody)))

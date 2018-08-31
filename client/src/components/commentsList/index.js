@@ -12,7 +12,7 @@ class CommentsList extends Component {
 
   sortComments () {
     this.props.comments.sort((a, b) => {
-      return a.createdAt > b.createdAt ? 1 : -1
+      return a.createdAt > b.createdAt ? -1 : 1
     })
   }
   getComments (comments) {

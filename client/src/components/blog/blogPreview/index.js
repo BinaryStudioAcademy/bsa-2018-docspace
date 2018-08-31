@@ -15,19 +15,19 @@ class Blog extends Component {
   }
 
   render () {
-    const {space} = this.props
+    const {space, t} = this.props
     return (
       <React.Fragment>
         <BlogHeader space={space} />
         <div className='blog-container'>
           <div className='empty-blog-message'>
-            <div className='empty-blog-message-title'>Got something to share?</div>
-            <div className='empty-blog-message-text'>Blog posts are a great way to share announcements, status reports or other important news with your team.</div>
+            <div className='empty-blog-message-title'>{t('Got something to share?')}</div>
+            <div className='empty-blog-message-text'>{t('Blog posts are a great')}</div>
             <button
               className='empty-blog-message-button'
               onClick={this.handleCreateBlogPage}
             >
-              Create Blog Post
+              {t('Create Blog Post')}
             </button>
           </div>
         </div>
@@ -55,7 +55,8 @@ Blog.propTypes = {
     _id: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)
   }),
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  t: PropTypes.func
 }
 
 export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(Blog))
