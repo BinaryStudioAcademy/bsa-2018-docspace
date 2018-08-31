@@ -7,7 +7,7 @@ router.get('/search/:filter', pageService.searchByTitle)
 
 router.get('/', pageService.findAll)
 
-router.get('/:id', pageService.findOne)
+router.post('/:id', pageService.findOne)
 
 router.post('/', pageService.add)
 

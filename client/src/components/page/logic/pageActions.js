@@ -18,9 +18,9 @@ export const getAllPagesError = () => ({
 })
 
 // GET ONE
-export const getPageByIdRequest = (id) => ({
+export const getPageByIdRequest = (id, version) => ({
   type: actionTypes.GET_PAGE_BY_ID_REQUEST,
-  payload: id
+  payload: {id, version}
 })
 
 export const getPageByIdSuccess = (page) => ({
@@ -107,9 +107,9 @@ export const updatePageError = () => ({
 })
 
 // DELETE
-export const deletePageRequest = (page) => ({
+export const deletePageRequest = (id) => ({
   type: actionTypes.DELETE_PAGE_REQUEST,
-  payload: { ...page }
+  payload: { id }
 })
 
 export const deletePageSuccess = (deletedPage) => ({

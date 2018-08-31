@@ -41,7 +41,8 @@ class SpaceRepository extends GeneralRepository {
           categories: {
             _id: 1,
             name: 1
-          }
+          },
+          spaceSettings: 1
         }
       }
     ])
@@ -119,7 +120,8 @@ class SpaceRepository extends GeneralRepository {
             title: 1
           },
           history: 1,
-          rights: 1
+          rights: 1,
+          spaceSettings: 1
         }
       }
     ])

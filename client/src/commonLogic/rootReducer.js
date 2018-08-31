@@ -15,6 +15,7 @@ import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
 import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
+import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -32,6 +33,7 @@ const baseReducer = combineReducers({
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
   allUsers: allUsersReducer,
+  warningModal: warningModalReducer,
   routing
 })
 

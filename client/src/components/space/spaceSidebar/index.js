@@ -16,8 +16,7 @@ class SpaceSidebar extends Component {
     const { space, t, showLabels, showContent, isOpened, isFetching } = this.props
     const sidebarWrapperClass = isOpened ? 'sidebar' : 'sidebar minimized'
     const sidebarClass = showLabels ? 'full-sidebar' : 'full-sidebar minimized'
-    const sidebarButtons = isOpened ? null : <SpaceSidebarButtons spaceId={space._id} />
-
+    const sidebarButtons = isOpened ? null : <SpaceSidebarButtons spaceId={space._id} spaceSettings={space.spaceSettings} />
     return (
       <div className={sidebarWrapperClass} >
         <MinSidebar tabs={sidebarButtons} isGray={!isOpened} />
@@ -28,9 +27,14 @@ class SpaceSidebar extends Component {
                 showContent && (
                   <React.Fragment>
                     <div className='space-sidebar-header'>
-                      <div className='space-sidebar-header-icon'>
-                        <i className='fas fa-folder' />
-                      </div>
+                      { space.spaceSettings
+                        ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color}}>
+                          <i className={`fa fa-${space.spaceSettings.icon}`} />
+                        </div>
+                        : <div className='space-sidebar-header-icon'>
+                          <i className={`fa fa-folder`} />
+                        </div>
+                      }
                       {showLabels && <span className='space-sidebar-header-name'>{space.name}</span>}
                     </div>
                     <div className='space-sidebar-main'>

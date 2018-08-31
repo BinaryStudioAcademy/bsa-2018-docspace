@@ -18,6 +18,7 @@ import NewPassword from './components/auth/setNewPassword'
 import PageEditorContainer from 'src/components/pageEditorContainer'
 import BlogPostEditor from 'src/components/blog/blogPostEditor'
 import Page404 from 'src/components/common/page404'
+import IconColourPicker from 'src/components/iconColorPicker'
 
 sagaMiddleware.run(rootSaga)
 
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route path='/reset/:token' component={NewPassword} />
           <Route path='/spaces/:space_id/pages/:page_id/edit' exact component={PageEditorContainer} />
           <Route path='/spaces/:space_id/blog/:page_id/edit' exact component={BlogPostEditor} />
+          <Route path='/testIconPicker' component={IconColourPicker} />
           <Route path='/page404' component={RequiredAuth(Page404)} />
           <Route path='/' component={RequiredAuth(App)} />
         </Switch>

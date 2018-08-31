@@ -59,7 +59,9 @@ class PageRepository extends GeneralRepository {
           'isDeleted': {'$first': '$isDeleted'},
           'comments': {'$first': '$comments'},
           'usersLikes': {'$first': '$usersLikes'},
-          'likes': {'$first': '$likes'}
+          'likes': {'$first': '$likes'},
+          'modifiedVersions': {'$first': '$modifiedVersions'},
+          'version': {'$first': '$version'}
         }
       }
     ])

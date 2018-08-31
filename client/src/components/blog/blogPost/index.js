@@ -90,7 +90,6 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

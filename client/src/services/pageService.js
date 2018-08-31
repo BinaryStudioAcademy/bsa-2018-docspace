@@ -11,8 +11,8 @@ class PageService {
     return apiResult
   }
 
-  getPage = (id) => {
-    const args = { endpoint: `/api/pages/${id}`, method: 'GET' }
+  getPage = (obj) => {
+    const args = { endpoint: `/api/pages/${obj.id}`, method: 'POST', body: JSON.stringify({version: obj.version}) }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
@@ -27,8 +27,8 @@ class PageService {
     return apiResult
   }
 
-  deletePage = (page) => {
-    const args = { endpoint: `/api/pages/${page._id}`, method: 'DELETE' }
+  deletePage = (id) => {
+    const args = { endpoint: `/api/pages/${id}`, method: 'DELETE' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))

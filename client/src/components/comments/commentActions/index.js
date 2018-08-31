@@ -21,7 +21,7 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
         </li>
         <Like
           t={t}
-          user={user._id}
+          user={user._id || ''}
           likes={likes || []}
           likePage={onLikeComment}
         />
@@ -35,7 +35,11 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
     </div>
   )
 }
-
+CommentActions.defaultProps = {
+  user: {
+    _id: ''
+  }
+}
 CommentActions.propTypes = {
   onReplyComment: PropTypes.func,
   onEditComment: PropTypes.func,
