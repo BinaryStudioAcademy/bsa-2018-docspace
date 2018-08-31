@@ -19,6 +19,8 @@ import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
 
+import SearchPage from 'src/components/searchPage'
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -94,7 +96,8 @@ class App extends Component {
               <Route path='/spaces/:id' component={SpaceContainer} />
               <Route path='/group/:id' exact component={GroupPage} />
               <Route path='/admin' component={Administration} />
-              <Redirect to={'/'} />
+              <Route path='/settings' component={SearchPage} />
+              {/* <Redirect to={'/'} /> */}
             </Switch>
           </DashboardMain>
         </SplitPane>

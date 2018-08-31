@@ -19,6 +19,8 @@ import fakeImg from 'src/resources/logo.svg'
 import './page.css'
 import '../comments//comments/comments.css'
 
+import ElasticsearchService from 'src/services/elasticsearchService'
+
 class Page extends Component {
   constructor (props) {
     super(props)
@@ -31,6 +33,7 @@ class Page extends Component {
   }
 
   componentDidMount () {
+    ElasticsearchService.search({entityToSearch: 'page', input: 'text'}).then(res => console.log(res)).catch(err => console.log(err))
     !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
   }
 

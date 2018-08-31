@@ -14,6 +14,8 @@ const history = require('./history')
 const uploadFiles = require('./uploadFile')
 const upload = require('./upload')
 
+const SearchService = require('../../services/searchService')
+
 module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/signup', signup)
   app.use('/api/login', login)
@@ -30,4 +32,5 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/history', verifyJWTMiddleware, history)
   app.use('/api/uploadFiles', uploadFiles)
   app.use('/api/upload', verifyJWTMiddleware, upload)
+  app.post('/api/search', verifyJWTMiddleware, SearchService.handleSearch)
 }
