@@ -23,7 +23,6 @@ function * getPages (action) {
 function * createPage (action) {
   try {
     const newPage = yield PageService.createPage(action.payload)
-    console.log(`saga page target`, newPage)
     yield put(actions.createPageSuccess(newPage))
     // Go to the editor
     yield put(push(`/spaces/${newPage.spaceId}/pages/${newPage._id}/edit`))
@@ -38,7 +37,6 @@ const spaceIdFromPathname = (state) => state.router.location.pathname.split('/')
 function * createBlogPage (action) {
   try {
     const newPage = yield PageService.createPage(action.payload)
-    console.log(`saga blog target`, newPage)
     const spaceId = action.spaceId
     yield put(push(`/spaces/${spaceId}/blog/${newPage._id}/edit`))
     yield put(actions.createBlogPageSuccess(newPage))
@@ -52,7 +50,6 @@ function * updatePage (action) {
   try {
     const target = action.payload
     const updated = yield PageService.updatePage(target)
-    console.log(`saga page`, updated)
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))
   } catch (e) {
@@ -65,7 +62,6 @@ function * updateBlogPage (action) {
   try {
     const target = action.payload
     const updated = yield PageService.updatePage(target)
-    console.log(`saga blog`, updated)
     const spaceId = yield select(spaceIdFromPathname)
     yield put(push(`/spaces/${spaceId}/blog/${updated._id}`))
     yield put(actions.updateBlogPageSuccess(updated))
