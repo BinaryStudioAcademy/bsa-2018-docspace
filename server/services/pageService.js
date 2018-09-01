@@ -94,6 +94,8 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
+    console.log(`body`, req.body)
+    console.log(`id`, req.pata)
     PageRepository.update(req.params.id, req.body)
       .then(page => {
         console.log(page)

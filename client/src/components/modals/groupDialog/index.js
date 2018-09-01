@@ -40,8 +40,6 @@ class GroupDialog extends Component {
   renderContent = () => {
     const {t} = this.props
     const forAutoFocus = true
-    // this.getUsers()
-    console.log(this.state)
     return <React.Fragment>
       <div className='group'>
         <div className='group-dialog-row'>
@@ -135,7 +133,6 @@ class GroupDialog extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <React.Fragment>
         <Modal

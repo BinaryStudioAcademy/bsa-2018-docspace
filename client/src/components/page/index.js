@@ -82,12 +82,10 @@ class Page extends Component {
   }
 
  likeAction = (obj) => {
-   console.log(obj)
    this.likePage(obj, 'page')
  }
 
   likePage = (obj, type, ...args) => {
-    console.log(args)
     if (type === 'page') {
       obj
         ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
@@ -100,15 +98,13 @@ class Page extends Component {
   }
 
   likeComment = (obj, comment) => {
-    console.log(comment)
     this.likePage(obj, 'comment', comment)
   }
 
   render () {
-    const { firstName, lastName, avatar, login, _id } = this.props.user
+    const { _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
-    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -132,13 +128,15 @@ class Page extends Component {
           </div>
           : <div className='page-container'>
             <PageTitle text={page.title} />
+            { this.props.page.pageCreator &&
             <PageInfo
-              avatar={user ? user.avatar : avatar}
-              firstName={user ? user.firstName : firstName}
-              lastName={user ? user.lastName : lastName}
+              avatar={this.props.page.pageCreator ? this.props.page.pageCreator[0].avatar : ''}
+              firstName={this.props.page.pageCreator[0].firstName}
+              lastName={this.props.page.pageCreator[0].lastName}
               date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
-              login={user ? user.login : login}
+              login={this.props.page.pageCreator[0].login}
             />
+            }
             <PageContent content={page.content} />
             <Like t={t} user={user} likes={this.props.page.likes || []} likePage={this.likeAction} />
             <div className='comments-section'>
@@ -147,23 +145,26 @@ class Page extends Component {
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
-              <CommentsList
-                comments={this.props.page.commentsArr && this.props.page.comments.length ? this.props.page.commentsArr : []}
-                deleteComment={this.deleteComment}
-                editComment={this.editComment}
-                addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
-                userId={_id}
-                likeAction={this.likeComment}
-              />
-              <AddComment
-                firstName={firstName}
-                lastName={lastName}
-                addNewComment={this.addNewComment}
-                userId={_id}
-                t={t}
-              />
+              { this.props.page.pageCreator && this.props.page.commentsArr[0].user && this.props.page.commentsArr[0].user.length
+                ? <CommentsList
+                  comments={this.props.page.commentsArr}
+                  deleteComment={this.deleteComment}
+                  editComment={this.editComment}
+                  addNewComment={this.addNewComment}
+                  userId={_id}
+                  user={this.props.user}
+                  likeAction={this.likeComment}
+                />
+                : null
+              }
+              { this.props.page.pageCreator
+                ? <AddComment
+                  addNewComment={this.addNewComment}
+                  userId={_id}
+                  avatar={this.props.user.avatar}
+                  t={t}
+                /> : null
+              }
             </div>
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
@@ -181,7 +182,8 @@ Page.propTypes = {
     content: PropTypes.string,
     commentsArr: PropTypes.array,
     likes: PropTypes.array,
-    comments: PropTypes.comment
+    comments: PropTypes.array,
+    pageCreator: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -222,7 +224,9 @@ Page.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)

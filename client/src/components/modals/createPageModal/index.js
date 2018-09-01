@@ -25,7 +25,7 @@ class CreatePageModal extends Component {
   handlecreateClick = () => {
     const selectedTemplate = this.state.selectedTemplate
     const selectedSpace = JSON.parse(this.state.selectedSpace)
-    PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name)
+    PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name, this.props.userId)
   }
 
   componentDidMount () {
@@ -59,7 +59,7 @@ class CreatePageModal extends Component {
     const selectedSpace = JSON.parse(this.state.selectedSpace)
     const disableSend = !selectedSpace || !selectedTemplate
     if (!disableSend) {
-      PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name)
+      PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name, this.props.userId)
     }
   }
 
@@ -145,7 +145,8 @@ class CreatePageModal extends Component {
 
 function mapStateToProps (state) {
   return {
-    spaces: allSpaces(state)
+    spaces: allSpaces(state),
+    userId: state.verification.user._id
   }
 }
 
@@ -164,5 +165,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePageModal)
 CreatePageModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   spaces: PropTypes.arrayOf(PropTypes.object),
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired
 }

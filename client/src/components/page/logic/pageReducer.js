@@ -28,7 +28,6 @@ function all (state = initialState.all, action) {
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
     case actionTypes.SEND_DOC_FILE_SUCCESS:
-      console.log(action.payload)
       return [ ...state, action.payload._id ]
 
     default: return state
