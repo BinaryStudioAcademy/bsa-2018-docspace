@@ -9,12 +9,6 @@ class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
     const {spaceSettings} = space
-    // FOR DEMO HARDCODED
-    let name = 'Oleg Kupriianov'
-
-    if (space.owner) {
-      name = space.owner.firstName + ' ' + space.owner.lastName
-    }
     const icon = spaceSettings ? spaceSettings.icon : 'folder'
     const color = spaceSettings ? spaceSettings.color : '#1c80ff'
     return (
@@ -50,7 +44,7 @@ class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>{t('Created_by')}</td>
-            <td> <span className='link'>{name}</span></td>
+            <td> <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link></td>
           </tr>
           <tr>
             <td>{t('Categoies')}</td>
@@ -70,7 +64,7 @@ class SpaceDetails extends Component {
           <tr>
             <td>{t('Administrators')}</td>
             <td>
-              <span className='link'>{name}</span>
+              <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link>
             </td>
           </tr>
         </tbody>

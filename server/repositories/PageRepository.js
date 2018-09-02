@@ -13,7 +13,6 @@ class PageRepository extends GeneralRepository {
   }
 
   getById (id) {
-    console.log('aaaa')
     return this.model.aggregate([
       {
         '$match': { _id: ObjectId(id) }
