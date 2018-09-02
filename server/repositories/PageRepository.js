@@ -98,8 +98,12 @@ class PageRepository extends GeneralRepository {
     })
   }
 
-  updateComment (id, commentId) {
+  addNewComment (id, commentId) {
     return super.updateOne(id, {'$addToSet': {'comments': commentId}})
+  }
+
+  deleteComment (id, commentId) {
+    return super.updateOne(id, {'$pull': {'comments': commentId}})
   }
 
 //   searchByTitle (filter) {

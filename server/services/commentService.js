@@ -65,30 +65,18 @@ module.exports = {
       .catch(err => err)
     console.log('savedComment', savedComment)
     console.log('pageID', req.body.pageId)
-    await PageRepository.updateComment(req.body.pageId, savedComment._id)
+    await PageRepository.addNewComment(req.body.pageId, savedComment._id)
       .then(page => page)
-      .catch(err => err)
+      .catch(err => res.status(500).send(err))
     res.send(savedComment)
   },
 
   findOneAndUpdate: (req, res) => {
     CommentRepository.update(req.params.id, req.body)
-      .then(comment => {
-        if (!comment) {
-          res.status(404).send({
-            message: 'Comment not found with id ' + req.params.id
-          })
-        }
-        res.status(200)
-        res.send(comment[0])
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t update comment with id' + req.params.id
-        })
-        console.log(err)
-      })
+      .then(comment => res.send(comment))
+      .catch(err => res.status(500).send(err))
   },
+
   findOneAndDelete: (req, res) => {
     CommentRepository.update(req.params.id, {'isDeleted': true})
       .then(comment => {
@@ -97,9 +85,9 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        res.status(200).send({
-          message: 'Comment deleted successfully'
-        })
+        PageRepository.deleteComment(req.body.pageId, comment._id)
+          .then(() => res.status(200).send(comment))
+          .catch(err => res.status(500).send(err))
       })
       .catch(err => {
         res.status(500).send({

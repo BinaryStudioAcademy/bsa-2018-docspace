@@ -13,7 +13,8 @@ const initialState = {
     succesful: false,
     errors: []
   },
-  isFetching: false
+  isFetching: false,
+  pageComments: []
 }
 
 function all (state = initialState.all, action) {
@@ -42,8 +43,37 @@ function byId (state = initialState.byId, action) {
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
     case likesActionTypes.PUT_LIKE_SUCCESS:
     case likesActionTypes.DELETE_LIKE_SUCCESS:
-    case commentsActionTypes.CREATE_COMMENT_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
+
+    case commentsActionTypes.CREATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: [...action.payload.page.comments.slice(), action.payload.newComment]
+        }
+      }
+    case commentsActionTypes.EDIT_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: action.payload.page.comments.map(comment => {
+            if (comment._id !== action.payload.editedComment._id) {
+              return comment
+            }
+            return action.payload.editedComment
+          })
+        }
+      }
+    case commentsActionTypes.DELETE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: action.payload.page.comments.filter(comment => comment._id !== action.payload.deletedComment._id)
+        }
+      }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:
       return action.payload.byId
@@ -107,12 +137,6 @@ export const pageByIdFromRoute = (state) => {
   // console.log('SELECTOR :' ,id)
   // console.log(state.router.location)
   return state.pages.byId[id] || {}
-}
-
-export const getPageComments = (state) => {
-  const page = pageByIdFromRoute(state)
-  console.log('SELECTOR', page.comments)
-  return page.comments
 }
 
 export const isPagesFetching = ({ pages }) => {

@@ -31,10 +31,7 @@ export const getAllCommentsFailure = () => ({
 
 export const addCommentRequest = (comment, page) => ({
   type: commentsActionTypes.CREATE_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
 // export const addCommentSuccessfully = (comment) => {
@@ -50,9 +47,9 @@ export const addCommentRequest = (comment, page) => ({
 //   }
 // }
 
-export const addCommentToPageSuccess = (pageWithComment) => ({
+export const addCommentToPageSuccess = (page, newComment) => ({
   type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
-  payload: pageWithComment
+  payload: {page, newComment}
 })
 
 export const addCommentFailure = () => ({
@@ -62,14 +59,12 @@ export const addCommentFailure = () => ({
 // EDIT
 export const editCommentRequest = (comment, page) => ({
   type: commentsActionTypes.EDIT_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
-export const editCommentSuccessfully = () => ({
-  type: commentsActionTypes.EDIT_COMMENT_SUCCESS
+export const editCommentSuccess = (page, editedComment) => ({
+  type: commentsActionTypes.EDIT_COMMENT_SUCCESS,
+  payload: {page, editedComment}
 })
 
 export const editCommentFailure = () => ({
@@ -79,14 +74,12 @@ export const editCommentFailure = () => ({
 // DELETE
 export const deleteCommentRequest = (comment, page) => ({
   type: commentsActionTypes.DELETE_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
-export const deleteCommentSuccessfully = () => ({
-  type: commentsActionTypes.DELETE_COMMENT_SUCCESS
+export const deleteCommentSuccess = (page, deletedComment) => ({
+  type: commentsActionTypes.DELETE_COMMENT_SUCCESS,
+  payload: {page, deletedComment}
 })
 
 export const deleteCommentFailure = () => ({

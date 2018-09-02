@@ -25,8 +25,8 @@ class CommentService {
       return apiResult
     }
 
-    deleteComment = (id) => {
-      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE'}
+    deleteComment = (id, pageId) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE', body: JSON.stringify({pageId})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))

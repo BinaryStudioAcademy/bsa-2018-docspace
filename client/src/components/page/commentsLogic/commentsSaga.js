@@ -2,7 +2,6 @@ import { takeEvery, put } from 'redux-saga/effects'
 import * as actions from './commentsActions'
 import * as actionTypes from './commentsActionTypes'
 import {commentService} from '../../../services/commentService'
-import * as pageAction from '../logic/pageActions'
 
 function * getComments (action) {
   try {
@@ -13,61 +12,34 @@ function * getComments (action) {
   }
 }
 
-// function * createComment (action) {
-//   try {
-//     const comment = yield commentService.createComment(action.payload.comment)
-//     action.payload.page.comments.push(comment._id)
-//     const newComments = [...action.payload.page.commentsArr]
-//     newComments.push(comment)
-//     yield put(actions.addCommentSuccessfully(newComments))
-
-//     if (action.payload.page.spaceId) {
-//       yield put(pageAction.updatePageRequest(action.payload.page))
-//     } else {
-//       yield put(pageAction.updateBlogPageRequest(action.payload.page))
-//     }
-//   } catch (e) {
-//     yield put(actions.addCommentFailure())
-//   }
-// }
-
 function * createComment (action) {
   const {comment, page} = action.payload
   try {
     const savedComment = yield commentService.createComment(comment, page._id)
-    page.comments.push(savedComment)
-    yield put(actions.addCommentToPageSuccess(page))
+    yield put(actions.addCommentToPageSuccess(page, savedComment))
   } catch (e) {
     yield put(actions.addCommentFailure())
   }
 }
 
 function * editComment (action) {
+  const {comment, page} = action.payload
   try {
-    yield commentService.editComment(action.payload.comment._id, action.payload.comment)
-
-    if (action.payload.page.spaceId) {
-      yield put(pageAction.updatePageRequest(action.payload.page))
-    } else {
-      yield put(pageAction.updateBlogPageRequest(action.payload.page))
-    }
+    const editedComment = yield commentService.editComment(comment._id, comment)
+    yield put(actions.editCommentSuccess(page, editedComment))
   } catch (e) {
+    console.log(e)
     yield put(actions.editCommentFailure())
   }
 }
 
 function * deleteComment (action) {
+  const {comment, page} = action.payload
   try {
-    yield commentService.deleteComment(action.payload.comment._id)
-    const commentsRemoved = action.payload.page.comments.filter(_id => _id !== action.payload.comment._id)
-    action.payload.page.comments = commentsRemoved
-
-    if (action.payload.page.spaceId) {
-      yield put(pageAction.updatePageRequest(action.payload.page))
-    } else {
-      yield put(pageAction.updateBlogPageRequest(action.payload.page))
-    }
+    const deletedComment = yield commentService.deleteComment(comment._id, page._id)
+    yield put(actions.deleteCommentSuccess(page, deletedComment))
   } catch (e) {
+    console.log(e)
     yield put(actions.deleteCommentFailure())
   }
 }

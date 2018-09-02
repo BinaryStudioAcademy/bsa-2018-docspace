@@ -5,7 +5,7 @@ import PageHeader from 'src/components/common/pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import { pageByIdFromRoute, isPagesFetching, getPageComments } from 'src/components/page/logic/pageReducer'
+import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
@@ -36,10 +36,6 @@ class Page extends Component {
   componentDidMount () {
     const {page_id: pageId, version} = this.props.match.params
     !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    console.log('NEXT', nextProps)
   }
 
   addNewComment (obj) {
@@ -107,7 +103,6 @@ class Page extends Component {
   }
 
   render () {
-    console.log('re-render component', this.props.pageComments)
     const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
@@ -184,7 +179,6 @@ Page.propTypes = {
     comments: PropTypes.array,
     likes: PropTypes.array
   }),
-  pageComments: PropTypes.array,
 
   user: PropTypes.object,
   t: PropTypes.func,
@@ -222,13 +216,11 @@ Page.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
-  console.log('PROPS CHANGED')
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
     space: spaceById(state),
-    isFetching: isPagesFetching(state),
-    pageComments: getPageComments(state)
+    isFetching: isPagesFetching(state)
   }
 }
 
