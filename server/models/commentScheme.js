@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema({
   userId: Schema.Types.ObjectId,
   firstName: String,
   lastName: String,
-  userLikes: [Schema.Types.ObjectId],
+  userLikes: [{type: Schema.Types.ObjectId, ref: 'User'}],
   text: String,
   isDeleted: {type: Boolean, default: false},
   parentId: {type: Schema.Types.ObjectId, default: null},

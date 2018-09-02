@@ -18,24 +18,14 @@ module.exports = {
 
   findOne: async (req, res) => {
     let page = await PageRepository.getById(req.params.id)
-      .then(page => {
-        if (!page[0]) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        return page[0]
+      .populate({
+        path: 'comments'
+        // populate: {path: 'userLikes', select: 'firstName lastName avatar'}
       })
+      .then(page => page)
       .catch(err => {
         console.log(err)
-        if (err.kind === 'ObjectId') {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        return res.status(500).send({
-          message: 'Error retrieving page with id ' + req.params.id
-        })
+        return err
       })
     if (req.body.version) {
       const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
@@ -56,7 +46,6 @@ module.exports = {
         createdAt: page.createdAt,
         updatedAt: pageCurrentHistory[0].date,
         content: oldPage.content,
-        commentsArr: page.commentsArr,
         userModified: pageCurrentHistory[0].userId
       }
     }
@@ -95,15 +84,15 @@ module.exports = {
 
   findOneAndUpdate: (req, res) => {
     PageRepository.update(req.params.id, req.body)
+      .populate({
+        path: 'comments',
+        populate: {path: 'userLikes', select: 'firstName lastName avatar'}
+      })
       .then(page => {
-        console.log(page)
-        if (!page) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        res.send(page[0])
-      }).catch(err => {
+        console.log('after populate', page)
+        return res.send(page)
+      })
+      .catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {
           return res.status(404).send({

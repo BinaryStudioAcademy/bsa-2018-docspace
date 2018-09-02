@@ -1,5 +1,6 @@
 const CommentRepository = require('../repositories/CommentRepository')
-const scheme = require('../models/commentScheme')
+const PageRepository = require('../repositories/PageRepository')
+// const scheme = require('../models/commentScheme')
 
 module.exports = {
   findAllCommentsForPage: (req, res) => {
@@ -34,30 +35,42 @@ module.exports = {
         console.log(err)
       })
   },
-  add: (req, res) => {
-    const Comment = new scheme.Comment({
-      userId: req.body.userId,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      text: req.body.text,
-      isDeleted: req.body.isDeleted,
-      comments: req.body.comments,
-      usersLikes: req.body.usersLikes,
-      createdAt: req.body.createdAt,
-      parentId: req.body.parentId
-    })
-    Comment.save()
-      .then(comment => {
-        res.status(200)
-        res.send(comment)
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t add page'
-        })
-        console.log(err)
-      })
+  // add: (req, res) => {
+  //   const Comment = new scheme.Comment({
+  //     userId: req.body.userId,
+  //     firstName: req.body.firstName,
+  //     lastName: req.body.lastName,
+  //     text: req.body.text,
+  //     isDeleted: req.body.isDeleted,
+  //     comments: req.body.comments,
+  //     usersLikes: req.body.usersLikes,
+  //     createdAt: req.body.createdAt,
+  //     parentId: req.body.parentId
+  //   })
+  //   Comment.save()
+  //     .then(comment => {
+  //       res.status(200)
+  //       res.send(comment)
+  //     })
+  //     .catch(err => {
+  //       res.status(500).send({
+  //         message: 'Can\'t add page'
+  //       })
+  //       console.log(err)
+  //     })
+  // },
+  add: async (req, res) => {
+    let savedComment = await CommentRepository.create(req.body.comment)
+      .then(comment => comment)
+      .catch(err => err)
+    console.log('savedComment', savedComment)
+    console.log('pageID', req.body.pageId)
+    await PageRepository.updateComment(req.body.pageId, savedComment._id)
+      .then(page => page)
+      .catch(err => err)
+    res.send(savedComment)
   },
+
   findOneAndUpdate: (req, res) => {
     CommentRepository.update(req.params.id, req.body)
       .then(comment => {

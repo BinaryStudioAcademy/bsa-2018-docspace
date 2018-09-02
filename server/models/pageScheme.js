@@ -41,7 +41,8 @@ const pageSchema = new mongoose.Schema({
   }],
   usersLikes: {
     type: [Schema.Types.ObjectId],
-    es_indexed: false
+    es_indexed: false,
+    ref: 'User'
   },
   isDeleted: {
     type: Boolean,
@@ -66,6 +67,7 @@ const pageSchema = new mongoose.Schema({
 
 pageSchema.pre('findOneAndUpdate', async function () {
   let pageQuery = this
+  console.log('PRE METHOD PAGE', pageQuery)
   let { version, title, content, modifiedVersions, isDeleted } = pageQuery.getUpdate()
   if (!isDeleted) {
     let newId = new mongoose.Types.ObjectId()
