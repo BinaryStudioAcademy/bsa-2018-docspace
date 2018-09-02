@@ -11,7 +11,6 @@ const RecentWorkListItem = ({content}) => {
       <NavLink className={`recent-work-link ${disabledLink}`} to={content.path} >
         <i id='recent-work-content-icon' className={`${content.icon} recent-work-icon`} />
         <span className='recent-work-name'>{content.name}
-          <span className='recent-work-name-action'> {content.action}</span>
           {content.isDeleted
             ? <span className='recent-work-name-deleted'> <i className='far fa-trash-alt' aria-hidden='true' /></span>
             : null}

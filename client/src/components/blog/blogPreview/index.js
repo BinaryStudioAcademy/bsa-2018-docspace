@@ -11,7 +11,7 @@ import './blog.css'
 
 class Blog extends Component {
   handleCreateBlogPage = () => {
-    this.props.actions.createBlogPageRequest({ blogId: this.props.blog._id }, this.props.space._id)
+    this.props.actions.createBlogPageRequest({ blogId: this.props.blog._id, userId: this.props.userId }, this.props.space._id)
   }
 
   render () {
@@ -39,7 +39,8 @@ class Blog extends Component {
 const mapStateToProps = (state) => {
   return {
     space: spaceById(state),
-    blog: state.blog
+    blog: state.blog,
+    userId: state.verification.user._id
   }
 }
 
@@ -55,7 +56,8 @@ Blog.propTypes = {
     _id: PropTypes.string,
     pages: PropTypes.arrayOf(PropTypes.object)
   }),
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  userId: PropTypes.string
 }
 
 export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(Blog))

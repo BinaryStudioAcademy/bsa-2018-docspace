@@ -13,7 +13,6 @@ class PageRepository extends GeneralRepository {
   }
 
   getById (id) {
-    console.log('aaaa')
     return this.model.aggregate([
       {
         '$match': { _id: ObjectId(id) }
@@ -35,6 +34,14 @@ class PageRepository extends GeneralRepository {
         }
       },
       {
+        '$lookup': {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'pageCreator'
+        }
+      },
+      {
         '$unwind': {
           path: '$commentsArr',
           preserveNullAndEmptyArrays: true
@@ -49,10 +56,19 @@ class PageRepository extends GeneralRepository {
         }
       },
       {
+        '$lookup': {
+          from: 'users',
+          localField: 'commentsArr.userId',
+          foreignField: '_id',
+          as: 'commentsArr.user'
+        }
+      },
+      {
         '$group': {
           '_id': '$_id',
           'commentsArr': {'$addToSet': '$commentsArr'},
           'title': {'$first': '$title'},
+          'pageCreator': {'$first': '$pageCreator'},
           'spaceId': {'$first': '$spaceId'},
           'createdAt': {'$first': '$createdAt'},
           'updatedAt': {'$first': '$updatedAt'},
