@@ -23,7 +23,6 @@ class UserRepository extends GeneralRepository {
   }
 
   getByLogin (login) {
-    console.log('in get by login')
     return this.model.findOne({'login': login})
   }
 

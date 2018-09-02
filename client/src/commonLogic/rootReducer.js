@@ -10,9 +10,10 @@ import pageReducer from 'src/components/page/logic/pageReducer'
 import blogReducer from 'src/components/blog/logic/blogReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
 import commentReducer from '../components/page/commentsLogic/commentsReducer'
-import { activityReducer } from 'src/components/dashboard/main/activity/logic/activityReducer'
+import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
+import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -28,6 +29,7 @@ const baseReducer = combineReducers({
   activity: activityReducer,
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
+  warningModal: warningModalReducer,
   routing
 })
 

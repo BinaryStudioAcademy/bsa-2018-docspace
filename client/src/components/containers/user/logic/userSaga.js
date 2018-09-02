@@ -1,6 +1,7 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects'
 import * as actionTypes from './userActionTypes'
 import { userService } from 'src/services/userService'
+import HistoryService from 'src/services/historyService'
 
 function * getUser (action) {
   try {
@@ -37,11 +38,27 @@ function * checkUserPassword (action) {
 function * sendAvatarFile (action) {
   try {
     const response = yield userService.sendAvatarFile(action.payload.file, action.payload.userId)
-    console.log(`saga`, action)
-    console.log(`saga AVATAR`, response)
     yield put({ type: actionTypes.UPDATE_USER_SUCCESS, response })
   } catch (error) {
     yield put({ type: actionTypes.UPDATE_USER_FAILED, error })
+  }
+}
+
+function * userFlow (action) {
+  try {
+    let userHistory = yield call(HistoryService.getUserHistory, action.payload)
+    yield put({ type: actionTypes.GET_USER_UPDATES_SUCCESS, userHistory })
+  } catch (error) {
+    yield put({ type: actionTypes.GET_USER_UPDATES_ERROR, error })
+  }
+}
+
+function * CompareUsers (action) {
+  try {
+    const response = yield userService.compareUsers(action.payload)
+    yield put({ type: actionTypes.COMPARE_USER_SUCCESS, response })
+  } catch (err) {
+    yield put({ type: actionTypes.COMPARE_USER_ERROR, err })
   }
 }
 
@@ -50,6 +67,8 @@ export default function * selectionsSaga () {
     takeLatest(actionTypes.UPDATE_USER, updUser),
     takeLatest(actionTypes.CHECK_USER_PASSWORD, checkUserPassword),
     takeLatest(actionTypes.SEND_AVATAR_REQUEST, sendAvatarFile),
-    takeLatest(actionTypes.GET_USER_REQUEST, getUser)
+    takeLatest(actionTypes.GET_USER_REQUEST, getUser),
+    takeLatest(actionTypes.GET_USER_UPDATES_REQUEST, userFlow),
+    takeLatest(actionTypes.COMPARE_USER_REQUEST, CompareUsers)
   ])
 }

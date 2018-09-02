@@ -73,9 +73,9 @@ function * updateBlogPage (action) {
 
 function * deletePage (action) {
   try {
-    yield PageService.deletePage(action.payload)
-    yield put(actions.deletePageSuccess(action.payload))
-    yield put(push(`/spaces/${action.payload.spaceId}/overview`))
+    const deletedPage = yield PageService.deletePage(action.payload.id)
+    yield put(actions.deletePageSuccess(deletedPage[0]))
+    yield put(push(`/spaces/${deletedPage[0].spaceId}/overview`))
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())

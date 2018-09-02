@@ -6,7 +6,6 @@ function * resetFlow (action) {
   try {
     const { email } = action
     const response = yield call(resetService.reset, {email})
-    console.log(response)
     if (!response.succesful) {
       throw new Error(response.message)
     }

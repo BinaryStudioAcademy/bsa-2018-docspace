@@ -5,7 +5,7 @@ import PermissionsTableRow from '../permissionsTableRow'
 export default class PermissionsTableBody extends Component {
   render () {
     const { items, restrictionsByItemsId, restictionsCategory, handleChangePermission, isEditing } = this.props
-    if (restictionsCategory == 'anonymous') {
+    if (restictionsCategory === 'anonymous') {
       console.log('LOOOOOK !!!!!!!!!!!!!!!!!!!!!!!!!!')
     }
     console.log('BODY')

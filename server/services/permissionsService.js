@@ -16,23 +16,22 @@ module.exports = {
   },
 
   addGroupPermissions: (req, res) => {
-
-    GroupRepository.getByTitle( req.body.groupTitle )
-      .then( group => {
-          if(!group) {return res.status(400).json({message: 'group not exist'})}
-          PermissionsRepository.create({ ...req.body, groupId: group._id })
-            .then(permissionsObject => {
-              SpaceRepository.addGroupPermissions(req.params.space_id, permissionsObject._id)
-                .then((spaceWithPerissionsIds) => res.json(permissionsObject))
-                .catch(err => {
-                  console.log(err)
-                  res.status(400).end()
-                })
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(400).end()
-            })
+    GroupRepository.getByTitle(req.body.groupTitle)
+      .then(group => {
+        if (!group) { return res.status(400).json({message: 'group not exist'}) }
+        PermissionsRepository.create({ ...req.body, groupId: group._id })
+          .then(permissionsObject => {
+            SpaceRepository.addGroupPermissions(req.params.space_id, permissionsObject._id)
+              .then((spaceWithPerissionsIds) => res.json(permissionsObject))
+              .catch(err => {
+                console.log(err)
+                res.status(400).end()
+              })
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(400).end()
+          })
       })
       .catch(err => {
         console.log(err)
@@ -45,29 +44,28 @@ module.exports = {
       .then(user => {
         console.log('USER!!!!!!!!!!!!!!!!')
         console.log(user)
-        if(!user) { return res.status(400).json({message: 'user not exist'})}
+        if (!user) { return res.status(400).json({message: 'user not exist'}) }
 
-          const permissionsWithUserId = { ...req.body, userId: user._id }
-          console.log(permissionsWithUserId)
-          PermissionsRepository.create(permissionsWithUserId)
-            .then(permissionsObject => {
-              SpaceRepository.addUserPermissions(req.params.space_id, permissionsObject._id)
-                .then((spaceWithPerissionsIds) => res.json(permissionsObject))
-                .catch(err => {
-                  console.log(err)
-                  res.status(400).end()
-                })
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(400).end()
-            })
+        const permissionsWithUserId = { ...req.body, userId: user._id }
+        console.log(permissionsWithUserId)
+        PermissionsRepository.create(permissionsWithUserId)
+          .then(permissionsObject => {
+            SpaceRepository.addUserPermissions(req.params.space_id, permissionsObject._id)
+              .then((spaceWithPerissionsIds) => res.json(permissionsObject))
+              .catch(err => {
+                console.log(err)
+                res.status(400).end()
+              })
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(400).end()
+          })
       })
       .catch(err => {
         console.log(err)
         res.status(400).json({message: err.message})
       })
-
   },
 
   addAnonymousPermissions: (req, res) => {
@@ -96,16 +94,14 @@ module.exports = {
       })
   },
 
-  updateManyPermissionsInDifferentWay:  (req, res) => {
+  updateManyPermissionsInDifferentWay: (req, res) => {
     PermissionsRepository.updateManyInDifferentWay(req.premissionsArr)
-      .then( () => {
+      .then(() => {
         return res.status(200).end()
       })
-      .catch(err=> {
+      .catch(err => {
         console.log(err)
         res.status(400).end()
       })
   }
 }
-
-

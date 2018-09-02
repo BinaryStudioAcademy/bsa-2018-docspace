@@ -15,7 +15,7 @@ import PermissionsService from 'src/services/permissionsService'
 export class PermissionsPage extends Component {
   constructor (props) {
     super(props)
-    const { groups, users, anonymous } = this.props
+    // const { groups, users, anonymous } = this.props
     this.state = {
       isEditing: false
       // groups: { ...this.splateRestrictions(groups) },
@@ -161,18 +161,18 @@ export class PermissionsPage extends Component {
      })
    }
 
-   normalizePermissionsFromState = (permissionsById) => {
-     Object.keys(permissionsById).map(id => {
-       let rights = { _id: id }
-       const rights = Object.keys(permissionsById[id]).reduce()
-     })
-   }
+   //  normalizePermissionsFromState = (permissionsById) => {
+   //    Object.keys(permissionsById).map(id => {
+   //      let rights = { _id: id }
+   //      const rights = Object.keys(permissionsById[id]).reduce()
+   //    })
+   //  }
 
-   handleSaveEditingClick = () => {
-     let res = []
-     let anonymous = this.state.anon
-     //  PermissionsService.updateManyPermissionsObjects()
-   }
+   //  handleSaveEditingClick = () => {
+   //    let res = []
+   //    let anonymous = this.state.anon
+   //    //  PermissionsService.updateManyPermissionsObjects()
+   //  }
 
    // Transform permissions from { blog: {edit: true, delete: true}, ... } to { 'edit blog': true, 'delete blog': true}
    // Need for more comfortable woek with state
@@ -259,7 +259,10 @@ export class PermissionsPage extends Component {
 PermissionsPage.propTypes = {
   groups: PropTypes.array,
   users: PropTypes.array,
-  anonymous: PropTypes.object
+  // anonymous: PropTypes.object,
+  space: PropTypes.object,
+  permissions: PropTypes.object,
+  actions: PropTypes.object
 }
 
 PermissionsPage.defaultProps = {

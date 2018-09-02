@@ -7,6 +7,8 @@ router.get('/:id', pageService.findOne)
 
 router.post('/', pageService.add)
 
+router.post('/search', pageService.search)
+
 router.put('/:id', pageService.findOneAndUpdate)
 
 router.delete('/:id', pageService.findOneAndDelete)

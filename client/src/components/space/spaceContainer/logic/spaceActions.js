@@ -48,10 +48,12 @@ export const createSpaceError = () => ({
 })
 
 // UPDATE
-export const updateSpaceRequest = (newSpace) => ({
-  type: actionTypes.UPDATE_SPACE_REQUEST,
-  payload: newSpace
-})
+export const updateSpaceRequest = (newSpace) => {
+  return {
+    type: actionTypes.UPDATE_SPACE_REQUEST,
+    payload: newSpace
+  }
+}
 
 export const updateSpaceSuccess = (updatedSpace) => ({
   type: actionTypes.UPDATE_SPACE_SUCCESS,

@@ -35,3 +35,13 @@ export const sendAvatarError = (error) => ({
   type: actionTypes.SEND_AVATAR_ERROR,
   payload: error
 })
+
+export const getUserUpdatesRequest = (userLogin) => ({
+  type: actionTypes.GET_USER_UPDATES_REQUEST,
+  payload: userLogin
+})
+
+export const compareUserRequest = (currentUserLogin, RequestedUserLogin) => ({
+  type: actionTypes.COMPARE_USER_REQUEST,
+  payload: {currentUserLogin: currentUserLogin, RequestedUserLogin: RequestedUserLogin}
+})

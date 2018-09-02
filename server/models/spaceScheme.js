@@ -25,6 +25,10 @@ const spaceSchema = new mongoose.Schema({
     users: [Schema.Types.ObjectId],
     groups: [Schema.Types.ObjectId],
     anonymous: Schema.Types.ObjectId
+  },
+  spaceSettings: {
+    icon: {type: String, default: 'folder'},
+    color: {type: String, default: '#1c80ff'}
   }
 },
 {

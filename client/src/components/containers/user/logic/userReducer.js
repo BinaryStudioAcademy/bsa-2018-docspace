@@ -8,9 +8,9 @@ const initialState = {
   isFetching: false
 }
 
-const initialStateGetUser = {
-  user: {}
-}
+const initialStateGetUser = {}
+
+const userHist = []
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -59,6 +59,17 @@ const checkingReducer = (state = initialState, action) => {
   }
 }
 
+const userHistory = (state = userHist, action) => {
+  switch (action.type) {
+    case actionTypes.GET_USER_UPDATES_SUCCESS:
+      return action.userHistory
+    case actionTypes.GET_USER_UPDATES_ERROR:
+      return action.error
+    default:
+      return state
+  }
+}
+
 function isFetching (state = initialState.isFetching, action) {
   switch (action.type) {
     case actionTypes.UPDATE_USER:
@@ -76,11 +87,17 @@ function isFetching (state = initialState.isFetching, action) {
       return state
   }
 }
-const getUser = (state = initialStateGetUser.user, action) => {
+const getUser = (state = initialStateGetUser, action) => {
   switch (action.type) {
     case actionTypes.GET_USER_SUCCESS:
+    case actionTypes.COMPARE_USER_SUCCESS:
     {
       return action.response
+    }
+    case actionTypes.GET_USER_ERROR:
+    case actionTypes.COMPARE_USER_ERROR:
+    {
+      return action.err
     }
     default: return state
   }
@@ -90,6 +107,7 @@ export default combineReducers({
   userReducer,
   checkingReducer,
   getUser,
+  userHistory,
   isFetching
 })
 export const getUserSpaces = ({user}) => {
