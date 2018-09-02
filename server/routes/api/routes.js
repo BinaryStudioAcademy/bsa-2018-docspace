@@ -14,6 +14,7 @@ const history = require('./history')
 const permissions = require('./permissions')
 const uploadFiles = require('./uploadFile')
 const upload = require('./upload')
+// const search = require('./search')
 
 module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/signup', signup)
@@ -21,6 +22,7 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/autologin', verifyJWTMiddleware, autologin)
   app.use('/api/logout', logout)
   app.use('/api/pages', verifyJWTMiddleware, page)
+  // app.use('/api/search', search)
   app.use('/api/user', verifyJWTMiddleware, user)
   app.use('/api/spaces', verifyJWTMiddleware, space)
   app.use('/api/category', verifyJWTMiddleware, category)

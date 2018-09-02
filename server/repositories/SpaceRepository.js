@@ -277,6 +277,21 @@ class SpaceRepository extends GeneralRepository {
       { $set: { 'permissions.anonymous': permissionsId } }
     )
   }
+
+  searchByTitle (filter) {
+    return this.model.aggregate([
+      {
+        $match: {name: { $regex: filter, $options: 'i' }}
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          key: 1
+        }
+      }
+    ])
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

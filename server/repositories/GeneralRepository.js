@@ -34,6 +34,12 @@ class GeneralRepository {
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }
+
+  searchByTitle (filter) {
+    return this.model.find({title: { $regex: filter, $options: 'i' }})
+      .populate({ path: 'spaceId', select: '_id' })
+      .populate({ path: 'spaceId', select: 'name' })
+  }
 }
 
 module.exports = GeneralRepository
