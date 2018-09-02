@@ -101,9 +101,10 @@ class GroupPage extends Component {
 
   renderDescription = () => {
     const group = this.props.group[0]
+    const forAutoFocus = true
     const description = this.state.editDescription
       ? <div className='group-user-filter'>
-        <textarea value={this.state.description} onChange={({target}) => this.changeDescription(target)} />
+        <textarea autoFocus={forAutoFocus} value={this.state.description} onChange={({target}) => this.changeDescription(target)} />
         <div>
           <button className='accept-button' onClick={this.updateGroupDescription}>Save</button>
           <button onClick={this.closeEditField}>Close</button>
@@ -124,6 +125,7 @@ class GroupPage extends Component {
   }
 
   renderAddUser = () => {
+    const forAutoFocus = true
     return this.state.addUser
       ? <div className='group-user-filter'>
         <Input
@@ -133,6 +135,7 @@ class GroupPage extends Component {
           name='name'
           id='name'
           inputType='text'
+          autoFocus={forAutoFocus}
         />
         <div>
           <button className='accept-button' onClick={() => this.updateGroupMembers()}>Add users</button>

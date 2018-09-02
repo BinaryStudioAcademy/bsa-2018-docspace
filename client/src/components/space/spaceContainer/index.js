@@ -44,7 +44,7 @@ class SpaceContainer extends Component {
           <Route path='/spaces/:space_id/overview' render={this.renderSpaceOverview} />
           <Route path='/spaces/:space_id/blog' component={Blog} />
           <Route path='/spaces/:space_id/settings' component={SpaceSettings} />
-          <Route path='/spaces/:space_id/pages/:page_id' component={Page} />
+          <Route path='/spaces/:space_id/pages/:page_id/:version?' component={Page} />
         </SpaceContent>
         {showModal && <WarningModal />}
       </div>

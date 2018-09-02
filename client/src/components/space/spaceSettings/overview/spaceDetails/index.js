@@ -9,7 +9,8 @@ class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
     const {spaceSettings} = space
-    let name = ''
+    // FOR DEMO HARDCODED
+    let name = 'Oleg Kupriianov'
 
     if (space.owner) {
       name = space.owner.firstName + ' ' + space.owner.lastName

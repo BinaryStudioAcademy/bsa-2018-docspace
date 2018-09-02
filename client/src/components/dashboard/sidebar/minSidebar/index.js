@@ -5,6 +5,7 @@ import './minSideBar.css'
 import PropTypes from 'prop-types'
 import DropdownMenu from 'src/components/common/dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
+import SearchModal from 'src/components/modals/searchModal'
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
 import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
 
@@ -43,7 +44,8 @@ class MinSidebar extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      showPageModal: false
+      showPageModal: false,
+      showSearchModal: false
     }
   }
 
@@ -53,17 +55,25 @@ class MinSidebar extends Component {
     })
   }
 
+  toggleSearchModal = () => {
+    this.setState(prevState => ({
+      showSearchModal: !prevState.showSearchModal
+    }))
+  }
+
   render () {
     const logo = this.props.isGray ? grayLogo : whiteLogo
     dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
+    console.log(this.state)
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
+        {this.state.showSearchModal && <SearchModal closeModal={this.toggleSearchModal} />}
         <div className='top-icons'>
           <NavLink to={'/spacedirectory'}>
             <img src={logo} alt='DocSpace logo' />
           </NavLink>
-          <span className='toggle-search-btn round-button nav-button' >
+          <span className='toggle-search-btn round-button nav-button' onClick={this.toggleSearchModal}>
             <i className='fa fa-search' />
           </span>
           <span className='toggle-add-page-modal-btn round-button nav-button' onClick={this.toggleModal} >

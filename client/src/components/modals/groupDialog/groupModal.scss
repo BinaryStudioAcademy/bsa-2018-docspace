@@ -39,6 +39,9 @@
   button{
     margin: 0 5px 0 0;  
   }
+  button:hover{
+    background-color: #ccc;
+}
 }
 #name, #description, #user{
     width: 70%;
@@ -50,7 +53,7 @@
     padding: 10px 0;
   }
 .modal-footer-group button{
-    border: none;
+    border: 1px solid #ccc;
     margin: 0 5px;
 }
 .modal-header-group{
@@ -66,6 +69,10 @@
     align-items: left; 
     padding-top: 10px;
 }
-// .modal-body{
-//     overflow: ; 
-// }
+.modal-footer-group .accept-button:hover{
+    background: #08367C;
+}
+
+.modal-footer-group button:hover{
+    background-color: #EAECF0;
+}

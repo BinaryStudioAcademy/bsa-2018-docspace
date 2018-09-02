@@ -34,6 +34,9 @@
         vertical-align: baseline;
         white-space: nowrap;
     }
+    .groups-button:hover{
+        background-color: #ccc;
+    }
     .group-filter-container{
         background-color: $greyBlog;
         border-bottom: 1px solid $lightGrey;
@@ -64,9 +67,11 @@
         width: 40%;
     }
     td {
+        vertical-align: middle;
         border-bottom: 1px solid #ddd;
         text-overflow: ellipsis;
         height: 35px;
+        padding: 10px 0;
     }
     th{
         border-bottom: 1px solid #ddd;
@@ -74,6 +79,9 @@
     }
     a, a:hover, a:active{
         color: #1c80ff;
+    }
+    a:hover{
+        color: #0052cc;
     }
     table .group-delete{
         display: flex;
@@ -85,5 +93,10 @@
         background-color: transparent;
         border: none;
         color: #333;
+        cursor: pointer;
+        margin: 0;
+    }
+    table .group-delete:hover{
+        background: #EAECF0;
     }
 }

@@ -157,9 +157,7 @@
 }
 
 .profile-avatar-wrapper .profile-avatar-cover-btn {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: cover;
   border-radius: 50%;
   display: flex;
   flex: 1 1 100%;
@@ -287,6 +285,7 @@
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
   margin: 0px -2px;
+  cursor: pointer;
 }
 
 .profile-fields-wrapper .user-general-errors-user {
@@ -298,6 +297,7 @@
 .edit-manage-btn .manage-btn {
   flex: 1 0 auto;
   margin: 0px 2px;
+  cursor: pointer;
 }
 
 .profile-fields-wrapper .edit-btn {
@@ -326,6 +326,7 @@
   padding: 0px 8px;
   text-decoration: none;
   transition: background 0.1s ease-out;
+  cursor: pointer;
 }
 
 .edit-manage-btn .manage-btn button {
@@ -344,7 +345,7 @@
 }
 
 .current-new-passwords .edit-btn button:hover,
-.profile-fields-wrapper .edit-btn button {
+.profile-fields-wrapper .edit-btn button:hover {
   cursor: pointer;
   background: #0065ff;
 }

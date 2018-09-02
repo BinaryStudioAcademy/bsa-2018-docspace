@@ -25,8 +25,8 @@ const historySchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Blog'
   },
-  modified_versions_Id: {
-    type: Schema.Types.ObjectId
+  modifiedVersion: {
+    type: Number
   },
   action: {
     type: String,

@@ -11,8 +11,8 @@ class PageService {
     return apiResult
   }
 
-  getPage = (id) => {
-    const args = { endpoint: `/api/pages/${id}`, method: 'GET' }
+  getPage = (obj) => {
+    const args = { endpoint: `/api/pages/${obj.id}`, method: 'POST', body: JSON.stringify({version: obj.version}) }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
@@ -79,8 +79,16 @@ class PageService {
     const { content, _id } = page
     const html = `<!DOCTYPE html><head></head><body>${content}</body>`
     const converted = htmlDocx.asBlob(html)
-
     fileSaver.saveAs(converted, `${_id}.docx`)
+  }
+
+  findByCriteria = (filter) => {
+    console.log(filter)
+    const args = { endpoint: `/api/pages/search/${filter}`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
   }
 }
 export default new PageService()

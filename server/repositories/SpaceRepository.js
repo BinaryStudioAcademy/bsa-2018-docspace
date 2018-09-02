@@ -150,6 +150,21 @@ class SpaceRepository extends GeneralRepository {
   deleteAllHistory (id) {
     return super.update(id, {'$set': {'history': []}})
   }
+
+  searchByTitle (filter) {
+    return this.model.aggregate([
+      {
+        $match: {name: { $regex: filter, $options: 'i' }}
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          key: 1
+        }
+      }
+    ])
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

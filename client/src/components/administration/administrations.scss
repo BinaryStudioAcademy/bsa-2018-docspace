@@ -1,5 +1,6 @@
 @import 'globalStyles/variables.scss';
 .dashboard-admin {
+    box-sizing: border-box;
     width: 100%;
     margin: 10px 15px;
     .dashboard-admin-body input {
@@ -12,7 +13,11 @@
         color: white;
         font-weight: bold;
         padding: 5px 15px;
-        margin-top: 15px
+        margin-top: 15px;
+        cursor: pointer;
+    }
+    button:hover{
+      background: #08367C;
     }
     .dashboard-admin-body .admin-filter-container{
     background-color: $greyBlog;

@@ -15,7 +15,7 @@ class UserRepository extends GeneralRepository {
           name: { $concat: [ '$firstName', ' ', '$lastName' ] },
           _id: 1
         }},
-        {$match: {name: { $regex: nameContains }}}
+        {$match: {name: { $regex: nameContains, $options: 'i' }}}
       ]
     )
   }
