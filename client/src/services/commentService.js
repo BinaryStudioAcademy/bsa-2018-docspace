@@ -9,9 +9,8 @@ class CommentService {
       return apiResult
     }
 
-    createComment = (comment) => {
-      console.log(comment)
-      const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify(comment)}
+    createComment = (comment, pageId) => {
+      const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify({comment, pageId: pageId})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))

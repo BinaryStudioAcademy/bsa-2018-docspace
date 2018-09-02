@@ -5,7 +5,7 @@ import PageHeader from 'src/components/common/pageHeader'
 import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
-import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
+import { pageByIdFromRoute, isPagesFetching, getPageComments } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
@@ -36,6 +36,10 @@ class Page extends Component {
   componentDidMount () {
     const {page_id: pageId, version} = this.props.match.params
     !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    console.log('NEXT', nextProps)
   }
 
   addNewComment (obj) {
@@ -82,7 +86,6 @@ class Page extends Component {
   }
 
  likeAction = (obj) => {
-   console.log(obj)
    this.likePage(obj, 'page')
  }
 
@@ -100,15 +103,14 @@ class Page extends Component {
   }
 
   likeComment = (obj, comment) => {
-    console.log(comment)
     this.likePage(obj, 'comment', comment)
   }
 
   render () {
+    console.log('re-render component', this.props.pageComments)
     const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
-    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -142,13 +144,13 @@ class Page extends Component {
             <PageContent content={page.content} />
             <Like t={t} user={user} likes={this.props.page.likes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length &&
+              {this.props.page && this.props.page.comments && this.props.page.comments.length &&
               this.props.page.comments.length
-                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr && this.props.page.comments.length ? this.props.page.commentsArr : []}
+                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
@@ -179,10 +181,10 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array,
-    likes: PropTypes.array,
-    comments: PropTypes.comment
+    comments: PropTypes.array,
+    likes: PropTypes.array
   }),
+  pageComments: PropTypes.array,
 
   user: PropTypes.object,
   t: PropTypes.func,
@@ -220,12 +222,13 @@ Page.defaultProps = {
 }
 
 const mapStateToProps = (state) => {
+  console.log('PROPS CHANGED')
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
-    comments: state.comments,
     space: spaceById(state),
-    isFetching: isPagesFetching(state)
+    isFetching: isPagesFetching(state),
+    pageComments: getPageComments(state)
   }
 }
 

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import * as actionTypes from './pageActionTypes'
 import * as likesActionTypes from '../likesLogic/likesActionTypes'
+import * as commentsActionTypes from '../commentsLogic/commentsActionTypes'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
@@ -28,7 +29,6 @@ function all (state = initialState.all, action) {
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
     case actionTypes.SEND_DOC_FILE_SUCCESS:
-      console.log(action.payload)
       return [ ...state, action.payload._id ]
 
     default: return state
@@ -42,6 +42,7 @@ function byId (state = initialState.byId, action) {
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
     case likesActionTypes.PUT_LIKE_SUCCESS:
     case likesActionTypes.DELETE_LIKE_SUCCESS:
+    case commentsActionTypes.CREATE_COMMENT_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:
@@ -70,7 +71,9 @@ function getHTML (state = initialState.htmlFile, action) {
 function isFetching (state = initialState.isFetching, action) {
   switch (action.type) {
     case actionTypes.GET_PAGE_BY_ID_REQUEST:
+    case actionTypes.UPDATE_PAGE_REQUEST:
     case actionTypes.SEND_DOC_FILE_REQUEST:
+    case actionTypes.UPDATE_BLOG_PAGE_REQUEST:
       return true
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.GET_PAGE_BY_ID_ERROR:
@@ -79,6 +82,8 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.SEND_DOC_ERROR:
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_PAGE_ERROR:
+    case actionTypes.UPDATE_PAGE_SUCCESS:
+    case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
       return false
     default:
       return state
@@ -101,8 +106,15 @@ export const pageByIdFromRoute = (state) => {
   const id = getPageIdFromRouterLocation(state.router.location)
   // console.log('SELECTOR :' ,id)
   // console.log(state.router.location)
-  return state.pages.byId[id] || null
+  return state.pages.byId[id] || {}
 }
+
+export const getPageComments = (state) => {
+  const page = pageByIdFromRoute(state)
+  console.log('SELECTOR', page.comments)
+  return page.comments
+}
+
 export const isPagesFetching = ({ pages }) => {
   return pages.isFetching
 }
