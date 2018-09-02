@@ -6,7 +6,6 @@ import Like from 'src/components/common/like'
 import './commentActions.css'
 
 export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes}) => {
-  console.log(likes)
   return (
     <div className='comment-actions-wrapper'>
       <ul className='comment-actions-list'>

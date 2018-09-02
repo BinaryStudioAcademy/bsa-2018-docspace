@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const commentSchema = new mongoose.Schema({
   userId: Schema.Types.ObjectId,
-  firstName: String,
-  lastName: String,
   userLikes: [Schema.Types.ObjectId],
   text: String,
   isDeleted: {type: Boolean, default: false},

@@ -27,6 +27,12 @@ const pageSchema = new mongoose.Schema({
     es_indexed: true,
     es_type: 'text'
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    es_indexed: false,
+    es_type: 'text'
+  },
   created: {
     date: {
       type: Date

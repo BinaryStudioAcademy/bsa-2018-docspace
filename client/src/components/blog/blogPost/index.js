@@ -58,12 +58,10 @@ class Page extends Component {
   }
 
   likeAction = (obj) => {
-    console.log(obj)
     this.likePage(obj, 'page')
   }
 
   likePage = (obj, type, ...args) => {
-    console.log(args)
     if (type === 'page') {
       obj
         ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
@@ -76,14 +74,12 @@ class Page extends Component {
   }
 
   likeComment = (obj, comment) => {
-    console.log(comment)
     this.likePage(obj, 'comment', comment)
   }
 
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { _id } = this.props.user
     const { page, t, space, isFetching } = this.props
-    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -105,10 +101,11 @@ class Page extends Component {
             <div className='page-body-wrp'>
               <PageTitle text={page.title} />
               <PageInfo
-                avatar={fakeImg}
-                firstName={firstName}
-                lastName={lastName}
-                date={page.created ? page.created.date : ''}
+                avatar={this.props.page.pageCreator ? this.props.page.pageCreator[0].avatar : ''}
+                firstName={this.props.page.pageCreator[0].firstName}
+                lastName={this.props.page.pageCreator[0].lastName}
+                date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+                login={this.props.page.pageCreator[0].login}
               />
               <PageContent content={page.content} />
             </div>
@@ -119,28 +116,31 @@ class Page extends Component {
               likePage={this.likeAction}
             />
             <div className='comments-section'>
-              {this.props.page.commentsArr.length
+              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length &&
+              this.props.page.comments.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
-              <CommentsList
-                comments={this.props.page.commentsArr}
-                deleteComment={this.deleteComment}
-                editComment={this.editComment}
-                addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
-                userId={_id}
-                user={this.props.user}
-                likeAction={this.likeComment}
-              />
-              <AddComment
-                firstName={firstName}
-                lastName={lastName}
-                addNewComment={this.addNewComment}
-                userId={_id}
-                t={t}
-              />
+              { this.props.page.pageCreator && this.props.page.commentsArr[0].user && this.props.page.commentsArr[0].user.length
+                ? <CommentsList
+                  comments={this.props.page.commentsArr}
+                  deleteComment={this.deleteComment}
+                  editComment={this.editComment}
+                  addNewComment={this.addNewComment}
+                  user={this.props.user}
+                  userId={_id}
+                  likeAction={this.likeComment}
+                />
+                : null
+              }
+              { this.props.page.pageCreator
+                ? <AddComment
+                  addNewComment={this.addNewComment}
+                  avatar={this.props.user.avatar}
+                  userId={_id}
+                  t={t}
+                /> : null
+              }
             </div>
           </div>
         }
@@ -155,7 +155,9 @@ Page.propTypes = {
     created: PropTypes.object,
     content: PropTypes.string,
     commentsArr: PropTypes.array,
-    likes: PropTypes.array
+    likes: PropTypes.array,
+    comments: PropTypes.array,
+    pageCreator: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -179,7 +181,9 @@ Page.defaultProps = {
 const mapStateToProps = (state, props) => {
   return {
     page: state.pages.byId[props.match.params.page_id],
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)

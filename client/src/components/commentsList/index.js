@@ -30,7 +30,6 @@ class CommentsList extends Component {
   }
 
   render () {
-    console.log(this.props)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}
@@ -40,9 +39,8 @@ class CommentsList extends Component {
         editComment={this.props.editComment}
         level={comment.level}
         addNewComment={this.props.addNewComment}
-        firstName={this.props.firstName}
-        lastName={this.props.lastName}
         user={this.props.user}
+        userId={this.props.userId}
         likeAction={this.props.likeAction}
       />)
     return (
@@ -60,8 +58,7 @@ CommentsList.propTypes = {
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
   addNewComment: PropTypes.func,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
   user: PropTypes.obj,
-  likeAction: PropTypes.func
+  likeAction: PropTypes.func,
+  userId: PropTypes.string
 }
