@@ -10,7 +10,6 @@ class CommentService {
     }
 
     createComment = (comment) => {
-      console.log(comment)
       const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify(comment)}
       const apiResult = callWebApi(args)
         .then(res => res.json())
@@ -21,7 +20,7 @@ class CommentService {
     editComment = (id, comment) => {
       const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify(comment)}
       const apiResult = callWebApi(args)
-        .then(res => res.json())
+        .then(res => res)
         .catch(err => console.log(`Error: ${err}`))
       return apiResult
     }

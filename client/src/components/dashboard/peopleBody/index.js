@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {getAlUsersRequest} from './logic/allUsersActions'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 import './peopleBody.css'
 
 class PeopleBody extends Component {
@@ -11,12 +12,11 @@ class PeopleBody extends Component {
   }
 
   render () {
-    console.log(this.props.allUsers)
     const usersList = this.props.allUsers.map(user =>
       <tr>
-        <td>{`${user.firstName} ${user.lastName}`}</td>
-        <td>{user.email}</td>
-        <td>{user.login}</td>
+        <td><NavLink to={`/users/${user.login}`}>{`${user.firstName} ${user.lastName}`}</NavLink></td>
+        <td><NavLink to={`/users/${user.login}`}>{user.email}</NavLink></td>
+        <td><NavLink to={`/users/${user.login}`}>{user.login}</NavLink></td>
       </tr>
     )
     return (

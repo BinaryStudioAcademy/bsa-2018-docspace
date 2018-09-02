@@ -64,7 +64,10 @@ SpaceSettings.defaultProps = {
 
 const mapStateToprops = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 
@@ -73,7 +76,6 @@ const mapDispatchToProps = (dispatch) => {
     updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch),
     createCategory: bindActionCreators(actions.createCategoryRequest, dispatch),
     deleteCategory: bindActionCreators(actions.deleteCategoryRequest, dispatch)
-
   }
 }
 

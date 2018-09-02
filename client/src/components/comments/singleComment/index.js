@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import UserAvatarLink from 'src/resources/icons/user-comment.png'
 import {CommentActions} from 'src/components/comments/commentActions'
 import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import AddComment from '../addComment'
+import UserAvatarLink from 'src/resources/icons/user-comment.png'
+import { Link } from 'react-router-dom'
 
 import './singleComment.css'
 
@@ -69,7 +70,6 @@ export class Comment extends Component {
   }
 
   render () {
-    // console.log(this.props)
     return (
       <React.Fragment>
         {this.state.editMode
@@ -77,18 +77,21 @@ export class Comment extends Component {
             text={this.props.comment.text}
             onEditComment={this.onEditComment}
             editComment={this.props.editComment}
-            firstName={this.props.comment.firstName}
-            lastName={this.props.comment.lastName}
             userId={this.props.comment.userId}
+            avatar={this.props.comment.user[0].avatar}
             _id={this.props.comment._id}
             parentId={this.props.comment.parentId}
           />
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <CommentAvatar UserAvatarLink={UserAvatarLink} />
+            <Link to={`/users/${this.props.comment.user[0].login}`} >
+              <CommentAvatar UserAvatarLink={this.props.comment.user[0].avatar ? this.props.comment.user[0].avatar : UserAvatarLink} />
+            </Link>
             <div className='comment-body'>
-              <h4 className='comment-first-last-names'>
-                <a href=''>{this.props.comment.firstName} {this.props.comment.lastName}</a>
-              </h4>
+              <Link to={`/users/${this.props.comment.user[0].login}`} >
+                <h4 className='comment-first-last-names'>
+                  <a href=''>{this.props.comment.user[0].firstName} {this.props.comment.user[0].lastName}</a>
+                </h4>
+              </Link>
               <div className='comment-body-content'>
                 <p>{this.props.comment.text}</p>
               </div>
@@ -112,8 +115,8 @@ export class Comment extends Component {
           style={{'marginLeft': `${(this.props.level + 1) * 25}px`}}
           addNewComment={this.props.addNewComment}
           ReplyComment={this.onReplyComment}
-          firstName={this.props.firstName}
-          lastName={this.props.lastName}
+          avatar={this.props.user.avatar}
+          userId={this.props.userId}
         />}
       </React.Fragment>
     )
@@ -131,6 +134,7 @@ Comment.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   likeAction: PropTypes.func,
-  user: PropTypes.obj
+  user: PropTypes.obj,
+  userId: PropTypes.string
 }
 export default translate('translations')(Comment)
