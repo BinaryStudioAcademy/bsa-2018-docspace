@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { EntityNamesForPermissionsSettingsArray } from '../logic/constants'
 import './permissionsTableRow.css'
 
 export default class PermissionsTableRow extends Component {
@@ -10,22 +11,24 @@ export default class PermissionsTableRow extends Component {
     return <i className={clazz} />
   }
 
-  renderPermissionCheckbox = (restrictionName) => {
-    const { restictionsCategory, item, restrictionsHash, handleChangePermission } = this.props
+  renderPermissionCheckbox = (permissionName) => {
+    const { item, permissionsObject, handleChangePermission } = this.props
+    const [action, entity] = permissionName.split(' ')
+
     return (
       <input
-        name={restrictionName}
+        name={permissionName}
         type='checkbox'
-        checked={restrictionsHash[restrictionName]}
+        checked={permissionsObject[entity][action]}
         onChange={
-          ({target}) => handleChangePermission(restictionsCategory, item._id, restrictionName, target.checked)
+          ({target}) => handleChangePermission(item._id, entity, action, target.checked)
         }
       />
     )
   }
 
   render () {
-    const { item, restrictionsHash, isEditing, handleToggleAllCLick, restictionsCategory } = this.props
+    const { item, permissionsObject, isEditing, handleToggleAllCLick } = this.props
     return (
       <tr className={'permissions-table-row'} >
         <td className='permissions-table-row-ceil'>
@@ -37,13 +40,32 @@ export default class PermissionsTableRow extends Component {
                 <input
                   id={'toggle-all-permission' + item._id}
                   type='checkbox'
-                  onChange={({target}) => handleToggleAllCLick(restictionsCategory, item._id, target.checked)}
+                  onChange={({target}) => handleToggleAllCLick(item._id, target.checked)}
                 />
               </div>
           }
         </td>
         {
-          Object.keys(restrictionsHash).map(restrictionName => (
+
+          EntityNamesForPermissionsSettingsArray.reduce((res, permissionsTarget) => {
+            Object.keys(permissionsObject[permissionsTarget]).forEach(action => {
+              let permissionsName = action + ' ' + permissionsTarget
+              res.push(
+                <td className='permissions-table-row-ceil' key={permissionsName}>
+                  {
+                    isEditing
+                      ? this.renderPermissionCheckbox(permissionsName)
+                      : this.renderCkecboxStatusIcon(permissionsName)
+                  }
+                </td>
+              )
+            })
+            return res
+          }, [])
+
+        }
+
+        {/* Object.keys(permissionsObject).map(restrictionName => (
             <td className='permissions-table-row-ceil' key={restrictionName}>
               {
                 isEditing
@@ -51,8 +73,8 @@ export default class PermissionsTableRow extends Component {
                   : this.renderCkecboxStatusIcon(restrictionName)
               }
             </td>
-          ))
-        }
+          )) */}
+
       </tr>
     )
   }
@@ -61,8 +83,7 @@ export default class PermissionsTableRow extends Component {
 PermissionsTableRow.propTypes = {
   isEditing: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
-  restrictionsHash: PropTypes.object,
+  permissionsObject: PropTypes.object,
   handleChangePermission: PropTypes.func.isRequired,
-  restictionsCategory: PropTypes.string,
   handleToggleAllCLick: PropTypes.func.isRequired
 }

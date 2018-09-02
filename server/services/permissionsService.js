@@ -15,6 +15,7 @@ module.exports = {
       })
   },
 
+  // when add to space, then return permission with group. Do : GroupService.getById(id)...
   addGroupPermissions: (req, res) => {
     GroupRepository.getByTitle(req.body.groupTitle)
       .then(group => {
@@ -95,9 +96,11 @@ module.exports = {
   },
 
   updateManyPermissionsInDifferentWay: (req, res) => {
-    PermissionsRepository.updateManyInDifferentWay(req.premissionsArr)
-      .then(() => {
-        return res.status(200).end()
+    Promise.all(req.body.map(permissions => {
+      return PermissionsRepository.update(permissions._id, permissions)
+    }))
+      .then(updatedPermissionsArray => {
+        res.status(200).json(updatedPermissionsArray)
       })
       .catch(err => {
         console.log(err)
