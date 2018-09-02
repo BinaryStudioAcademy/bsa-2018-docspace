@@ -21,7 +21,7 @@ module.exports = {
           userWithAvatar = {
             spaces: userWithAvatar.spaces,
             _id: userWithAvatar._id,
-            firstName: userWithAvatar.fileName,
+            firstName: userWithAvatar.firstName,
             lastName: userWithAvatar.lastName,
             email: userWithAvatar.email,
             login: userWithAvatar.login,

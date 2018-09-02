@@ -14,6 +14,8 @@ import activityReducer from 'src/components/dashboard/main/activity/logic/activi
 import workReducer from 'src/components/dashboard/main/work/logic/workReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
+import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
+import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 
 const baseReducer = combineReducers({
@@ -24,6 +26,7 @@ const baseReducer = combineReducers({
   spaces: spaceReducer,
   blog: blogReducer,
   groups: groupsReducer,
+  searchResults: searchByTitle,
   matchingUsers: matchingUsersReducer,
   verification: verificationReducer,
   comments: commentReducer,
@@ -31,6 +34,7 @@ const baseReducer = combineReducers({
   work: workReducer,
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
+  allUsers: allUsersReducer,
   warningModal: warningModalReducer,
   routing
 })

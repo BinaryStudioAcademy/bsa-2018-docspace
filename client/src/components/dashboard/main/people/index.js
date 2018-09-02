@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './people.css'
 import SpacesSideBar from '../../spacesSidebar'
+import PeopleBody from '../../peopleBody'
 const sideBarTabs = ['All People', 'People with Personal Spaces']
 
 class People extends Component {
@@ -20,7 +21,10 @@ class People extends Component {
           <div className='spaces-sidebar'>
             <SpacesSideBar menuTabs={sideBarTabs} handleClickNavTab={this.handleClickNavTab} activeTab={this.state.active} />
           </div>
-          <div />
+          <div className='people-list-container' >
+            <h1>People</h1>
+            <PeopleBody />
+          </div>
         </div>
       </div>
 

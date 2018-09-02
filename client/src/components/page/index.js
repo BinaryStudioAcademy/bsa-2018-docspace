@@ -13,9 +13,11 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
+import {putLikeRequest, deleteLikeRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
+import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
@@ -32,7 +34,8 @@ class Page extends Component {
   }
 
   componentDidMount () {
-    !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+    const {page_id: pageId, version} = this.props.match.params
+    !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
   }
 
   addNewComment (obj) {
@@ -65,8 +68,11 @@ class Page extends Component {
   }
 
   handleOpenWarningModal = () => {
-    this.props.actions.openWarningModal(true, this.props.page._id)
+    if (!this.props.match.params.version) {
+      this.props.actions.openWarningModal(true, this.props.page._id)
+    }
   }
+
   handleChoosenFile = (e) => {
     if (e.target.files[0]) {
       this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
@@ -75,9 +81,34 @@ class Page extends Component {
     }
   }
 
+ likeAction = (obj) => {
+   console.log(obj)
+   this.likePage(obj, 'page')
+ }
+
+  likePage = (obj, type, ...args) => {
+    console.log(args)
+    if (type === 'page') {
+      obj
+        ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
+        : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+    } else {
+      obj
+        ? this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, args[0])
+        : this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, args[0])
+    }
+  }
+
+  likeComment = (obj, comment) => {
+    console.log(comment)
+    this.likePage(obj, 'comment', comment)
+  }
+
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const user = page ? page.userModified : null
+    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -102,26 +133,29 @@ class Page extends Component {
           : <div className='page-container'>
             <PageTitle text={page.title} />
             <PageInfo
-              avatar={fakeImg}
-              firstName={firstName}
-              lastName={lastName}
-              date={page.created ? page.created.date : ''}
+              avatar={user ? user.avatar : avatar}
+              firstName={user ? user.firstName : firstName}
+              lastName={user ? user.lastName : lastName}
+              date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+              login={user ? user.login : login}
             />
             <PageContent content={page.content} />
+            <Like t={t} user={user} likes={this.props.page.likes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length
+              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length &&
+              this.props.page.comments.length
                 ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr || []}
+                comments={this.props.page.commentsArr && this.props.page.comments.length ? this.props.page.commentsArr : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 firstName={firstName}
                 lastName={lastName}
                 userId={_id}
-
+                likeAction={this.likeComment}
               />
               <AddComment
                 firstName={firstName}
@@ -145,7 +179,9 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array
+    commentsArr: PropTypes.array,
+    likes: PropTypes.array,
+    comments: PropTypes.comment
   }),
 
   user: PropTypes.object,
@@ -168,7 +204,12 @@ Page.defaultProps = {
     created: {
       date: 'it is a date! TRUST ME'
     },
-    content: ''
+    content: '',
+    userModified: {
+      firstName: '',
+      lastName: '',
+      avatar: ''
+    }
   },
 
   user: {
@@ -197,6 +238,10 @@ function mapDispatchToProps (dispatch) {
         exportPageToPdf,
         exportPageToWord,
         sendDocFileRequest,
+        deleteLikeRequest,
+        putLikeRequest,
+        deleteLikeFromCommentRequest,
+        putLikeOnCommentRequest,
         openWarningModal
       }
       , dispatch),

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import InviteUsers from './inviteUsers'
 import Input from 'src/components/common/input'
+import PeopleBody from 'src/components/dashboard/peopleBody'
 
 export default class AdministrationUsers extends Component {
   constructor (props) {
@@ -16,9 +17,9 @@ export default class AdministrationUsers extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
-  renderTable = () => {
-    return ''
-  }
+  // renderTable = () => {
+  //   return ''
+  // }
   handleChange (target) {
     this.setState({
       [target.name]: target.value
@@ -60,8 +61,9 @@ export default class AdministrationUsers extends Component {
             name='filterValue'
           />
         </div>
-        <div className='admin-user-list'>
-          <table>
+        <div className='people-list-container' >
+          <PeopleBody />
+          {/* <table>
             <thead>
               <tr>
                 <th className='name'>Full name</th>
@@ -73,8 +75,8 @@ export default class AdministrationUsers extends Component {
             </thead>
             <tbody>
               {this.renderTable()}
-            </tbody>
-          </table>
+            </tbody> */}
+          {/* </table> */}
         </div>
       </React.Fragment>
     )

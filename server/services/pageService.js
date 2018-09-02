@@ -1,6 +1,7 @@
 const PageRepository = require('../repositories/PageRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
+const HistoryRepository = require('../repositories/HistoryRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -15,27 +16,51 @@ module.exports = {
       })
   },
 
-  findOne: (req, res) => {
-    PageRepository.getById(req.params.id)
+  findOne: async (req, res) => {
+    let page = await PageRepository.getById(req.params.id)
       .then(page => {
         if (!page[0]) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
           })
         }
-        res.send(page[0])
-      }).catch(err => {
+        return page[0]
+      })
+      .catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
           })
         }
-
         return res.status(500).send({
           message: 'Error retrieving page with id ' + req.params.id
         })
       })
+    if (req.body.version) {
+      const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName avatar login'
+        })
+        .then(pageCurrentHistory => pageCurrentHistory)
+        .catch(err => err)
+      const oldPage = page.modifiedVersions.filter(old => old.version === Number(req.body.version))[0]
+      page = {
+        _id: page._id,
+        comments: page.comments,
+        usersLikes: page.userLikes,
+        isDeleted: page.isDeleted,
+        title: `${oldPage.title}`,
+        spaceId: page.spaceId,
+        createdAt: page.createdAt,
+        updatedAt: pageCurrentHistory[0].date,
+        content: oldPage.content,
+        commentsArr: page.commentsArr,
+        userModified: pageCurrentHistory[0].userId
+      }
+    }
+    res.send(page)
   },
 
   add: (req, res) => {
@@ -71,6 +96,7 @@ module.exports = {
   findOneAndUpdate: (req, res) => {
     PageRepository.update(req.params.id, req.body)
       .then(page => {
+        console.log(page)
         if (!page) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
@@ -134,6 +160,7 @@ module.exports = {
   },
 
   search (req, res) {
+    console.log('даніл')
     if (req.body.advancedSearch) {
       PageRepository.advancedSearch(req.body.input)
         .then(result => {
@@ -146,5 +173,22 @@ module.exports = {
     } else {
       // do other search, maybe PageRepository.searchByTitle(req.body.input)
     }
+  },
+
+  searchByTitle: (req, res) => {
+    console.log('normal')
+    Promise.all(
+      [
+        PageRepository.searchByTitle(req.params.filter),
+        SpaceRepository.searchByTitle(req.params.filter)
+      ])
+      .then(([one, two]) => {
+        console.log(one)
+        console.log(two)
+        res.send(one.concat(two))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
