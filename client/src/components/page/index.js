@@ -86,7 +86,6 @@ class Page extends Component {
  }
 
   likePage = (obj, type, ...args) => {
-    console.log(args)
     if (type === 'page') {
       obj
         ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
@@ -137,7 +136,7 @@ class Page extends Component {
               login={user ? user.login : login}
             />
             <PageContent content={page.content} />
-            <Like t={t} user={user} likes={this.props.page.likes || []} likePage={this.likeAction} />
+            <Like t={t} user={this.props.user} likes={this.props.page.likes || []} likePage={this.likeAction} />
             <div className='comments-section'>
               {this.props.page && this.props.page.comments && this.props.page.comments.length &&
               this.props.page.comments.length
@@ -151,7 +150,7 @@ class Page extends Component {
                 addNewComment={this.addNewComment}
                 firstName={firstName}
                 lastName={lastName}
-                userId={_id}
+                user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment

@@ -13,14 +13,14 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
           <span className='comment-reply' onClick={onReplyComment}>{t('reply')}</span>
         </li>
         <li className='comment-actions-item'>
-          <span className='comment-edit' onClick={onEditComment}>{t('Edit')}</span>
+          <span className='comment-edit' onClick={onEditComment}>{t('edit')}</span>
         </li>
         <li className='comment-actions-item'>
           <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
         </li>
         <Like
           t={t}
-          user={user._id || ''}
+          user={user || ''}
           likes={likes || []}
           likePage={onLikeComment}
         />

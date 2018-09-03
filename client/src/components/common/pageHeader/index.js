@@ -9,7 +9,7 @@ const PageHeader = ({ space, t, handleEditPageClick, onWordImport, onPdfExport, 
   <div className='space-page-header'>
     <div className='title'>
       <NavLink className='space-name-link' to={`/spaces/${space._id}/overview`}>{space && space.name}</NavLink>
-      <NavLink className='buttons-item restrictions' title={t('Unrestricted')} to={''}>
+      <NavLink className='buttons-item restrictions' title={t('unrestricted')} to={''}>
         <i className='fas fa-lock-open' />
       </NavLink>
     </div>
