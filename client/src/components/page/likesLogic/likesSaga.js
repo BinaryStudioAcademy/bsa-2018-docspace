@@ -11,23 +11,24 @@ function * putLikeOnPage (action) {
     if (liked) {
       let likedUser = {_id: user._id, firstName: user.firstName, lastName: user.lastName}
       yield put(actions.putLikeOnPageSuccess(page, likedUser))
+    } else {
+      throw new Error(liked)
     }
-    throw liked
   } catch (e) {
     console.log(e)
   }
 }
 
 function * deleteLikeFromPage (action) {
-  console.log(action.payload)
   const {user, page} = action.payload
   try {
     const unliked = yield pageService.likePage(page._id, user._id, false)
     if (unliked) {
       let unlikedUser = {_id: user._id, firstName: user.firstName, lastName: user.lastName}
       yield put(actions.deleteLikeFromPageSuccess(page, unlikedUser))
+    } else {
+      throw new Error(unliked)
     }
-    throw unliked
   } catch (e) {
     console.log(e)
   }
