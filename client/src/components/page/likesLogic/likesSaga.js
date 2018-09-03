@@ -40,15 +40,11 @@ function * deleteLike (action) {
 }
 
 function * putLikeOnComment (action) {
+  const {userId, comment, page} = action.payload
   try {
-    // const users = yield groupService.getMatchingUsers(action.payload)
-    // yield put(actions.getAllUserGroupsSuccess(users))
-    console.log('put')
-    console.log(action.payload.comment)
-    action.payload.comment.userLikes.push(action.payload.userId)
-    yield commentService.editComment(action.payload.comment._id, action.payload.comment)
-    const updatedPage = yield pageService.updatePage(action.payload.page)
-    yield put(actions.putLikeSuccess(updatedPage))
+    const likedComment = yield commentService.likeComment(comment._id, userId, true)
+    console.log(likedComment)
+    yield put(actions.putLikeSuccess(page, likedComment))
   } catch (e) {
     console.log(e)
   }

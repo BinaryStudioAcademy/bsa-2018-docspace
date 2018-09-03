@@ -72,9 +72,21 @@ module.exports = {
   },
 
   findOneAndUpdate: (req, res) => {
-    CommentRepository.update(req.params.id, req.body)
+    CommentRepository.update(req.params.id, req.body.comment)
       .then(comment => res.send(comment))
       .catch(err => res.status(500).send(err))
+  },
+
+  addRemoveLike: (req, res) => {
+    if (req.body.toAdd) {
+      CommentRepository.addLike(req.params.id, req.body.userId)
+        .then(comment => res.send(comment))
+        .catch(err => res.status(500).send(err))
+    } else {
+      CommentRepository.removeLike(req.params.id, req.body.userId)
+        .then(comment => res.send(comment))
+        .catch(err => res.status(500).send(err))
+    }
   },
 
   findOneAndDelete: (req, res) => {

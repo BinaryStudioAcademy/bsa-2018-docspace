@@ -18,7 +18,15 @@ class CommentService {
     }
 
     editComment = (id, comment) => {
-      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify(comment)}
+      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify({comment})}
+      const apiResult = callWebApi(args)
+        .then(res => res.json())
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
+    // toAdd = true - adds LIKE , false - removes LIKE
+    likeComment = (id, userId, toAdd) => {
+      const args = {endpoint: `/api/comments/like/${id}`, method: 'PUT', body: JSON.stringify({userId, toAdd})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))

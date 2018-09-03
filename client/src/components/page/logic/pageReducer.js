@@ -41,7 +41,6 @@ function byId (state = initialState.byId, action) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
     case actionTypes.UPDATE_PAGE_SUCCESS + '(EXTERNAL)':
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
-    case likesActionTypes.PUT_LIKE_SUCCESS:
     case likesActionTypes.DELETE_LIKE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
@@ -54,6 +53,7 @@ function byId (state = initialState.byId, action) {
         }
       }
     case commentsActionTypes.EDIT_COMMENT_SUCCESS:
+    case likesActionTypes.PUT_LIKE_SUCCESS:
       return {
         ...state,
         [action.payload.page._id]: {
