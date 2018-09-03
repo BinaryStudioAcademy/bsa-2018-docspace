@@ -53,13 +53,15 @@ const pageSchema = new mongoose.Schema({
     default: 0,
     es_indexed: false
   },
-  modifiedVersions: [{
-    _id: {type: Schema.Types.ObjectId, ref: 'History'},
-    version: Number,
-    title: String,
-    content: String,
+  modifiedVersions: {
+    type: [{
+      _id: {type: Schema.Types.ObjectId, ref: 'History'},
+      version: Number,
+      title: String,
+      content: String
+    }],
     es_indexed: false
-  }]
+  }
 },
 { versionKey: false, timestamps: true }
 )

@@ -2,6 +2,7 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
+const PermissionsRepository = require('../repositories/PermissionsRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -47,9 +48,20 @@ module.exports = {
       return res.end('Invalid data')
     }
 
-    BlogRepository.create({})
-      .then(blog => {
-        const spaceWithOwnerAndEmptyBlog = { ...req.body, ownerId: req.user._id, blogId: blog._id }
+    let spaceBlog, anonymousPermissions
+    Promise.all([
+      BlogRepository.create({}).then(blog => { spaceBlog = blog }),
+      PermissionsRepository.create({}).then(permissions => { anonymousPermissions = permissions })
+    ])
+      .then(() => {
+        const spaceWithOwnerAndEmptyBlog = {
+          ...req.body,
+          ownerId: req.user._id,
+          blogId: spaceBlog._id,
+          permissions: {
+            anonymous: anonymousPermissions._id
+          }
+        }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
             UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
@@ -57,10 +69,6 @@ module.exports = {
                 return res.json(space)
               })
               .catch(err => console.log(err))
-          })
-          .catch((err) => {
-            console.log(err)
-            res.status(400).end()
           })
       })
       .catch(err => {

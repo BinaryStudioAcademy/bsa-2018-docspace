@@ -9,6 +9,9 @@ function * getSpacePermissions (action) {
     const permissions = yield PermissionsService.getSpacePermissions(action.payload.spaceId)
     let allPermissionsById = {}; let groupsPermissionsIds = []; let usersPermissionsIds = []; let anonymousPermissionsId = ''
 
+    console.log('IN SAGA')
+    console.log(permissions)
+
     permissions.groupsPermissions.forEach(permissions => {
       if (!_.isEmpty(permissions)) {
         allPermissionsById[permissions._id] = permissions
@@ -23,9 +26,9 @@ function * getSpacePermissions (action) {
       }
     })
 
-    if (permissions.anonymous) {
-      allPermissionsById[permissions.anonymous._id] = permissions.anonymous
-      anonymousPermissionsId = permissions.anonymous._id
+    if (permissions.anonymousPermissions) {
+      allPermissionsById[permissions.anonymousPermissions._id] = permissions.anonymousPermissions
+      anonymousPermissionsId = permissions.anonymousPermissions._id
     }
 
     const normalized = { allPermissionsById, groupsPermissionsIds, usersPermissionsIds, anonymousPermissionsId }

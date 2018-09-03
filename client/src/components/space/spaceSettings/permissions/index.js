@@ -7,19 +7,22 @@ import { bindActionCreators } from 'redux'
 import { translate } from 'react-i18next'
 import { currentSpacePermissions, isFetchingForPermissions } from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
 import { EntityNamesForPermissionsSettingsArray } from './logic/constants'
+import AddPermissionsForm from './addPermissionsForm'
 
+// TODO: RENEMA SEARCH ACTIONS, RENEMA REDUCE, MOVE INTO SERACH LOGIN IN COMMON FOLDER
+import {getMatchingPagesRequest, cleanMatchingPages} from 'src/components/modals/searchModal/logic/searchActions'
 import { MoonLoader } from 'react-spinners'
 
 import './permissionsPage.css'
 // import _ from 'lodash'
 
-import PermissionsService from 'src/services/permissionsService'
+// import PermissionsService from 'src/services/permissionsService'
 
 export class PermissionsPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isEditing: false
+      isEditing: true
     }
   }
 
@@ -62,10 +65,10 @@ export class PermissionsPage extends Component {
         }
         {
           this.state.isEditing &&
-          <button onClick={() => {
-            PermissionsService.createAnonymousPermissions(this.props.space._id)
-          }}
-          >anon</button>
+          <AddPermissionsForm
+            searchPlaceholder='Group name'
+            renderSearchedEntityLiContent={this.renderUserLiContent}
+          />
         }
 
       </React.Fragment>
@@ -90,13 +93,29 @@ export class PermissionsPage extends Component {
 
       {
         this.state.isEditing &&
-          <button onClick={() => {
+        <AddPermissionsForm
+          searchPlaceholder='User name'
+          renderSearchedEntityLiContent={this.renderUserLiContent}
+
+        />
+      }
+
+      {/* <button onClick={() => {
             PermissionsService.getSpacePermissions(this.props.space._id)
           }}
-          >get permission</button>
-      }
+          >get permission</button> */}
     </React.Fragment>
   )
+
+  renderUserLiContent = (user) => {
+    return (
+      <div className='user-li-node'>
+        <img src={user.avatar} alt='' />
+        <span className='userName'> {user.firstName + ' ' + user.lastName}</span>
+        <span className='user-login'>{' @' + user.login}</span>
+      </div>
+    )
+  }
 
   renderAnonymousPermissionsSection = () => {
     const { anonymous } = this.props.permissions
@@ -196,7 +215,7 @@ export class PermissionsPage extends Component {
 
         { this.renderGroupsPermissionsSection() }
         { this.renderUsersPermissionsSection() }
-        {/* { this.renderAnonymousPermissionsSection() } */}
+        { this.renderAnonymousPermissionsSection() }
 
         <div className='edit-btns-wrp'>
           {
@@ -231,150 +250,13 @@ PermissionsPage.propTypes = {
 }
 
 PermissionsPage.defaultProps = {
-  users: [
-    {
-      user: {
-        name: 'name',
-        surname: 'surname'
-      },
-      _id: 'permissions id',
-      userId: 'lol',
-
-      all: {
-        view: true
-      },
-      pages: {
-        add: true,
-        delete: true
-      },
-      blog: {
-        add: false,
-        delete: true
-      },
-      comments: {
-        add: true,
-        delete: true
-      },
-      space: {
-        export: true,
-        administate: true
-      }
-    }
-  ],
-
-  groups: [
-    {}, {}
-  ]
-  // groups: [
-  //   {
-  //     name: 'My Group',
-  //     _id: 'groupId',
-  //     permissions: {
-  //       all: {
-  //         view: true
-  //       },
-  //       pages: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       blog: {
-  //         add: false,
-  //         delete: true
-  //       },
-  //       comments: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       space: {
-  //         export: true,
-  //         administate: true
-  //       }
-  //     }
-  //   },
-  //   {
-  //     name: 'My Second Group',
-  //     _id: 'groupIdasdfasdfasdf',
-  //     permissions: {
-  //       all: {
-  //         view: true
-  //       },
-  //       pages: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       blog: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       comments: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       space: {
-  //         export: true,
-  //         administate: true
-  //       }
-  //     }
-  //   }
-  // ],
-  // users: [
-  //   {
-  //     name: 'Fake User',
-  //     _id: 'some user id',
-  //     permissions: {
-  //       all: {
-  //         view: true
-  //       },
-  //       pages: {
-  //         add: false,
-  //         delete: true
-  //       },
-  //       blog: {
-  //         add: true,
-  //         delete: false
-  //       },
-  //       comments: {
-  //         add: true,
-  //         delete: true
-  //       },
-  //       space: {
-  //         export: true,
-  //         administate: false
-  //       }
-  //     }
-  //   }
-  // ],
-  // anonymous: {
-
-  //   permissions: {
-  //     all: {
-  //       view: true
-  //     },
-  //     pages: {
-  //       add: false,
-  //       delete: true
-  //     },
-  //     blog: {
-  //       add: true,
-  //       delete: false
-  //     },
-  //     comments: {
-  //       add: true,
-  //       delete: true
-  //     },
-  //     space: {
-  //       export: true,
-  //       administate: false
-  //     }
-  //   }
-
-  // }
 }
 
 const mapStateToProps = (state, props) => {
   return {
     permissions: currentSpacePermissions(state),
-    isFetching: isFetchingForPermissions(state)
+    isFetching: isFetchingForPermissions(state),
+    seachedEntities: state.searchResults
   }
 }
 
@@ -383,7 +265,11 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         getSpacePermissionsRequest,
-        updateSpacePermissionsRequest
+        updateSpacePermissionsRequest,
+
+        // TODO : Dont forget renema this
+        getMatchingPagesRequest,
+        cleanMatchingPages
       }
       , dispatch)
   }
