@@ -73,8 +73,6 @@ class AddPermissionsForm extends Component {
         selectedEntity: null,
         showSelectEntityList: false
       })
-
-      // this.isDebounced = false
     }
   }
 
@@ -88,7 +86,7 @@ class AddPermissionsForm extends Component {
   }
 
   render () {
-    const { searchPlaceholder, renderSearchedEntityLiContent, searchedEntities, isSearching } = this.props
+    const { searchPlaceholder, renderSearchedEntityLiContent, searchedEntities, isSearching, t } = this.props
     const { selectedEntity, showSelectEntityList } = this.state
     return (
       <form
@@ -138,7 +136,7 @@ class AddPermissionsForm extends Component {
                   : <li className='nothing-found-message'>
                     <i className='fas fa-exclamation-triangle' />
                     <span>
-                          Nothing found
+                      {t('nothing_found')}
                     </span>
                   </li>
             }
@@ -150,6 +148,7 @@ class AddPermissionsForm extends Component {
 }
 
 AddPermissionsForm.propTypes = {
+  t: PropTypes.object,
   actions: PropTypes.object,
   isSearching: PropTypes.bool,
   getEntityName: PropTypes.func,

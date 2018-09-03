@@ -6,7 +6,7 @@ import './blogHeader.css'
 
 const BlogHeader = ({ t }) => (
   <div className='blog-header'>
-    <div className='blog-header-title'> { t('Blog') } </div>
+    <div className='blog-header-title'> { t('blog') } </div>
   </div>
 )
 

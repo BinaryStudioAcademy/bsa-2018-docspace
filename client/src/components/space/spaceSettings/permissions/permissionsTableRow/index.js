@@ -40,7 +40,7 @@ export default class PermissionsTableRow extends Component {
                 <input
                   id={'toggle-all-permission' + item._id}
                   type='checkbox'
-                  checked={permissionsObject.all.view}
+                  checked={permissionsObject.blog.add}
                   onChange={({target}) => handleToggleAllCLick(item._id, target.checked)}
                 />
               </div>

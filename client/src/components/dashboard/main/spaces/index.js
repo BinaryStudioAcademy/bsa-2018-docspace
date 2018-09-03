@@ -1,17 +1,23 @@
 import React from 'react'
 import DashboardSpacesBody from '../../spacesBody'
 import CreateSpaceButton from 'src/components/common/createSpaceButton'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 import './spaces.css'
 
-const Spaces = () => (
+const Spaces = (props) => (
   <div className={'dashboard-spaces'}>
     <div className={'spaces-header'}>
-      <h1>Space Directory</h1>
+      <h1>{props.t('space_directory')}</h1>
       <CreateSpaceButton />
     </div>
-    <DashboardSpacesBody />
+    <DashboardSpacesBody t={props.t} />
   </div>
 )
 
-export default Spaces
+Spaces.propTypes = {
+  t: PropTypes.func
+}
+
+export default translate('translations')(Spaces)

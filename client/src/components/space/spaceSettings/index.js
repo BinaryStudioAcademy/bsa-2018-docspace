@@ -5,28 +5,27 @@ import { bindActionCreators } from 'redux'
 import * as actions from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewTab from './overview'
 // import SpaceSettingsTab from './settings'
-import { Route, NavLink } from 'react-router-dom'
+import { Route, NavLink, withRouter } from 'react-router-dom'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import SpacePermissionsTab from './permissions'
+import { translate } from 'react-i18next'
 import './spaceSettings.css'
 
-const TABS = [
-  {
-    name: 'overview',
-    path: '/overview',
-    component: SpaceOverviewTab
-  },
-  {
-    name: 'permissions',
-    path: '/permissions',
-    component: SpacePermissionsTab
-  }
-]
-
-// will be connected to store. Fetch for space with this name in didMount
-const SpaceSettings = (props) => (
-  <div className='space-settings-page'>
-    <h2 className='space-settings-page-header'>Space settings</h2>
+const SpaceSettings = (props) => {
+  const TABS = [
+    {
+      name: props.t('overview'),
+      path: '/overview',
+      component: SpaceOverviewTab
+    },
+    {
+      name: props.t('permissions'),
+      path: '/permissions',
+      component: SpacePermissionsTab
+    }
+  ]
+  return <div className='space-settings-page'>
+    <h2 className='space-settings-page-header'>{props.t('space_settings')}</h2>
     <div className='nav-bar'>
       {TABS.map(({ name, path }) =>
         <NavLink
@@ -44,15 +43,17 @@ const SpaceSettings = (props) => (
         key={name}
         path={`${props.match.url}${path}`}
         render={() => <TabComponent {...props} />}
+        t={props.t}
       />
     )}
   </div>
-)
+}
 
 SpaceSettings.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string
-  })
+  }),
+  t: PropTypes.func
 }
 
 SpaceSettings.defaultProps = {
@@ -73,8 +74,7 @@ const mapDispatchToProps = (dispatch) => {
     updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch),
     createCategory: bindActionCreators(actions.createCategoryRequest, dispatch),
     deleteCategory: bindActionCreators(actions.deleteCategoryRequest, dispatch)
-
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpaceSettings)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SpaceSettings)))

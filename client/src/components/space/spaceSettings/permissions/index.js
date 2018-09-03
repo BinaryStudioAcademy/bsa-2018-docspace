@@ -52,14 +52,13 @@ export class PermissionsPage extends Component {
 
     return (
       <React.Fragment>
-        <h3>Groups permissions</h3>
-        <p>Permissions for this space for all members of the group.</p>
+        <h3>{this.props.t('groups_permissions')}</h3>
+        <p>{this.props.t('permissions_the_group')}</p>
         {
           this.props.permissions.groups.length > 0 &&
           <PermissionsTable
             isEditing={this.state.isEditing}
             items={this.props.permissions.groups}
-            restictionsCategory={'groups'}
             permissionsByItemsId={items}
             handleChangePermission={this.handleChangePermission}
             handleToggleAllCLick={this.setPermissionsForAllEntityTo}
@@ -68,7 +67,7 @@ export class PermissionsPage extends Component {
         {
           this.state.isEditing &&
           <AddPermissionsForm
-            searchPlaceholder='Group name'
+            searchPlaceholder={this.props.t('group_title')}
             renderSearchedEntityLiContent={this.renderGroupLiContent}
             handleSearchEntitiesToAddPermissions={this.handleSearchGroups}
             getEntityName={(group) => group.title}
@@ -76,7 +75,6 @@ export class PermissionsPage extends Component {
             idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.groups.map(perm => perm.groupId)}
           />
         }
-
       </React.Fragment>
     )
   }
@@ -96,8 +94,8 @@ export class PermissionsPage extends Component {
 
   renderUsersPermissionsSection = () => (
     <React.Fragment>
-      <h3>Users permissions</h3>
-      <p>Grant permissions to individual users, regardless of which group they are members of.</p>
+      <h3>{this.props.t('users_permissions')}</h3>
+      <p>{this.props.t('permissions_to_individual_users')}</p>
       {
         this.props.permissions.users.length > 0 &&
         <PermissionsTable
@@ -113,7 +111,7 @@ export class PermissionsPage extends Component {
       {
         this.state.isEditing &&
         <AddPermissionsForm
-          searchPlaceholder='User login'
+          searchPlaceholder={this.props.t('user_login')}
           renderSearchedEntityLiContent={this.renderUserLiContent}
           handleSearchEntitiesToAddPermissions={this.handleSearchUsers}
           getEntityName={(user) => user.firstName + ' ' + user.lastName + ' @' + user.login}
@@ -138,14 +136,13 @@ export class PermissionsPage extends Component {
     const { anonymous } = this.props.permissions
     return (
       <React.Fragment>
-        <h3>Anonymous access</h3>
-        <p>If your Confluence is public, you can grant permissions to people who are not authorized on the site.</p>
+        <h3>{this.props.t('anonymous_access')}</h3>
+        <p>{this.props.t('permissions_to_anonymous_users')}</p>
         {
           anonymous && this.state.permissionsById[anonymous._id] &&
           <PermissionsTable
             isEditing={this.state.isEditing}
             items={[ anonymous ]}
-            restictionsCategory={'anonymous'}
             permissionsByItemsId={{ [anonymous._id]: this.state.permissionsById[anonymous._id] }}
             handleChangePermission={this.handleChangePermission}
             handleToggleAllCLick={this.setPermissionsForAllEntityTo}
@@ -226,7 +223,7 @@ export class PermissionsPage extends Component {
         </div>
       )
     }
-
+    const {t} = this.props
     return (
       <div className='space-permissions-page'>
 
@@ -238,14 +235,14 @@ export class PermissionsPage extends Component {
           {
             !this.state.isEditing
               ? <button onClick={this.toggleEditing}>
-                  Edit permissions
+                {t('edit_permissions')}
               </button>
               : <React.Fragment>
                 <button className='save-btn' onClick={this.handleSaveEditingClick}>
-                  Save all
+                  {t('save_all')}
                 </button>
                 <button onClick={this.handleCancelEditingClick}>
-                  Cancel
+                  {t('cancel')}
                 </button>
               </React.Fragment>
           }
@@ -262,7 +259,8 @@ PermissionsPage.propTypes = {
   space: PropTypes.object,
   permissions: PropTypes.object,
   actions: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  t: PropTypes.func
 }
 
 PermissionsPage.defaultProps = {

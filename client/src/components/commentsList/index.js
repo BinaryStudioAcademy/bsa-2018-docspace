@@ -10,19 +10,23 @@ class CommentsList extends Component {
     this.state = {commentTree: this.getComments(props.comments)}
   }
 
-  sortComments () {
-    this.props.comments.sort((a, b) => {
-      return a.createdAt > b.createdAt ? 1 : -1
+  sortComments (comments) {
+    comments.sort((a, b) => {
+      if (typeof a.createdAt === 'string') {
+        return a.createdAt > b.createdAt ? 1 : -1
+      }
+      return a.createdAt.toISOString() > b.createdAt.toISOString() ? 1 : -1
     })
   }
   getComments (comments) {
     if (comments) {
-      this.sortComments()
+      this.sortComments(comments)
       const tree = getTree(comments)
       const flatArray = Array.from(convertTreeToArray(tree, 0))
       return flatArray
     }
   }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.comments !== nextProps.comments) {
       this.setState({commentTree: this.getComments(nextProps.comments)})
@@ -30,7 +34,6 @@ class CommentsList extends Component {
   }
 
   render () {
-    console.log(this.props)
     const commentsList = this.state.commentTree.map(comment =>
       <Comment
         margin={`${comment.level * 25}px`}
@@ -38,12 +41,13 @@ class CommentsList extends Component {
         key={comment.id}
         deleteComment={this.props.deleteComment}
         editComment={this.props.editComment}
+        replyComment={this.replyComment}
         level={comment.level}
         addNewComment={this.props.addNewComment}
         firstName={this.props.firstName}
         lastName={this.props.lastName}
-        user={this.props.user}
         likeAction={this.props.likeAction}
+        user={this.props.user}
       />)
     return (
       <div className='comments-list-wrapper'>
@@ -62,6 +66,6 @@ CommentsList.propTypes = {
   addNewComment: PropTypes.func,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
-  user: PropTypes.obj,
+  user: PropTypes.object,
   likeAction: PropTypes.func
 }

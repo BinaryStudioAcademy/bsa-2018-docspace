@@ -7,14 +7,14 @@ export default class TemplateSelectionModal extends Component {
   renderModalHeader = () => {
     return (
       <h2 className='modal-header' >
-        Create a space
+        {this.props.t('create_space')}
         <div className='modal-help-link' >
-          <a href=''> Help </a>
+          <a href=''> {this.props.t('help')} </a>
         </div>
         <form className='modal-filter-form'>
           <input
             type='text'
-            placeholder='filter'
+            placeholder={this.props.t('filter')}
             onChange={({target}) => this.props.handleFilter(target)}
           />
         </form>
@@ -32,10 +32,10 @@ export default class TemplateSelectionModal extends Component {
           onClick={this.props.handleNextClick}
           disabled={disableNextButton}
         >
-           Next
+          {this.props.t('next')}
         </button>
         <button onClick={this.props.closeModal}>
-           Close
+          {this.props.t('close')}
         </button>
       </div>
     )
@@ -71,5 +71,6 @@ TemplateSelectionModal.propTypes = {
   handleNextClick: PropTypes.func.isRequired,
   handleSelectTemplate: PropTypes.func.isRequired,
   spaceTemplates: PropTypes.arrayOf(PropTypes.object),
-  selectTemplateAngGoToNextStep: PropTypes.func
+  selectTemplateAngGoToNextStep: PropTypes.func,
+  t: PropTypes.func
 }

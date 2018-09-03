@@ -23,7 +23,7 @@ class UserRepository extends GeneralRepository {
   }
 
   getByLogin (login) {
-    return this.model.findOne({'login': login})
+    return this.model.find({'login': login})
   }
 
   deleteSpace (id, spaceId) {
