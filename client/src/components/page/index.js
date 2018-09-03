@@ -82,12 +82,10 @@ class Page extends Component {
   }
 
  likeAction = (obj) => {
-   console.log(obj)
    this.likePage(obj, 'page')
  }
 
   likePage = (obj, type, ...args) => {
-    console.log(args)
     if (type === 'page') {
       obj
         ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
@@ -100,7 +98,6 @@ class Page extends Component {
   }
 
   likeComment = (obj, comment) => {
-    console.log(comment)
     this.likePage(obj, 'comment', comment)
   }
 
@@ -108,7 +105,6 @@ class Page extends Component {
     const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
-    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader
@@ -140,7 +136,7 @@ class Page extends Component {
               login={user ? user.login : login}
             />
             <PageContent content={page.content} />
-            <Like t={t} user={user} likes={this.props.page.likes || []} likePage={this.likeAction} />
+            <Like t={t} user={this.props.user} likes={this.props.page.likes || []} likePage={this.likeAction} />
             <div className='comments-section'>
               {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length &&
               this.props.page.comments.length
@@ -154,7 +150,7 @@ class Page extends Component {
                 addNewComment={this.addNewComment}
                 firstName={firstName}
                 lastName={lastName}
-                userId={_id}
+                user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
