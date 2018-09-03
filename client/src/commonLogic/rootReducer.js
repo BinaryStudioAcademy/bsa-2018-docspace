@@ -13,7 +13,7 @@ import commentReducer from '../components/page/commentsLogic/commentsReducer'
 import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
-import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
+import searchReducer from 'src/commonLogic/search/searchReducer'
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 import permissionsReducer from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
@@ -27,7 +27,7 @@ const baseReducer = combineReducers({
   currentSpacePermissions: permissionsReducer,
   blog: blogReducer,
   groups: groupsReducer,
-  searchResults: searchByTitle,
+  search: searchReducer,
   matchingUsers: matchingUsersReducer,
   verification: verificationReducer,
   comments: commentReducer,

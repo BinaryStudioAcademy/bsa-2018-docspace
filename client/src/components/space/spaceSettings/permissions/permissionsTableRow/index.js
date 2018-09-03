@@ -4,8 +4,8 @@ import { EntityNamesForPermissionsSettingsArray } from '../logic/constants'
 import './permissionsTableRow.css'
 
 export default class PermissionsTableRow extends Component {
-  renderCkecboxStatusIcon = (restrictionName) => {
-    const [ action, entity ] = restrictionName.split(' ')
+  renderCkecboxStatusIcon = (permissionName) => {
+    const [ action, entity ] = permissionName.split(' ')
     const { item } = this.props
     const clazz = item[entity][action] ? 'fas fa-check-circle' : 'fas fa-times-circle'
     return <i className={clazz} />
@@ -65,17 +65,6 @@ export default class PermissionsTableRow extends Component {
           }, [])
 
         }
-
-        {/* Object.keys(permissionsObject).map(restrictionName => (
-            <td className='permissions-table-row-ceil' key={restrictionName}>
-              {
-                isEditing
-                  ? this.renderPermissionCheckbox(restrictionName)
-                  : this.renderCkecboxStatusIcon(restrictionName)
-              }
-            </td>
-          )) */}
-
       </tr>
     )
   }

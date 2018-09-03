@@ -20,7 +20,6 @@ const byId = (state = initialState.byId, action) => {
         ...action.payload.updatedById
       }
 
-    case types.ADD_ANONYMOUS_PERMISSIONS_SUCCESS:
     case types.ADD_USER_PERMISSIONS_SUCCESS:
     case types.ADD_GROUP_PERMISSIONS_SUCCESS:
       return {
@@ -68,19 +67,16 @@ const anonymous = (state = initialState.anonymous, action) => {
 const isFetching = (state = initialState.isFetching, action) => {
   switch (action.type) {
     case types.GET_SPACE_PERMISSIONS_REQUEST:
-    case types.ADD_ANONYMOUS_PERMISSIONS_REQUEST:
     case types.ADD_USER_PERMISSIONS_REQUEST:
     case types.ADD_GROUP_PERMISSIONS_REQUEST:
     case types.UPDATE_SPACE_PERMISSIONS_REQUEST:
       return true
 
     case types.GET_SPACE_PERMISSIONS_SUCCESS:
-    case types.ADD_ANONYMOUS_PERMISSIONS_SUCCESS:
     case types.ADD_USER_PERMISSIONS_SUCCESS:
     case types.ADD_GROUP_PERMISSIONS_SUCCESS:
     case types.UPDATE_SPACE_PERMISSIONS_SUCCESS:
     case types.GET_SPACE_PERMISSIONS_ERROR:
-    case types.ADD_ANONYMOUS_PERMISSIONS_ERROR:
     case types.ADD_USER_PERMISSIONS_ERROR:
     case types.ADD_GROUP_PERMISSIONS_ERROR:
     case types.UPDATE_SPACE_PERMISSIONS_ERROR:
@@ -98,34 +94,9 @@ export default combineReducers({
   isFetching
 })
 
-const stub = {
-  _id: 'anon permission',
-  userId: 'lol',
-
-  all: {
-    view: true
-  },
-  pages: {
-    add: true,
-    delete: true
-  },
-  blog: {
-    add: false,
-    delete: true
-  },
-  comments: {
-    add: true,
-    delete: true
-  },
-  space: {
-    export: true,
-    administate: true
-  }
-}
-
 export const groupsPermissions = (state) => state.currentSpacePermissions.groups.map(id => state.currentSpacePermissions.byId[id])
 export const usersPermissions = (state) => state.currentSpacePermissions.users.map(id => state.currentSpacePermissions.byId[id])
-export const anonymousPermissions = (state) => state.currentSpacePermissions.byId[state.currentSpacePermissions.anonymous] || stub
+export const anonymousPermissions = (state) => state.currentSpacePermissions.byId[state.currentSpacePermissions.anonymous]
 
 export const allSpacePermissionsById = (state) => state.currentSpacePermissions.byId
 
@@ -134,7 +105,7 @@ export const currentSpacePermissions = (state) => {
     groups: groupsPermissions(state),
     users: usersPermissions(state),
     anonymous: anonymousPermissions(state),
-    allById: { ...allSpacePermissionsById(state), 'anon permission': stub }
+    allById: allSpacePermissionsById(state)
   }
 
   return result

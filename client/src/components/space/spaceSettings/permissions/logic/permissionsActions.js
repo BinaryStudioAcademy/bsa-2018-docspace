@@ -32,13 +32,14 @@ export const updateSpacePermissionsError = (error) => ({
 })
 
 // USERS PERMISSIONS
-export const addUserPermissionsRequest = (permissionsObj) => ({
+export const addUserPermissionsRequest = (targetUser, spaceId) => ({
   type: actionsTypes.ADD_USER_PERMISSIONS_REQUEST,
-  payload: permissionsObj
+  payload: { userId: targetUser._id, spaceId: spaceId },
+  user: targetUser
 })
 
 export const addUserPermissionsSuccess = (permissions) => ({
-  type: actionsTypes.ADD_USER_PERMISSIONS_REQUEST,
+  type: actionsTypes.ADD_USER_PERMISSIONS_SUCCESS,
   payload: permissions
 })
 
@@ -48,33 +49,18 @@ export const addUserPermissionsError = (err) => ({
 })
 
 // GROUPS PERMISSIONS
-export const addGroupPermissionsRequest = (permissionsObj) => ({
+export const addGroupPermissionsRequest = (targetGroup, spaceId) => ({
   type: actionsTypes.ADD_GROUP_PERMISSIONS_REQUEST,
-  payload: permissionsObj
+  payload: { groupId: targetGroup._id, spaceId },
+  group: targetGroup
 })
 
 export const addGroupPermissionsSuccess = (permissions) => ({
-  type: actionsTypes.ADD_GROUP_PERMISSIONS_REQUEST,
+  type: actionsTypes.ADD_GROUP_PERMISSIONS_SUCCESS,
   payload: permissions
 })
 
 export const addGroupPermissionsError = (err) => ({
   type: actionsTypes.ADD_GROUP_PERMISSIONS_ERROR,
-  payload: err
-})
-
-// ANONYMOUS PERMISSIONS
-export const addAnonymousPermissionsRequest = (permissionsObj) => ({
-  type: actionsTypes.ADD_ANONYMOUS_PERMISSIONS_REQUEST,
-  payload: permissionsObj
-})
-
-export const addAnonymousPermissionsSuccess = (permissions) => ({
-  type: actionsTypes.ADD_ANONYMOUS_PERMISSIONS_REQUEST,
-  payload: permissions
-})
-
-export const addAnonymousPermissionsError = (err) => ({
-  type: actionsTypes.ADD_ANONYMOUS_PERMISSIONS_ERROR,
   payload: err
 })

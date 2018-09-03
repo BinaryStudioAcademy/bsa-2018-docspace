@@ -12,8 +12,6 @@ router.post('/:space_id/groups_permissions', permissionsService.addGroupPermissi
 
 router.post('/:space_id/users_permissions', permissionsService.addUserPermissions)
 
-router.post('/:space_id/anonymous_permissions', permissionsService.addAnonymousPermissions)
-
 router.post('/', spaceService.add)
 
 router.put('/:id', spaceService.findOneAndUpdate)

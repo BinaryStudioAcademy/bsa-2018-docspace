@@ -14,6 +14,7 @@ const history = require('./history')
 const permissions = require('./permissions')
 const uploadFiles = require('./uploadFile')
 const upload = require('./upload')
+const SearchService = require('../../services/searchService')
 // const search = require('./search')
 
 module.exports = (app, verifyJWTMiddleware) => {
@@ -34,4 +35,5 @@ module.exports = (app, verifyJWTMiddleware) => {
   app.use('/api/permissions', verifyJWTMiddleware, permissions)
   app.use('/api/uploadFiles', uploadFiles)
   app.use('/api/upload', verifyJWTMiddleware, upload)
+  app.post('/api/search', verifyJWTMiddleware, SearchService.handleSearch)
 }

@@ -29,6 +29,12 @@ class UserRepository extends GeneralRepository {
   deleteSpace (id, spaceId) {
     return super.update(id, {'$pull': {'spaces': spaceId}})
   }
+
+  searchByLoginPart (loginPart) {
+    return this.model.aggregate([
+      {$match: {login: { $regex: loginPart, $options: 'i' }}}
+    ])
+  }
 }
 
 module.exports = new UserRepository(scheme.User)

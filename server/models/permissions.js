@@ -7,7 +7,7 @@ const PermissionsSchema = new mongoose.Schema({
   groupId: Schema.Types.ObjectId,
 
   all: {
-    view: { type: Boolean, default: false }
+    view: { type: Boolean, default: true }
   },
 
   blog: {

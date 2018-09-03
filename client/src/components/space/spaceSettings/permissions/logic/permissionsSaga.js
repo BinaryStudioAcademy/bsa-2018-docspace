@@ -1,6 +1,6 @@
 import { takeEvery, put } from 'redux-saga/effects'
 import * as actions from './permissionsActions'
-import * as actionTypes from './permissionsActionsTypes'
+import * as actionsTypes from './permissionsActionsTypes'
 import PermissionsService from 'src/services/permissionsService'
 import _ from 'lodash'
 
@@ -56,7 +56,33 @@ function * updateSpacePermissions (action) {
   }
 }
 
+function * addPermissionsForGroup (action) {
+  try {
+    let permissions = yield PermissionsService.createGroupPermissions(action.payload)
+    const { group } = action
+    permissions = { ...permissions, group: group }
+    yield put(actions.addGroupPermissionsSuccess(permissions))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.addGroupPermissionsError(e))
+  }
+}
+
+function * addPermissionsForUser (action) {
+  try {
+    let permissions = yield PermissionsService.createUserPermissions(action.payload)
+    const { user } = action
+    permissions = { ...permissions, user: user }
+    yield put(actions.addUserPermissionsSuccess(permissions))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.addUserPermissionsError(e))
+  }
+}
+
 export default function * permissionsSaga () {
-  yield takeEvery(actionTypes.GET_SPACE_PERMISSIONS_REQUEST, getSpacePermissions)
-  yield takeEvery(actionTypes.UPDATE_SPACE_PERMISSIONS_REQUEST, updateSpacePermissions)
+  yield takeEvery(actionsTypes.GET_SPACE_PERMISSIONS_REQUEST, getSpacePermissions)
+  yield takeEvery(actionsTypes.UPDATE_SPACE_PERMISSIONS_REQUEST, updateSpacePermissions)
+  yield takeEvery(actionsTypes.ADD_GROUP_PERMISSIONS_REQUEST, addPermissionsForGroup)
+  yield takeEvery(actionsTypes.ADD_USER_PERMISSIONS_REQUEST, addPermissionsForUser)
 }

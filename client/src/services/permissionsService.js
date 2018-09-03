@@ -8,24 +8,24 @@ class PermissionsService {
     return apiResult
   }
 
-  createUserPermissions = (spaceId, permissions) => {
-    const args = { endpoint: `/api/spaces/${spaceId}/users_permissions`, method: 'POST', body: JSON.stringify(permissions) }
+  createUserPermissions = (permissions) => {
+    const args = {
+      endpoint: `/api/spaces/${permissions.spaceId}/users_permissions`,
+      method: 'POST',
+      body: JSON.stringify(permissions)
+    }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
 
-  createGroupPermissions = (spaceId, permissions) => {
-    const args = { endpoint: `/api/spaces/${spaceId}/groups_permissions`, method: 'POST', body: JSON.stringify(permissions) }
-    const apiResult = callWebApi(args)
-      .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
-    return apiResult
-  }
-
-  createAnonymousPermissions= (spaceId) => {
-    const args = { endpoint: `/api/spaces/${spaceId}/anonymous_permissions`, method: 'POST', body: JSON.stringify({}) }
+  createGroupPermissions = (permissions) => {
+    const args = {
+      endpoint: `/api/spaces/${permissions.spaceId}/groups_permissions`,
+      method: 'POST',
+      body: JSON.stringify(permissions)
+    }
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))

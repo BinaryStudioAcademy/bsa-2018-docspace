@@ -1,28 +1,26 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import PermissionsTable from './permissionsTable'
-import { getSpacePermissionsRequest, updateSpacePermissionsRequest } from './logic/permissionsActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { translate } from 'react-i18next'
 import { currentSpacePermissions, isFetchingForPermissions } from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
 import { EntityNamesForPermissionsSettingsArray } from './logic/constants'
 import AddPermissionsForm from './addPermissionsForm'
-
-// TODO: RENEMA SEARCH ACTIONS, RENEMA REDUCE, MOVE INTO SERACH LOGIN IN COMMON FOLDER
-import {getMatchingPagesRequest, cleanMatchingPages} from 'src/components/modals/searchModal/logic/searchActions'
 import { MoonLoader } from 'react-spinners'
+import { searchRequest } from 'src/commonLogic/search/searchActions'
+import {
+  getSpacePermissionsRequest, updateSpacePermissionsRequest,
+  addUserPermissionsRequest, addGroupPermissionsRequest
+} from './logic/permissionsActions'
 
 import './permissionsPage.css'
-// import _ from 'lodash'
-
-// import PermissionsService from 'src/services/permissionsService'
 
 export class PermissionsPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isEditing: true
+      isEditing: false
     }
   }
 
@@ -45,6 +43,10 @@ export class PermissionsPage extends Component {
     }, {})
   )
 
+  handleSearchGroups = (title) => {
+    this.props.actions.searchRequest({ input: title, targetToSearch: 'groups by title part' })
+  }
+
   renderGroupsPermissionsSection = () => {
     const items = this.permissionsFromState(this.props.permissions.groups)
 
@@ -58,7 +60,7 @@ export class PermissionsPage extends Component {
             isEditing={this.state.isEditing}
             items={this.props.permissions.groups}
             restictionsCategory={'groups'}
-            restrictionsByItemsId={items}
+            permissionsByItemsId={items}
             handleChangePermission={this.handleChangePermission}
             handleToggleAllCLick={this.setPermissionsForAllEntityTo}
           />
@@ -67,12 +69,29 @@ export class PermissionsPage extends Component {
           this.state.isEditing &&
           <AddPermissionsForm
             searchPlaceholder='Group name'
-            renderSearchedEntityLiContent={this.renderUserLiContent}
+            renderSearchedEntityLiContent={this.renderGroupLiContent}
+            handleSearchEntitiesToAddPermissions={this.handleSearchGroups}
+            getEntityName={(group) => group.title}
+            handleAddPermissions={(targetGroup) => this.props.actions.addGroupPermissionsRequest(targetGroup, this.props.space._id)}
+            idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.groups.map(perm => perm.groupId)}
           />
         }
 
       </React.Fragment>
     )
+  }
+
+  renderGroupLiContent (group) {
+    return (
+      <div className='user-li-node'>
+        <i className='fas fa-users' />
+        <span className='group-title'> {group.title}</span>
+      </div>
+    )
+  }
+
+  handleSearchUsers = (login) => {
+    this.props.actions.searchRequest({ input: login, targetToSearch: 'users by login part' })
   }
 
   renderUsersPermissionsSection = () => (
@@ -85,7 +104,7 @@ export class PermissionsPage extends Component {
           isEditing={this.state.isEditing}
           items={this.props.permissions.users}
           restictionsCategory={'users'}
-          restrictionsByItemsId={this.permissionsFromState(this.props.permissions.users)}
+          permissionsByItemsId={this.permissionsFromState(this.props.permissions.users)}
           handleChangePermission={this.handleChangePermission}
           handleToggleAllCLick={this.setPermissionsForAllEntityTo}
         />
@@ -94,16 +113,14 @@ export class PermissionsPage extends Component {
       {
         this.state.isEditing &&
         <AddPermissionsForm
-          searchPlaceholder='User name'
+          searchPlaceholder='User login'
           renderSearchedEntityLiContent={this.renderUserLiContent}
-
+          handleSearchEntitiesToAddPermissions={this.handleSearchUsers}
+          getEntityName={(user) => user.firstName + ' ' + user.lastName + ' @' + user.login}
+          handleAddPermissions={(targetUser) => this.props.actions.addUserPermissionsRequest(targetUser, this.props.space._id)}
+          idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.users.map(perm => perm.userId)}
         />
       }
-
-      {/* <button onClick={() => {
-            PermissionsService.getSpacePermissions(this.props.space._id)
-          }}
-          >get permission</button> */}
     </React.Fragment>
   )
 
@@ -129,7 +146,7 @@ export class PermissionsPage extends Component {
             isEditing={this.state.isEditing}
             items={[ anonymous ]}
             restictionsCategory={'anonymous'}
-            restrictionsByItemsId={{ [anonymous._id]: this.state.permissionsById[anonymous._id] }}
+            permissionsByItemsId={{ [anonymous._id]: this.state.permissionsById[anonymous._id] }}
             handleChangePermission={this.handleChangePermission}
             handleToggleAllCLick={this.setPermissionsForAllEntityTo}
           />
@@ -242,7 +259,6 @@ export class PermissionsPage extends Component {
 PermissionsPage.propTypes = {
   groups: PropTypes.array,
   users: PropTypes.array,
-  // anonymous: PropTypes.object,
   space: PropTypes.object,
   permissions: PropTypes.object,
   actions: PropTypes.object,
@@ -266,28 +282,12 @@ function mapDispatchToProps (dispatch) {
       {
         getSpacePermissionsRequest,
         updateSpacePermissionsRequest,
-
-        // TODO : Dont forget renema this
-        getMatchingPagesRequest,
-        cleanMatchingPages
+        addUserPermissionsRequest,
+        addGroupPermissionsRequest,
+        searchRequest
       }
       , dispatch)
   }
 }
 
 export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(PermissionsPage))
-
-// users
-// _id(pin): "5b6c572ab0e94b20bb1847ee"
-// name(pin): "qweasd SDF"
-// _id(pin): "5b6c619236a36c31da037912"
-// name(pin): "qwe qwe"
-// _id(pin): "5b6d4f3a4b3be73ec4835776"
-// name(pin): "qwe qwe"
-// _id(pin): "5b76a20f0d0b4e39c873dcf6"
-// name(pin): "qwe qwe"
-// _id(pin): "5b76a3d50d0b4e39c873dcfb"
-// name(pin): "qwe qwe"
-
-// group
-// _id(pin): "5b847444535f1f1d42b5e825"
