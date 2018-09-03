@@ -15,6 +15,8 @@ router.post('/search', pageService.search)
 
 router.put('/:id', pageService.findOneAndUpdate)
 
+router.put('/like/:id', pageService.addRemoveLike)
+
 router.delete('/:id', pageService.findOneAndDelete)
 
 module.exports = router

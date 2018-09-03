@@ -8,6 +8,7 @@
     "you": "Ви",
     "and": "і",
     "already_like_it": "сподобали це",
+    "already_likes_it": "сподобав це",
     "be_the_first_who_like_it": "Стань першим кому сподобається це",
     "and_0_ other_people": " і {{count}} інших людей ",
     "overview": "Огляд",
@@ -16,8 +17,8 @@
     "all_people": "Всі люди",
     "add_cover_photo": "Додати фото обкладинки",
     "general": "Загальне",
-    "private": "Безпека",
-    "work": "Робота",
+    "password": "Налаштування паролю",
+    "work": "Останні роботи",
     "email": "Електронна пошта",
     "nickname": "Логін",
     "first_name": "Ім'я",
@@ -155,6 +156,9 @@
     "permissions_to_anonymous_users": "Якщо ваш Dockspace є загальнодоступним, ви можете надати дозволи людям, які не авторизовані на сайті.",
     "user_login": "Логін користувача",
     "group_title": "Назва групи",
-    "nothing_found": "Нічого не знайдено"
+    "nothing_found": "Нічого не знайдено",
+    "general_information": "Загальна інформація",
+    "data_is_changing": "Данні змінено",
+    "password_is_changing": "Пароль зміненно"
   }
 }
