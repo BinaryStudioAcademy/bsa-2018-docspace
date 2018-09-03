@@ -2,6 +2,8 @@
 
 .content-card {
   display: flex;
+  flex-direction: column;
+  width: 100%;
   a,
   a:visited,
   a:hover,
@@ -46,8 +48,9 @@
   .content-card-time {
     padding: 5px;
   }
-  .content-card-name {
+  .history-name-container .content-card-name {
     font-weight: 500;
+    text-overflow: ellipsis;
   }
   a.content-card-name {
     color: $blueLink;
@@ -57,11 +60,29 @@
       @extend a.content-card-name;
     }
   }
+  .content-card-history{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
   .content-card-history-name {
+    width: 20%;
     font-weight: 500;
   }
   .content-card-time,
   .content-card-action {
     color: $grey;
+    width: 20%;
   }
+  .history-name-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 60%;
+    text-align: left;
+  }
+  // .content-card-action{
+  //   width: 20%;
+  // }
 }

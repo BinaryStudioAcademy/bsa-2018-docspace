@@ -11,7 +11,6 @@ class PeopleBody extends Component {
   }
 
   render () {
-    console.log(this.props.allUsers)
     const usersList = this.props.allUsers.map(user =>
       <tr>
         <td>{`${user.firstName} ${user.lastName}`}</td>

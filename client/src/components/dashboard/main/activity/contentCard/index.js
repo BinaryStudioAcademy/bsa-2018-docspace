@@ -19,16 +19,18 @@ const ContentCard = (props) => {
         : null
       }
       <div className='content-card-history'>
-        {props.showUser ? <Link to={`/users/${user.login}`}><p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link> : null}
-        <i id='content-icon' className={`${icon}`} />
-        <Link to={path} className={`content-card-name ${disabledLink}`}>
-          {name}
-        </Link>
-        {isDeleted
-          ? <span data-title='deleted' className='content-card-deleted'>
-            <i className='far fa-trash-alt' />
-          </span>
-          : null}
+        <div className='history-name-container'>
+          {props.showUser ? <Link to={`/users/${user.login}`}><p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link> : null}
+          <i id='content-icon' className={`${icon}`} />
+          <Link to={path} className={`content-card-name ${disabledLink}`}>
+            {name}
+          </Link>
+          {isDeleted
+            ? <span data-title='deleted' className='content-card-deleted'>
+              <i className='far fa-trash-alt' />
+            </span>
+            : null}
+        </div>
         <p className='content-card-action'>{action}</p>
         <p className='content-card-time' >{time}</p>
       </div>

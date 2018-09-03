@@ -68,11 +68,11 @@ class Group extends Component {
       <div className='group-container'>
         {this.state.modalIsOpened && <GroupDialog cancelModal={this.closeModal} />}
         <div className='group-header'>
-          <h1>{t('Groups')}</h1>
-          <Button value={t('Create group')} nameClass='groups-button' onClick={this.openModal} />
+          <h1>{t('groups')}</h1>
+          <Button value={t('create group')} nameClass='groups-button' onClick={this.openModal} />
         </div>
         <div className='group-filter-container'>
-          <Input label={t('Group name contains')}
+          <Input label={t('group_name_contains')}
             onChange={({target}) => this.handleChange(target)}
             value={this.state.filterField}
             inputType='text'
@@ -82,9 +82,9 @@ class Group extends Component {
           <table>
             <thead>
               <tr>
-                <th className='name'>{t('Name')}</th>
+                <th className='name'>{t('name')}</th>
                 <th className='tags' />
-                <th className='description'>{t('Description')}</th>
+                <th className='description'>{t('description')}</th>
                 <th />
               </tr>
             </thead>
@@ -125,5 +125,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Group)
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Group)))

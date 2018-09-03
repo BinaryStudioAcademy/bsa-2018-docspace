@@ -5,5 +5,5 @@ export default (socketEndpointPort) => {
 
   return process.env.NODE_ENV === 'production'
     ? io()
-    : io(`${currentLocation.protocol}${currentLocation.hostname}:3001`)
+    : io(`${currentLocation.protocol}//${currentLocation.hostname}:3001`)
 }

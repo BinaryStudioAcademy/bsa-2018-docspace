@@ -20,7 +20,7 @@ const SpaceOverviewHeader = ({ space, t, handleEditBtnClick, onPdfExport, onWord
         className='space-button'
         onClick={openWarningModal}
       >
-        {t('Remove_from_My_Spaces')}
+        {t('remove_from_My_Spaces')}
       </div>
     </SpaceHeaderButtons>
   </div>

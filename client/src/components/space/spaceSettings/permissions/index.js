@@ -13,13 +13,12 @@ export default class PermissionsPage extends Component {
       users: { ...this.splateRestrictions(users) },
       anonymous: { ...this.splateRestrictionsForSingleObject(anonymous) }
     }
-    console.log(this.state)
   }
 
   renderGroupsPermissionsSection= () => (
     <React.Fragment>
-      <h3>Groups permissions</h3>
-      <p>Permissions for this space for all members of the group.</p>
+      <h3>{this.props.t('groups_permissions')}</h3>
+      <p>{this.props.t('permissions_the_group')}</p>
       <PermissionsTable
         isEditing={this.state.isEditing}
         items={this.props.groups}
@@ -33,8 +32,8 @@ export default class PermissionsPage extends Component {
 
   renderUsersPermissionsSection = () => (
     <React.Fragment>
-      <h3>Users permissions</h3>
-      <p>Grant permissions to individual users, regardless of which group they are members of.</p>
+      <h3>{this.props.t('users_permissions')}</h3>
+      <p>{this.props.t('permissions_to_individual_users')}</p>
       <PermissionsTable
         isEditing={this.state.isEditing}
         items={this.props.users}
@@ -48,8 +47,8 @@ export default class PermissionsPage extends Component {
 
   renderAnonymousPermissionsSection = () => (
     <React.Fragment>
-      <h3>Anonymous access</h3>
-      <p>If your Confluence is public, you can grant permissions to people who are not authorized on the site.</p>
+      <h3>{this.props.t('anonymous_access')}</h3>
+      <p>{this.props.t('permissions_to_not_authorized')}</p>
       <PermissionsTable
         isEditing={this.state.isEditing}
         items={[{_id: 'anonymous', name: 'anonymous users', permissions: this.props.anonymous.permissions}]}
@@ -143,6 +142,7 @@ export default class PermissionsPage extends Component {
   }
 
   render () {
+    const {t} = this.props
     return (
       <div className='space-permissions-page'>
 
@@ -154,14 +154,14 @@ export default class PermissionsPage extends Component {
           {
             !this.state.isEditing
               ? <button onClick={this.toggleEditing}>
-                  Edit permissions
+                {t('edit_permissions')}
               </button>
               : <React.Fragment>
                 <button className='save-btn' onClick={this.handleSaveEditingClick}>
-                  Save all
+                  {t('save_all')}
                 </button>
                 <button onClick={this.handleCancelEditingClick}>
-                  Cancel
+                  {t('cancel')}
                 </button>
               </React.Fragment>
           }
@@ -175,7 +175,8 @@ export default class PermissionsPage extends Component {
 PermissionsPage.propTypes = {
   groups: PropTypes.array,
   users: PropTypes.array,
-  anonymous: PropTypes.object
+  anonymous: PropTypes.object,
+  t: PropTypes.func
 }
 
 PermissionsPage.defaultProps = {
