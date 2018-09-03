@@ -22,8 +22,6 @@ class SearchService {
             SpaceRepository.searchByTitle(req.body.input)
           ])
           .then(([pages, spaces]) => {
-            console.log([ ...pages, ...spaces ])
-            console.log('_______________________________________')
             res.json([ ...pages, ...spaces ])
           })
       },

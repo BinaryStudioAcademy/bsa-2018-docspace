@@ -187,13 +187,6 @@ class SpaceRepository extends GeneralRepository {
       },
 
       { $unwind: '$usersPermissions' },
-      // Group back to arrays
-      // {
-      //   $group: {
-      //     "_id": "$_id",
-      //     "usersPermissions": { "$push": "$usersPermissions" }
-      //   }
-      // },
 
       {
         $lookup: {
@@ -228,7 +221,6 @@ class SpaceRepository extends GeneralRepository {
       },
 
       { $unwind: '$groupsPermissions' },
-      // Group back to arrays
 
       {
         $lookup: {
