@@ -2,8 +2,12 @@ const GeneralRepository = require('./GeneralRepository')
 const scheme = require('../models/commentScheme')
 
 class CommentRepository extends GeneralRepository {
-  add (comment, page) {
+  addLike (id, userId) {
+    return super.update(id, {'$addToSet': {'userLikes': userId}})
+  }
 
+  removeLike (id, userId) {
+    return super.update(id, {'$pull': {'userLikes': userId}})
   }
 }
 

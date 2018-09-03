@@ -16,7 +16,6 @@ export default class WizardModalBody extends Component {
 
  emptySpaceFormFields = () => {
    const checked = this.props.isPrivateCheckboxChecked
-   console.log(checked)
    return (
      <div className='field-group'>
        <label ><i className={`fas fa-lock${checked ? '' : '-open'}`} /></label>
