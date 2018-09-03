@@ -7,13 +7,14 @@
     "settings": "Settings",
     "you": "You",
     "already_like_it": "already like it",
+    "already_likes_it": "already likes it",
     "be_the_first_who_like_it": "Be the first who like it",
     "and_0_ other_people": " and {{count}} other people ",
     "all_people": "All people",
     "add_cover_photo": "Add cover photo",
     "general": "General",
-    "private": "Private",
-    "work": "Work",
+    "password": "Password settings",
+    "work": "Recent work",
     "email": "Email",
     "nickname": "Nickname",
     "first_name": "First Name",
@@ -156,6 +157,9 @@
     "warning_space_delete_long": "This operation cannot be undone. Once the space is deleted, it cannot be retrieved. It will be gone forever.Are you sure you want to delete this space?",
     "my_updates": "My updates",
     "welcome_to_docspace": "Welcome to Docspace",
-    "docspace_intro": "Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes,    specs, mockups, diagrams, and projects. Share useful links, ads and information here"
+    "docspace_intro": "Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes,    specs, mockups, diagrams, and projects. Share useful links, ads and information here",
+    "general_information": "General information",
+    "data_is_changing": "Data is changing",
+    "password_is_changing": "Password is changing"
   }
 }

@@ -36,7 +36,7 @@ class Like extends Component {
 
   sortLikes () {
     this.props.likes.sort((a) => {
-      return a.id === this.props.user ? 1 : -1
+      return a.id === this.props.user ? -1 : 1
     })
   }
 
@@ -58,7 +58,7 @@ class Like extends Component {
         message += i === count - 1 ? name + '' : name + ', '
       }
       message += likes.length > 3 ? t('and_0_ other_people', { count: likes.length - 3 }) : ''
-      message += ' ' + t('already_like_it')
+      message += likes.length === 1 && !this.state.isCurrentUserLike ? ' ' + t('already_likes_it') : ' ' + t('already_like_it')
     }
     return message
   }
