@@ -31,9 +31,7 @@ class SpaceSidebar extends Component {
                         ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color}}>
                           <i className={`fa fa-${space.spaceSettings.icon}`} />
                         </div>
-                        : <div className='space-sidebar-header-icon'>
-                          <i className={`fa fa-folder`} />
-                        </div>
+                        : null
                       }
                       {showLabels && <span className='space-sidebar-header-name'>{space.name}</span>}
                     </div>

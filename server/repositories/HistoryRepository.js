@@ -51,11 +51,19 @@ class HistoryRepository extends GeneralRepository {
             spaceId: {'$first': '$space._id'},
             name: {'$first': '$space.name'}}},
       {$sort: {date: -1}},
+      {
+        $project: {
+          _id: 1,
+          date: 1,
+          pageId: 1,
+          title: 1,
+          isDeleted: 1,
+          spaceId: 1,
+          name: 1
+        }
+      },
       {$limit: 8}
     ])
-  }
-  getUserWorks (id) {
-    return this.model.find({userId: id, action: { $in: [/UPDATE_PAGE/, /UPDATE_BLOG/] }})
   }
 }
 

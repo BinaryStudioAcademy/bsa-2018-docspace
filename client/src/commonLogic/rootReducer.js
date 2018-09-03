@@ -11,7 +11,6 @@ import blogReducer from 'src/components/blog/logic/blogReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
 import commentReducer from '../components/page/commentsLogic/commentsReducer'
 import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
-import workReducer from 'src/components/dashboard/main/work/logic/workReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
 import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
@@ -31,7 +30,6 @@ const baseReducer = combineReducers({
   verification: verificationReducer,
   comments: commentReducer,
   activity: activityReducer,
-  work: workReducer,
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
   allUsers: allUsersReducer,

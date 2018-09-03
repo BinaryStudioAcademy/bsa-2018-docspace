@@ -1,12 +1,21 @@
 import React from 'react'
-import {workHelper} from '../workHelper'
+import workHelper from 'src/components/recentWorkListItem/helperRecentWork'
 import PropTypes from 'prop-types'
 import WorkCard from '../workCard'
 
 import './RecentlyWorkedOn.css'
 const RecentlyWorkedOn = (props) => {
-  const {works} = props
-  const today = works && works.filter(item => {
+  const {userHistory} = props
+  let filteredHistory = userHistory.filter((item) => {
+    if (item._id.action === 'CREATE_BLOG_PAGE_SUCCESS') {
+      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_BLOG_PAGE_SUCCESS' && itemUpdate.pageId[0] === item.pageId[0])
+    }
+    if (item._id.action === 'CREATE_PAGE_SUCCESS') {
+      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_PAGE_SUCCESS' && itemUpdate.pageId[0] === item.pageId[0])
+    }
+    return true
+  })
+  const today = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'TODAY') {
       return true
@@ -14,7 +23,7 @@ const RecentlyWorkedOn = (props) => {
       return false
     }
   })
-  const yesterday = works && works.filter(item => {
+  const yesterday = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'YESTERDAY') {
       return true
@@ -22,7 +31,7 @@ const RecentlyWorkedOn = (props) => {
       return false
     }
   })
-  const aFewDaysAgo = works && works.filter(item => {
+  const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'A FEW DAYS AGO') {
       return true
@@ -30,7 +39,7 @@ const RecentlyWorkedOn = (props) => {
       return false
     }
   })
-  const aWeekAgo = works && works.filter(item => {
+  const aWeekAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'A WEEK AGO') {
       return true
@@ -38,7 +47,7 @@ const RecentlyWorkedOn = (props) => {
       return false
     }
   })
-  const aMonthAgo = works && works.filter(item => {
+  const aMonthAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'A MONTH AGO') {
       return true
@@ -46,7 +55,7 @@ const RecentlyWorkedOn = (props) => {
       return false
     }
   })
-  const aMonthsAgo = works && works.filter(item => {
+  const aMonthsAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
     if (content.time === 'A MONTHS AGO') {
       return true
@@ -120,7 +129,7 @@ const RecentlyWorkedOn = (props) => {
   )
 }
 RecentlyWorkedOn.propTypes = {
-  works: PropTypes.array.isRequired
+  userHistory: PropTypes.array.isRequired
 }
 
 export default RecentlyWorkedOn

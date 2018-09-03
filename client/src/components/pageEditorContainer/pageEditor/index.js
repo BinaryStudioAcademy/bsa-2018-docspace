@@ -48,7 +48,6 @@ export default class PageEditor extends Component {
 
  render () {
    const {space, page, user, joditEditorConfig} = this.props
-   console.log(this.props)
    return (
      <div className='page-editor-wrp'>
        <div className='page-editor-header'>

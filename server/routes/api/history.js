@@ -9,8 +9,6 @@ router.get('/user/:login', historyService.findUserHistory)
 
 router.get('/current-user/:id', historyService.findCurrentUserHistory)
 
-router.get('/userWorks/:id', historyService.findUserWorks)
-
 router.post('/', historyService.add)
 
 router.delete('/:id', historyService.findOneAndDelete)

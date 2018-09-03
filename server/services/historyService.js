@@ -120,33 +120,6 @@ module.exports = {
       .catch(err => console.log(err))
   },
 
-  findUserWorks: (req, res) => {
-    const userId = req.params.id
-    if (userId.length === 0) {
-      res.status(400)
-
-      return res.end('Invalid id')
-    }
-    HistoryRepository.getUserWorks(userId)
-      .limit(15)
-      .sort('-date')
-      .populate({
-        path: 'pageId',
-        select: 'title isDeleted'})
-      .then((data) => {
-        if (data.length === 0) {
-          res.json([])
-        }
-
-        res.json(data)
-      })
-      .catch((err) => {
-        console.log(err)
-        res.status(400)
-        res.end()
-      })
-  },
-
   findAllInSpace: (req, res) => {
     const id = req.params.id
 

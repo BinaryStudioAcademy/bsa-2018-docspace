@@ -7,12 +7,12 @@ import './work.css'
 import RecentlyWorkedOn from './RecentlyWorkedOn'
 import RecentlyVisited from './RecentlyVisited'
 import SavedForLater from './SavedForLater'
-import * as actions from './logic/workActions'
+import * as actions from 'src/components/containers/user/logic/userActions'
 import Input from '../../input'
 const TABS = [
   {
     name: 'Recently worked on',
-    path: '/RecentlyWorkedOn',
+    path: '/RecentWorks',
     component: RecentlyWorkedOn
   },
   {
@@ -29,7 +29,7 @@ const TABS = [
 
 class Work extends Component {
   componentDidMount () {
-    this.props.getUserWorksRequest(this.props.userId)
+    this.props.getUserUpdatesRequest(this.props.user.login)
   }
   render () {
     const {match} = this.props
@@ -66,20 +66,23 @@ class Work extends Component {
 
 Work.propTypes = {
   match: PropTypes.object,
-  userId: PropTypes.string,
-  getUserWorksRequest: PropTypes.func
+  user: PropTypes.object,
+  getUserUpdatesRequest: PropTypes.func,
+  userHistory: PropTypes.array
 }
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.verification.user._id,
-    works: state.work.userWorks.list
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
+    userHistory: state.user.userHistory
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserWorksRequest: bindActionCreators(actions.getUserWorksRequest, dispatch)
+    getUserUpdatesRequest: bindActionCreators(actions.getUserUpdatesRequest, dispatch)
   }
 }
 

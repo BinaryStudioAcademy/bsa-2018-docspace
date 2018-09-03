@@ -89,7 +89,7 @@ export class Comment extends Component {
             <div className='comment-body'>
               <Link to={`/users/${this.props.comment.user[0].login}`} >
                 <h4 className='comment-first-last-names'>
-                  <a href=''>{this.props.comment.user[0].firstName} {this.props.comment.user[0].lastName}</a>
+                  <span>{this.props.comment.user[0].firstName} {this.props.comment.user[0].lastName}</span>
                 </h4>
               </Link>
               <div className='comment-body-content'>
