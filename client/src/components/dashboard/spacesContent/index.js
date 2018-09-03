@@ -74,12 +74,12 @@ class SpacesContent extends Component {
   }
 
   render () {
-    const { isFetching } = this.props
+    const { isFetching, t } = this.props
     return (
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>
           <h2>{this.props.activeTab}</h2>
-          <DashboardInput dashboardValue={this.state.filterField} ref='filterInput' placeholder='Filter' onChange={this.handleFilterField} />
+          <DashboardInput dashboardValue={this.state.filterField} ref='filterInput' placeholder={t('filter')} onChange={this.handleFilterField} />
         </div>
         { isFetching
           ? <div className='body-spaces-loader'>
@@ -95,9 +95,9 @@ class SpacesContent extends Component {
             <table className='table-paces'>
               <thead className='list-header'>
                 <tr>
-                  <td className='column-heading name-heading' colSpan='2'>Space</td>
-                  <td className='column-heading desc-heading'>Description</td>
-                  <td className='column-heading labels-heading'>Categories</td>
+                  <td className='column-heading name-heading' colSpan='2'>{t('Space')}</td>
+                  <td className='column-heading desc-heading'>{t('Description')}</td>
+                  <td className='column-heading labels-heading'>{t('Categories')}</td>
                   <td className='column-heading icon-column-heading' />
                 </tr>
               </thead>
@@ -114,6 +114,7 @@ class SpacesContent extends Component {
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
   isFetching: PropTypes.bool,
-  activeTab: PropTypes.string
+  activeTab: PropTypes.string,
+  t: PropTypes.func
 }
 export default SpacesContent

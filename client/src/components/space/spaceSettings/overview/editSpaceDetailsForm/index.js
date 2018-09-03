@@ -143,12 +143,12 @@ class EditSpaceDetailsForm extends Component {
 
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
-          <label>Home page</label>
+          <label>{t('Home_page')}</label>
           <select name='homePageId'
             onChange={({target}) => this.handleFieldChange(target)}
             defaultValue={homePage ? homePage._id : 'none'}
           >
-            <option value='none' disabled hidden> None </option>
+            <option value='none' disabled hidden> {t('None')} </option>
             {
               pages.map((page, index) => (
                 <option value={page._id} key={index}>
