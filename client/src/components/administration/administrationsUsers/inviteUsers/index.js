@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 
 const InviteUsers = (props) => (
   <div>
-    <Input label={props.t('Full name')}
+    <Input label={props.t('full_name')}
       onChange={({target}) => props.onChange(target)}
       name={props.nameName}
       value={props.valueName}
       inputType='text'
     />
-    <Input label={props.t('Email address')}
+    <Input label={props.t('email_address')}
       onChange={({target}) => props.onChange(target)}
       name={props.nameEmail}
       value={props.valueEmail}

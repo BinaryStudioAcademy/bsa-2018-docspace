@@ -48,7 +48,7 @@ class WizardSpaceModal extends Component {
     const {t} = this.props
     return (
       <h2 className='modal-header' >
-        { name === t('empty space') ? t('Create_an_0', {name: name}) : t('Create_a_0', {name: name})}
+        { name === t('empty_space') ? t('create_an_0', {name: name}) : t('create_a_0', {name: name})}
       </h2>
     )
   }
@@ -58,16 +58,16 @@ class WizardSpaceModal extends Component {
     return (
       <div className='modal-footer'>
         <button onClick={this.props.handleBackClick}>
-          {t('Back')}
+          {t('back')}
         </button>
         <button
           className='accept-button'
           onClick={this.handleCreateSpace}
         >
-          {t('Create')}
+          {t('create')}
         </button>
         <button onClick={this.props.closeModal}>
-          {t('Close')}
+          {t('close')}
         </button>
       </div>
     )

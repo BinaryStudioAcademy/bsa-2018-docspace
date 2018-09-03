@@ -20,17 +20,17 @@ class Activity extends Component {
     const { t, match } = this.props
     const TABS = [
       {
-        name: t('All updates'),
+        name: t('all_updates'),
         path: '/allupdates',
         component: AllUpdatesTab
       },
       {
-        name: t('My updates'),
+        name: t('my_updates'),
         path: '/myupdates',
         component: MyUpdatesTab
       },
       {
-        name: t('Popular'),
+        name: t('popular'),
         path: '/popular',
         component: PopularTab
       }
@@ -38,7 +38,7 @@ class Activity extends Component {
     return (
       <div className='dashboard-activity'>
         <div className='dashboard-activity-body'>
-          <h2 className='dashboard-activity-header'>{t('Activity')}</h2>
+          <h2 className='dashboard-activity-header'>{t('activity')}</h2>
           <div className='dashboard-activity-nav-bar'>
             {TABS.map(({ name, path }) =>
               <NavLink
@@ -60,7 +60,7 @@ class Activity extends Component {
             />
           )}
         </div>
-        <ActivitySidebar />
+        <ActivitySidebar t={t} />
       </div>
     )
   }

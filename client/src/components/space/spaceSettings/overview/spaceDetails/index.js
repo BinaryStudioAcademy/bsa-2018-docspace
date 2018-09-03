@@ -21,7 +21,7 @@ class SpaceDetails extends Component {
       <table className='space-details-table'>
         <tbody>
           <tr>
-            <td className='avatar-label-cell'>{t('Space_logo')}</td>
+            <td className='avatar-label-cell'>{t('space_logo')}</td>
             <td className='avatar-cell'>
               <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
                 <span className='icon-avatar' >
@@ -31,11 +31,11 @@ class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>{t('Name')}</td>
+            <td>{t('name')}</td>
             <td>{space.name}</td>
           </tr>
           <tr>
-            <td>{t('Key')}</td>
+            <td>{t('key')}</td>
             <td>{space.key}</td>
           </tr>
           <tr>
@@ -49,26 +49,26 @@ class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>{t('Created_by')}</td>
+            <td>{t('created_by')}</td>
             <td> <span className='link'>{name}</span></td>
           </tr>
           <tr>
-            <td>{t('Categories')}</td>
+            <td>{t('categories')}</td>
             <td >
               {space.categories.length
                 ? space.categories.map((category, index) =>
                   <Link key={index} to='#' className='space-category'>
                     {category.name}
                   </Link>)
-                : `(${t('None')})` }
+                : `(${t('none')})` }
             </td>
           </tr>
           <tr>
-            <td>{t('Description')}</td>
+            <td>{t('description')}</td>
             <td>{space.description}</td>
           </tr>
           <tr>
-            <td>{t('Administrators')}</td>
+            <td>{t('administrators')}</td>
             <td>
               <span className='link'>{name}</span>
             </td>

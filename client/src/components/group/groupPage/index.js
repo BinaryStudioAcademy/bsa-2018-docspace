@@ -57,7 +57,7 @@ class GroupPage extends Component {
         <td className=''>
           <button
             className='groups-button'
-            onClick={() => { this.deleteUser(groupMembers._id) }}>{t('Remove user')}
+            onClick={() => { this.deleteUser(groupMembers._id) }}>{t('remove_user')}
           </button>
         </td>
       </tr>
@@ -114,12 +114,12 @@ class GroupPage extends Component {
         <textarea autoFocus={forAutoFocus} value={this.state.description} onChange={({target}) => this.changeDescription(target)} />
         <div>
           <button className='accept-button' onClick={this.updateGroupDescription}>{t('Save')}</button>
-          <button onClick={this.closeEditField}>{t('Close')}</button>
+          <button onClick={this.closeEditField}>{t('close')}</button>
         </div>
       </div>
       : <div className='group-content-container'>
-        <h2 className='group-description'>{group ? group.description || t('No description') : ''}</h2>
-        <button onClick={this.changeEditState}>{t('Edit')}</button>
+        <h2 className='group-description'>{group ? group.description || t('no_description') : ''}</h2>
+        <button onClick={this.changeEditState}>{t('edit')}</button>
       </div>
     return description
   }
@@ -137,7 +137,7 @@ class GroupPage extends Component {
     return this.state.addUser
       ? <div className='group-user-filter'>
         <Input
-          label={t('User name contains')}
+          label={t('user_name_contains')}
           value={this.state.filterValue}
           onChange={({target}) => this.onChange(target)}
           name='name'
@@ -146,17 +146,17 @@ class GroupPage extends Component {
           autoFocus={forAutoFocus}
         />
         <div>
-          <button className='accept-button' onClick={() => this.updateGroupMembers()}>{t('Add user')}</button>
-          <button onClick={this.changeAddUserState}>{t('Cancel')}</button>
+          <button className='accept-button' onClick={() => this.updateGroupMembers()}>{t('add_user')}</button>
+          <button onClick={this.changeAddUserState}>{t('cancel')}</button>
         </div>
         <div className='group-users-list'>
           {this.renderUsers()}
         </div>
-        <h3>{t('Members')}</h3>
+        <h3>{t('members')}</h3>
       </div>
       : <div className='group-content-container'>
-        <h3>{t('Members')}</h3>
-        <button className='groups-button' onClick={this.changeAddUserState}>{t('Add user')}</button>
+        <h3>{t('members')}</h3>
+        <button className='groups-button' onClick={this.changeAddUserState}>{t('add_user')}</button>
       </div>
   }
 
@@ -187,9 +187,9 @@ class GroupPage extends Component {
         {this.renderAddUser()}
         <table>
           <thead>
-            <th>{t('Full name')}</th>
-            <th>{t('Email address')}</th>
-            <th>{t('Login')}</th>
+            <th>{t('full_name')}</th>
+            <th>{t('email_address')}</th>
+            <th>{t('login')}</th>
             <th />
           </thead>
           <tbody>

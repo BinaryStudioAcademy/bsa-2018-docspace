@@ -50,10 +50,10 @@ class Like extends Component {
     const { t, likes } = this.props
     let message
     if (!likes.length) {
-      return t('Be_the_first_who_like_it')
+      return t('be_the_first_who_like_it')
     } else {
       let maxNumber = this.state.isCurrentUserLike ? 2 : 3
-      message = this.state.isCurrentUserLike ? t('You') : ''
+      message = this.state.isCurrentUserLike ? t('you') : ''
       const likeLength = this.state.isCurrentUserLike ? likes.length - 1 : likes.length
       const count = Math.min(likeLength, maxNumber)
       message += this.state.isCurrentUserLike && count ? ', ' : ''

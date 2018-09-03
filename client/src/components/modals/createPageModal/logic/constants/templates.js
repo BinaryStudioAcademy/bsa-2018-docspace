@@ -7,12 +7,12 @@ const t = getT()
 export const templates = [
   {
     name: names.EMPTY_PAGE,
-    previewText: t('Start from empty page'),
+    previewText: t('start_from_empty_page'),
     img: emptyPageIcon
   },
   {
     name: names.BLOG_PAGE,
-    previewText: t('Share news and announcements with your team'),
+    previewText: t('share_news_and_announcements_with_your_team'),
     img: blogPageIcon
   }
 ]

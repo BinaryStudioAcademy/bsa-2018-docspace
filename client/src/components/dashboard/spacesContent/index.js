@@ -95,9 +95,9 @@ class SpacesContent extends Component {
             <table className='table-paces'>
               <thead className='list-header'>
                 <tr>
-                  <td className='column-heading name-heading' colSpan='2'>{t('Space')}</td>
-                  <td className='column-heading desc-heading'>{t('Description')}</td>
-                  <td className='column-heading labels-heading'>{t('Categories')}</td>
+                  <td className='column-heading name-heading' colSpan='2'>{t('space')}</td>
+                  <td className='column-heading desc-heading'>{t('description')}</td>
+                  <td className='column-heading labels-heading'>{t('categories')}</td>
                   <td className='column-heading icon-column-heading' />
                 </tr>
               </thead>

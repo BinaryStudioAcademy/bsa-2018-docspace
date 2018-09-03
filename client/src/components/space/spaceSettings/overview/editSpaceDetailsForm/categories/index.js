@@ -57,7 +57,7 @@ class Categories extends Component {
         <div className='field-group'>
           <label>Categories</label>
           <Input placeholder={this.props.t('Enter_category')} inputType='text' name='category-input' onChange={this.handleChangeName} value={this.state.categoryName} />
-          <button type='submit' className='add-btn' disabled={this.isAllowedSubmit()} onClick={this.handleCreateCategory}>{t('Add')}</button>
+          <button type='submit' className='add-btn' disabled={this.isAllowedSubmit()} onClick={this.handleCreateCategory}>{t('add')}</button>
         </div>
       </React.Fragment>
     )

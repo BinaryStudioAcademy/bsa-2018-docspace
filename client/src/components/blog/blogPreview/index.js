@@ -21,13 +21,13 @@ class Blog extends Component {
         <BlogHeader space={space} />
         <div className='blog-container'>
           <div className='empty-blog-message'>
-            <div className='empty-blog-message-title'>{t('Got something to share?')}</div>
-            <div className='empty-blog-message-text'>{t('Blog posts are a great')}</div>
+            <div className='empty-blog-message-title'>{t('got_something_to_share')}</div>
+            <div className='empty-blog-message-text'>{t('blog_posts_are_a_great')}</div>
             <button
               className='empty-blog-message-button'
               onClick={this.handleCreateBlogPage}
             >
-              {t('Create Blog Post')}
+              {t('create_blog_post')}
             </button>
           </div>
         </div>

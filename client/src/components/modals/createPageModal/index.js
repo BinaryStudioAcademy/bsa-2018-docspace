@@ -69,9 +69,9 @@ class CreatePageModal extends Component {
     const {t} = this.props
     return (
       <h2 className='modal-header' >
-        {t('Create')}
+        {t('create')}
         <div className='modal-help-link' >
-          <a href=''>{t('Help')} </a>
+          <a href=''>{t('help')} </a>
         </div>
         <form className='modal-filter-form'>
           <input
@@ -95,10 +95,10 @@ class CreatePageModal extends Component {
           onClick={this.handlecreateClick}
           disabled={disableNextButton}
         >
-          {t('Create')}
+          {t('create')}
         </button>
         <button onClick={this.props.closeModal}>
-          {t('Close')}
+          {t('close')}
         </button>
       </div>
     )
@@ -110,13 +110,13 @@ class CreatePageModal extends Component {
        <React.Fragment>
          <div className='select-space-for-page-creation-block'>
            <span>
-             {t('Choose a space')}
+             {t('choose_a_space')}
            </span>
            <select
              onChange={({target}) => this.handleSelectSpace(target.value)}
              defaultValue='none'
            >
-             <option value='none' disabled hidden>{t('Choose here')}</option>
+             <option value='none' disabled hidden>{t('choose_here')}</option>
              {
                this.props.spaces.map((space, index) => (
                  <option value={JSON.stringify(space)} key={index}>

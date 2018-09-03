@@ -15,18 +15,18 @@ import './spaceSettings.css'
 const SpaceSettings = (props) => {
   const TABS = [
     {
-      name: props.t('Overview'),
+      name: props.t('overview'),
       path: '/overview',
       component: SpaceOverviewTab
     },
     {
-      name: props.t('Permissions'),
+      name: props.t('permissions'),
       path: '/permissions',
       component: SpacePermissionsTab
     }
   ]
   return <div className='space-settings-page'>
-    <h2 className='space-settings-page-header'>{props.t('Space_settings')}</h2>
+    <h2 className='space-settings-page-header'>{props.t('space_settings')}</h2>
     <div className='nav-bar'>
       {TABS.map(({ name, path }) =>
         <NavLink

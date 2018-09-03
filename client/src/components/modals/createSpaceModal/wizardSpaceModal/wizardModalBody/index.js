@@ -24,7 +24,7 @@ export default class WizardModalBody extends Component {
          name='isPrivate'
          onChange={({target}) => this.props.handleCheckboxChange(target)}
        />
-       <label> {this.props.t('only for me')}</label>
+       <label> {this.props.t('only_for_me')}</label>
      </div>
    )
  }
@@ -49,7 +49,7 @@ export default class WizardModalBody extends Component {
       <div className='wizard-modal-body'>
         <form className='wizzard-modal-form'>
           <div className='field-group'>
-            <label>{t('Space name')}</label>
+            <label>{t('space_name')}</label>
             <input
               type='text'
               name='name'
@@ -58,7 +58,7 @@ export default class WizardModalBody extends Component {
           </div>
 
           <div className='field-group'>
-            <label>{t('Space key')}</label>
+            <label>{t('space_key')}</label>
             <input
               type='text'
               name='key'
@@ -70,7 +70,7 @@ export default class WizardModalBody extends Component {
         </form>
 
         <div className='wizard-modal-description'>
-          <h3> {t('About_0', {name: templateName})}</h3>
+          <h3> {t('about_0', {name: templateName})}</h3>
           <p> { selectedTemplate.description } </p>
         </div>
       </div>

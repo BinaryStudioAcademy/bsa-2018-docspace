@@ -13,12 +13,12 @@ class Administration extends Component {
     const { match, t } = this.props
     const TABS = [
       {
-        name: t('Groups'),
+        name: t('groups'),
         path: '/groups',
         component: Group
       },
       {
-        name: t('Users'),
+        name: t('users'),
         path: '/users',
         component: AdministrationUsers
       }

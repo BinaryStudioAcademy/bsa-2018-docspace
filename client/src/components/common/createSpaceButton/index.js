@@ -22,7 +22,7 @@ class CreateSpaceButton extends Component {
     const {t} = this.props
     return (
       <React.Fragment>
-        <button onClick={this.toggleModal} className='create-space-btn'>{t('Create space')}</button>
+        <button onClick={this.toggleModal} className='create-space-btn'>{t('create_space')}</button>
         {
           this.state.showSpaceModal &&
           <CreateSpaceModal toggleModal={this.toggleModal} />

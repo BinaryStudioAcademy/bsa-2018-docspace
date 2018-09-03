@@ -32,7 +32,7 @@ class AdministrationUsers extends Component {
     return (
       <React.Fragment>
         <div>
-          <h1>{t('Invite new users')}</h1>
+          <h1>{t('invite_new_users')}</h1>
           <InviteUsers
             valueName={this.state.nameField1}
             valueEmail={this.state.emailField1}
@@ -58,9 +58,9 @@ class AdministrationUsers extends Component {
             t={t}
           />
         </div>
-        <button>{t('Invite users')}</button>
+        <button>{t('invite_users')}</button>
         <div className='admin-filter-container'>
-          <Input label={t('Name or email contains')}
+          <Input label={t('name_or_email_contains')}
             onChange={({target}) => this.handleChange(target)}
             value={this.state.filterValue}
             inputType='text'

@@ -64,7 +64,7 @@ export class ProfileFields extends Component {
   }
 
   renderLabelButton () {
-    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: this.props.t('Edit')}
+    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: this.props.t('edit')}
       : {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('Save')}
   }
 
@@ -149,10 +149,10 @@ export class ProfileFields extends Component {
               />
             </div>
             <div className='language-choise'>
-              <span>{t('choose language')}</span>
+              <span>{t('choose_language')}</span>
               <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
-                <option value='en'>{t('English')}</option>
-                <option value='uk'>{t('Ukrainian')}</option>
+                <option value='en'>{t('english')}</option>
+                <option value='uk'>{t('ukrainian')}</option>
               </select>
             </div>
           </React.Fragment>

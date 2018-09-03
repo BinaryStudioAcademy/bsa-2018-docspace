@@ -21,29 +21,29 @@ class MinSidebar extends Component {
     this.dropdownMenuItems = {
       avatar: [
         {
-          name: this.props.t('Profile'),
+          name: this.props.t('profile'),
           path: '/userSettings'
         },
         {
-          name: this.props.t('LogOut'),
+          name: this.props.t('log_out'),
           path: '/login'
         }
       ],
       help: [
         {
-          name: this.props.t('Help'),
+          name: this.props.t('help'),
           path: '#'
         }
       ],
       notifications: [
         {
-          name: this.props.t('Notifications'),
+          name: this.props.t('notifications'),
           path: '#'
         }
       ],
       burger: [
         {
-          name: this.props.t('Administration'),
+          name: this.props.t('administration'),
           path: '/admin'
         }
       ]

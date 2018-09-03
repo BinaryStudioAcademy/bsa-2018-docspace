@@ -16,10 +16,10 @@ class DashboardSpacesBody extends Component {
     super(props)
     const {t} = props
     this.state = {
-      active: t('All Spaces'),
+      active: t('all_spaces'),
       spaces: []
     }
-    this.sideBarTabs = [ t('All Spaces'), t('Personal Spaces'), t('My Spaces'), t('Archived Spaces') ]
+    this.sideBarTabs = [ t('all_spaces'), t('personal_spaces'), t('my_spaces'), t('archived_spaces') ]
   }
   componentDidMount () {
     this.props.actions.getSpacesRequest()
@@ -27,10 +27,10 @@ class DashboardSpacesBody extends Component {
   }
   handleClickNavTab = (tab) => {
     const {t} = this.props
-    if (tab === t('All Spaces')) {
+    if (tab === t('all_spaces')) {
       this.setState({spaces: this.props.spaces})
     }
-    if (tab === t('Personal Spaces') || tab === t('My Spaces') || tab === t('Archived Spaces')) {
+    if (tab === t('personal_spaces') || tab === t('my_spaces') || tab === t('archived_spaces')) {
       const filteredSpaces = this.props.spaces.filter(space => this.props.userSpaces.some(userSpaceId => userSpaceId === space._id))
       this.setState({ spaces: filteredSpaces })
     }
@@ -50,7 +50,7 @@ class DashboardSpacesBody extends Component {
         <SpacesContent
           activeTab={this.state.active}
           isFetching={this.props.isFetching}
-          spaces={this.state.active !== t('All Spaces') ? this.state.spaces : this.props.spaces}
+          spaces={this.state.active !== t('all_spaces') ? this.state.spaces : this.props.spaces}
           t={t}
         />
       </div>

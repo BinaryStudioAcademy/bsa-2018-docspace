@@ -7,18 +7,18 @@ import PropTypes from 'prop-types'
 
 class People extends Component {
   state = {
-    active: this.props.t('All People')
+    active: this.props.t('all_people')
   }
   handleClickNavTab = (tab) => {
     this.setState({ active: tab })
   }
   render () {
     const {t} = this.props
-    const sideBarTabs = [t('All People'), t('People with Personal Spaces')]
+    const sideBarTabs = [t('all_people'), t('people_with_personal_spaces')]
     return (
       <div className='dashboard-spaces'>
         <div className='spaces-header'>
-          <h1>{t('People Directory')}</h1>
+          <h1>{t('people_directory')}</h1>
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>

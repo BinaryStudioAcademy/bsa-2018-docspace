@@ -7,9 +7,9 @@ export default class TemplateSelectionModal extends Component {
   renderModalHeader = () => {
     return (
       <h2 className='modal-header' >
-        {this.props.t('Create space')}
+        {this.props.t('create_space')}
         <div className='modal-help-link' >
-          <a href=''> {this.props.t('Help')} </a>
+          <a href=''> {this.props.t('help')} </a>
         </div>
         <form className='modal-filter-form'>
           <input
@@ -32,10 +32,10 @@ export default class TemplateSelectionModal extends Component {
           onClick={this.props.handleNextClick}
           disabled={disableNextButton}
         >
-          {this.props.t('Next')}
+          {this.props.t('next')}
         </button>
         <button onClick={this.props.closeModal}>
-          {this.props.t('Close')}
+          {this.props.t('close')}
         </button>
       </div>
     )
