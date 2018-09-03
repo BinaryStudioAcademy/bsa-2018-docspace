@@ -16,15 +16,12 @@ class Like extends Component {
   }
 
   changeLikeState () {
-    this.setState((prevState) => {
-      return {isCurrentUserLike: !prevState.isCurrentUserLike}
-    }, this.likeAction)
+    this.likeAction()
   }
 
   findUser (nextProps) {
-    // console.log(this.findUser)
     for (let i = 0; i < nextProps.likes.length; i++) {
-      if (nextProps.likes[i]._id === nextProps.user) {
+      if (nextProps.likes[i]._id === nextProps.user._id) {
         return true
       }
     }
@@ -32,7 +29,7 @@ class Like extends Component {
   }
 
   likeAction () {
-    this.props.likePage(this.state.isCurrentUserLike)
+    this.props.likePage(!this.state.isCurrentUserLike)
   }
 
   sortLikes () {
@@ -42,7 +39,6 @@ class Like extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    // console.log(nextProps)
     if (this.props !== nextProps) {
       this.setState({isCurrentUserLike: this.findUser(nextProps)})
     }
@@ -50,16 +46,14 @@ class Like extends Component {
 
   getMessage () {
     this.sortLikes()
-    // this.setState({
 
-    // })
     const { t, likes } = this.props
     let message
     if (!likes.length) {
-      return t('Be_the_first_who_like_it')
+      return t('be_the_first_who_like_it')
     } else {
       let maxNumber = this.state.isCurrentUserLike ? 2 : 3
-      message = this.state.isCurrentUserLike ? t('You') : ''
+      message = this.state.isCurrentUserLike ? t('you') : ''
       const likeLength = this.state.isCurrentUserLike ? likes.length - 1 : likes.length
       const count = Math.min(likeLength, maxNumber)
       message += this.state.isCurrentUserLike && count ? ', ' : ''
@@ -74,7 +68,6 @@ class Like extends Component {
   }
 
   render () {
-    // console.log(this.props)
     return (
       <div className='like-wrapper'>
         <button className='like-button' onClick={this.changeLikeState} >

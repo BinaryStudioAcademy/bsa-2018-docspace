@@ -39,7 +39,7 @@ class SpaceHeader extends Component {
             : (
               <div className='space-header-page'>
                 <NavLink className='space-header-name page' to={`/spaces/${id}/overview`}>{space.name}</NavLink>
-                <NavLink className='buttons-item restrictions' title={t('Unrestricted')} to={''}>
+                <NavLink className='buttons-item restrictions' title={t('unrestricted')} to={''}>
                   <i className='fas fa-lock-open' />
                 </NavLink>
               </div>
@@ -52,7 +52,7 @@ class SpaceHeader extends Component {
               <SpaceHeaderButtons type={type}>
                 {
                   type === 'space'
-                    ? <div className='space-button'>{t('Remove_from_My_Spaces')}</div>
+                    ? <div className='space-button'>{t('remove_from_My_Spaces')}</div>
                     : null
                 }
               </SpaceHeaderButtons>
