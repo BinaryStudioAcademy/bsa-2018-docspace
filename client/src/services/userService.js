@@ -28,8 +28,13 @@ class UserService {
   compareUsers (data) {
     const args = { endpoint: `/api/user/compareUsers`, method: 'POST', body: JSON.stringify(data) }
     const apiResult = callWebApi(args)
-      .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .then(res => {
+        return res.json()
+      })
+      .catch(err => {
+        console.log(`here`, err)
+        throw err
+      })
     return apiResult
   }
 

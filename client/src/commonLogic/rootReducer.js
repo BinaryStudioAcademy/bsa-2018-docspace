@@ -16,12 +16,14 @@ import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchi
 import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
+import errorReducer from 'src/components/common/app/logic/errorReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
   login: loginReducer,
   user: userReducers,
   pages: pageReducer,
+  error: errorReducer,
   spaces: spaceReducer,
   blog: blogReducer,
   groups: groupsReducer,

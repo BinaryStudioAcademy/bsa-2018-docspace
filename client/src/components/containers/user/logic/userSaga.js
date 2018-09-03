@@ -1,5 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects'
 import * as actionTypes from './userActionTypes'
+import * as actionTypesError from 'src/components/common/app/logic/errorActionTypes'
 import { userService } from 'src/services/userService'
 import HistoryService from 'src/services/historyService'
 
@@ -59,6 +60,7 @@ function * CompareUsers (action) {
     yield put({ type: actionTypes.COMPARE_USER_SUCCESS, response })
   } catch (err) {
     yield put({ type: actionTypes.COMPARE_USER_ERROR, err })
+    yield put({ type: actionTypesError.ERROR_HANDLER, err })
   }
 }
 
