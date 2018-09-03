@@ -34,23 +34,14 @@ export const addCommentRequest = (comment, page) => ({
   payload: {comment, page}
 })
 
-// export const addCommentSuccessfully = (comment) => {
-//   const commentWithCorrectTime = comment
+export const addCommentToPageSuccess = (page, newComment) => {
+  newComment.createdAt = new Date(newComment.createdAt)
 
-//   commentWithCorrectTime.createdAt = new Date(comment.createdAt)
-
-//   return {
-//     type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
-//     payload: {
-//       comment: commentWithCorrectTime
-//     }
-//   }
-// }
-
-export const addCommentToPageSuccess = (page, newComment) => ({
-  type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
-  payload: {page, newComment}
-})
+  return {
+    type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
+    payload: {page, newComment}
+  }
+}
 
 export const addCommentFailure = () => ({
   type: commentsActionTypes.CREATE_COMMENT_ERROR

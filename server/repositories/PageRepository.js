@@ -106,6 +106,14 @@ class PageRepository extends GeneralRepository {
     return super.updateOne(id, {'$pull': {'comments': commentId}})
   }
 
+  addLike (id, userId) {
+    return super.updateOne(id, {'$addToSet': {'usersLikes': userId}})
+  }
+
+  removeLike (id, userId) {
+    return super.updateOne(id, {'$pull': {'usersLikes': userId}})
+  }
+
 //   searchByTitle (filter) {
 //   //   return this.model.find({title: { $regex: filter, $options: 'i' }})
 //   //     .populate({ path: 'spaceId', select: '_id' })

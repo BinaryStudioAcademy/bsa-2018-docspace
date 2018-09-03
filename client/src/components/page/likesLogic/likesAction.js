@@ -1,24 +1,48 @@
 import * as actionTypes from './likesActionTypes'
 
-export const putLikeRequest = (userId, page) => ({
-  type: actionTypes.PUT_LIKE_REQUEST,
-  payload: {userId, page}
+export const putLikeOnPageRequest = (user, page) => ({
+  type: actionTypes.PUT_LIKE_ON_PAGE_REQUEST,
+  payload: {user, page}
 })
 
-export const putLikeSuccess = (page, editedComment) => ({
-  type: actionTypes.PUT_LIKE_SUCCESS,
-  payload: {page, editedComment}
+export const putLikeOnPageSuccess = (page, likedUser) => ({
+  type: actionTypes.PUT_LIKE_ON_PAGE_SUCCESS,
+  payload: {page, likedUser}
 })
 
-export const deleteLikeRequest = (userId, page) => ({
-  type: actionTypes.DELETE_LIKE_REQUEST,
-  payload: {userId, page}
+export const putLikeOnPageError = () => ({
+  type: actionTypes.PUT_LIKE_ON_PAGE_ERROR
 })
 
-export const deleteLikeSuccess = (page) => ({
-  type: actionTypes.DELETE_LIKE_SUCCESS,
-  payload: page
+export const deleteLikeFromPageRequest = (user, page) => ({
+  type: actionTypes.DELETE_LIKE_FROM_PAGE_REQUEST,
+  payload: {user, page}
 })
+
+export const deleteLikeFromPageSuccess = (page, unlikedUser) => ({
+  type: actionTypes.DELETE_LIKE_FROM_PAGE_SUCCESS,
+  payload: {page, unlikedUser}
+})
+
+export const deleteLikeFromPageError = () => ({
+  type: actionTypes.DELETE_LIKE_FROM_PAGE_ERROR
+})
+
+export const putLikeOnCommentSuccess = (page, editedComment) => {
+  editedComment.createdAt = new Date(editedComment.createdAt)
+  return {
+    type: actionTypes.PUT_LIKE_ON_COMMENT_SUCCESS,
+    payload: {page, editedComment}
+  }
+}
+
+export const deleteLikeFromCommentSuccess = (page, editedComment) => {
+  editedComment.createdAt = new Date(editedComment.createdAt)
+  return {
+    type: actionTypes.DELETE_LIKE_FROM_COMMENT_SUCCESS,
+    payload: {page, editedComment}
+  }
+}
 
 export const putLikeOnCommentRequest = (userId, page, comment) => ({
   type: actionTypes.PUT_LIKE_ON_COMMENT_REQUEST,

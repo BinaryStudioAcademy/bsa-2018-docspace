@@ -19,8 +19,12 @@ module.exports = {
   findOne: async (req, res) => {
     let page = await PageRepository.getById(req.params.id)
       .populate({
-        path: 'comments'
-        // populate: {path: 'userLikes', select: 'firstName lastName avatar'}
+        path: 'comments',
+        populate: {path: 'userLikes', select: 'firstName lastName'}
+      })
+      .populate({
+        path: 'usersLikes',
+        select: 'firstName lastName'
       })
       .then(page => page)
       .catch(err => {
@@ -104,6 +108,23 @@ module.exports = {
         })
       })
   },
+
+  addRemoveLike: (req, res) => {
+    if (req.body.toAdd) {
+      PageRepository.addLike(req.params.id, req.body.userId)
+        .then(page => res.send({liked: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      PageRepository.removeLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unliked: true}))
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
   findOneAndDelete: (req, res) => {
     PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {

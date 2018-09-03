@@ -36,7 +36,7 @@ const MyUpdatesTab = (props) => {
 
 MyUpdatesTab.propTypes = {
   user: PropTypes.object.isRequired,
-  currentUserUpdates: PropTypes.array.isRequired
+  currentUserUpdates: PropTypes.array
 }
 
 export default MyUpdatesTab

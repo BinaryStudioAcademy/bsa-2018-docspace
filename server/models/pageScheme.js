@@ -39,11 +39,11 @@ const pageSchema = new mongoose.Schema({
     ref: 'Comment',
     es_indexed: false
   }],
-  usersLikes: {
-    type: [Schema.Types.ObjectId],
+  usersLikes: [{
+    type: Schema.Types.ObjectId,
     es_indexed: false,
     ref: 'User'
-  },
+  }],
   isDeleted: {
     type: Boolean,
     default: false,

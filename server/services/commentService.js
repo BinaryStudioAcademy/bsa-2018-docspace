@@ -35,36 +35,11 @@ module.exports = {
         console.log(err)
       })
   },
-  // add: (req, res) => {
-  //   const Comment = new scheme.Comment({
-  //     userId: req.body.userId,
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     text: req.body.text,
-  //     isDeleted: req.body.isDeleted,
-  //     comments: req.body.comments,
-  //     usersLikes: req.body.usersLikes,
-  //     createdAt: req.body.createdAt,
-  //     parentId: req.body.parentId
-  //   })
-  //   Comment.save()
-  //     .then(comment => {
-  //       res.status(200)
-  //       res.send(comment)
-  //     })
-  //     .catch(err => {
-  //       res.status(500).send({
-  //         message: 'Can\'t add page'
-  //       })
-  //       console.log(err)
-  //     })
-  // },
+
   add: async (req, res) => {
     let savedComment = await CommentRepository.create(req.body.comment)
       .then(comment => comment)
       .catch(err => err)
-    console.log('savedComment', savedComment)
-    console.log('pageID', req.body.pageId)
     await PageRepository.addNewComment(req.body.pageId, savedComment._id)
       .then(page => page)
       .catch(err => res.status(500).send(err))
@@ -80,10 +55,18 @@ module.exports = {
   addRemoveLike: (req, res) => {
     if (req.body.toAdd) {
       CommentRepository.addLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
         .then(comment => res.send(comment))
         .catch(err => res.status(500).send(err))
     } else {
       CommentRepository.removeLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
         .then(comment => res.send(comment))
         .catch(err => res.status(500).send(err))
     }

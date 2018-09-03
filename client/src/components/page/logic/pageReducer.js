@@ -41,7 +41,6 @@ function byId (state = initialState.byId, action) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
     case actionTypes.UPDATE_PAGE_SUCCESS + '(EXTERNAL)':
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
-    case likesActionTypes.DELETE_LIKE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
     case commentsActionTypes.CREATE_COMMENT_SUCCESS:
@@ -52,8 +51,27 @@ function byId (state = initialState.byId, action) {
           comments: [...action.payload.page.comments.slice(), action.payload.newComment]
         }
       }
+    case likesActionTypes.PUT_LIKE_ON_PAGE_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser]
+        }
+      }
+
+    case likesActionTypes.DELETE_LIKE_FROM_PAGE_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          usersLikes: action.payload.page.usersLikes.filter(user => user._id !== action.payload.unlikedUser._id)
+        }
+      }
+
     case commentsActionTypes.EDIT_COMMENT_SUCCESS:
-    case likesActionTypes.PUT_LIKE_SUCCESS:
+    case likesActionTypes.PUT_LIKE_ON_COMMENT_SUCCESS:
+    case likesActionTypes.DELETE_LIKE_FROM_COMMENT_SUCCESS:
       return {
         ...state,
         [action.payload.page._id]: {
