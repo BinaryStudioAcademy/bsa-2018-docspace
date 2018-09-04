@@ -17,54 +17,12 @@ const RecentlyWorkedOn = (props) => {
     }
     return true
   })
-  const today = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'today') {
-      return true
-    } else {
-      return false
-    }
-  })
-  const yesterday = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'yesterday') {
-      return true
-    } else {
-      return false
-    }
-  })
-  const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'a few days ago') {
-      return true
-    } else {
-      return false
-    }
-  })
-  const aWeekAgo = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'a week ago') {
-      return true
-    } else {
-      return false
-    }
-  })
-  const aMonthAgo = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'a month ago') {
-      return true
-    } else {
-      return false
-    }
-  })
-  const aMonthsAgo = filteredHistory && filteredHistory.filter(item => {
-    let content = workHelper(item)
-    if (content.time === 'a months ago') {
-      return true
-    } else {
-      return false
-    }
-  })
+  const today = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'today')
+  const yesterday = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'yesterday')
+  const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a few days ago')
+  const aWeekAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a week ago')
+  const aMonthAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a month ago')
+  const aMonthsAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a months ago')
   return (
     <React.Fragment>
       {!!today.length &&

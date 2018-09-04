@@ -5,10 +5,10 @@ import getRightProps from '../helperRecentWork'
 const RecentWorkListContainer = ({userHistory}) => {
   let filteredHistory = userHistory.filter((item) => {
     if (item._id.action === 'CREATE_BLOG_PAGE_SUCCESS') {
-      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_BLOG_PAGE_SUCCESS' && itemUpdate.pageId[0] === item.pageId[0])
+      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_BLOG_PAGE_SUCCESS' && itemUpdate.pageId === item.pageId)
     }
     if (item._id.action === 'CREATE_PAGE_SUCCESS') {
-      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_PAGE_SUCCESS' && itemUpdate.pageId[0] === item.pageId[0])
+      return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_PAGE_SUCCESS' && itemUpdate.pageId === item.pageId)
     }
     return true
   })

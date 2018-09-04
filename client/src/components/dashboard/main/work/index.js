@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route, NavLink, Redirect, withRouter } from 'react-router-dom'
+import { Route, NavLink, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import './work.css'
@@ -9,10 +9,9 @@ import RecentlyVisited from './RecentlyVisited'
 import SavedForLater from './SavedForLater'
 import * as actions from 'src/components/containers/user/logic/userActions'
 import Input from '../../input'
-import { translate } from 'react-i18next'
 import {getT} from 'src/config/i18n'
 const t = getT()
-const TABS = [
+const TABS = () => [
   {
     name: t('recently_worked_on'),
     path: '/RecentWorks',
@@ -35,7 +34,7 @@ class Work extends Component {
     this.props.getUserUpdatesRequest(this.props.user.login)
   }
   render () {
-    const {match, t} = this.props
+    const {match} = this.props
     return (
       <div className='dashboard-work' >
         <div className='work-header'>
@@ -43,7 +42,7 @@ class Work extends Component {
           <Input placeholder='Filter' className='work-filter' autoComplete={false} />
         </div>
         <div className='work-body'>
-          {TABS.map(({ name, path }) =>
+          {TABS().map(({ name, path }) =>
             <NavLink
               key={name}
               className='activity-nav-bar-tab'
@@ -55,7 +54,7 @@ class Work extends Component {
           )}
         </div>
         <Route path='/works' exact render={() => <Redirect to='works/RecentWorks' />} />
-        {TABS.map(({ name, path, component: TabComponent }) =>
+        {TABS().map(({ name, path, component: TabComponent }) =>
           <Route
             key={name}
             path={`${match.path}${path}`}
@@ -90,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Work)))
+export default connect(mapStateToProps, mapDispatchToProps)(Work)
