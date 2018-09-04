@@ -1,12 +1,12 @@
 export function timeDifference (current, previous) {
-  var msPerMinute = 60 * 1000
-  var msPerHour = msPerMinute * 60
-  var msPerDay = msPerHour * 24
-  var msPerTwoDays = msPerDay * 2
-  var msPerWeek = msPerDay * 7
-  var msEightDays = msPerDay * 8
-  var msPerTwoMonth = msPerDay * 60
-  var elapsed = current - previous
+  const msPerMinute = 60 * 1000
+  const msPerHour = msPerMinute * 60
+  const msPerDay = msPerHour * 24
+  const msPerTwoDays = msPerDay * 2
+  const msPerWeek = msPerDay * 7
+  const msEightDays = msPerDay * 8
+  const msPerTwoMonth = msPerDay * 60
+  const elapsed = current - previous
   if (elapsed < msPerDay) {
     return 'TODAY'
   } else if (elapsed < msPerTwoDays) {
