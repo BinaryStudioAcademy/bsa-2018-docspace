@@ -7,18 +7,18 @@ import './contentCard.css'
 const ContentCard = (props) => {
   const { icon, path, name, action, time, isDeleted, user } = props.content
   const disabledLink = isDeleted ? 'disabled-link' : ''
-  console.log(time)
+  console.log(props)
   return (
     <div className='content-card'>
       <div className='content-card-history'>
+        {props.showUser
+          ? <Link to={`/users/${user.login}`} className='history-user-wrapper'>
+            {user.avatar
+              ? <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
+              : <i id='user-avatar-icon' className='fas fa-user-circle' />
+            }<p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link>
+          : null}
         <div className='history-name-container'>
-          {props.showUser
-            ? <Link to={`/users/${user.login}`} className='history-user-wrapper'>
-              {user.avatar
-                ? <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
-                : <i id='user-avatar-icon' className='fas fa-user-circle' />
-              }<p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link>
-            : null}
           <i id='content-icon' className={`${icon}`} />
           <Link to={path} className={`content-card-name ${disabledLink}`}>
             {name}

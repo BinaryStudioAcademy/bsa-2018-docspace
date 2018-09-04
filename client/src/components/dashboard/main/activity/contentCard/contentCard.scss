@@ -68,8 +68,9 @@
     margin: 8px 0;
   }
   .content-card-history-name {
-    width: 100%;
+    max-width: 150px;
     font-weight: 500;
+    padding: 5px;
   }
   .content-card-time,
   .content-card-action {
@@ -79,16 +80,17 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 60%;
+    width: 30%;
     text-align: left;
   }
   .history-user-wrapper{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    margin-right: 30px;
-    flex-basis: 55%;
+    justify-content: center;
+    width: 40%;
     margin: 0;
+    text-align: center;
 
   }
   .content-card-action{
@@ -96,6 +98,8 @@
   }
   .content-card-time{
     text-align: right;
+    width: 20%;
+    margin-right: 10px;
   }
 
 }
