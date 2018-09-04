@@ -11,7 +11,6 @@ import SpacePermissionsTab from './permissions'
 import { translate } from 'react-i18next'
 import './spaceSettings.css'
 
-// will be connected to store. Fetch for space with this name in didMount
 const SpaceSettings = (props) => {
   const TABS = [
     {
