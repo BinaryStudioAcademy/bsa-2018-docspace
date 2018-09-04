@@ -65,24 +65,42 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
+    margin: 8px 0;
   }
   .content-card-history-name {
-    width: 20%;
+    max-width: 150px;
     font-weight: 500;
+    padding: 5px;
   }
   .content-card-time,
   .content-card-action {
     color: $grey;
-    width: 20%;
   }
   .history-name-container{
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 60%;
+    width: 30%;
     text-align: left;
   }
-  // .content-card-action{
-  //   width: 20%;
-  // }
+  .history-user-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    min-width: 150px;
+    margin: 0 35px 0 0;
+    text-align: center;
+
+  }
+  .content-card-action{
+    width: 20%;
+  }
+  .content-card-time{
+    text-align: right;
+    width: 20%;
+    margin-right: 10px;
+  }
+
 }
