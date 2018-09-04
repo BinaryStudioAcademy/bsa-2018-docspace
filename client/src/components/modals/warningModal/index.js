@@ -10,21 +10,22 @@ import { closeWarningModal } from 'src/components/modals/warningModal/logic/warn
 import { deletePageRequest } from 'src/components/page/logic/pageActions'
 class WarningModal extends Component {
   handleDeleteMethod = () => {
+    console.log(this.props.deleteId)
     this.props.forPage ? this.props.deletePage(this.props.deleteId) : this.props.deleteSpace(this.props.deleteId)
     this.props.closeWarningModal()
   }
 
   renderModalHeader = () => (
-    <h1 className='warning-header'>{this.props.forPage ? this.props.t('Delete_page') : this.props.t('Delete_space') }</h1>
+    <h1 className='warning-header'>{this.props.forPage ? this.props.t('delete_page') : this.props.t('delete_space') }</h1>
   )
 
   renderModalFooter = () => (
     <div className='modal-footer'>
       <button className='accept-button' onClick={this.handleDeleteMethod}>
-        {this.props.t('Confirm')}
+        {this.props.t('confirm')}
       </button>
       <button onClick={this.props.closeWarningModal}>
-        {this.props.t('Cancel')}
+        {this.props.t('cancel')}
       </button>
     </div>
 
@@ -34,12 +35,12 @@ class WarningModal extends Component {
      <div className='warning-text'>
        {this.props.forPage
          ? (<div className='page-delete-warning'>
-           <p>{this.props.t('Warning_page_delete_short')}</p>
-           <p>{this.props.t('Warning_page_delete_long')}</p>
+           <p>{this.props.t('warning_page_delete_short')}</p>
+           <p>{this.props.t('warning_page_delete_long')}</p>
          </div>)
          : (<div className='space-delete-warning'>
-           <p>{this.props.t('Warning_space_delete_short')}</p>
-           <p>{this.props.t('Warning_space_delete_long')}</p>
+           <p>{this.props.t('warning_space_delete_short')}</p>
+           <p>{this.props.t('warning_space_delete_long')}</p>
          </div>)
        }
      </div>

@@ -42,7 +42,7 @@ class BlogSidebar extends Component {
                           <div className='space-sidebar-main-navbar-section--icon'>
                             <i className='fas fa-arrow-left' />
                           </div>
-                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Blog')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('blog')}</div>}
                         </NavLink>
                       </div>
                       { isFetching || !blog

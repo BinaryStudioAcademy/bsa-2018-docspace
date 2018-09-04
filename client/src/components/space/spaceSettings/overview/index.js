@@ -42,7 +42,7 @@ class SpaceOverviewTab extends Component {
     const { t } = this.props
     return (
       <React.Fragment>
-        <h3 className='space-details-header'> {t('Space_details')}
+        <h3 className='space-details-header'> {t('space_details')}
           <span className='edit-icons'>
             <i
               className={`fas fa-pen ${isEditing ? 'active' : ''}`}

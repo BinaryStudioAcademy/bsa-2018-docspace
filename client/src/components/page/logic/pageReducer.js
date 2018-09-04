@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import * as actionTypes from './pageActionTypes'
 import * as likesActionTypes from '../likesLogic/likesActionTypes'
+import * as commentsActionTypes from '../commentsLogic/commentsActionTypes'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
@@ -12,7 +13,8 @@ const initialState = {
     succesful: false,
     errors: []
   },
-  isFetching: false
+  isFetching: false,
+  pageComments: []
 }
 
 function all (state = initialState.all, action) {
@@ -39,9 +41,57 @@ function byId (state = initialState.byId, action) {
     case actionTypes.UPDATE_PAGE_SUCCESS:
     case actionTypes.UPDATE_PAGE_SUCCESS + '(EXTERNAL)':
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
-    case likesActionTypes.PUT_LIKE_SUCCESS:
-    case likesActionTypes.DELETE_LIKE_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
+
+    case commentsActionTypes.CREATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: [...action.payload.page.comments.slice(), action.payload.newComment]
+        }
+      }
+    case likesActionTypes.PUT_LIKE_ON_PAGE_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser]
+        }
+      }
+
+    case likesActionTypes.DELETE_LIKE_FROM_PAGE_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          usersLikes: action.payload.page.usersLikes.filter(user => user._id !== action.payload.unlikedUser._id)
+        }
+      }
+
+    case commentsActionTypes.EDIT_COMMENT_SUCCESS:
+    case likesActionTypes.PUT_LIKE_ON_COMMENT_SUCCESS:
+    case likesActionTypes.DELETE_LIKE_FROM_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: action.payload.page.comments.map(comment => {
+            if (comment._id !== action.payload.editedComment._id) {
+              return comment
+            }
+            return action.payload.editedComment
+          })
+        }
+      }
+    case commentsActionTypes.DELETE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        [action.payload.page._id]: {
+          ...action.payload.page,
+          comments: action.payload.page.comments.filter(comment => comment._id !== action.payload.deletedComment._id)
+        }
+      }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:
       return action.payload.byId
@@ -69,7 +119,9 @@ function getHTML (state = initialState.htmlFile, action) {
 function isFetching (state = initialState.isFetching, action) {
   switch (action.type) {
     case actionTypes.GET_PAGE_BY_ID_REQUEST:
+    case actionTypes.UPDATE_PAGE_REQUEST:
     case actionTypes.SEND_DOC_FILE_REQUEST:
+    case actionTypes.UPDATE_BLOG_PAGE_REQUEST:
       return true
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.GET_PAGE_BY_ID_ERROR:
@@ -78,6 +130,8 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.SEND_DOC_ERROR:
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_PAGE_ERROR:
+    case actionTypes.UPDATE_PAGE_SUCCESS:
+    case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
       return false
     default:
       return state
@@ -100,8 +154,9 @@ export const pageByIdFromRoute = (state) => {
   const id = getPageIdFromRouterLocation(state.router.location)
   // console.log('SELECTOR :' ,id)
   // console.log(state.router.location)
-  return state.pages.byId[id] || null
+  return state.pages.byId[id] || {}
 }
+
 export const isPagesFetching = ({ pages }) => {
   return pages.isFetching
 }

@@ -41,19 +41,19 @@ class SpaceSidebar extends Component {
                           <div className='space-sidebar-main-navbar-section--icon'>
                             <i className='fas fa-stream' />
                           </div>
-                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Overview')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('overview')}</div>}
                         </NavLink>
                         <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/blog`} activeClassName='current'>
                           <div className='space-sidebar-main-navbar-section-icon'>
                             <i className='fas fa-quote-right' />
                           </div>
-                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Blog')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('blog')}</div>}
                         </NavLink>
                         <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings/overview`} activeClassName='current'>
                           <div className='space-sidebar-main-navbar-section-icon'>
                             <i className='fas fa-cog' />
                           </div>
-                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('Space_settings')}</div>}
+                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('space_settings')}</div>}
                         </NavLink>
                       </div>
                       { isFetching

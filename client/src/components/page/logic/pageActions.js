@@ -72,7 +72,7 @@ export const updatePageRequest = (newPage) => ({
 export const updatePageSuccess = (updatedPage) => {
   const pageWithCorrectCommentTime = updatedPage
 
-  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+  pageWithCorrectCommentTime.comments = updatedPage.comments.map((comment) => {
     comment.createdAt = new Date(comment.createdAt)
     return comment
   })
@@ -92,11 +92,10 @@ export const updateBlogPageRequest = (newPage, spaceId) => ({
 export const updateBlogPageSuccess = (updatedPage) => {
   const pageWithCorrectCommentTime = updatedPage
 
-  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+  pageWithCorrectCommentTime.comments = updatedPage.comments.map((comment) => {
     comment.createdAt = new Date(comment.createdAt)
     return comment
   })
-
   return {
     type: actionTypes.UPDATE_BLOG_PAGE_SUCCESS,
     payload: pageWithCorrectCommentTime

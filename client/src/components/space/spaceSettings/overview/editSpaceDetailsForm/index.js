@@ -89,7 +89,7 @@ class EditSpaceDetailsForm extends Component {
     return (
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
-          <label>{t('Space_logo')}</label>
+          <label>{t('space_logo')}</label>
           <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
             <span className='icon-avatar' >
               <i className={`fa fa-${iconName.toLowerCase()}`} />
@@ -107,7 +107,7 @@ class EditSpaceDetailsForm extends Component {
         />
 
         <div className='field-group'>
-          <label>{t('Name')}</label>
+          <label>{t('name')}</label>
           <input
             type='text'
             name='name'
@@ -117,7 +117,7 @@ class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>{t('Description')}</label>
+          <label>{t('description')}</label>
           <textarea
             type='text'
             name='description'
@@ -133,7 +133,7 @@ class EditSpaceDetailsForm extends Component {
         />
         {/*
         <div className='field-group'>
-          <label>{t('Home_page')}</label>
+          <label>{t('home_page')}</label>
           <input
             type='text'
             name='homePage'
@@ -144,12 +144,12 @@ class EditSpaceDetailsForm extends Component {
 
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
-          <label>Home page</label>
+          <label>{t('home_page')}</label>
           <select name='homePageId'
             onChange={({target}) => this.handleFieldChange(target)}
             defaultValue={homePage ? homePage._id : 'none'}
           >
-            <option value='none' disabled hidden> None </option>
+            <option value='none' disabled hidden> {t('none')} </option>
             {
               pages.map((page, index) => (
                 <option value={page._id} key={index}>
@@ -163,7 +163,7 @@ class EditSpaceDetailsForm extends Component {
         <div className='btn-group'>
           <label />
           <button className='save-btn' type='submit' onClick={this.handleSave}> {t('Save')} </button>
-          <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
+          <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('cancel')} </button>
         </div>
       </form>
 

@@ -7,7 +7,7 @@ export const CommentAvatar = ({UserAvatarLink}) => {
   return (
     <div className='comment-avatar'>
       <span className='comment-link-user-avatar'>
-        <img src={UserAvatarLink} alt='User icon' className='comment-icon-avatar' />
+        <img src={UserAvatarLink} alt='' className='comment-icon-avatar' />
       </span>
     </div>
   )

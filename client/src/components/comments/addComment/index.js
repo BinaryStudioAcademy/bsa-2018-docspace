@@ -89,19 +89,19 @@ export class AddComment extends Component {
               ? <Input
                 name='comment-body-disabled'
                 inputType='button'
-                value={t('Save')}
+                value={t('save')}
               />
               : <Input
                 name='comment-body-save'
                 inputType='button'
-                value={t('Save')}
+                value={t('save')}
                 onClick={this.createComment}
               />
             }
             <Input
               name='comment-body-cancel'
               inputType='button'
-              value={t('Cancel')}
+              value={t('cancel')}
               onClick={this.props.onEditComment || this.props.ReplyComment || this.cancelSendText}
             />
           </div>

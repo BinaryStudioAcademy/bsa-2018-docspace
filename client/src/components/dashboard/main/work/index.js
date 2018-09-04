@@ -51,7 +51,7 @@ class Work extends Component {
             </NavLink>
           )}
         </div>
-        <Route path='/works' exact render={() => <Redirect to='works/RecentlyWorkedOn' />} />
+        <Route path='/works' exact render={() => <Redirect to='works/RecentWorks' />} />
         {TABS.map(({ name, path, component: TabComponent }) =>
           <Route
             key={name}

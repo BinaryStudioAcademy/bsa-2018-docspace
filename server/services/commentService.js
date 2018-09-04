@@ -1,5 +1,6 @@
 const CommentRepository = require('../repositories/CommentRepository')
-const scheme = require('../models/commentScheme')
+const PageRepository = require('../repositories/PageRepository')
+// const scheme = require('../models/commentScheme')
 
 module.exports = {
   findAllCommentsForPage: (req, res) => {
@@ -34,48 +35,58 @@ module.exports = {
         console.log(err)
       })
   },
-  add: (req, res) => {
-    const Comment = new scheme.Comment({
-      userId: req.body.userId,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      text: req.body.text,
-      isDeleted: req.body.isDeleted,
-      comments: req.body.comments,
-      usersLikes: req.body.usersLikes,
-      createdAt: req.body.createdAt,
-      parentId: req.body.parentId
-    })
-    Comment.save()
-      .then(comment => {
-        res.status(200)
-        res.send(comment)
+
+  add: async (req, res) => {
+    let savedComment = await CommentRepository.create(req.body.comment)
+      .then(comment => comment)
+      .catch(err => err)
+    await PageRepository.addNewComment(req.body.pageId, savedComment._id)
+      .then(page => {
+        console.log(page)
+        return page
       })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t add page'
-        })
-        console.log(err)
-      })
+      .catch(err => res.status(500).send(err))
+    res.send(savedComment)
   },
+
   findOneAndUpdate: (req, res) => {
-    CommentRepository.update(req.params.id, req.body)
-      .then(comment => {
-        if (!comment) {
-          res.status(404).send({
-            message: 'Comment not found with id ' + req.params.id
-          })
-        }
-        res.status(200)
-        res.send(comment[0])
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t update comment with id' + req.params.id
-        })
-        console.log(err)
-      })
+    CommentRepository.update(req.params.id, req.body.comment)
+      .then(comment => res.send(comment))
+      .catch(err => res.status(500).send(err))
   },
+
+  addRemoveLike: (req, res) => {
+    if (req.body.toAdd) {
+      CommentRepository.addLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
+        .catch(err => res.status(500).send(err))
+    } else {
+      CommentRepository.removeLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
   findOneAndDelete: (req, res) => {
     CommentRepository.update(req.params.id, {'isDeleted': true})
       .then(comment => {
@@ -84,9 +95,9 @@ module.exports = {
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        res.status(200).send({
-          message: 'Comment deleted successfully'
-        })
+        PageRepository.deleteComment(req.body.pageId, comment._id)
+          .then(() => res.status(200).send(comment))
+          .catch(err => res.status(500).send(err))
       })
       .catch(err => {
         res.status(500).send({

@@ -78,18 +78,18 @@ export class Comment extends Component {
             onEditComment={this.onEditComment}
             editComment={this.props.editComment}
             userId={this.props.comment.userId}
-            avatar={this.props.comment.user[0].avatar}
+            avatar={this.props.comment.userId.avatar}
             _id={this.props.comment._id}
             parentId={this.props.comment.parentId}
           />
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <Link to={`/users/${this.props.comment.user[0].login}`} >
-              <CommentAvatar UserAvatarLink={this.props.comment.user[0].avatar ? this.props.comment.user[0].avatar : UserAvatarLink} />
+            <Link to={`/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}`} >
+              <CommentAvatar UserAvatarLink={this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink} />
             </Link>
             <div className='comment-body'>
-              <Link to={`/users/${this.props.comment.user[0].login}`} >
+              <Link to={`/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}`} >
                 <h4 className='comment-first-last-names'>
-                  <span>{this.props.comment.user[0].firstName} {this.props.comment.user[0].lastName}</span>
+                  <span>{this.props.comment.userId.firstName ? this.props.comment.userId.firstName : this.props.user.firstName} {this.props.comment.userId.lastName ? this.props.comment.userId.lastName : this.props.user.lastName}</span>
                 </h4>
               </Link>
               <div className='comment-body-content'>
@@ -102,10 +102,9 @@ export class Comment extends Component {
                 onLikeComment={this.onLikeComment}
                 editComment={this.props.editComment}
                 creationDate={this.transformData()}
-                likes={this.props.comment.likes}
+                likes={this.props.comment.userLikes}
                 t={this.props.t}
                 user={this.props.user}
-                likeAction={this.props.likeAction}
               />
             </div>
           </div>}
@@ -134,7 +133,7 @@ Comment.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   likeAction: PropTypes.func,
-  user: PropTypes.obj,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  user: PropTypes.object
 }
 export default translate('translations')(Comment)
