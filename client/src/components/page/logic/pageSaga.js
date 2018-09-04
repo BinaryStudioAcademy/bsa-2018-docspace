@@ -6,6 +6,7 @@ import { normalize } from 'normalizr'
 import { pagesArray } from './pagesNormalizerSchema'
 import { push } from 'connected-react-router'
 import * as commentsActions from '../commentsLogic/commentsActions'
+import * as spaceActions from 'src/components/space/spaceContainer/logic/spaceActions'
 
 function * getPages (action) {
   try {
@@ -140,12 +141,15 @@ function * exportPageToWord (action) {
 function * movePageToSpace (action) {
   const {pageId, fromSpaceId, toSpaceId} = action.payload
   try {
-    yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
-    yield actions.movePageToSpaceSuccess()
-    yield put(push(`/spaces/${toSpaceId}/pages/${pageId}`))
+    const page = yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
+    yield put(spaceActions.addPageToSpace(toSpaceId, page))
+    yield put(spaceActions.removePageFromSpace(fromSpaceId, pageId))
+    yield put(actions.getPageByIdSuccess(page))
+    yield put(actions.movePageToSpaceSuccess())
+    yield put(push(`/spaces/${page.spaceId}/pages/${page._id}`))
   } catch (e) {
     console.log(e)
-    yield actions.movePageToSpaceError()
+    yield put(actions.movePageToSpaceError())
   }
 }
 

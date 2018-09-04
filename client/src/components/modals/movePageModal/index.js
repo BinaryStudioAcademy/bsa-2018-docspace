@@ -7,35 +7,37 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { closeMovePageModal } from 'src/components/modals/movePageModal/logic/movePageModalActions'
 import { movePageToSpaceRequest } from 'src/components/page/logic/pageActions'
-import { allSpaces } from 'src/components/space/spaceContainer/logic/spaceReducer'
+import { allSpaces, spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
 
 class MovePageModal extends Component {
   state = {
-    selectedSpace: null
+    selectedSpaceId: null
   }
 
   handleMoveMethod = () => {
     const {pageId, fromSpaceId} = this.props
-    const toSpaceId = this.state.selectedSpace._id
-    if (this.state.selectedSpace) {
+    const toSpaceId = this.state.selectedSpaceId
+    if (this.state.selectedSpaceId) {
       this.props.movePageToSpace(pageId, fromSpaceId, toSpaceId)
       this.props.closeMovePageModal()
     }
   }
 
-  handleSelectSpace = (space) => {
+  handleSelectSpace = (spaceId) => {
     this.setState({
-      selectedSpace: space
+      selectedSpaceId: spaceId
     })
   }
 
+  isConfirmAllowed = () => Boolean(this.state.selectedSpaceId)
+
   renderModalHeader = () => (
-    <h1 className='warning-header'>{this.props.t('Move_page')}</h1>
+    <h2 className='movepage-header'>{this.props.t('Move_page')}</h2>
   )
 
   renderModalFooter = () => (
     <div className='modal-footer'>
-      <button className='accept-button' onClick={this.handleMoveMethod}>
+      <button className='accept-button' onClick={this.handleMoveMethod} disabled={!this.isConfirmAllowed()}>
         {this.props.t('confirm')}
       </button>
       <button onClick={this.props.closeMovePageModal}>
@@ -46,21 +48,29 @@ class MovePageModal extends Component {
   )
 
    renderModalContent = () => (
-     <div className='movepage-text' >
-       <p> SOME TEXT </p>
-       <select
-         onChange={({target}) => this.handleSelectSpace(target.value)}
-         defaultValue='none'
-       >
-         <option value='none' disabled hidden>{this.props.t('choose_here')}</option>
-         {
-           this.props.spaces.map((space, index) => (
-             <option value={JSON.stringify(space)} key={index}>
-               {space.name}
-             </option>
-           ))
-         }
-       </select>
+     <div className='movepage-body' >
+       <div className='movepage-text'>
+         <p>{this.props.t('specify_new_space')}</p>
+
+       </div>
+       <div className='movepage-choose-space'>
+         <span>{this.props.t('choose_a_space')}</span>
+         <select
+           onChange={({target}) => this.handleSelectSpace(target.value)}
+           defaultValue='none'
+         >
+           <option value='none' disabled hidden>{this.props.spaces.length < 2 ? this.props.t('no_spaces_to_move') : this.props.t('choose_here')}</option>
+           {
+             this.props.spaces.map(space => (
+               space._id !== this.props.fromSpaceId &&
+               <option value={space._id} key={space._id}>
+                 {space.name}
+               </option>
+             ))
+           })
+         </select>
+         <span>{`${this.props.t('current_space')}: ${this.props.currentSpaceName}`}</span>
+       </div>
      </div>
 
    )
@@ -84,7 +94,8 @@ MovePageModal.propTypes = {
   movePageToSpace: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
   fromSpaceId: PropTypes.string.isRequired,
-  spaces: PropTypes.array.isRequired
+  spaces: PropTypes.array.isRequired,
+  currentSpaceName: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -93,7 +104,8 @@ const mapStateToProps = (state) => {
     pageId: state.movePageModal.pageId,
     fromSpaceId: state.movePageModal.fromSpaceId,
     toSpaceId: state.movePageModal.toSpaceId,
-    spaces: allSpaces(state)
+    spaces: allSpaces(state),
+    currentSpaceName: spaceById(state).name
   }
 }
 

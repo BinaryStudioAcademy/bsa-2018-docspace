@@ -12,67 +12,6 @@ class PageRepository extends GeneralRepository {
     ])
   }
 
-  // getById (id) {
-  //   console.log('aaaa')
-  //   return this.model.aggregate([
-  //     {
-  //       '$match': { _id: ObjectId(id) }
-  //     },
-  //     {
-  //       '$lookup': {
-  //         from: 'comments',
-  //         localField: 'comments',
-  //         foreignField: '_id',
-  //         as: 'commentsArr'
-  //       }
-  //     },
-  //     {
-  //       '$lookup': {
-  //         from: 'users',
-  //         localField: 'usersLikes',
-  //         foreignField: '_id',
-  //         as: 'likes'
-  //       }
-  //     },
-  //     {
-  //       '$unwind': {
-  //         path: '$commentsArr',
-  //         preserveNullAndEmptyArrays: true
-  //       }
-  //     },
-  //     {
-  //       '$lookup': {
-  //         from: 'users',
-  //         localField: 'commentsArr.userLikes',
-  //         foreignField: '_id',
-  //         as: 'commentsArr.likes'
-  //       }
-  //     },
-  //     {
-  //       '$group': {
-  //         '_id': '$_id',
-  //         'commentsArr': {'$addToSet': '$commentsArr'},
-  //         'title': {'$first': '$title'},
-  //         'spaceId': {'$first': '$spaceId'},
-  //         'createdAt': {'$first': '$createdAt'},
-  //         'updatedAt': {'$first': '$updatedAt'},
-  //         'isDeleted': {'$first': '$isDeleted'},
-  //         'comments': {'$first': '$comments'},
-  //         'usersLikes': {'$first': '$usersLikes'},
-  //         'likes': {'$first': '$likes'},
-  //         'modifiedVersions': {'$first': '$modifiedVersions'},
-  //         'version': {'$first': '$version'},
-  //         'content': {'$first': '$content'}
-  //       }
-  //     }
-  //   ])
-  // }
-
-  // update (id, data) {
-  //   return super.update(id, data)
-  //     .then(() => this.getById(id))
-  // }
-
   advancedSearch (input) {
     return this.model.search({
       // query for match some input in field 'title' OR 'content'

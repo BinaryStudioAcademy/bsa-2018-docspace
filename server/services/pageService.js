@@ -204,11 +204,12 @@ module.exports = {
 
   moveToSpace: async (req, res) => {
     await SpaceRepository.addPageById(req.body.toSpaceId, req.params.id)
-      .catch(err => err)
+      .catch(err => console.log('addPageById', err))
     await SpaceRepository.deletePageFromSpace(req.body.fromSpaceId, req.params.id)
+      .catch(err => console.log('deletePage', err))
+    const pageWithNewSpace = await PageRepository.update(req.params.id, {'$set': {'spaceId': req.body.toSpaceId}})
+      .then(page => page)
       .catch(err => err)
-    await PageRepository.changeSpace(req.params.id, req.body.toSpaceId)
-      .then(() => res.send({pageReplaced: true}))
-      .catch(err => res.status(500).send(err))
+    res.send(pageWithNewSpace)
   }
 }

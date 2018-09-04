@@ -39,7 +39,8 @@ class SpaceHeaderButtons extends Component {
       },
       {
         name: t('Move_page'),
-        onClick: openMovePageModal
+        onClick: () => openMovePageModal(),
+        onlyForPage: true
       }
     ]
 

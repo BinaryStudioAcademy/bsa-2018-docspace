@@ -155,6 +155,8 @@
         "Move_page": "Перемістити сторінку",
         "general_information": "Загальна інформація",
         "data_is_changing": "Данні змінено",
-        "password_is_changing": "Пароль зміненно"
+        "password_is_changing": "Пароль зміненно",
+        "no_spaces_to_move": "Немає просторів для переміщення",
+        "specify_new_space": "Оберить новий простір для переміщення поточної сторiнки"
     }
 }

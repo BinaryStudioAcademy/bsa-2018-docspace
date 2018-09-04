@@ -85,7 +85,7 @@
         "user": "User",
         "filter": "filter",
         "help": "Help",
-        "choose_a_space": "Choose a space",
+        "choose_a_space": "Choose space",
         "choose_here": "Choose here",
         "popular": "Popular",
         "all_updates": "All updates",
@@ -161,6 +161,9 @@
         "Move_page": "Move page",
         "general_information": "General information",
         "data_is_changing": "Data is changing",
-        "password_is_changing": "Password is changing"
+        "password_is_changing": "Password is changing",
+        "no_spaces_to_move": "No spaces to move",
+        "specify_new_space": "Specify new space to replace current page",
+        "current_space": "Current space"
     }
 }
