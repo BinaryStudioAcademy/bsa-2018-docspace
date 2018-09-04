@@ -51,6 +51,10 @@ module.exports = {
 
   findOneAndUpdate: (req, res) => {
     CommentRepository.update(req.params.id, req.body.comment)
+      .populate({
+        path: 'userLikes',
+        select: 'firstName lastName'
+      })
       .then(comment => res.send(comment))
       .catch(err => res.status(500).send(err))
   },

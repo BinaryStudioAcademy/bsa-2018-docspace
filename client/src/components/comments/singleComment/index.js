@@ -77,8 +77,8 @@ export class Comment extends Component {
             text={this.props.comment.text}
             onEditComment={this.onEditComment}
             editComment={this.props.editComment}
-            userId={this.props.comment.userId}
-            avatar={this.props.comment.userId.avatar}
+            userId={this.props.comment.userId._id}
+            avatar={this.props.user.avatar}
             _id={this.props.comment._id}
             parentId={this.props.comment.parentId}
           />
