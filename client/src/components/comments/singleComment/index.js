@@ -70,6 +70,7 @@ export class Comment extends Component {
   }
 
   render () {
+    const comparingCurrentAndCommentUsers = this.props.comment.userId._id === this.props.user._id || this.props.comment.userId === this.props.user._id
     return (
       <React.Fragment>
         {this.state.editMode
@@ -103,6 +104,7 @@ export class Comment extends Component {
                 editComment={this.props.editComment}
                 creationDate={this.transformData()}
                 likes={this.props.comment.userLikes}
+                comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
                 t={this.props.t}
                 user={this.props.user}
               />

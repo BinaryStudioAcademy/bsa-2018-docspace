@@ -1,4 +1,4 @@
-import {timeDifference} from 'src/components/dashboard/main/work/timeDifference'
+import {timeDifference} from 'src/helpers/timeDifference'
 export default (content) => {
   switch (content._id.action) {
     case 'CREATE_PAGE_SUCCESS':

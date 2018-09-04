@@ -165,6 +165,12 @@
     "nothing_found": "Nothing found",
     "general_information": "General information",
     "data_is_changing": "Data is changing",
-    "password_is_changing": "Password is changing"
+    "password_is_changing": "Password is changing",
+    "today": "today",
+    "yesterday": "yesterday",
+    "a_few_days_ago": "a few days ago",
+    "a_week_ago": "a week ago",
+    "a_month_ago": "a month ago",
+    "a_months_ago": "a months ago"
   }
 }

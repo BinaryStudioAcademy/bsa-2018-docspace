@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route, NavLink, Redirect } from 'react-router-dom'
+import { Route, NavLink, Redirect, withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import './work.css'
@@ -9,19 +9,22 @@ import RecentlyVisited from './RecentlyVisited'
 import SavedForLater from './SavedForLater'
 import * as actions from 'src/components/containers/user/logic/userActions'
 import Input from '../../input'
+import { translate } from 'react-i18next'
+import {getT} from 'src/config/i18n'
+const t = getT()
 const TABS = [
   {
-    name: 'Recently worked on',
+    name: t('recently_worked_on'),
     path: '/RecentWorks',
     component: RecentlyWorkedOn
   },
   {
-    name: 'Recently visited',
+    name: t('recently_visited'),
     path: '/RecentlyVisited',
     component: RecentlyVisited
   },
   {
-    name: 'Saved for later',
+    name: t('saved_for_later'),
     path: '/SavedForLater',
     component: SavedForLater
   }
@@ -32,11 +35,11 @@ class Work extends Component {
     this.props.getUserUpdatesRequest(this.props.user.login)
   }
   render () {
-    const {match} = this.props
+    const {match, t} = this.props
     return (
       <div className='dashboard-work' >
         <div className='work-header'>
-          <h1>Work</h1>
+          <h1>{t('work')}</h1>
           <Input placeholder='Filter' className='work-filter' autoComplete={false} />
         </div>
         <div className='work-body'>
@@ -68,7 +71,8 @@ Work.propTypes = {
   match: PropTypes.object,
   user: PropTypes.object,
   getUserUpdatesRequest: PropTypes.func,
-  userHistory: PropTypes.array
+  userHistory: PropTypes.array,
+  t: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -86,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Work)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Work)))

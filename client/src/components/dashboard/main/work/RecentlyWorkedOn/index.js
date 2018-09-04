@@ -2,10 +2,12 @@ import React from 'react'
 import workHelper from 'src/components/recentWorkListItem/helperRecentWork'
 import PropTypes from 'prop-types'
 import WorkCard from '../workCard'
+import { translate } from 'react-i18next'
 
 import './RecentlyWorkedOn.css'
 const RecentlyWorkedOn = (props) => {
   const {userHistory} = props
+  const {t} = props
   let filteredHistory = userHistory.filter((item) => {
     if (item._id.action === 'CREATE_BLOG_PAGE_SUCCESS') {
       return !userHistory.some((itemUpdate) => itemUpdate._id.action === 'UPDATE_BLOG_PAGE_SUCCESS' && itemUpdate.pageId[0] === item.pageId[0])
@@ -17,7 +19,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const today = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'TODAY') {
+    if (content.time === 'today') {
       return true
     } else {
       return false
@@ -25,7 +27,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const yesterday = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'YESTERDAY') {
+    if (content.time === 'yesterday') {
       return true
     } else {
       return false
@@ -33,7 +35,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'A FEW DAYS AGO') {
+    if (content.time === 'a few days ago') {
       return true
     } else {
       return false
@@ -41,7 +43,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const aWeekAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'A WEEK AGO') {
+    if (content.time === 'a week ago') {
       return true
     } else {
       return false
@@ -49,7 +51,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const aMonthAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'A MONTH AGO') {
+    if (content.time === 'a month ago') {
       return true
     } else {
       return false
@@ -57,7 +59,7 @@ const RecentlyWorkedOn = (props) => {
   })
   const aMonthsAgo = filteredHistory && filteredHistory.filter(item => {
     let content = workHelper(item)
-    if (content.time === 'A MONTHS AGO') {
+    if (content.time === 'a months ago') {
       return true
     } else {
       return false
@@ -67,7 +69,7 @@ const RecentlyWorkedOn = (props) => {
     <React.Fragment>
       {!!today.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>TODAY</h6>
+          <h6 className='work-header-recently'>{t('today')}</h6>
           {today.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -77,7 +79,7 @@ const RecentlyWorkedOn = (props) => {
       }
       {!!yesterday.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>YESTERDAY</h6>
+          <h6 className='work-header-recently'>{t('yesterday')}</h6>
           {yesterday.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -87,7 +89,7 @@ const RecentlyWorkedOn = (props) => {
       }
       {!!aFewDaysAgo.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>A FEW DAYS AGO</h6>
+          <h6 className='work-header-recently'>{t('a_few_days_ago')}</h6>
           {aFewDaysAgo.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -97,7 +99,7 @@ const RecentlyWorkedOn = (props) => {
       }
       {!!aWeekAgo.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>A WEEK AGO</h6>
+          <h6 className='work-header-recently'>{t('a_week_ago')}</h6>
           {aWeekAgo.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -107,7 +109,7 @@ const RecentlyWorkedOn = (props) => {
       }
       {!!aMonthAgo.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>A MONTH AGO</h6>
+          <h6 className='work-header-recently'>{t('a_month_ago')}</h6>
           {aMonthAgo.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -117,7 +119,7 @@ const RecentlyWorkedOn = (props) => {
       }
       {!!aMonthsAgo.length &&
         <div className='work-conteiner'>
-          <h6 className='work-header-recently'>A MONTHS AGO</h6>
+          <h6 className='work-header-recently'>{t('a_months_ago')}</h6>
           {aMonthsAgo.map((item, index) => {
             let content = workHelper(item)
             return !!content && <WorkCard content={content} key={index} />
@@ -129,7 +131,8 @@ const RecentlyWorkedOn = (props) => {
   )
 }
 RecentlyWorkedOn.propTypes = {
+  t: PropTypes.func,
   userHistory: PropTypes.array.isRequired
 }
 
-export default RecentlyWorkedOn
+export default translate('translations')(RecentlyWorkedOn)
