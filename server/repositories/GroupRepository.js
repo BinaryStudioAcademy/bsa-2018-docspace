@@ -19,6 +19,7 @@ class GroupRepository extends GeneralRepository {
       }
     ])
   }
+
   getAllForUser (id) {
     console.log(id)
     return this.model.find(
@@ -27,6 +28,17 @@ class GroupRepository extends GeneralRepository {
       }
     )
   }
+
+  getByTitle (title) {
+    return this.model.findOne({'title': title})
+  }
+
+  searchByTitlePart (titlePart) {
+    return this.model.aggregate([
+      {$match: {title: { $regex: titlePart, $options: 'i' }}}
+    ])
+  }
+
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))

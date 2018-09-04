@@ -2,6 +2,7 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
+const PermissionsRepository = require('../repositories/PermissionsRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -22,12 +23,15 @@ module.exports = {
 
       return res.end('Invalid id')
     }
+
     SpaceRepository.getById(id)
       .then((data) => {
         if (data.length === 0) {
           res.status(404)
+
           return res.end()
         }
+
         res.json(data[0])
       })
       .catch((err) => {
@@ -43,26 +47,28 @@ module.exports = {
 
       return res.end('Invalid data')
     }
-    BlogRepository.create({})
-      .then(blog => {
-        const spaceWithOwnerAndEmptyBlog = { ...req.body,
+
+    let spaceBlog, anonymousPermissions
+    Promise.all([
+      BlogRepository.create({}).then(blog => { spaceBlog = blog }),
+      PermissionsRepository.create({}).then(permissions => { anonymousPermissions = permissions })
+    ])
+      .then(() => {
+        const spaceWithOwnerAndEmptyBlog = {
+          ...req.body,
           ownerId: req.user._id,
-          blogId: blog._id
+          blogId: spaceBlog._id,
+          permissions: {
+            anonymous: anonymousPermissions._id
+          }
         }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
-            UserRepository.addSpaceToUser({
-              userId: spaceWithOwnerAndEmptyBlog.ownerId,
-              spaceId: space._id
-            })
+            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
               .then(() => {
                 return res.json(space)
               })
               .catch(err => console.log(err))
-          })
-          .catch((err) => {
-            console.log(err)
-            res.status(400).end()
           })
       })
       .catch(err => {
@@ -79,13 +85,11 @@ module.exports = {
 
       return res.end('Invalid id')
     }
+
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
-      .then(data => {
-        console.log(`anws`, data)
-        return res.json(data)
-      })
+      .then(data => res.json(data))
       .catch((err) => {
         console.log(err)
         res.status(400)
