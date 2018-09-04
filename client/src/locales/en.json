@@ -164,6 +164,8 @@
         "password_is_changing": "Password is changing",
         "no_spaces_to_move": "No spaces to move",
         "specify_new_space": "Specify new space to replace current page",
-        "current_space": "Current space"
+        "current_space": "Current space",
+        "copy_page": "Copy page",
+        "copy_page_warning": "Are you sure you want to copy this page?"
     }
 }

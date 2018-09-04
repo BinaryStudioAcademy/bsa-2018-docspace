@@ -153,6 +153,21 @@ function * movePageToSpace (action) {
   }
 }
 
+function * copyPage (action) {
+  const {pageId, spaceId} = action.payload
+  try {
+    const copiedPage = yield PageService.copyPage(pageId)
+    console.log('in copy sage copied page----', copiedPage)
+    yield put(spaceActions.addPageToSpace(spaceId, copiedPage))
+    yield put(actions.getPageByIdSuccess(copiedPage))
+    yield put(actions.copyPageSuccess())
+    yield put(push(`/spaces/${spaceId}/pages/${copiedPage._id}`))
+  } catch (err) {
+    console.log(err)
+    yield put(action.copyPageError())
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
@@ -166,4 +181,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
   yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
+  yield takeEvery(actionTypes.COPY_PAGE_REQUEST, copyPage)
 }

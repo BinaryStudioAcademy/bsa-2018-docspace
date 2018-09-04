@@ -174,3 +174,16 @@ export const movePageToSpaceSuccess = () => ({
 export const movePageToSpaceError = () => ({
   type: actionTypes.MOVE_PAGE_TO_SPACE_ERROR
 })
+
+export const copyPageRequest = (pageId, spaceId) => ({
+  type: actionTypes.COPY_PAGE_REQUEST,
+  payload: {pageId, spaceId}
+})
+
+export const copyPageSuccess = () => ({
+  type: actionTypes.COPY_PAGE_SUCCESS
+})
+
+export const copyPageError = () => ({
+  type: actionTypes.COPY_PAGE_ERROR
+})

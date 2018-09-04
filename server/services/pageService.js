@@ -211,5 +211,23 @@ module.exports = {
       .then(page => page)
       .catch(err => err)
     res.send(pageWithNewSpace)
+  },
+
+  copyPage: async (req, res) => {
+    const page = await PageRepository.getById(req.params.id)
+      .then(page => page)
+      .catch(err => console.log('get PAGE BY ID ERROR', err))
+    const newPage = {
+      title: page.title,
+      content: page.content,
+      spaceId: page.spaceId
+    }
+
+    const copyOfPage = await PageRepository.create(newPage)
+      .then(page => page)
+      .catch(err => console.log('CREATE COPY OF PAGE ERROR', err))
+    await SpaceRepository.addPageById(copyOfPage.spaceId, copyOfPage._id)
+      .catch(err => console.log('addPageById', err))
+    res.send(copyOfPage)
   }
 }

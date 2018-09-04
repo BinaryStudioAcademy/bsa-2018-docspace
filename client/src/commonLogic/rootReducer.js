@@ -16,6 +16,7 @@ import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 import { movePageModalReducer } from 'src/components/modals/movePageModal/logic/movePageModalReducer'
+import { copyPageModalReducer } from 'src/components/modals/copyPageModal/logic/copyPageModalReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -34,7 +35,8 @@ const baseReducer = combineReducers({
   allUsers: allUsersReducer,
   warningModal: warningModalReducer,
   routing,
-  movePageModal: movePageModalReducer
+  movePageModal: movePageModalReducer,
+  copyPageModal: copyPageModalReducer
 })
 
 export default baseReducer
