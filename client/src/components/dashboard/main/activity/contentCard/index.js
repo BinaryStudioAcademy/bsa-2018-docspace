@@ -7,7 +7,6 @@ import './contentCard.css'
 const ContentCard = (props) => {
   const { icon, path, name, action, time, isDeleted, user } = props.content
   const disabledLink = isDeleted ? 'disabled-link' : ''
-  console.log(props)
   return (
     <div className='content-card'>
       <div className='content-card-history'>

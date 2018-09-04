@@ -65,7 +65,10 @@ SpaceSettings.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 

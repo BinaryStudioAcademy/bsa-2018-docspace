@@ -58,7 +58,11 @@ class SpaceOverviewTab extends Component {
         <div className='space-overview-body'>
           {
             !isEditing
-              ? <SpaceDetails space={this.props.space} pathToCategories={`${this.props.match.url}/categories`} />
+              ? <SpaceDetails
+                space={this.props.space}
+                pathToCategories={`${this.props.match.url}/categories`}
+                user={this.props.user}
+              />
               : <EditSpaceDetailsForm
                 goBackToDetails={this.backToSpaceDetails}
                 updateSpace={this.props.updateSpace}
@@ -92,7 +96,8 @@ SpaceOverviewTab.propTypes = {
   deleteCategory: PropTypes.func.isRequired,
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
-  })
+  }),
+  user: PropTypes.object
 }
 
 export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverviewTab))

@@ -12,9 +12,16 @@
 		padding-bottom: 8px;
 		padding-top: 1px;
 		margin: 0px;
+		color: black;
 	}
 	h4.comment-first-last-names a {
-		color: #3572b0;
+		color: black;
 		text-decoration: none;
+	}
+	.comment-body a {
+		text-decoration: none;
+	}
+	.comment-body a:visited {
+		color: black;
 	}
 }

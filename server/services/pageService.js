@@ -25,7 +25,15 @@ module.exports = {
     let page = await PageRepository.getById(req.params.id)
       .populate({
         path: 'comments',
+        populate: {path: 'userId', select: 'firstName lastName login avatar'}
+      })
+      .populate({
+        path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName'}
+      })
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
       })
       .populate({
         path: 'usersLikes',

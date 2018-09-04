@@ -66,7 +66,9 @@ module.exports = {
           .then(space => {
             UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
               .then(() => {
-                return res.json(space)
+                SpaceRepository.getById(space._id)
+                  .then(getSpace => res.json(getSpace[0]))
+                  .catch(err => console.log(err))
               })
               .catch(err => console.log(err))
           })
@@ -89,7 +91,11 @@ module.exports = {
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
-      .then(data => res.json(data))
+      .populate('ownerId', 'firstName lastName login')
+      .then(data => {
+        console.log(`anws`, data)
+        return res.json(data)
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
