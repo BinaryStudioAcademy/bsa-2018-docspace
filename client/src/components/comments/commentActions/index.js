@@ -5,16 +5,18 @@ import Like from 'src/components/common/like'
 
 import './commentActions.css'
 
-export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes}) => {
+export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes, comparingCurrentAndCommentUsers}) => {
   return (
     <div className='comment-actions-wrapper'>
       <ul className='comment-actions-list'>
         <li className='comment-actions-item'>
           <span className='comment-reply' onClick={onReplyComment}>{t('reply')}</span>
         </li>
+        { comparingCurrentAndCommentUsers &&
         <li className='comment-actions-item'>
           <span className='comment-edit' onClick={onEditComment}>{t('edit')}</span>
         </li>
+        }
         <li className='comment-actions-item'>
           <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
         </li>
@@ -47,6 +49,7 @@ CommentActions.propTypes = {
   creationDate: PropTypes.string,
   t: PropTypes.func,
   user: PropTypes.object,
-  likes: PropTypes.array
+  likes: PropTypes.array,
+  comparingCurrentAndCommentUsers: PropTypes.bool
 }
 export default translate('translations')(CommentActions)

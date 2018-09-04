@@ -78,8 +78,9 @@ class Page extends Component {
   }
 
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const user = page ? page.userId : null
     return (
       <React.Fragment>
         <PageHeader
@@ -101,10 +102,11 @@ class Page extends Component {
             <div className='page-body-wrp'>
               <PageTitle text={page.title} />
               <PageInfo
-                avatar={fakeImg}
-                firstName={firstName}
-                lastName={lastName}
-                date={page.created ? page.created.date : ''}
+                avatar={user ? user.avatar : ''}
+                firstName={user ? user.firstName : ''}
+                lastName={user ? user.lastName : ''}
+                date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+                login={user ? user.login : ''}
               />
               <PageContent content={page.content} />
             </div>
@@ -120,21 +122,18 @@ class Page extends Component {
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.comments}
+                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
                 userId={_id}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
-                firstName={firstName}
-                lastName={lastName}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                avatar={avatar}
                 t={t}
               />
             </div>
@@ -150,6 +149,7 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
+    pageCreator: PropTypes.array,
     comments: PropTypes.array,
     usersLikes: PropTypes.array
   }),
@@ -175,7 +175,9 @@ Page.defaultProps = {
 const mapStateToProps = (state, props) => {
   return {
     page: state.pages.byId[props.match.params.page_id],
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)

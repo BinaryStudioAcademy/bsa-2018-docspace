@@ -92,7 +92,6 @@ class PageService {
   }
 
   findByCriteria = (filter) => {
-    console.log(filter)
     const args = { endpoint: `/api/pages/search/${filter}`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
