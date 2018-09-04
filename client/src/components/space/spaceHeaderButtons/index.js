@@ -23,7 +23,7 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, openWarningModal, onPdfExport, onWordExport, onWordImport } = this.props
+    const { onEdit, onWatch, onShare, onSave, children, type, t, hideEditBtn, openWarningModal, onPdfExport, onWordExport, onWordImport, openMovePageModal } = this.props
     const dropdownMenuItems = [
       {
         name: t('export_to_PDF'),
@@ -36,6 +36,10 @@ class SpaceHeaderButtons extends Component {
       {
         name: t('import_word'),
         onClick: () => onWordImport()
+      },
+      {
+        name: t('Move_page'),
+        onClick: openMovePageModal
       }
     ]
 
@@ -92,7 +96,8 @@ SpaceHeaderButtons.propTypes = {
   type: PropTypes.string,
   hideEditBtn: PropTypes.bool,
   openWarningModal: PropTypes.func,
-  onWordImport: PropTypes.func
+  onWordImport: PropTypes.func,
+  openMovePageModal: PropTypes.func
 }
 
 SpaceHeaderButtons.defaultProps = {

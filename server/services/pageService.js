@@ -190,5 +190,15 @@ module.exports = {
       .catch(err => {
         console.log(err)
       })
+  },
+
+  moveToSpace: async (req, res) => {
+    await SpaceRepository.addPageById(req.body.toSpaceId, req.params.id)
+      .catch(err => err)
+    await SpaceRepository.deletePageFromSpace(req.body.fromSpaceId, req.params.id)
+      .catch(err => err)
+    await PageRepository.changeSpace(req.params.id, req.body.toSpaceId)
+      .then(() => res.send({pageReplaced: true}))
+      .catch(err => res.status(500).send(err))
   }
 }

@@ -137,6 +137,18 @@ function * exportPageToWord (action) {
   }
 }
 
+function * movePageToSpace (action) {
+  const {pageId, fromSpaceId, toSpaceId} = action.payload
+  try {
+    yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
+    yield actions.movePageToSpaceSuccess()
+    yield put(push(`/spaces/${toSpaceId}/pages/${pageId}`))
+  } catch (e) {
+    console.log(e)
+    yield actions.movePageToSpaceError()
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
@@ -149,4 +161,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.SEND_DOC_FILE_REQUEST, sendFile)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
+  yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
 }

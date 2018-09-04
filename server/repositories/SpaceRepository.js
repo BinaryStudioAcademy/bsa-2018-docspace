@@ -165,6 +165,10 @@ class SpaceRepository extends GeneralRepository {
       }
     ])
   }
+
+  addPageById (spaceId, pageId) {
+    return super.update(spaceId, {'$addToSet': {'pages': pageId}})
+  }
 }
 
 module.exports = new SpaceRepository(SpaceModel)

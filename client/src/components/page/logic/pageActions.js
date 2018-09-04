@@ -161,3 +161,16 @@ export const exportPageToWord = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_WORD,
   payload: page
 })
+
+export const movePageToSpaceRequest = (pageId, fromSpaceId, toSpaceId) => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_REQUEST,
+  payload: {pageId, fromSpaceId, toSpaceId}
+})
+
+export const movePageToSpaceSuccess = () => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_SUCCESS
+})
+
+export const movePageToSpaceError = () => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_ERROR
+})

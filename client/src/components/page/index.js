@@ -21,6 +21,8 @@ import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
+import MoveToPageModal from 'src/components/modals/movePageModal'
+import { openMovePageModal } from 'src/components/modals/movePageModal/logic/movePageModalActions'
 
 class Page extends Component {
   constructor (props) {
@@ -73,6 +75,12 @@ class Page extends Component {
     }
   }
 
+  handleOpenMovePageModal = () => {
+    if (!this.props.match.params.version) {
+      this.props.actions.openMovePageModal(this.props.page._id, this.props.page.spaceId)
+    }
+  }
+
   handleChoosenFile = (e) => {
     if (e.target.files[0]) {
       this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
@@ -103,7 +111,7 @@ class Page extends Component {
 
   render () {
     const { firstName, lastName, avatar, login, _id } = this.props.user
-    const { page, t, space, isFetching } = this.props
+    const { page, t, space, isFetching, showMovePageModal } = this.props
     const user = page ? page.userModified : null
     return (
       <React.Fragment>
@@ -115,6 +123,7 @@ class Page extends Component {
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
+          openMovePageModal={this.handleOpenMovePageModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -164,6 +173,7 @@ class Page extends Component {
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
         }
+        {showMovePageModal && <MoveToPageModal />}
       </React.Fragment>
     )
   }
@@ -177,7 +187,8 @@ Page.propTypes = {
     content: PropTypes.string,
     commentsArr: PropTypes.array,
     likes: PropTypes.array,
-    comments: PropTypes.comment
+    comments: PropTypes.comment,
+    spaceId: PropTypes.string
   }),
 
   user: PropTypes.object,
@@ -191,7 +202,8 @@ Page.propTypes = {
   exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  showMovePageModal: PropTypes.bool.isRequired
 }
 
 Page.defaultProps = {
@@ -221,7 +233,8 @@ const mapStateToProps = (state) => {
     user: state.verification.user,
     comments: state.comments,
     space: spaceById(state),
-    isFetching: isPagesFetching(state)
+    isFetching: isPagesFetching(state),
+    showMovePageModal: state.movePageModal.showModal
   }
 }
 
@@ -238,7 +251,8 @@ function mapDispatchToProps (dispatch) {
         putLikeRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
-        openWarningModal
+        openWarningModal,
+        openMovePageModal
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

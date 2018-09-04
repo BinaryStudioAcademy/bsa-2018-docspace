@@ -17,4 +17,6 @@ router.put('/:id', pageService.findOneAndUpdate)
 
 router.delete('/:id', pageService.findOneAndDelete)
 
+router.put('/move/:id', pageService.moveToSpace)
+
 module.exports = router
