@@ -13,7 +13,6 @@ export default class PermissionsPage extends Component {
       users: { ...this.splateRestrictions(users) },
       anonymous: { ...this.splateRestrictionsForSingleObject(anonymous) }
     }
-    console.log(this.state)
   }
 
   renderGroupsPermissionsSection= () => (

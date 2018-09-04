@@ -9,6 +9,8 @@ router.post('/', commentService.add)
 
 router.put('/:id', commentService.findOneAndUpdate)
 
+router.put('/like/:id', commentService.addRemoveLike)
+
 router.delete('/:id', commentService.findOneAndDelete)
 
 module.exports = router

@@ -43,6 +43,15 @@ class PageService {
     return apiResult
   }
 
+  // toAdd = true - adds LIKE , false - removes LIKE
+  likePage = (pageId, userId, toAdd) => {
+    const args = { endpoint: `/api/pages/like/${pageId}`, method: 'PUT', body: JSON.stringify({userId, toAdd}) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
   search = (paramsObject) => {
     const args = { endpoint: `/api/pages/search`, method: 'POST', body: JSON.stringify(paramsObject) }
     const apiResult = callWebApi(args)

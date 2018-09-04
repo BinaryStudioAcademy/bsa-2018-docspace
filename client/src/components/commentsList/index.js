@@ -34,8 +34,8 @@ class CommentsList extends Component {
   }
 
   render () {
-    const commentsList = this.state.commentTree.map(comment =>
-      <Comment
+    const commentsList = this.state.commentTree.map(comment => {
+      return <Comment
         margin={`${comment.level * 25}px`}
         comment={comment.item}
         key={comment.id}
@@ -48,7 +48,8 @@ class CommentsList extends Component {
         lastName={this.props.lastName}
         likeAction={this.props.likeAction}
         user={this.props.user}
-      />)
+      />
+    })
     return (
       <div className='comments-list-wrapper'>
         {commentsList}

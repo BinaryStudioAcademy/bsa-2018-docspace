@@ -13,7 +13,7 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
-import {putLikeRequest, deleteLikeRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
+import {putLikeOnPageRequest, deleteLikeFromPageRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
@@ -89,24 +89,24 @@ class Page extends Component {
     }
   }
 
- likeAction = (obj) => {
-   this.likePage(obj, 'page')
+ likeAction = (isLiked) => {
+   this.likePage(isLiked, 'page')
  }
 
-  likePage = (obj, type, ...args) => {
+  likePage = (isLiked, type, comment) => {
     if (type === 'page') {
-      obj
-        ? this.props.actions.putLikeRequest(this.props.user._id, this.props.page)
-        : this.props.actions.deleteLikeRequest(this.props.user._id, this.props.page)
+      isLiked
+        ? this.props.actions.deleteLikeFromPageRequest(this.props.user, this.props.page)
+        : this.props.actions.putLikeOnPageRequest(this.props.user, this.props.page)
     } else {
-      obj
-        ? this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, args[0])
-        : this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, args[0])
+      isLiked
+        ? this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, comment)
+        : this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, comment)
     }
   }
 
-  likeComment = (obj, comment) => {
-    this.likePage(obj, 'comment', comment)
+  likeComment = (isLiked, comment) => {
+    this.likePage(isLiked, 'comment', comment)
   }
 
   render () {
@@ -145,15 +145,15 @@ class Page extends Component {
               login={user ? user.login : login}
             />
             <PageContent content={page.content} />
-            <Like t={t} user={this.props.user} likes={this.props.page.likes || []} likePage={this.likeAction} />
+            <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length &&
+              {this.props.page && this.props.page.comments && this.props.page.comments.length &&
               this.props.page.comments.length
-                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr && this.props.page.comments.length ? this.props.page.commentsArr : []}
+                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
@@ -185,10 +185,9 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array,
-    likes: PropTypes.array,
-    comments: PropTypes.comment,
-    spaceId: PropTypes.string
+    spaceId: PropTypes.string,
+    comments: PropTypes.array,
+    usersLikes: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -231,7 +230,6 @@ const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
-    comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state),
     showMovePageModal: state.movePageModal.showModal
@@ -247,8 +245,8 @@ function mapDispatchToProps (dispatch) {
         exportPageToPdf,
         exportPageToWord,
         sendDocFileRequest,
-        deleteLikeRequest,
-        putLikeRequest,
+        deleteLikeFromPageRequest,
+        putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
