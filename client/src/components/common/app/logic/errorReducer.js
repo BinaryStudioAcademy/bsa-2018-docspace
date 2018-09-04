@@ -1,4 +1,6 @@
-import * as actionTypes from 'src/components/containers/user/logic/userActionTypes'
+import * as actionTypesUser from 'src/components/containers/user/logic/userActionTypes'
+import * as actionTypesSpace from 'src/components/space/spaceContainer/logic/spaceActionTypes'
+import * as actionTypesPage from 'src/components/page/logic/pageActionTypes'
 import * as actionTypesError from 'src/components/common/app/logic/errorActionTypes'
 const initialState = {
   status: 0,
@@ -7,7 +9,9 @@ const initialState = {
 
 const errorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.COMPARE_USER_ERROR:
+    case actionTypesUser.COMPARE_USER_ERROR:
+    case actionTypesSpace.GET_SPACE_ERROR:
+    case actionTypesPage.GET_PAGE_BY_ID_ERROR:
     {
       return {
         status: action.err.status

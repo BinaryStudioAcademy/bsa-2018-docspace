@@ -2,6 +2,7 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
+var mongoose = require('mongoose')
 
 module.exports = {
   findAll: (req, res) => {
@@ -17,13 +18,13 @@ module.exports = {
   findOne: (req, res) => {
     const id = req.params.id
 
-    if (id.length === 0) {
-      res.status(400)
-
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404)
       return res.end('Invalid id')
     }
     SpaceRepository.getById(id)
       .then((data) => {
+        console.log(data)
         if (data.length === 0) {
           res.status(404)
           return res.end()

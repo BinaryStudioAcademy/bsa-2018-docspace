@@ -106,8 +106,9 @@ function * getPage (action) {
     const page = yield PageService.getPage(action.payload)
     yield commentsActions.allCommentsFetched(page.commentsArr)
     yield put(actions.getPageByIdSuccess(page))
-  } catch (e) {
+  } catch (err) {
     yield put(actions.getPageByIdError())
+    yield put({type: actionTypes.GET_PAGE_BY_ID_ERROR, err})
   }
 }
 

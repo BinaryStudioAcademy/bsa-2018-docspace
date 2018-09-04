@@ -2,6 +2,7 @@ const PageRepository = require('../repositories/PageRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const HistoryRepository = require('../repositories/HistoryRepository')
+var mongoose = require('mongoose')
 
 module.exports = {
   findAll: (req, res) => {
@@ -17,12 +18,17 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    let page = await PageRepository.getById(req.params.id)
+    const id = req.params.id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404)
+      return res.end('Invalid id')
+    }
+    let page = await PageRepository.getById(id)
       .then(page => {
         if (!page[0]) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
-          })
+          }).end()
         }
         return page[0]
       })
