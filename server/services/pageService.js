@@ -18,30 +18,19 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    const id = req.params.id
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(404)
-      return res.end('Invalid id')
-    }
-    let page = await PageRepository.getById(id)
-      .then(page => {
-        if (!page[0]) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          }).end()
-        }
-        return page[0]
+    let page = await PageRepository.getById(req.params.id)
+      .populate({
+        path: 'comments',
+        populate: {path: 'userLikes', select: 'firstName lastName'}
       })
+      .populate({
+        path: 'usersLikes',
+        select: 'firstName lastName'
+      })
+      .then(page => page)
       .catch(err => {
         console.log(err)
-        if (err.kind === 'ObjectId') {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        return res.status(500).send({
-          message: 'Error retrieving page with id ' + req.params.id
-        })
+        return err
       })
     if (req.body.version) {
       const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
@@ -62,7 +51,6 @@ module.exports = {
         createdAt: page.createdAt,
         updatedAt: pageCurrentHistory[0].date,
         content: oldPage.content,
-        commentsArr: page.commentsArr,
         userModified: pageCurrentHistory[0].userId
       }
     }
@@ -101,14 +89,15 @@ module.exports = {
 
   findOneAndUpdate: (req, res) => {
     PageRepository.update(req.params.id, req.body)
+      .populate({
+        path: 'comments',
+        populate: {path: 'userLikes', select: 'firstName lastName avatar'}
+      })
       .then(page => {
-        if (!page) {
-          return res.status(404).send({
-            message: 'page not found with id ' + req.params.id
-          })
-        }
-        res.send(page[0])
-      }).catch(err => {
+        console.log('after populate', page)
+        return res.send(page)
+      })
+      .catch(err => {
         console.log(err)
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
@@ -120,6 +109,23 @@ module.exports = {
         })
       })
   },
+
+  addRemoveLike: (req, res) => {
+    if (req.body.toAdd) {
+      PageRepository.addLike(req.params.id, req.body.userId)
+        .then(page => res.send({liked: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      PageRepository.removeLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unliked: true}))
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
   findOneAndDelete: (req, res) => {
     PageRepository.update(req.params.id, {'isDeleted': true})
       .then(page => {

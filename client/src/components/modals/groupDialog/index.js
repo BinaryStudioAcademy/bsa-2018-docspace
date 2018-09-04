@@ -41,12 +41,11 @@ class GroupDialog extends Component {
     const {t} = this.props
     const forAutoFocus = true
     // this.getUsers()
-    console.log(this.state)
     return <React.Fragment>
       <div className='group'>
         <div className='group-dialog-row'>
-          <div className='group-modal-label'><label htmlFor='name'>{t('Name')}<span>*</span></label></div>
-          <div className='group-modal-input'><Input label={t('Name')}
+          <div className='group-modal-label'><label htmlFor='name'>{t('name')}<span>*</span></label></div>
+          <div className='group-modal-input'><Input label={t('name')}
             value={this.state.name}
             onChange={({target}) => this.handleChange(target)}
             name='name'
@@ -56,8 +55,8 @@ class GroupDialog extends Component {
           /></div>
         </div>
         <div className='group-dialog-row'>
-          <div className='group-modal-label'><label htmlFor='description'>{t('Description')}</label></div>
-          <div className='group-modal-input'><Input label={t('Description')}
+          <div className='group-modal-label'><label htmlFor='description'>{t('description')}</label></div>
+          <div className='group-modal-input'><Input label={t('description')}
             value={this.state.description}
             onChange={({target}) => this.handleChange(target)}
             name='description'
@@ -68,7 +67,7 @@ class GroupDialog extends Component {
         <div className='group-dialog-row'>
           <div className='group-modal-label'><label htmlFor='user'>{t('User')}</label></div>
           <div className='group-modal-input'>
-            <Input label={t('User')}
+            <Input label={t('user')}
               value={this.state.user}
               onChange={({target}) => this.onChange(target)}
               name='user'
@@ -116,7 +115,6 @@ class GroupDialog extends Component {
       title: this.state.name,
       description: this.state.description
     }
-    console.log(group)
     this.props.actions.createGroupRequest(group)
     this.props.cancelModal()
   }
@@ -129,13 +127,12 @@ class GroupDialog extends Component {
         className='accept-button'
         onClick={this.createGroup}
         disabled={idDisabled}
-      >{t('Create')}</button>
-      <button onClick={this.props.cancelModal}>{t('Close')}</button>
+      >{t('create')}</button>
+      <button onClick={this.props.cancelModal}>{t('close')}</button>
     </div>
   }
 
   render () {
-    console.log(this.state)
     return (
       <React.Fragment>
         <Modal

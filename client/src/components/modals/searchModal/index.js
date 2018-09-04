@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './searchModal.css'
-import {getMatchingPagesRequest, cleanMatchingPages} from './logic/searchActions'
+import {searchRequest, cleanSearchResults} from 'src/commonLogic/search/searchActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -23,11 +23,11 @@ class SearchModal extends Component {
 
   search = _.debounce(target => {
     if (this.state.filter !== '') {
-      this.props.actions.getMatchingPagesRequest(this.state.filter)
+      this.props.actions.searchRequest({ input: this.state.filter, targetToSearch: 'all by name' })
     } else {
-      this.props.actions.cleanMatchingPages()
+      this.props.actions.cleanSearchResults()
     }
-  }, 1000);
+  }, 200);
 
   renderResults = () => {
     let blogsList = []
@@ -47,23 +47,27 @@ class SearchModal extends Component {
     console.log(postList)
     const blogRender = blogsList.map(blog =>
       <div className='search-result-wrapper'>
-        <NavLink onClick={this.props.closeModal}
-          to={`/spaces/${blog.spaceId._id}/blogs/${blog._id}`}>
-          <i className='fas fa-rss-square result-big-icon' />
-          {blog.title}
-        </NavLink>
+        {blog.spaceId
+          ? <NavLink onClick={this.props.closeModal}
+            to={`/spaces/${blog.spaceId && blog.spaceId._id}/blogs/${blog._id}`}>
+            <i className='fas fa-rss-square result-big-icon' />
+            {blog.title}
+          </NavLink>
+          : null}
       </div>
 
     )
     const PageRender = postList.map(page =>
       <div className='search-result-wrapper'>
-        <NavLink onClick={this.props.closeModal}
-          to={`/spaces/${page.spaceId._id}/pages/${page._id}`}>
-          <i className='fas fa-file-alt result-big-icon' />
-          {page.title}
-        </NavLink>
+        {page.spaceId
+          ? <NavLink onClick={this.props.closeModal}
+            to={`/spaces/${page.spaceId._id}/pages/${page._id}`}>
+            <i className='fas fa-file-alt result-big-icon' />
+            {page.title}
+          </NavLink>
+          : null
+        }
       </div>
-
     )
 
     const SpaceRender = spacesList.map(space =>
@@ -110,7 +114,7 @@ class SearchModal extends Component {
     this.setState({
       filter: ''
     })
-    this.props.actions.cleanMatchingPages()
+    this.props.actions.cleanSearchResults()
   }
 
   render () {
@@ -135,7 +139,7 @@ class SearchModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchResults
+    searchResults: state.search.results
   }
 }
 
@@ -143,8 +147,8 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getMatchingPagesRequest,
-        cleanMatchingPages
+        searchRequest,
+        cleanSearchResults
       }
       , dispatch)
   }

@@ -6,6 +6,7 @@ import './RecentWorkListItem.css'
 
 const RecentWorkListItem = ({content}) => {
   const disabledLink = content.isDeleted ? 'recent-work-disabled-link' : ''
+  console.log(content)
   return (
     <div className='recent-work-list-item'>
       <NavLink className={`recent-work-link ${disabledLink}`} to={content.path} >
@@ -16,6 +17,7 @@ const RecentWorkListItem = ({content}) => {
             ? <span className='recent-work-name-deleted'> <i className='far fa-trash-alt' aria-hidden='true' /></span>
             : null}
         </span>
+        <span className='recent-work-time'>{content.time}</span>
         <span className='recent-work-name-of-container'>{content.title}</span>
         <span className='recent-work-contributors'>{''}</span>
       </NavLink>

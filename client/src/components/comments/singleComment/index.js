@@ -69,7 +69,6 @@ export class Comment extends Component {
   }
 
   render () {
-    // console.log(this.props)
     return (
       <React.Fragment>
         {this.state.editMode
@@ -99,10 +98,9 @@ export class Comment extends Component {
                 onLikeComment={this.onLikeComment}
                 editComment={this.props.editComment}
                 creationDate={this.transformData()}
-                likes={this.props.comment.likes}
+                likes={this.props.comment.userLikes}
                 t={this.props.t}
                 user={this.props.user}
-                likeAction={this.props.likeAction}
               />
             </div>
           </div>}
@@ -131,6 +129,6 @@ Comment.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   likeAction: PropTypes.func,
-  user: PropTypes.obj
+  user: PropTypes.object
 }
 export default translate('translations')(Comment)

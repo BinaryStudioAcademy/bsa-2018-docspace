@@ -4,26 +4,25 @@ import Group from 'src/components/group'
 import AdministrationUsers from './administrationsUsers'
 import { Route, NavLink, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import './administrations.css'
 
-const TABS = [
-  {
-    name: 'Groups',
-    path: '/groups',
-    component: Group
-  },
-  {
-    name: 'Users',
-    path: '/users',
-    component: AdministrationUsers
-  }
-]
-
-export default class Administration extends Component {
+class Administration extends Component {
   render () {
-    const { match } = this.props
-
+    const { match, t } = this.props
+    const TABS = [
+      {
+        name: t('groups'),
+        path: '/groups',
+        component: Group
+      },
+      {
+        name: t('users'),
+        path: '/users',
+        component: AdministrationUsers
+      }
+    ]
     return (
       <div className='dashboard-admin'>
         <div className='dashboard-admin-body'>
@@ -57,3 +56,5 @@ export default class Administration extends Component {
 Administration.propTypes = {
   match: PropTypes.object
 }
+
+export default translate('translations')(Administration)

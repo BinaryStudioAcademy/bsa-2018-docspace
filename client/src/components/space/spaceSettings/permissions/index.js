@@ -1,136 +1,204 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import PermissionsTable from './permissionsTable'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { translate } from 'react-i18next'
+import { currentSpacePermissions, isFetchingForPermissions } from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
+import { EntityNamesForPermissionsSettingsArray } from './logic/constants'
+import AddPermissionsForm from './addPermissionsForm'
+import { MoonLoader } from 'react-spinners'
+import { searchRequest } from 'src/commonLogic/search/searchActions'
+import {
+  getSpacePermissionsRequest, updateSpacePermissionsRequest,
+  addUserPermissionsRequest, addGroupPermissionsRequest
+} from './logic/permissionsActions'
+
 import './permissionsPage.css'
 
-export default class PermissionsPage extends Component {
+export class PermissionsPage extends Component {
   constructor (props) {
     super(props)
-    const { groups, users, anonymous } = this.props
     this.state = {
-      isEditing: false,
-      groups: { ...this.splateRestrictions(groups) },
-      users: { ...this.splateRestrictions(users) },
-      anonymous: { ...this.splateRestrictionsForSingleObject(anonymous) }
+      isEditing: false
     }
-    console.log(this.state)
   }
 
-  renderGroupsPermissionsSection= () => (
-    <React.Fragment>
-      <h3>Groups permissions</h3>
-      <p>Permissions for this space for all members of the group.</p>
-      <PermissionsTable
-        isEditing={this.state.isEditing}
-        items={this.props.groups}
-        restictionsCategory={'groups'}
-        restrictionsByItemsId={this.state.groups}
-        handleChangePermission={this.handleChangePermission}
-        handleToggleAllCLick={this.setAllpermissionForTargetEntityTo}
-      />
-    </React.Fragment>
+  componentDidMount () {
+    this.props.space && this.props.actions.getSpacePermissionsRequest(this.props.space._id)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.permissions) {
+      this.setState({
+        permissionsById: { ...nextProps.permissions.allById }
+      })
+    }
+  }
+
+  permissionsFromState = (permissionsFromProps) => (
+    permissionsFromProps.reduce((res, perm) => {
+      res[perm._id] = this.state.permissionsById[perm._id]
+      return res
+    }, {})
   )
+
+  handleSearchGroups = (title) => {
+    this.props.actions.searchRequest({ input: title, targetToSearch: 'groups by title part' })
+  }
+
+  renderGroupsPermissionsSection = () => {
+    const items = this.permissionsFromState(this.props.permissions.groups)
+
+    return (
+      <React.Fragment>
+        <h3>{this.props.t('groups_permissions')}</h3>
+        <p>{this.props.t('permissions_the_group')}</p>
+        {
+          this.props.permissions.groups.length > 0 &&
+          <PermissionsTable
+            isEditing={this.state.isEditing}
+            items={this.props.permissions.groups}
+            permissionsByItemsId={items}
+            handleChangePermission={this.handleChangePermission}
+            handleToggleAllCLick={this.setPermissionsForAllEntityTo}
+          />
+        }
+        {
+          this.state.isEditing &&
+          <AddPermissionsForm
+            searchPlaceholder={this.props.t('group_title')}
+            renderSearchedEntityLiContent={this.renderGroupLiContent}
+            handleSearchEntitiesToAddPermissions={this.handleSearchGroups}
+            getEntityName={(group) => group.title}
+            handleAddPermissions={(targetGroup) => this.props.actions.addGroupPermissionsRequest(targetGroup, this.props.space._id)}
+            idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.groups.map(perm => perm.groupId)}
+          />
+        }
+      </React.Fragment>
+    )
+  }
+
+  renderGroupLiContent (group) {
+    return (
+      <div className='user-li-node'>
+        <i className='fas fa-users' />
+        <span className='group-title'> {group.title}</span>
+      </div>
+    )
+  }
+
+  handleSearchUsers = (login) => {
+    this.props.actions.searchRequest({ input: login, targetToSearch: 'users by login part' })
+  }
 
   renderUsersPermissionsSection = () => (
     <React.Fragment>
-      <h3>Users permissions</h3>
-      <p>Grant permissions to individual users, regardless of which group they are members of.</p>
-      <PermissionsTable
-        isEditing={this.state.isEditing}
-        items={this.props.users}
-        restictionsCategory={'users'}
-        restrictionsByItemsId={this.state.users}
-        handleChangePermission={this.handleChangePermission}
-        handleToggleAllCLick={this.setAllpermissionForTargetEntityTo}
-      />
+      <h3>{this.props.t('users_permissions')}</h3>
+      <p>{this.props.t('permissions_to_individual_users')}</p>
+      {
+        this.props.permissions.users.length > 0 &&
+        <PermissionsTable
+          isEditing={this.state.isEditing}
+          items={this.props.permissions.users}
+          restictionsCategory={'users'}
+          permissionsByItemsId={this.permissionsFromState(this.props.permissions.users)}
+          handleChangePermission={this.handleChangePermission}
+          handleToggleAllCLick={this.setPermissionsForAllEntityTo}
+        />
+      }
+
+      {
+        this.state.isEditing &&
+        <AddPermissionsForm
+          searchPlaceholder={this.props.t('user_login')}
+          renderSearchedEntityLiContent={this.renderUserLiContent}
+          handleSearchEntitiesToAddPermissions={this.handleSearchUsers}
+          getEntityName={(user) => user.firstName + ' ' + user.lastName + ' @' + user.login}
+          handleAddPermissions={(targetUser) => this.props.actions.addUserPermissionsRequest(targetUser, this.props.space._id)}
+          idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.users.map(perm => perm.userId)}
+        />
+      }
     </React.Fragment>
   )
 
-  renderAnonymousPermissionsSection = () => (
-    <React.Fragment>
-      <h3>Anonymous access</h3>
-      <p>If your Confluence is public, you can grant permissions to people who are not authorized on the site.</p>
-      <PermissionsTable
-        isEditing={this.state.isEditing}
-        items={[{_id: 'anonymous', name: 'anonymous users', permissions: this.props.anonymous.permissions}]}
-        restictionsCategory={'anonymous'}
-        restrictionsByItemsId={{ anonymous: {...this.state.anonymous} }}
-        handleChangePermission={this.handleChangePermission}
-        handleToggleAllCLick={this.setAllpermissionForTargetEntityTo}
-      />
-    </React.Fragment>
-  )
+  renderUserLiContent = (user) => {
+    return (
+      <div className='user-li-node'>
+        <img src={user.avatar} alt='' />
+        <span className='userName'> {user.firstName + ' ' + user.lastName}</span>
+        <span className='user-login'>{' @' + user.login}</span>
+      </div>
+    )
+  }
+
+  renderAnonymousPermissionsSection = () => {
+    const { anonymous } = this.props.permissions
+    return (
+      <React.Fragment>
+        <h3>{this.props.t('anonymous_access')}</h3>
+        <p>{this.props.t('permissions_to_anonymous_users')}</p>
+        {
+          anonymous && this.state.permissionsById[anonymous._id] &&
+          <PermissionsTable
+            isEditing={this.state.isEditing}
+            items={[ anonymous ]}
+            permissionsByItemsId={{ [anonymous._id]: this.state.permissionsById[anonymous._id] }}
+            handleChangePermission={this.handleChangePermission}
+            handleToggleAllCLick={this.setPermissionsForAllEntityTo}
+          />
+        }
+      </React.Fragment>
+    )
+  }
 
    handleCancelEditingClick = () => {
      this.setState({
        isEditing: false,
-       groups: { ...this.splateRestrictions(this.props.groups) }
+       permissionsById: this.props.permissions.allById
      })
    }
 
-   setAllpermissionForTargetEntityTo = (category, entityId, boolValue) => {
-     if (category === 'anonymous') {
-       return this.setState({
-         anonymous:
-           Object.keys(this.state.anonymous).reduce((permissions, permissionName) => {
-             permissions[permissionName] = boolValue
-             return permissions
-           }, {})
-       })
-     }
-
+   setPermissionsForAllEntityTo = (permissionsId, boolValue) => {
      this.setState({
-       [category]: {
-         ...this.state[category],
-         [entityId]: {
-           ...Object.keys(this.state[category][entityId]).reduce((permissions, permissionName) => {
-             permissions[permissionName] = boolValue
+       permissionsById: {
+         ...this.state.permissionsById,
+         [permissionsId]: {
+           ...this.state.permissionsById[permissionsId],
+           ...EntityNamesForPermissionsSettingsArray.reduce((permissions, entity) => {
+             Object.keys(this.state.permissionsById[permissionsId][entity]).forEach(action => {
+               !permissions[entity] && (permissions[entity] = {})
+               permissions[entity][action] = boolValue
+             })
              return permissions
-           }, {})
+           }, {}),
+           isChanged: true
          }
        }
      })
    }
 
-   handleSaveEditingClick = () => {
-
-   }
-
-   // Transform permissions from { blog: {edit: true, delete: true}, ... } to { 'edit blog': true, 'delete blog': true}
-   // Need for more comfortable woek with state
-   // Before request on server should transform back
-   splateRestrictionsForSingleObject = (item) => (
-     Object.keys(item.permissions).reduce((rights, entity) => {
-       Object.keys(item.permissions[entity]).forEach(action => {
-         rights[ action + ' ' + entity ] = item.permissions[entity][action]
-       })
-       return rights
-     }, {})
-   )
-
-   splateRestrictions = (items) => (
-     items.reduce((rightsByItemId, item) => {
-       rightsByItemId[item._id] = this.splateRestrictionsForSingleObject(item)
-       return rightsByItemId
-     }, {})
-   )
-
-  handleChangePermission = (category, entityId, restriction, value) => {
-    if (category === 'anonymous') {
-      return this.setState({
-        anonymous: {
-          ...this.state.anonymous,
-          [restriction]: value
-        }
-      })
-    }
+  handleSaveEditingClick = () => {
+    const changedPermissions = Object.values(this.state.permissionsById).filter(permissions => permissions.isChanged)
+    this.props.actions.updateSpacePermissionsRequest(changedPermissions)
 
     this.setState({
-      [category]: {
-        ...this.state[category],
-        [entityId]: {
-          ...this.state[category][entityId],
-          [restriction]: value
+      isEditing: false
+    })
+  }
+
+  handleChangePermission = (permissionsId, entity, action, value) => {
+    console.log(permissionsId, entity, action, value)
+    this.setState({
+      permissionsById: {
+        ...this.state.permissionsById,
+        [permissionsId]: {
+          ...this.state.permissionsById[permissionsId],
+          [entity]: {
+            ...this.state.permissionsById[permissionsId][entity],
+            [action]: value
+          },
+          isChanged: true
         }
       }
     })
@@ -143,6 +211,19 @@ export default class PermissionsPage extends Component {
   }
 
   render () {
+    if (!this.state.permissionsById || !this.props.permissions.anonymous) return null
+    if (this.props.isFetching) {
+      return (
+        <div className='space-settings-moon-loader'>
+          <MoonLoader
+            sizeUnit={'px'}
+            size={32}
+            color={'#123abc'}
+          />
+        </div>
+      )
+    }
+    const {t} = this.props
     return (
       <div className='space-permissions-page'>
 
@@ -154,14 +235,14 @@ export default class PermissionsPage extends Component {
           {
             !this.state.isEditing
               ? <button onClick={this.toggleEditing}>
-                  Edit permissions
+                {t('edit_permissions')}
               </button>
               : <React.Fragment>
                 <button className='save-btn' onClick={this.handleSaveEditingClick}>
-                  Save all
+                  {t('save_all')}
                 </button>
                 <button onClick={this.handleCancelEditingClick}>
-                  Cancel
+                  {t('cancel')}
                 </button>
               </React.Fragment>
           }
@@ -175,152 +256,36 @@ export default class PermissionsPage extends Component {
 PermissionsPage.propTypes = {
   groups: PropTypes.array,
   users: PropTypes.array,
-  anonymous: PropTypes.object
+  space: PropTypes.object,
+  permissions: PropTypes.object,
+  actions: PropTypes.object,
+  isFetching: PropTypes.bool,
+  t: PropTypes.func
 }
 
 PermissionsPage.defaultProps = {
-  groups: [
-    {
-      name: 'My Group',
-      _id: 'groupId',
-      permissions: {
-        all: {
-          view: true
-        },
-        pages: {
-          add: true,
-          delete: true
-        },
-        blog: {
-          add: false,
-          delete: true
-        },
-        comments: {
-          add: true,
-          delete: true
-        },
-        attachments: {
-          add: false,
-          delete: true
-        },
-        space: {
-          export: true,
-          administate: true
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: true
-        }
-      }
-    },
-    {
-      name: 'My Second Group',
-      _id: 'groupIdasdfasdfasdf',
-      permissions: {
-        all: {
-          view: true
-        },
-        pages: {
-          add: true,
-          delete: true
-        },
-        blog: {
-          add: true,
-          delete: true
-        },
-        comments: {
-          add: true,
-          delete: true
-        },
-        attachments: {
-          add: true,
-          delete: true
-        },
-        space: {
-          export: true,
-          administate: true
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: true
-        }
-      }
-    }
-  ],
-  users: [
-    {
-      name: 'Fake User',
-      _id: 'some user id',
-      permissions: {
-        all: {
-          view: true
-        },
-        pages: {
-          add: false,
-          delete: true
-        },
-        blog: {
-          add: true,
-          delete: false
-        },
-        comments: {
-          add: true,
-          delete: true
-        },
-        attachments: {
-          add: true,
-          delete: true
-        },
-        space: {
-          export: true,
-          administate: false
-        },
-        restrictions: {
-          edit: true
-        },
-        mail: {
-          delete: false
-        }
-      }
-    }
-  ],
-  anonymous: {
+}
 
-    permissions: {
-      all: {
-        view: true
-      },
-      pages: {
-        add: false,
-        delete: true
-      },
-      blog: {
-        add: true,
-        delete: false
-      },
-      comments: {
-        add: true,
-        delete: true
-      },
-      attachments: {
-        add: true,
-        delete: true
-      },
-      space: {
-        export: true,
-        administate: false
-      },
-      restrictions: {
-        edit: true
-      },
-      mail: {
-        delete: false
-      }
-    }
-
+const mapStateToProps = (state, props) => {
+  return {
+    permissions: currentSpacePermissions(state),
+    isFetching: isFetchingForPermissions(state),
+    seachedEntities: state.searchResults
   }
 }
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        getSpacePermissionsRequest,
+        updateSpacePermissionsRequest,
+        addUserPermissionsRequest,
+        addGroupPermissionsRequest,
+        searchRequest
+      }
+      , dispatch)
+  }
+}
+
+export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(PermissionsPage))
