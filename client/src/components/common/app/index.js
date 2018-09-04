@@ -31,9 +31,6 @@ class App extends Component {
       showSpaceLabels: true
     }
   }
-  handleError = (error) => {
-    console.log(`sssssssssss`, error)
-  }
   changeSize (size) {
     this.setState({
       isOpened: size > 70,

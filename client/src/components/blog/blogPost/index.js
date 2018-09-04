@@ -76,14 +76,12 @@ class Page extends Component {
   }
 
   likeComment = (obj, comment) => {
-    console.log(comment)
     this.likePage(obj, 'comment', comment)
   }
 
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
-    console.log(this.props.page)
     return (
       <React.Fragment>
         <PageHeader

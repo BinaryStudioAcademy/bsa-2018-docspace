@@ -24,7 +24,6 @@ module.exports = {
     }
     SpaceRepository.getById(id)
       .then((data) => {
-        console.log(data)
         if (data.length === 0) {
           res.status(404)
           return res.end()

@@ -20,7 +20,6 @@ class GroupRepository extends GeneralRepository {
     ])
   }
   getAllForUser (id) {
-    console.log(id)
     return this.model.find(
       {
         members: {$in: [id]}

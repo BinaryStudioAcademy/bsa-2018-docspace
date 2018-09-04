@@ -102,7 +102,6 @@ module.exports = {
   findOneAndUpdate: (req, res) => {
     PageRepository.update(req.params.id, req.body)
       .then(page => {
-        console.log(page)
         if (!page) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
@@ -166,7 +165,6 @@ module.exports = {
   },
 
   search (req, res) {
-    console.log('даніл')
     if (req.body.advancedSearch) {
       PageRepository.advancedSearch(req.body.input)
         .then(result => {
@@ -182,7 +180,6 @@ module.exports = {
   },
 
   searchByTitle: (req, res) => {
-    console.log('normal')
     Promise.all(
       [
         PageRepository.searchByTitle(req.params.filter),
