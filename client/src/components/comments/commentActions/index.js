@@ -46,7 +46,7 @@ CommentActions.propTypes = {
   onLikeComment: PropTypes.func,
   creationDate: PropTypes.string,
   t: PropTypes.func,
-  user: PropTypes.obj,
-  likes: PropTypes.func
+  user: PropTypes.object,
+  likes: PropTypes.array
 }
 export default translate('translations')(CommentActions)

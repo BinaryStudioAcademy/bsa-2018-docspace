@@ -65,7 +65,6 @@ class MinSidebar extends Component {
   render () {
     const logo = this.props.isGray ? grayLogo : whiteLogo
     this.dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
-    console.log(this.state)
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
