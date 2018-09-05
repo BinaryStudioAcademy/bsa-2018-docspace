@@ -57,27 +57,34 @@ module.exports = {
   },
 
   add: (req, res) => {
-    PageRepository.create(req.body)
+    PageRepository.create(req.body, req.user._id)
       .then(page => {
-        if (page.blogId) {
-          BlogRepository.addPageToBlog(page)
-            .then(() => {
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        } else {
-          SpaceRepository.addPageToSpace(page)
-            .then(() => {
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        }
+        console.log('Page')
+        console.log(page)
+        PageRepository.addWatcher(page._id, req.user._id)
+          .then(() => {
+            console.log('Page add watcher')
+            console.log(page)
+            if (page.blogId) {
+              BlogRepository.addPageToBlog(page)
+                .then(() => {
+                  return res.json(page)
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.status(500).send(err.message)
+                })
+            } else {
+              SpaceRepository.addPageToSpace(page)
+                .then(() => {
+                  return res.json(page)
+                })
+                .catch(err => {
+                  console.log(err)
+                  res.status(500).send(err.message)
+                })
+            }
+          })
       }).catch(err => {
         console.log(err)
         res.status(500).send({
@@ -121,6 +128,22 @@ module.exports = {
           select: 'firstName lastName'
         })
         .then(page => res.send({unliked: true}))
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
+  addRemoveWatcher: (req, res) => {
+    if (req.body.toAdd) {
+      PageRepository.addWatcher(req.params.id, req.body.userId)
+        .then(page => res.send({watched: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      PageRepository.deleteWatcher(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unwatched: true}))
         .catch(err => res.status(500).send(err))
     }
   },

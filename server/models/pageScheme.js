@@ -60,6 +60,11 @@ const pageSchema = new mongoose.Schema({
     title: String,
     content: String,
     es_indexed: false
+  }],
+  watchedBy: [{
+    type: Schema.Types.ObjectId,
+    es_indexed: false,
+    ref: 'User'
   }]
 },
 { versionKey: false, timestamps: true }
