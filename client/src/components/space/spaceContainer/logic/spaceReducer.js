@@ -48,6 +48,14 @@ function byId (state = initialState.byId, action) {
         ...state,
         [action.payload.spaceId]: newSpace
       }
+    case actionTypes.REFRESH_PAGES_IN_SPACE: {
+      const newSpace = {...state[action.payload.spaceId]}
+      newSpace.pages = [...action.payload.pages]
+      return {
+        ...state,
+        [action.payload.spaceId]: newSpace
+      }
+    }
     case actionTypes.REMOVE_PAGE_FROM_SPACE: {
       const newSpace = {...state[action.payload.spaceId]}
       const index = newSpace.pages.findIndex(page => page._id === action.payload.pageId)

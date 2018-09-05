@@ -122,3 +122,8 @@ export const removePageFromSpace = (spaceId, pageId) => ({
   type: actionTypes.REMOVE_PAGE_FROM_SPACE,
   payload: {spaceId, pageId}
 })
+
+export const refreshPagesInSpace = (spaceId, pages) => ({
+  type: actionTypes.REFRESH_PAGES_IN_SPACE,
+  payload: {spaceId, pages}
+})

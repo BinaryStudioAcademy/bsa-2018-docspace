@@ -203,14 +203,18 @@ module.exports = {
   },
 
   moveToSpace: async (req, res) => {
-    await SpaceRepository.addPageById(req.body.toSpaceId, req.params.id)
+    const updatedSpace = await SpaceRepository.addPageById(req.body.toSpaceId, req.params.id)
+      .populate('pages', 'title')
+      .then(space => space)
       .catch(err => console.log('addPageById', err))
     await SpaceRepository.deletePageFromSpace(req.body.fromSpaceId, req.params.id)
       .catch(err => console.log('deletePage', err))
     const pageWithNewSpace = await PageRepository.update(req.params.id, {'$set': {'spaceId': req.body.toSpaceId}})
       .then(page => page)
       .catch(err => err)
-    res.send(pageWithNewSpace)
+    const allPagesInSpace = updatedSpace.pages
+    const data = {pageWithNewSpace, allPagesInSpace}
+    res.send(data)
   },
 
   copyPage: async (req, res) => {
@@ -218,7 +222,7 @@ module.exports = {
       .then(page => page)
       .catch(err => console.log('get PAGE BY ID ERROR', err))
     const newPage = {
-      title: page.title,
+      title: `${page.title}(copy)`,
       content: page.content,
       spaceId: page.spaceId
     }

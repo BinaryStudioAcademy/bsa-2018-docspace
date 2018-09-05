@@ -141,12 +141,12 @@ function * exportPageToWord (action) {
 function * movePageToSpace (action) {
   const {pageId, fromSpaceId, toSpaceId} = action.payload
   try {
-    const page = yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
-    yield put(spaceActions.addPageToSpace(toSpaceId, page))
+    const data = yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
+    yield put(spaceActions.refreshPagesInSpace(toSpaceId, data.allPagesInSpace))
     yield put(spaceActions.removePageFromSpace(fromSpaceId, pageId))
-    yield put(actions.getPageByIdSuccess(page))
+    yield put(actions.getPageByIdSuccess(data.pageWithNewSpace))
     yield put(actions.movePageToSpaceSuccess())
-    yield put(push(`/spaces/${page.spaceId}/pages/${page._id}`))
+    yield put(push(`/spaces/${data.pageWithNewSpace.spaceId}/pages/${data.pageWithNewSpace._id}`))
   } catch (e) {
     console.log(e)
     yield put(actions.movePageToSpaceError())
@@ -157,7 +157,6 @@ function * copyPage (action) {
   const {pageId, spaceId} = action.payload
   try {
     const copiedPage = yield PageService.copyPage(pageId)
-    console.log('in copy sage copied page----', copiedPage)
     yield put(spaceActions.addPageToSpace(spaceId, copiedPage))
     yield put(actions.getPageByIdSuccess(copiedPage))
     yield put(actions.copyPageSuccess())
