@@ -176,7 +176,9 @@
         }
       }
      }
-     
+     .user-avatar {
+      border-radius: 33px;
+    }
      span.avatar-wrp ~ span:hover:after{
         left: -120px;
         right: -2px;

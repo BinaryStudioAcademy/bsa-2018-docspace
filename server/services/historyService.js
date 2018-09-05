@@ -105,15 +105,6 @@ module.exports = {
     UserRepository.getByLogin(userLogin)
       .then(user => {
         HistoryRepository.getUserHistory(user[0]._id)
-          .sort('-date')
-          .populate({
-            path: 'pageId',
-            select: 'title isDeleted'
-          })
-          .populate({
-            path: 'spaceId',
-            select: 'name isDeleted'
-          })
           .then((data) => {
             if (data.length === 0) {
               return res.json([])

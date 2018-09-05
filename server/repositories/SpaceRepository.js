@@ -88,12 +88,12 @@ class SpaceRepository extends GeneralRepository {
           from: 'users',
           localField: 'ownerId',
           foreignField: '_id',
-          as: 'owner'
+          as: 'ownerId'
         }
       },
       {
         $unwind: {
-          path: '$owner',
+          path: '$ownerId',
           preserveNullAndEmptyArrays: true
         }
       },
@@ -103,10 +103,11 @@ class SpaceRepository extends GeneralRepository {
           name: 1,
           key: 1,
           isDeleted: 1,
-          owner: {
+          ownerId: {
             _id: 1,
             firstName: 1,
-            lastName: 1
+            lastName: 1,
+            login: 1
           },
           description: 1,
           categories: {
@@ -149,6 +150,125 @@ class SpaceRepository extends GeneralRepository {
 
   deleteAllHistory (id) {
     return super.update(id, {'$set': {'history': []}})
+  }
+
+  getPermissions (spaceId) {
+    return this.model.aggregate([
+      { $match: { _id: ObjectId(spaceId) } },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.users',
+          foreignField: '_id',
+          as: 'usersPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$usersPermissions',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'usersPermissions.userId',
+          foreignField: '_id',
+          as: 'usersPermissions.user'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$usersPermissions.user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$usersPermissions' },
+
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.groups',
+          foreignField: '_id',
+          as: 'groupsPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'groups',
+          localField: 'groupsPermissions.groupId',
+          foreignField: '_id',
+          as: 'groupsPermissions.group'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions.group',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$groupsPermissions' },
+
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.anonymous',
+          foreignField: '_id',
+          as: 'anonymousPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$anonymousPermissions',
+          preserveNullAndEmptyArrays: true
+        } },
+
+      {
+        $group: {
+          '_id': '$_id',
+          'groupsPermissions': { '$addToSet': '$groupsPermissions' },
+          'usersPermissions': { '$addToSet': '$usersPermissions' },
+          'anonymousPermissions': { $first: '$anonymousPermissions' }
+        }
+      }
+
+    ])
+  }
+
+  addGroupPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.groups': permissionsId } }
+    )
+  }
+
+  addUserPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.users': permissionsId } }
+    )
+  }
+
+  addAnonymousPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $set: { 'permissions.anonymous': permissionsId } }
+    )
   }
 
   searchByTitle (filter) {

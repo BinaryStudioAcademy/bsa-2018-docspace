@@ -11,7 +11,7 @@ const PermissionsTable = (props) => (
       isEditing={props.isEditing}
       items={props.items}
       restictionsCategory={props.restictionsCategory}
-      restrictionsByItemsId={props.restrictionsByItemsId}
+      permissionsByItemsId={props.permissionsByItemsId}
       handleChangePermission={props.handleChangePermission}
       handleToggleAllCLick={props.handleToggleAllCLick}
     />
@@ -21,7 +21,7 @@ const PermissionsTable = (props) => (
 PermissionsTable.propTypes = {
   isEditing: PropTypes.bool.isRequired,
   items: PropTypes.array.isRequired,
-  restrictionsByItemsId: PropTypes.object,
+  permissionsByItemsId: PropTypes.object,
   restictionsCategory: PropTypes.string,
   handleChangePermission: PropTypes.func.isRequired,
   handleToggleAllCLick: PropTypes.func.isRequired

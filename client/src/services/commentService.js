@@ -28,7 +28,10 @@ class CommentService {
     likeComment = (id, userId, toAdd) => {
       const args = {endpoint: `/api/comments/like/${id}`, method: 'PUT', body: JSON.stringify({userId, toAdd})}
       const apiResult = callWebApi(args)
-        .then(res => res.json())
+        .then(res => {
+          console.log(res.body)
+          return res.json()
+        })
         .catch(err => console.log(`Error: ${err}`))
       return apiResult
     }

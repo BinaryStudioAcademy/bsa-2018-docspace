@@ -13,7 +13,8 @@ const spaceSchema = new mongoose.Schema({
   isDeleted: {type: Boolean, default: false},
   ownerId: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'User'
   },
   description: String,
   categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
@@ -21,7 +22,7 @@ const spaceSchema = new mongoose.Schema({
   blogId: Schema.Types.ObjectId,
   pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
   history: [{type: Schema.Types.ObjectId, ref: 'History'}],
-  rights: {
+  permissions: {
     users: [Schema.Types.ObjectId],
     groups: [Schema.Types.ObjectId],
     anonymous: Schema.Types.ObjectId

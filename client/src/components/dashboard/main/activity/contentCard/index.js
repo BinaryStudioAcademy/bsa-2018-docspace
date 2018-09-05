@@ -9,18 +9,15 @@ const ContentCard = (props) => {
   const disabledLink = isDeleted ? 'disabled-link' : ''
   return (
     <div className='content-card'>
-      {props.showUser ? (user.avatar
-        ? <Link to={`/users/${user.login}`}>
-          <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
-        </Link>
-        : <Link to={`/users/${user.login}`}>
-          <i id='user-avatar-icon' className='fas fa-user-circle' />
-        </Link>)
-        : null
-      }
       <div className='content-card-history'>
+        {props.showUser
+          ? <Link to={`/users/${user.login}`} className='history-user-wrapper'>
+            {user.avatar
+              ? <img src={user.avatar} alt='avatar' className='content-card-user-avatar' />
+              : <i id='user-avatar-icon' className='fas fa-user-circle' />
+            }<p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link>
+          : null}
         <div className='history-name-container'>
-          {props.showUser ? <Link to={`/users/${user.login}`}><p className='content-card-history-name'>{`${user.firstName} ${user.lastName}`}</p></Link> : null}
           <i id='content-icon' className={`${icon}`} />
           <Link to={path} className={`content-card-name ${disabledLink}`}>
             {name}
@@ -32,7 +29,7 @@ const ContentCard = (props) => {
             : null}
         </div>
         <p className='content-card-action'>{action}</p>
-        <p className='content-card-time' >{time}</p>
+        <p className='content-card-time' >{time.slice(0, -3)}</p>
       </div>
     </div>
   )

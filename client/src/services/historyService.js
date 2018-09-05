@@ -31,6 +31,13 @@ class HistoryService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+  getUserWorks = (userId) => {
+    const args = { endpoint: `/api/history/userWorks/${userId}`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
 }
 
 export default new HistoryService()

@@ -11,7 +11,6 @@ import SpacePermissionsTab from './permissions'
 import { translate } from 'react-i18next'
 import './spaceSettings.css'
 
-// will be connected to store. Fetch for space with this name in didMount
 const SpaceSettings = (props) => {
   const TABS = [
     {
@@ -66,7 +65,10 @@ SpaceSettings.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 
@@ -75,7 +77,6 @@ const mapDispatchToProps = (dispatch) => {
     updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch),
     createCategory: bindActionCreators(actions.createCategoryRequest, dispatch),
     deleteCategory: bindActionCreators(actions.deleteCategoryRequest, dispatch)
-
   }
 }
 

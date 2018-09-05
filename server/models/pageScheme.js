@@ -27,6 +27,12 @@ const pageSchema = new mongoose.Schema({
     es_indexed: true,
     es_type: 'text'
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    es_indexed: false,
+    es_type: 'text'
+  },
   created: {
     date: {
       type: Date
@@ -54,13 +60,15 @@ const pageSchema = new mongoose.Schema({
     default: 0,
     es_indexed: false
   },
-  modifiedVersions: [{
-    _id: {type: Schema.Types.ObjectId, ref: 'History'},
-    version: Number,
-    title: String,
-    content: String,
+  modifiedVersions: {
+    type: [{
+      _id: {type: Schema.Types.ObjectId, ref: 'History'},
+      version: Number,
+      title: String,
+      content: String
+    }],
     es_indexed: false
-  }]
+  }
 },
 { versionKey: false, timestamps: true }
 )

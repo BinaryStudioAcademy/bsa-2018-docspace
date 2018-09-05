@@ -118,9 +118,9 @@ class Page extends Component {
   }
 
   render () {
-    const { firstName, lastName, avatar, login, _id } = this.props.user
+    const { _id, avatar } = this.props.user
     const { page, t, space, isFetching, showMovePageModal, showCopyPageModal } = this.props
-    const user = page ? page.userModified : null
+    const user = page ? page.userId : null
     return (
       <React.Fragment>
         <PageHeader
@@ -147,11 +147,11 @@ class Page extends Component {
           : <div className='page-container'>
             <PageTitle text={page.title} />
             <PageInfo
-              avatar={user ? user.avatar : avatar}
-              firstName={user ? user.firstName : firstName}
-              lastName={user ? user.lastName : lastName}
+              avatar={user ? user.avatar : ''}
+              firstName={user ? user.firstName : ''}
+              lastName={user ? user.lastName : ''}
               date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
-              login={user ? user.login : login}
+              login={user ? user.login : ''}
             />
             <PageContent content={page.content} />
             <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
@@ -166,16 +166,14 @@ class Page extends Component {
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
+                userId={_id}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
-                firstName={firstName}
-                lastName={lastName}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                avatar={avatar}
                 t={t}
               />
             </div>
@@ -197,6 +195,7 @@ Page.propTypes = {
     content: PropTypes.string,
     spaceId: PropTypes.string,
     comments: PropTypes.array,
+    pageCreator: PropTypes.array,
     usersLikes: PropTypes.array
   }),
 
@@ -240,7 +239,9 @@ Page.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     space: spaceById(state),
     isFetching: isPagesFetching(state),
     showMovePageModal: state.movePageModal.showModal,
