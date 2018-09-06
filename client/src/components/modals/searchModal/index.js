@@ -92,6 +92,16 @@ class SearchModal extends Component {
     )
 
     const result = <React.Fragment>
+      {
+        this.state.filter !== '' &&
+        <div className='search-link'>
+          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearchClick}>
+            <i className='fas fa-search' />
+            {`Search '${this.state.filter}'`}
+          </Link >
+        </div>
+      }
+
       {postList.length ? <div className='search-title-wrapper'>
         <p>PAGES</p>
       </div> : null
@@ -107,12 +117,6 @@ class SearchModal extends Component {
       </div> : null
       }
       {SpaceRender}
-      {this.state.filter !== '' && <div className='search-link'>
-        <Link to='/advanced_search_page' onClick={this.handleAdvancedSearchClick}>
-          <i className='fas fa-search' />
-          {`Search '${this.state.filter}'`}
-        </Link >
-      </div>}
     </React.Fragment>
 
     return result

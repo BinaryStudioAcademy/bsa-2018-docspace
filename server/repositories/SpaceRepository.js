@@ -273,7 +273,10 @@ class SpaceRepository extends GeneralRepository {
   searchByTitle (filter) {
     return this.model.aggregate([
       {
-        $match: {name: { $regex: filter, $options: 'i' }}
+        $match: {
+          name: { $regex: filter, $options: 'i' },
+          isDeleted: false
+        }
       },
       {
         $project: {
