@@ -12,7 +12,6 @@ import {verificationReducer} from 'src/components/auth/verification/logic/verifi
 import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
-// import searchReducer from 'src/components/searchPage/logic/searchReducer'
 import searchReducer from 'src/commonLogic/search/searchReducer'
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'

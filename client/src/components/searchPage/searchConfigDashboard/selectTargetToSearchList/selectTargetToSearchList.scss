@@ -3,15 +3,11 @@
 .select-target-to-search-list{
         list-style: none;
         display: flex;
-        // position: relative;
         flex-direction: column;
         z-index: 100000;
-        // min-width: 300px;
         max-width: 500px;
         box-sizing: border-box;
         background: #fff;
-        
-        // border: 1px solid rgba(0,0,0,.15);
         padding: 0rem;
         margin-top: 0;
 
@@ -23,7 +19,6 @@
             cursor: pointer;
             color: $black;
             font-weight: bold;
-            // color: white;
             background-color: #eee
           }
         }

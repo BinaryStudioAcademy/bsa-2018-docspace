@@ -17,7 +17,6 @@ import groupSaga from 'src/components/group/logic/groupSaga'
 import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
 import searchSaga from 'src/commonLogic/search/searchSaga'
 import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
-// import searchSaga from 'src/components/searchPage/logic/searchSaga'
 import permissionsSaga from 'src/components/space/spaceSettings/permissions/logic/permissionsSaga'
 import allUsersSaga from 'src/components/dashboard/peopleBody/logic/allUsersSaga'
 

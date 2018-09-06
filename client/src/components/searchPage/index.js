@@ -23,11 +23,6 @@ class SearchPage extends Component {
     }
   }
 
-  componentDidMount () {
-    console.log('MOUNT')
-    console.log(this.header.searchInput)
-  }
-
   handleSearchInput = (input) => {
     this.setState({
       input: input.value
@@ -43,8 +38,6 @@ class SearchPage extends Component {
 
   handleSetFilter = (filterName, filterValue, shouldSearch) => {
     // after we get filter, then we must search.
-    console.log('SETTING FILTER')
-    console.log(shouldSearch)
     this.setState({
       [filterName]: filterValue
     }, () => shouldSearch ? this.handleSearchSubmit() : false)
