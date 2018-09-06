@@ -31,6 +31,7 @@ class PageEditorContainer extends Component {
         handlePublishBtnClick={this.props.actions.updateBlogPageRequest}
         handleCancelBtnClick={this.goToThePreviousLocation}
         joditEditorConfig={joditEditorConfig}
+        user={this.props.user}
       />
     )
   }
@@ -39,7 +40,10 @@ class PageEditorContainer extends Component {
 function mapStateToProps (state, props) {
   return {
     space: spaceById(state),
-    page: state.pages.byId[props.match.params.page_id]
+    page: state.pages.byId[props.match.params.page_id],
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 
@@ -69,5 +73,6 @@ PageEditorContainer.propTypes = {
     _id: PropTypes.string
   }),
   history: PropTypes.object,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  user: PropTypes.object
 }

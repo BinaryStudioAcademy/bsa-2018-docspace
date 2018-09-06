@@ -4,19 +4,21 @@ import { createPageRequest, createBlogPageRequest } from 'src/components/page/lo
 import { store } from 'src/commonLogic/store'
 
 const pageCreatorsByTemplatesNames = {
-  [templatesNames.EMPTY_PAGE]: (space) => {
+  [templatesNames.EMPTY_PAGE]: (space, userId) => {
     let page = {
       title: 'Default title',
-      spaceId: space._id
+      spaceId: space._id,
+      userId: userId
     }
     // directly dispatch action for change store
     store.dispatch(createPageRequest(page))
   },
 
-  [templatesNames.BLOG_PAGE]: (space) => {
+  [templatesNames.BLOG_PAGE]: (space, userId) => {
     let blogPage = {
       title: 'Default title',
-      blogId: space.blogId
+      blogId: space.blogId,
+      userId: userId
     }
     store.dispatch(createBlogPageRequest(blogPage, space._id))
   }
@@ -26,8 +28,8 @@ class PageFactory {
   constructor (pageCreatorsByTemplatesNames) {
     this.PageCreators = pageCreatorsByTemplatesNames
   }
-  createTemplatePage (space, templateName) {
-    return this.PageCreators[templateName](space)
+  createTemplatePage (space, templateName, userId) {
+    return this.PageCreators[templateName](space, userId)
   }
 }
 

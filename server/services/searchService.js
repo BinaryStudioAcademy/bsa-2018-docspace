@@ -153,7 +153,7 @@ function generateQueryForPages (req, options) {
 
   if (userIdFilter) {
     filter.push({
-      term: { 'creatorId': userIdFilter }
+      term: { 'userId': userIdFilter }
     })
   }
 

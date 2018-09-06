@@ -32,8 +32,9 @@ const pageSchema = new mongoose.Schema({
     es_type: 'text'
   },
 
-  creatorId: {
+  userId: {
     type: Schema.Types.ObjectId,
+    ref: 'User',
     es_indexed: true,
     es_type: 'text'
   },

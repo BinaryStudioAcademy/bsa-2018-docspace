@@ -51,15 +51,10 @@ class GroupPage extends Component {
     const groupMembers = this.props.group[0] && this.props.group[0].membersInfo ? this.props.group[0].membersInfo : []
     const table = groupMembers.map((groupMembers, i) =>
       <tr key={i}>
-        <td className='group-title'>{`${groupMembers.firstName} ${groupMembers.lastName}`}</td>
-        <td className=''>{groupMembers.email}</td>
-        <td className=''>{groupMembers.login}</td>
-        <td className=''>
-          <button
-            className='groups-button'
-            onClick={() => { this.deleteUser(groupMembers._id) }}>{t('remove_user')}
-          </button>
-        </td>
+        <td className='group-title'><NavLink to={`/users/${groupMembers.login}`}>{`${groupMembers.firstName} ${groupMembers.lastName}`}</NavLink></td>
+        <td className=''><NavLink to={`/users/${groupMembers.login}`}>{groupMembers.email}</NavLink></td>
+        <td className=''><NavLink to={`/users/${groupMembers.login}`}>{groupMembers.login}</NavLink></td>
+        <td className=''><button className='groups-button' onClick={() => { this.deleteUser(groupMembers._id) }}>{t('remove_user')}</button></td>
       </tr>
     )
     return table

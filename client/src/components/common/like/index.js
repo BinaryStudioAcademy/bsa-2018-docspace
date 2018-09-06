@@ -35,8 +35,8 @@ class Like extends Component {
   }
 
   sortLikes () {
-    this.props.likes.sort((a) => {
-      return a.id === this.props.user ? -1 : 1
+    this.props.likes.sort((a, b) => {
+      return a.firstName > b.firstName ? -1 : 1
     })
   }
 

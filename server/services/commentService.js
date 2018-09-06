@@ -41,13 +41,20 @@ module.exports = {
       .then(comment => comment)
       .catch(err => err)
     await PageRepository.addNewComment(req.body.pageId, savedComment._id)
-      .then(page => page)
+      .then(page => {
+        console.log(page)
+        return page
+      })
       .catch(err => res.status(500).send(err))
     res.send(savedComment)
   },
 
   findOneAndUpdate: (req, res) => {
     CommentRepository.update(req.params.id, req.body.comment)
+      .populate({
+        path: 'userLikes',
+        select: 'firstName lastName'
+      })
       .then(comment => res.send(comment))
       .catch(err => res.status(500).send(err))
   },
@@ -59,7 +66,13 @@ module.exports = {
           path: 'userLikes',
           select: 'firstName lastName'
         })
-        .then(comment => res.send(comment))
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
         .catch(err => res.status(500).send(err))
     } else {
       CommentRepository.removeLike(req.params.id, req.body.userId)
@@ -67,7 +80,13 @@ module.exports = {
           path: 'userLikes',
           select: 'firstName lastName'
         })
-        .then(comment => res.send(comment))
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
         .catch(err => res.status(500).send(err))
     }
   },

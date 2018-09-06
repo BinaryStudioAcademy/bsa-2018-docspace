@@ -87,12 +87,12 @@ class SpaceRepository extends GeneralRepository {
           from: 'users',
           localField: 'ownerId',
           foreignField: '_id',
-          as: 'owner'
+          as: 'ownerId'
         }
       },
       {
         $unwind: {
-          path: '$owner',
+          path: '$ownerId',
           preserveNullAndEmptyArrays: true
         }
       },
@@ -102,10 +102,11 @@ class SpaceRepository extends GeneralRepository {
           name: 1,
           key: 1,
           isDeleted: 1,
-          owner: {
+          ownerId: {
             _id: 1,
             firstName: 1,
-            lastName: 1
+            lastName: 1,
+            login: 1
           },
           description: 1,
           categories: {

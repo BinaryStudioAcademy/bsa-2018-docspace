@@ -2,6 +2,7 @@ const PageRepository = require('../repositories/PageRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const HistoryRepository = require('../repositories/HistoryRepository')
+var mongoose = require('mongoose')
 
 module.exports = {
   findAll: (req, res) => {
@@ -17,16 +18,35 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(404)
+      return res.end('Invalid id')
+    }
     let page = await PageRepository.getById(req.params.id)
+      .populate({
+        path: 'comments',
+        populate: {path: 'userId', select: 'firstName lastName login avatar'}
+      })
       .populate({
         path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName'}
       })
       .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
+      })
+      .populate({
         path: 'usersLikes',
         select: 'firstName lastName'
       })
-      .then(page => page)
+      .then(page => {
+        if (!page) {
+          return res.status(404).send({
+            message: 'page not found with id ' + req.params.id
+          }).end()
+        }
+        return page
+      })
       .catch(err => {
         console.log(err)
         return err
@@ -170,7 +190,6 @@ module.exports = {
   },
 
   search (req, res) {
-    console.log('даніл')
     if (req.body.advancedSearch) {
       PageRepository.advancedSearch(req.body.input)
         .then(result => {
@@ -186,7 +205,6 @@ module.exports = {
   },
 
   searchByTitle: (req, res) => {
-    console.log('normal')
     Promise.all(
       [
         PageRepository.searchByTitle(req.params.filter),

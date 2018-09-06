@@ -30,8 +30,6 @@ export class AddComment extends Component {
       if (this.props.onEditComment) {
         this.props.editComment && this.props.editComment({
           userId: this.props.userId,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
           text: this.state.text,
           createdAt: new Date(),
           isDeleted: false,
@@ -42,8 +40,6 @@ export class AddComment extends Component {
       } else {
         this.props.addNewComment && this.props.addNewComment({
           userId: this.props.userId,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
           text: this.state.text,
           createdAt: new Date(),
           isDeleted: false,
@@ -75,7 +71,7 @@ export class AddComment extends Component {
     const { t } = this.props
     return (
       <div className='addComment' style={this.props.style || null}>
-        <CommentAvatar UserAvatarLink={UserAvatarLink} />
+        <CommentAvatar UserAvatarLink={this.props.avatar ? this.props.avatar : UserAvatarLink} />
         <div className='comment-body-container' >
           <div>
             <Input
@@ -118,8 +114,6 @@ export class AddComment extends Component {
 
 AddComment.propTypes = {
   addNewComment: PropTypes.func,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
   userId: PropTypes.string,
   t: PropTypes.func,
   editComment: PropTypes.func,
@@ -128,6 +122,7 @@ AddComment.propTypes = {
   _id: PropTypes.string,
   ReplyComment: PropTypes.func,
   parentId: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  avatar: PropTypes.string
 }
 export default translate('translations')(AddComment)

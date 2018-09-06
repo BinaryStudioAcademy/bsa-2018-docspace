@@ -15,7 +15,7 @@ class PageService {
     const args = { endpoint: `/api/pages/${obj.id}`, method: 'POST', body: JSON.stringify({version: obj.version}) }
     const apiResult = callWebApi(args)
       .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .catch(err => { throw err })
     return apiResult
   }
 
@@ -92,7 +92,6 @@ class PageService {
   }
 
   findByCriteria = (filter) => {
-    console.log(filter)
     const args = { endpoint: `/api/pages/search/${filter}`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => res.json())

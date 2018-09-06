@@ -72,7 +72,8 @@ class EditSpaceDetailsForm extends Component {
     // }
     const changedSpace = {...this.state,
       categories: this.props.space.categories,
-      spaceSettings: { icon: this.state.selectedIcon, color: this.state.selectedColor }
+      spaceSettings: { icon: this.state.selectedIcon, color: this.state.selectedColor },
+      ownerId: this.props.space.ownerId._id
     }
 
     this.props.updateSpace(changedSpace)
@@ -181,6 +182,7 @@ EditSpaceDetailsForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     categories: PropTypes.array,
+    ownerId: PropTypes.object,
     logo: PropTypes.string,
     homePage: PropTypes.object,
     pages: PropTypes.arrayOf(PropTypes.object)

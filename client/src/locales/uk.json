@@ -159,6 +159,12 @@
     "nothing_found": "Нічого не знайдено",
     "general_information": "Загальна інформація",
     "data_is_changing": "Данні змінено",
-    "password_is_changing": "Пароль зміненно"
+    "password_is_changing": "Пароль зміненно",
+    "today": "Сьогодні",
+    "yesterday": "Вчора",
+    "a_few_days_ago": "Декілька днів тому",
+    "a_week_ago": "Тиждень тому",
+    "a_month_ago": "Місяць тому",
+    "a_months_ago": "Декілька місяців тому"
   }
 }

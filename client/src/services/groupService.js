@@ -29,7 +29,7 @@ class GroupService {
     const args = {endpoint: `/api/groups/${id}`, method: 'GET'}
     const apiResult = callWebApi(args)
       .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .catch(err => { throw err })
     return apiResult
   }
 
