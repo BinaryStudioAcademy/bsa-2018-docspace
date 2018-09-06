@@ -32,7 +32,6 @@ class UserService {
         return res.json()
       })
       .catch(err => {
-        console.log(`here`, err)
         throw err
       })
     return apiResult

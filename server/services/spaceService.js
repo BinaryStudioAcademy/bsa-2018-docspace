@@ -93,7 +93,6 @@ module.exports = {
       .populate('pages', 'title')
       .populate('ownerId', 'firstName lastName login')
       .then(data => {
-        console.log(`anws`, data)
         return res.json(data)
       })
       .catch((err) => {

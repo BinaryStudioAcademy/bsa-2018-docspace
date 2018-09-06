@@ -53,7 +53,6 @@ function * getSpace (action) {
       yield put(actions.getSpaceSuccess(space))
     }
   } catch (err) {
-    console.log(err)
     yield put({ type: actionTypes.GET_SPACE_ERROR, err })
     yield put(actions.getSpaceError())
   }
