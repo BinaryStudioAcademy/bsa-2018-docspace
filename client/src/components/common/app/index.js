@@ -12,12 +12,13 @@ import User from 'src/components/containers/user'
 import SpaceContainer from 'src/components/space/spaceContainer'
 import SpaceSidebar from 'src/components/space/spaceSidebar'
 import BlogSidebar from 'src/components/blog/blogSidebar'
-
+import { connect } from 'react-redux'
 import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import SplitPane from 'react-split-pane'
 import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
+import Page404 from 'src/components/common/page404'
 
 class App extends Component {
   constructor (props) {
@@ -30,7 +31,6 @@ class App extends Component {
       showSpaceLabels: true
     }
   }
-
   changeSize (size) {
     this.setState({
       isOpened: size > 70,
@@ -69,42 +69,53 @@ class App extends Component {
   }
 
   render () {
+    const { error } = this.props
     // const showIconsInMinimizeDashboard = true
     return (
       // <Group />
-      <div className='app__root' >
-        <SplitPane
-          split='vertical'
-          minSize={70}
-          defaultSize={350}
-          maxSize={700}
-          onChange={size => { this.changeSize(size) }}
-        >
-          {
-            this.renderSidebarDependOnLocation()
-          }
-          <DashboardMain>
-            <Switch>
-              <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
-              <Route path='/works' component={Work} />
-              <Route path='/activity' component={Activity} />
-              <Route path='/people' component={People} />
-              <Route path='/spacedirectory' component={Spaces} />
-              <Route path='/users/:login' component={User} />
-              <Route path='/spaces/:id' component={SpaceContainer} />
-              <Route path='/group/:id' exact component={GroupPage} />
-              <Route path='/admin' component={Administration} />
-              <Redirect to={'/'} />
-            </Switch>
-          </DashboardMain>
-        </SplitPane>
-      </div>
+      <React.Fragment>
+        { error.status && error.status === 404
+          ? <Page404 />
+          : <div className='app__root' >
+            <SplitPane
+              split='vertical'
+              minSize={70}
+              defaultSize={350}
+              maxSize={700}
+              onChange={size => { this.changeSize(size) }}
+            >
+              {
+                this.renderSidebarDependOnLocation()
+              }
+              <DashboardMain>
+                <Switch>
+                  <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
+                  <Route path='/works' component={Work} />
+                  <Route path='/activity' component={Activity} />
+                  <Route path='/people' component={People} />
+                  <Route path='/spacedirectory' component={Spaces} />
+                  <Route path='/users/:login' component={User} />
+                  <Route path='/spaces/:id' component={SpaceContainer} />
+                  <Route path='/group/:id' exact component={GroupPage} />
+                  <Route path='/admin' component={Administration} />
+                  <Redirect to={'/'} />
+                </Switch>
+              </DashboardMain>
+            </SplitPane>
+          </div>
+        }
+      </React.Fragment>
     )
   }
 }
 
 App.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  error: PropTypes.object
 }
-
-export default withRouter(App)
+const mapStateToProps = (state) => {
+  return {
+    error: state.error
+  }
+}
+export default withRouter(connect(mapStateToProps, null)(App))
