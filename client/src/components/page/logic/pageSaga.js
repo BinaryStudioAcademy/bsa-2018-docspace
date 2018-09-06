@@ -48,7 +48,8 @@ function * createBlogPage (action) {
 
 function * updatePage (action) {
   try {
-    const target = action.payload
+    const target = {...action.payload}
+    delete target.isWatched
     const updated = yield PageService.updatePage(target)
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))

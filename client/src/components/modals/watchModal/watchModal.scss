@@ -1,0 +1,41 @@
+.watch-modals-wrapper{
+    width: 400px;
+    height: 250px;
+    position: absolute;
+    z-index: 500;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+    top: 80px;
+    right: 80px;
+    padding: 10px 8px;
+    input[type=checkbox] {
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+    // .watch-checkbox{
+    //     cursor: pointer;
+    //     position: absolute;
+    //     width: 25px;
+    //     height: 25px;
+    //     top: 0;
+    //     left: 0;
+    //     background: #eee;
+    //     border:1px solid #ddd;
+    // }
+}
+.watch-modals-wrapper:after{
+  content: ' ';
+  width: 0px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid red;
+  border-right: 10px solid transparent;
+  position: absolute;
+  z-index: 600;
+  left: 75%;
+  top: -15%;
+  margin-bottom: 70px;
+}

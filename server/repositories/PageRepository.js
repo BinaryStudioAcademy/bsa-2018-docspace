@@ -1,7 +1,7 @@
 const GeneralRepository = require('./GeneralRepository')
 const PageModel = require('../models/pageScheme')
-// const mongoose = require('mongoose')
-// const ObjectId = mongoose.Types.ObjectId
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 
 class PageRepository extends GeneralRepository {
   getAll () {
@@ -48,6 +48,14 @@ class PageRepository extends GeneralRepository {
     })
   }
 
+  isWatchedByCurrentUser (page, userId) {
+    // console.log(id)
+    // console.log(userId)
+    // return this.model.findOne({_id: id})
+    //   .then(page => page.watchedBy.includes(userId))
+    return page.watchedBy.includes(new ObjectId(userId))
+  }
+
   addNewComment (id, commentId) {
     return super.updateOne(id, {'$addToSet': {'comments': commentId}})
   }
@@ -65,10 +73,7 @@ class PageRepository extends GeneralRepository {
   }
 
   addWatcher (id, userId) {
-    console.log('CHRISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs')
-    console.log(id)
-    console.log(userId)
-    return this.model.findOneAndUpdate(id, {'$addToSet': {'watchedBy': userId}})
+    return super.updateOne(id, {'$addToSet': {'watchedBy': userId}})
   }
 
   deleteWatcher (id, userId) {

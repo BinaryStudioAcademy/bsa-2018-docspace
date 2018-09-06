@@ -21,6 +21,7 @@ import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
+import { addWatcherRequest, deleteWatcherRequest } from './watcherLogic/watcherAction'
 
 class Page extends Component {
   constructor (props) {
@@ -31,6 +32,7 @@ class Page extends Component {
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
+    this.manageWatcher = this.manageWatcher.bind(this)
   }
 
   componentDidMount () {
@@ -101,10 +103,26 @@ class Page extends Component {
     this.likePage(isLiked, 'comment', comment)
   }
 
+  manageWatcher = () => {
+    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
+    console.log(this.props.user)
+    const isWatching = this.props.page && this.props.page.isWatched ? this.props.page.isWatched : null
+    if (isWatching) {
+      console.log('Im deleting')
+      this.props.actions.deleteWatcherRequest(this.props.page, this.props.user)
+    } else {
+      console.log('Im adding')
+      this.props.actions.addWatcherRequest(this.props.page, this.props.user)
+    }
+  }
+
   render () {
     const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
+    console.log(page)
+    const isWatching = page && page.watchedBy && this.props.user ? page.watchedBy.indexOf(this.props.user._id) + 1 : null
+    console.log(isWatching)
     return (
       <React.Fragment>
         <PageHeader
@@ -115,6 +133,8 @@ class Page extends Component {
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
+          manageWatcher={this.manageWatcher}
+          isWatching={isWatching}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -176,7 +196,8 @@ Page.propTypes = {
     created: PropTypes.object,
     content: PropTypes.string,
     comments: PropTypes.array,
-    usersLikes: PropTypes.array
+    usersLikes: PropTypes.array,
+    isWatched: PropTypes.bool
   }),
 
   user: PropTypes.object,
@@ -236,7 +257,9 @@ function mapDispatchToProps (dispatch) {
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
-        openWarningModal
+        openWarningModal,
+        addWatcherRequest,
+        deleteWatcherRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

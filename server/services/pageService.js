@@ -17,6 +17,7 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
+    console.log('ITS FIND ONE FUNC')
     let page = await PageRepository.getById(req.params.id)
       .populate({
         path: 'comments',
@@ -31,6 +32,26 @@ module.exports = {
         console.log(err)
         return err
       })
+    // let isWatched = page.watchedBy.indexOf(req.user._id) + 1
+    console.log('BOOOOOOOOOOOOOOOOOOOOL')
+    // console.log(bool)
+    console.log(req.user._id + '   ' + typeof req.user._id)
+    console.log(page.watchedBy + '  ' + typeof page.watchedBy[0])
+    const isWatched = page.watchedBy.indexOf(req.user._id) !== -1
+
+    const resPage = {
+      _id: page._id,
+      comments: page.comments,
+      usersLikes: page.userLikes,
+      isDeleted: page.isDeleted,
+      title: page.title,
+      spaceId: page.spaceId,
+      createdAt: page.createdAt,
+      updatedAt: page.date,
+      content: page.content,
+      userModified: page.userId,
+      isWatched: isWatched
+    }
     if (req.body.version) {
       const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
         .populate({
@@ -39,61 +60,76 @@ module.exports = {
         })
         .then(pageCurrentHistory => pageCurrentHistory)
         .catch(err => err)
-      const oldPage = page.modifiedVersions.filter(old => old.version === Number(req.body.version))[0]
-      page = {
-        _id: page._id,
-        comments: page.comments,
-        usersLikes: page.userLikes,
-        isDeleted: page.isDeleted,
-        title: `${oldPage.title}`,
-        spaceId: page.spaceId,
-        createdAt: page.createdAt,
-        updatedAt: pageCurrentHistory[0].date,
-        content: oldPage.content,
-        userModified: pageCurrentHistory[0].userId
-      }
+      const oldPage = page.modifiedVersions.find(old => old.version === Number(req.body.version))
+      resPage.title = oldPage.title
+      resPage.content = oldPage.content
+      resPage.updatedAt = pageCurrentHistory[0].date
+      resPage.userModified = pageCurrentHistory[0].userId
+
+      // page = {
+      //   _id: page._id,
+      //   comments: page.comments,
+      //   usersLikes: page.userLikes,
+      //   isDeleted: page.isDeleted,
+      //   title: `${oldPage.title}`,
+      //   spaceId: page.spaceId,
+      //   createdAt: page.createdAt,
+      //   updatedAt: pageCurrentHistory[0].date,
+      //   content: oldPage.content,
+      //   userModified: pageCurrentHistory[0].userId,
+      //   watchedBy: page.watchedBy,
+      //   isWatched: isWatched
+      // }
     }
-    res.send(page)
+    console.log(resPage)
+    res.send(resPage)
   },
 
-  add: (req, res) => {
-    PageRepository.create(req.body, req.user._id)
-      .then(page => {
-        console.log('Page')
-        console.log(page)
-        PageRepository.addWatcher(page._id, req.user._id)
-          .then(() => {
-            console.log('Page add watcher')
-            console.log(page)
-            if (page.blogId) {
-              BlogRepository.addPageToBlog(page)
-                .then(() => {
-                  return res.json(page)
-                })
-                .catch(err => {
-                  console.log(err)
-                  res.status(500).send(err.message)
-                })
-            } else {
-              SpaceRepository.addPageToSpace(page)
-                .then(() => {
-                  return res.json(page)
-                })
-                .catch(err => {
-                  console.log(err)
-                  res.status(500).send(err.message)
-                })
-            }
-          })
-      }).catch(err => {
-        console.log(err)
-        res.status(500).send({
-          message: err.message || 'Some error occurred while creating the page.'
+  add: async (req, res) => {
+    let page = await PageRepository.create(req.body, req.user._id)
+      .then(page => page)
+      .catch(err => res.status(500).send(err.message))
+    if (page.blogId) {
+      await BlogRepository.addPageToBlog(page)
+        .catch(err => {
+          console.log(err)
+          res.status(500).send(err.message)
         })
+    } else {
+      await SpaceRepository.addPageToSpace(page)
+        .catch(err => {
+          console.log(err)
+          res.status(500).send(err.message)
+        })
+    }
+    await PageRepository.addWatcher(page._id, req.user._id)
+      .catch(err => {
+        console.log(err)
+        res.status(500).send(err.message)
       })
+    console.log(page)
+    const resPage = {
+      _id: page._id,
+      comments: page.comments,
+      usersLikes: page.userLikes,
+      isDeleted: page.isDeleted,
+      title: `${page.title}`,
+      spaceId: page.spaceId,
+      createdAt: page.createdAt,
+      updatedAt: page.date,
+      content: page.content,
+      // userModified: page.userId,
+      watchedBy: page.watchedBy,
+      modifiedVersions: page.modifiedVersions,
+      version: page.version,
+      isWatched: true
+    }
+    return res.send(resPage)
   },
 
   findOneAndUpdate: (req, res) => {
+    console.log('REQ BODY')
+    console.log(req.body)
     PageRepository.update(req.params.id, req.body)
       .populate({
         path: 'comments',
@@ -133,6 +169,8 @@ module.exports = {
   },
 
   addRemoveWatcher: (req, res) => {
+    console.log('ADD REMOVE WATCHER')
+    console.log(req.body)
     if (req.body.toAdd) {
       PageRepository.addWatcher(req.params.id, req.body.userId)
         .then(page => res.send({watched: true}))
