@@ -17,12 +17,12 @@ const RecentlyWorkedOn = (props) => {
     }
     return true
   })
-  const today = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'today')
-  const yesterday = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'yesterday')
-  const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a few days ago')
-  const aWeekAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a week ago')
-  const aMonthAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a month ago')
-  const aMonthsAgo = filteredHistory && filteredHistory.filter(item => workHelper(item).time === 'a months ago')
+  const today = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'today' : '')
+  const yesterday = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'yesterday' : '')
+  const aFewDaysAgo = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'a few days ago' : '')
+  const aWeekAgo = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'a week ago' : '')
+  const aMonthAgo = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'a month ago' : '')
+  const aMonthsAgo = filteredHistory && filteredHistory.filter(item => workHelper(item) ? workHelper(item).time === 'a months ago' : '')
   return (
     <React.Fragment>
       {!!today.length &&

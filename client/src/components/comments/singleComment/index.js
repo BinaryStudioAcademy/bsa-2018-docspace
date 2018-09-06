@@ -44,7 +44,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const comparingCurrentAndCommentUsers = this.props.comment.userId._id === this.props.user._id || this.props.comment.userId === this.props.user._id
+    const comparingCurrentAndCommentUsers = this.props.comment.userId && this.props.user ? this.props.comment.userId._id === this.props.user._id || this.props.comment.userId === this.props.user._id : null
     return (
       <React.Fragment>
         {this.state.editMode
@@ -58,13 +58,13 @@ export class Comment extends Component {
             parentId={this.props.comment.parentId}
           />
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <Link to={`/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}`} >
-              <CommentAvatar UserAvatarLink={this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink} />
+            <Link to={this.props.comment.userId ? `/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}` : '#'} >
+              <CommentAvatar UserAvatarLink={this.props.comment.userId ? this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink : UserAvatarLink} />
             </Link>
             <div className='comment-body'>
-              <Link to={`/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}`} >
+              <Link to={this.props.comment.userId ? `/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}` : '#'} >
                 <h4 className='comment-first-last-names'>
-                  <span>{this.props.comment.userId.firstName ? this.props.comment.userId.firstName : this.props.user.firstName} {this.props.comment.userId.lastName ? this.props.comment.userId.lastName : this.props.user.lastName}</span>
+                  <span>{this.props.comment.userId ? this.props.comment.userId.firstName ? this.props.comment.userId.firstName : this.props.user.firstName : null} {this.props.comment.userId ? this.props.comment.userId.lastName ? this.props.comment.userId.lastName : this.props.user.lastName : null}</span>
                 </h4>
               </Link>
               <div className='comment-body-content'>
