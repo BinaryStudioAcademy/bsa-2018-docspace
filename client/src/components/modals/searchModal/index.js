@@ -95,7 +95,7 @@ class SearchModal extends Component {
       {
         this.state.filter !== '' &&
         <div className='search-link'>
-          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearchClick}>
+          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
             <i className='fas fa-search' />
             {`Search '${this.state.filter}'`}
           </Link >
