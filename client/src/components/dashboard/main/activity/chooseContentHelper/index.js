@@ -11,6 +11,7 @@ export default (content) => {
         isDeleted: content.spaceId.isDeleted
       }
     case 'UPDATE_SPACE_SUCCESS':
+    case 'UPDATE_PAGE_SUCCESS(EXTERNAL)':
       return {
         user: {...content.userId},
         name: content.spaceId.name,
@@ -37,7 +38,7 @@ export default (content) => {
         name: content.pageId.title,
         title: content.spaceId.name,
         time: new Date(content.date).toLocaleString(),
-        path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}`,
+        path: `/spaces/${content.spaceId._id}/pages/${content.pageId._id}/${content.modifiedVersion}`,
         icon: 'fas fa-file-alt',
         action: 'Update page',
         isDeleted: content.pageId.isDeleted

@@ -2,24 +2,29 @@ import React, { Component } from 'react'
 import './avtivitySidebar.css'
 import welcome from './welcome.png'
 import CreateSpaceButton from 'src/components/common/createSpaceButton'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 class ActivitySidebar extends Component {
   render () {
+    const {t} = this.props
     return (
       <div className='dashboard-content-side' >
         <div className='side-header'>
           <CreateSpaceButton />
         </div>
         <div className='side-main'>
-          <h2>Welcome to Docspace</h2>
+          <h2>{t('welcome_to_docspace')}</h2>
           <img src={welcome} alt='' />
-          <p>
-            Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes,    specs, mockups, diagrams, and projects. Share useful links, ads and information here
-          </p>
+          <p>{t('docspace_intro')}</p>
         </div>
       </div>
     )
   }
 }
 
-export default ActivitySidebar
+ActivitySidebar.propTypes = {
+  t: PropTypes.func
+}
+
+export default translate('translations')(ActivitySidebar)

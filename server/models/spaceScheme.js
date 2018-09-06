@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const timestamps = require('mongoose-timestamp')
 const { Schema } = mongoose
 
 const spaceSchema = new mongoose.Schema({
@@ -21,14 +22,29 @@ const spaceSchema = new mongoose.Schema({
   blogId: Schema.Types.ObjectId,
   pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
   history: [{type: Schema.Types.ObjectId, ref: 'History'}],
-  rights: {
+  permissions: {
     users: [Schema.Types.ObjectId],
     groups: [Schema.Types.ObjectId],
     anonymous: Schema.Types.ObjectId
+  },
+  spaceSettings: {
+    icon: {type: String, default: 'folder'},
+    color: {type: String, default: '#1c80ff'}
   }
 },
 {
   versionKey: false
+})
+
+spaceSchema.plugin(timestamps, {
+  createdAt: {
+    name: 'createdAt',
+    type: Date
+  },
+  updatedAt: {
+    name: 'updatedAt',
+    type: Date
+  }
 })
 
 const SpaceModel = mongoose.model('Space', spaceSchema)

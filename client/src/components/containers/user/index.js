@@ -12,7 +12,7 @@ import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWor
 import { translate } from 'react-i18next'
 import { MoonLoader } from 'react-spinners'
 import defaultAvatar from '../../../assets/user.png'
-import { Redirect, withRouter } from 'react-router-dom'
+import { Redirect, withRouter, NavLink } from 'react-router-dom'
 
 import './user.css'
 
@@ -70,6 +70,15 @@ class User extends Component {
   changePrivate () {
     this.setState({isShowGeneral: false})
   }
+
+  changeState (target) {
+    if (target.name === this.props.t('general')) {
+      this.setState({isShowGeneral: true})
+    } else {
+      this.setState({isShowGeneral: false})
+    }
+  }
+
   managePhoto () {
     this.setState(prevState => {
       return { isShowManagePhoto: !prevState.isShowManagePhoto }
@@ -179,25 +188,39 @@ class User extends Component {
   }
 
   renderEditButtons (t, isFetching, resultOfComparing) {
+    const TABS = [
+      {
+        name: t('general')
+      },
+      {
+        name: t('password')
+      }
+    ]
     return (
       <div className='profile-edit-buttons'>
-        <div className='edit-manage-btn'>
-          <div className='manage-btn'>
-            <button onClick={this.changeGeneral}>{t('general')}</button>
+        {resultOfComparing
+          ? <div className='user-settings-nav-bar'>
+            {TABS.map(({ name, path }) =>
+              <NavLink
+                key={name}
+                className={(this.state.isShowGeneral && name === t('general')) || (!this.state.isShowGeneral && name === t('password')) ? 'activity-nav-bar-tab active-link' : 'activity-nav-bar-tab'}
+                to='#'
+                activeClassName='active-link'
+                onClick={({target}) => this.changeState(target)}
+                name={name}
+              >
+                {name}
+              </NavLink>
+            )}
           </div>
-          { resultOfComparing
-            ? <div className='manage-btn'>
-              <button onClick={this.changePrivate}>{t('private')}</button>
-            </div>
-            : null
-          }
-        </div>
+          : <h2 className='recent-work-list-wrapper-header'>{t('general_information')}</h2>
+        }
         { isFetching
           ? <div className='sweet-loading'>
             {
               this.state.isShowGeneral
-                ? <span className='user-loading-info'>Data is changing</span>
-                : <span className='user-loading-info'>Password is changing</span>
+                ? <span className='user-loading-info'>{t('data_is_changing')}</span>
+                : <span className='user-loading-info'>{t('password_is_changing')}</span>
             }
             <MoonLoader
               sizeUnit={'px'}

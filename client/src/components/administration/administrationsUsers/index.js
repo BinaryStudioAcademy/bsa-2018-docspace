@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import InviteUsers from './inviteUsers'
 import Input from 'src/components/common/input'
+import PeopleBody from 'src/components/dashboard/peopleBody'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
-export default class AdministrationUsers extends Component {
+class AdministrationUsers extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,25 +19,27 @@ export default class AdministrationUsers extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
-  renderTable = () => {
-    return ''
-  }
+  // renderTable = () => {
+  //   return ''
+  // }
   handleChange (target) {
     this.setState({
       [target.name]: target.value
     })
   }
   render () {
+    const { t } = this.props
     return (
       <React.Fragment>
         <div>
-          <h1>Invite new users</h1>
+          <h1>{t('invite_new_users')}</h1>
           <InviteUsers
             valueName={this.state.nameField1}
             valueEmail={this.state.emailField1}
             nameName='nameField1'
             nameEmail='emailField1'
             onChange={this.handleChange}
+            t={t}
           />
           <InviteUsers
             valueName={this.state.nameField2}
@@ -42,6 +47,7 @@ export default class AdministrationUsers extends Component {
             nameName='nameField2'
             nameEmail='emailField2'
             onChange={this.handleChange}
+            t={t}
           />
           <InviteUsers
             valueName={this.state.nameField3}
@@ -49,34 +55,28 @@ export default class AdministrationUsers extends Component {
             nameName='nameField3'
             nameEmail='emailField3'
             onChange={this.handleChange}
+            t={t}
           />
         </div>
-        <button>Invite users</button>
+        <button>{t('invite_users')}</button>
         <div className='admin-filter-container'>
-          <Input label={'Name or email contains'}
+          <Input label={t('name_or_email_contains')}
             onChange={({target}) => this.handleChange(target)}
             value={this.state.filterValue}
             inputType='text'
             name='filterValue'
           />
         </div>
-        <div className='admin-user-list'>
-          <table>
-            <thead>
-              <tr>
-                <th className='name'>Full name</th>
-                <th className='tags' />
-                <th className='email'>Email address</th>
-                <th className='last-active'>Last active</th>
-                <th className='admin-actions' />
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderTable()}
-            </tbody>
-          </table>
+        <div className='people-list-container' >
+          <PeopleBody />
         </div>
       </React.Fragment>
     )
   }
 }
+
+AdministrationUsers.propTypes = {
+  t: PropTypes.func
+}
+
+export default translate('translations')(AdministrationUsers)

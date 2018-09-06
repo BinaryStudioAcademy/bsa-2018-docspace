@@ -5,6 +5,7 @@ import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import AddComment from '../addComment'
+import formatDate from 'src/helpers/formatDate'
 
 import './singleComment.css'
 
@@ -37,31 +38,8 @@ export class Comment extends Component {
     this.props.deleteComment && this.props.deleteComment({target: this})
   }
 
-  onLikeComment () {
-  }
-
-  transformData () {
-    const { createdAt } = this.props.comment
-    let hours = createdAt.getHours()
-    let minutes = createdAt.getMinutes()
-    let day = createdAt.getDate()
-    let month = createdAt.getMonth() + 1
-    const year = createdAt.getFullYear()
-
-    if (hours < 10) {
-      hours = `0${hours}`
-    }
-    if (minutes < 10) {
-      minutes = `0${minutes}`
-    }
-    if (day < 10) {
-      day = `0${day}`
-    }
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    return `${hours}:${minutes} ${day}/${month}/${year}`
+  onLikeComment (obj) {
+    this.props.likeAction(obj, this.props.comment)
   }
 
   render () {
@@ -93,8 +71,10 @@ export class Comment extends Component {
                 onDeleteComment={this.onDeleteComment}
                 onLikeComment={this.onLikeComment}
                 editComment={this.props.editComment}
-                creationDate={this.transformData()}
+                creationDate={formatDate(this.props.comment.createdAt)}
+                likes={this.props.comment.userLikes}
                 t={this.props.t}
+                user={this.props.user}
               />
             </div>
           </div>}
@@ -121,7 +101,8 @@ Comment.propTypes = {
   addNewComment: PropTypes.func,
   level: PropTypes.number,
   firstName: PropTypes.string,
-  lastName: PropTypes.string
-
+  lastName: PropTypes.string,
+  likeAction: PropTypes.func,
+  user: PropTypes.object
 }
 export default translate('translations')(Comment)

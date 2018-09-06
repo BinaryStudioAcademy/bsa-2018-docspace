@@ -3,25 +3,55 @@ import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import Categories from './categories'
 import './editSpaceDetailsForm.css'
-import logo from 'src/resources/logo.png'
-
+import IconColorPicker from 'src/components/iconColorPicker'
 class EditSpaceDetailsForm extends Component {
   constructor (props) {
     super(props)
     const {space} = this.props
-    this.state = {
-      name: space.name,
-      description: space.description,
-      logo: space.logo,
-      homePage: space.homePage,
-      pages: space.pages
+    this.state = { ...space,
+      isShowColorPicker: false,
+      selectedIcon: space.spaceSettings ? space.spaceSettings.icon : '',
+      selectedColor: space.spaceSettings ? space.spaceSettings.color : '',
+      defaultColor: '',
+      defaultIcon: ''
     }
-    this.state = { ...space }
+  }
+
+  setSelectedIcon = (icon) => {
+    this.setState({ selectedIcon: icon })
+  }
+
+  setSelectedColor = (color) => {
+    this.setState({ selectedColor: color })
   }
 
   handleFieldChange = (field) => {
     this.setState({
       [field.name]: field.value
+    })
+  }
+
+  handleShowColorPicker = () => {
+    this.setState({
+      defaultColor: this.state.selectedColor ? this.state.selectedColor : '#1c80ff',
+      defaultIcon: this.state.selectedIcon ? this.state.selectedIcon : 'folder',
+      isShowColorPicker: true
+    })
+  }
+
+  handleChangeSuccess = () => {
+    this.setState({
+      defaultColor: '',
+      defaultIcon: '',
+      isShowColorPicker: false
+    })
+  }
+
+  handleChangeCancel = () => {
+    this.setState({
+      selectedIcon: this.state.defaultIcon,
+      selectedColor: this.state.defaultColor,
+      isShowColorPicker: false
     })
   }
 
@@ -40,7 +70,10 @@ class EditSpaceDetailsForm extends Component {
     //   name: this.state.name,
     //   description: this.state.description
     // }
-    const changedSpace = { ...this.state, categories: this.props.space.categories }
+    const changedSpace = {...this.state,
+      categories: this.props.space.categories,
+      spaceSettings: { icon: this.state.selectedIcon, color: this.state.selectedColor }
+    }
 
     this.props.updateSpace(changedSpace)
     this.props.goBackToDetails()
@@ -50,17 +83,30 @@ class EditSpaceDetailsForm extends Component {
     const { name, description, homePage, pages } = this.state
     const { t, createCategory, deleteCategory } = this.props
     const { categories, _id: spaceId } = this.props.space
-
+    const iconName = this.state.selectedIcon ? this.state.selectedIcon : 'folder'
+    const color = this.state.selectedColor ? this.state.selectedColor : '#1c80ff'
     return (
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
-          <label>{t('Space_logo')}</label>
-          <img id='space-logo' className='field-value space-avatar' src={logo} alt='space-logo' />
-           [<span className='link'>{t('change')}</span>]
+          <label>{t('space_logo')}</label>
+          <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+            <span className='icon-avatar' >
+              <i className={`fa fa-${iconName.toLowerCase()}`} />
+            </span>
+          </div>
         </div>
+        <IconColorPicker
+          isShowColorPicker={this.state.isShowColorPicker}
+          setSelectedColor={this.setSelectedColor}
+          setSelectedIcon={this.setSelectedIcon}
+          selectedIcon={this.state.selectedIcon}
+          selectedColor={this.state.selectedColor}
+          handleChangeCancel={this.handleChangeCancel}
+          handleChangeSuccess={this.handleChangeSuccess}
+        />
 
         <div className='field-group'>
-          <label>{t('Name')}</label>
+          <label>{t('name')}</label>
           <input
             type='text'
             name='name'
@@ -70,7 +116,7 @@ class EditSpaceDetailsForm extends Component {
         </div>
 
         <div className='field-group'>
-          <label>{t('Description')}</label>
+          <label>{t('description')}</label>
           <textarea
             type='text'
             name='description'
@@ -86,7 +132,7 @@ class EditSpaceDetailsForm extends Component {
         />
         {/*
         <div className='field-group'>
-          <label>{t('Home_page')}</label>
+          <label>{t('home_page')}</label>
           <input
             type='text'
             name='homePage'
@@ -97,12 +143,12 @@ class EditSpaceDetailsForm extends Component {
 
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
-          <label>Home page</label>
+          <label>{t('home_page')}</label>
           <select name='homePageId'
             onChange={({target}) => this.handleFieldChange(target)}
             defaultValue={homePage ? homePage._id : 'none'}
           >
-            <option value='none' disabled hidden> None </option>
+            <option value='none' disabled hidden> {t('none')} </option>
             {
               pages.map((page, index) => (
                 <option value={page._id} key={index}>
@@ -116,7 +162,7 @@ class EditSpaceDetailsForm extends Component {
         <div className='btn-group'>
           <label />
           <button className='save-btn' type='submit' onClick={this.handleSave}> {t('Save')} </button>
-          <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('Cancel')} </button>
+          <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('cancel')} </button>
         </div>
       </form>
 
@@ -142,6 +188,10 @@ EditSpaceDetailsForm.propTypes = {
 }
 
 EditSpaceDetailsForm.defaultProps = {
+  spaceSettings: {
+    icon: '',
+    color: ''
+  },
   space: {
     name: 'name',
     description: 'lore ipsum',

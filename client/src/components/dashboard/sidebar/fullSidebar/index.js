@@ -18,27 +18,27 @@ class FullSidebar extends Component {
           this.props.showIcons && (
             <React.Fragment>
               <Button
-                title={this.props.showLabels ? t('Activity') : null}
+                title={this.props.showLabels ? t('activity') : null}
                 path='/activity' type={navButtonClass}
                 icon='fa fa-compass'
               />
               <Button
-                title={this.props.showLabels ? t('Your_work') : null}
+                title={this.props.showLabels ? t('your_work') : null}
                 path='/works' type={navButtonClass}
                 icon='fa fa-clipboard'
               />
               <Button
-                title={this.props.showLabels ? t('Spaces') : null}
+                title={this.props.showLabels ? t('spaces') : null}
                 path='/spacedirectory' type={navButtonClass}
                 icon='fa fa-folder'
               />
               <Button
-                title={this.props.showLabels ? t('People') : null}
+                title={this.props.showLabels ? t('people') : null}
                 path='/people' type={navButtonClass}
                 icon='fa fa-users'
               />
               <Button
-                title={this.props.showLabels ? t('Settings') : null}
+                title={this.props.showLabels ? t('settings') : null}
                 path='/settings'
                 type={navButtonClass}
                 icon='fa fa-cog'

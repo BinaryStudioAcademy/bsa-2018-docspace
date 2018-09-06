@@ -18,9 +18,9 @@ export const getAllPagesError = () => ({
 })
 
 // GET ONE
-export const getPageByIdRequest = (id) => ({
+export const getPageByIdRequest = (id, version) => ({
   type: actionTypes.GET_PAGE_BY_ID_REQUEST,
-  payload: id
+  payload: {id, version}
 })
 
 export const getPageByIdSuccess = (page) => ({
@@ -71,7 +71,7 @@ export const updatePageRequest = (newPage) => ({
 export const updatePageSuccess = (updatedPage) => {
   const pageWithCorrectCommentTime = updatedPage
 
-  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+  pageWithCorrectCommentTime.comments = updatedPage.comments.map((comment) => {
     comment.createdAt = new Date(comment.createdAt)
     return comment
   })
@@ -91,11 +91,11 @@ export const updateBlogPageRequest = (newPage, spaceId) => ({
 export const updateBlogPageSuccess = (updatedPage) => {
   const pageWithCorrectCommentTime = updatedPage
 
-  pageWithCorrectCommentTime.commentsArr = updatedPage.commentsArr.map((comment) => {
+  pageWithCorrectCommentTime.comments = updatedPage.comments.map((comment) => {
     comment.createdAt = new Date(comment.createdAt)
     return comment
   })
-
+  console.log(pageWithCorrectCommentTime)
   return {
     type: actionTypes.UPDATE_BLOG_PAGE_SUCCESS,
     payload: pageWithCorrectCommentTime
@@ -107,9 +107,9 @@ export const updatePageError = () => ({
 })
 
 // DELETE
-export const deletePageRequest = (page) => ({
+export const deletePageRequest = (id) => ({
   type: actionTypes.DELETE_PAGE_REQUEST,
-  payload: { ...page }
+  payload: { id }
 })
 
 export const deletePageSuccess = (deletedPage) => ({

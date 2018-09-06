@@ -47,13 +47,19 @@ class GroupPage extends Component {
   }
 
   renderTable = () => {
+    const {t} = this.props
     const groupMembers = this.props.group[0] && this.props.group[0].membersInfo ? this.props.group[0].membersInfo : []
     const table = groupMembers.map((groupMembers, i) =>
       <tr key={i}>
         <td className='group-title'>{`${groupMembers.firstName} ${groupMembers.lastName}`}</td>
         <td className=''>{groupMembers.email}</td>
         <td className=''>{groupMembers.login}</td>
-        <td className=''><button className='groups-button' onClick={() => { this.deleteUser(groupMembers._id) }}>Remove user</button></td>
+        <td className=''>
+          <button
+            className='groups-button'
+            onClick={() => { this.deleteUser(groupMembers._id) }}>{t('remove_user')}
+          </button>
+        </td>
       </tr>
     )
     return table
@@ -100,18 +106,20 @@ class GroupPage extends Component {
   }
 
   renderDescription = () => {
+    const {t} = this.props
     const group = this.props.group[0]
+    const forAutoFocus = true
     const description = this.state.editDescription
       ? <div className='group-user-filter'>
-        <textarea value={this.state.description} onChange={({target}) => this.changeDescription(target)} />
+        <textarea autoFocus={forAutoFocus} value={this.state.description} onChange={({target}) => this.changeDescription(target)} />
         <div>
-          <button className='accept-button' onClick={this.updateGroupDescription}>Save</button>
-          <button onClick={this.closeEditField}>Close</button>
+          <button className='accept-button' onClick={this.updateGroupDescription}>{t('Save')}</button>
+          <button onClick={this.closeEditField}>{t('close')}</button>
         </div>
       </div>
       : <div className='group-content-container'>
-        <h2 className='group-description'>{group ? group.description || 'No description' : ''}</h2>
-        <button onClick={this.changeEditState}>Edit</button>
+        <h2 className='group-description'>{group ? group.description || t('no_description') : ''}</h2>
+        <button onClick={this.changeEditState}>{t('edit')}</button>
       </div>
     return description
   }
@@ -124,28 +132,31 @@ class GroupPage extends Component {
   }
 
   renderAddUser = () => {
+    const {t} = this.props
+    const forAutoFocus = true
     return this.state.addUser
       ? <div className='group-user-filter'>
         <Input
-          label='User name contains'
+          label={t('user_name_contains')}
           value={this.state.filterValue}
           onChange={({target}) => this.onChange(target)}
           name='name'
           id='name'
           inputType='text'
+          autoFocus={forAutoFocus}
         />
         <div>
-          <button className='accept-button' onClick={() => this.updateGroupMembers()}>Add users</button>
-          <button onClick={this.changeAddUserState}>Cancel</button>
+          <button className='accept-button' onClick={() => this.updateGroupMembers()}>{t('add_user')}</button>
+          <button onClick={this.changeAddUserState}>{t('cancel')}</button>
         </div>
         <div className='group-users-list'>
           {this.renderUsers()}
         </div>
-        <h3>Members</h3>
+        <h3>{t('members')}</h3>
       </div>
       : <div className='group-content-container'>
-        <h3>Members</h3>
-        <button className='groups-button' onClick={this.changeAddUserState}>Add user</button>
+        <h3>{t('members')}</h3>
+        <button className='groups-button' onClick={this.changeAddUserState}>{t('add_user')}</button>
       </div>
   }
 
@@ -167,6 +178,7 @@ class GroupPage extends Component {
 
   render () {
     const group = this.props.group[0]
+    const {t} = this.props
     return (
       <div className='group-page-container'>
         <NavLink to='/admin/groups'><i className='fas fa-arrow-left' /></NavLink>
@@ -175,9 +187,9 @@ class GroupPage extends Component {
         {this.renderAddUser()}
         <table>
           <thead>
-            <th>Full name</th>
-            <th>Email address</th>
-            <th>Login</th>
+            <th>{t('full_name')}</th>
+            <th>{t('email_address')}</th>
+            <th>{t('login')}</th>
             <th />
           </thead>
           <tbody>
@@ -215,7 +227,8 @@ GroupPage.propTypes = {
   user: PropTypes.object,
   actions: PropTypes.object,
   match: PropTypes.object,
-  group: PropTypes.array
+  group: PropTypes.array,
+  t: PropTypes.func
 }
 
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupPage)))

@@ -31,8 +31,18 @@ class GeneralRepository {
     return this.model.updateMany(filter, data)
   }
 
+  updateOne (id, data) {
+    return this.model.updateOne({ _id: id }, data)
+  }
+
   delete (id) {
     return this.model.deleteOne({ _id: id })
+  }
+
+  searchByTitle (filter) {
+    return this.model.find({title: { $regex: filter, $options: 'i' }})
+      .populate({ path: 'spaceId', select: '_id' })
+      .populate({ path: 'spaceId', select: 'name' })
   }
 }
 

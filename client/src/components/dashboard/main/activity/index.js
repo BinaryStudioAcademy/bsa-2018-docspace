@@ -11,24 +11,6 @@ import MyUpdatesTab from './myUpdatesTab'
 import ActivitySidebar from './activitySidebar'
 import './activity.css'
 
-const TABS = [
-  {
-    name: 'All updates',
-    path: '/allupdates',
-    component: AllUpdatesTab
-  },
-  {
-    name: 'My updates',
-    path: '/myupdates',
-    component: MyUpdatesTab
-  },
-  {
-    name: 'Popular',
-    path: '/popular',
-    component: PopularTab
-  }
-]
-
 class Activity extends Component {
   componentDidMount () {
     this.props.getAllUserUpdates()
@@ -36,10 +18,27 @@ class Activity extends Component {
   }
   render () {
     const { t, match } = this.props
+    const TABS = [
+      {
+        name: t('all_updates'),
+        path: '/allupdates',
+        component: AllUpdatesTab
+      },
+      {
+        name: t('my_updates'),
+        path: '/myupdates',
+        component: MyUpdatesTab
+      },
+      {
+        name: t('popular'),
+        path: '/popular',
+        component: PopularTab
+      }
+    ]
     return (
       <div className='dashboard-activity'>
         <div className='dashboard-activity-body'>
-          <h2 className='dashboard-activity-header'>{t('Activity')}</h2>
+          <h2 className='dashboard-activity-header'>{t('activity')}</h2>
           <div className='dashboard-activity-nav-bar'>
             {TABS.map(({ name, path }) =>
               <NavLink
@@ -61,7 +60,7 @@ class Activity extends Component {
             />
           )}
         </div>
-        <ActivitySidebar />
+        <ActivitySidebar t={t} />
       </div>
     )
   }
@@ -84,8 +83,9 @@ const mapStateToProps = (state) => {
     allUpdates: state.activity.allHistory.allUpdates,
     currentUserUpdates: state.activity.currentUserHistory.currentUserUpdates,
     userId: state.verification.user._id,
-    userName: `${state.verification.user.firstName} ${state.verification.user.lastName}`,
-    userAvatar: state.verification.user.avatar
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 

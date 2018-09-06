@@ -2,7 +2,8 @@
 
 .space-settings-page{
   font-size: 14px;
-
+  height: 100%;
+  
   & h1{
     color: #333;
     font-weight: normal;
@@ -42,6 +43,7 @@
     .active-link{
       border-bottom: 3px solid #205081;
       font-weight: bold;
+      font-size: 12px;
     }
   }
 }

@@ -1,8 +1,12 @@
+const MONGODB_USER = process.env.MONGODB_USER
+const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD
+const ES_HOST = process.env.ES_HOST
+
 const config = {
   mongodb: {
     production: {
       dbname: 'docspace',
-      uri: 'mongodb://admin:admin12345@ds113482.mlab.com:13482/docspace',
+      uri: `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@ds113482.mlab.com:13482/docspace`,
       opts: {
         auto_reconnect: true,
         poolSize: 40,
@@ -21,7 +25,7 @@ const config = {
   },
   elasticsearch: {
     production: {
-      host: '',
+      host: ES_HOST,
       port: 9200
     },
     default: {

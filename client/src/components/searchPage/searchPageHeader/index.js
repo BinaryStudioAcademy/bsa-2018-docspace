@@ -17,8 +17,10 @@ export default class SearchPageHeader extends Component {
           defaultValue={searchInputVaule}
           placeholder='Serach Dockspace'
           onInput={({target}) => handleSearchInput(target)}
+          ref={(input) => { this.searchInput = input }}
         />
-        <button onClic={handleSearchInputFormSubmit}>
+
+        <button onClick={handleSearchInputFormSubmit}>
           <i className='fa fa-search' />
         </button>
 

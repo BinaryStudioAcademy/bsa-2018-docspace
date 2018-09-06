@@ -96,8 +96,8 @@ class App extends Component {
               <Route path='/spaces/:id' component={SpaceContainer} />
               <Route path='/group/:id' exact component={GroupPage} />
               <Route path='/admin' component={Administration} />
-              <Route path='/settings' component={SearchPage} />
-              {/* <Redirect to={'/'} /> */}
+              <Route path='/advanced_search_page' component={SearchPage} />
+              <Redirect to={'/'} />
             </Switch>
           </DashboardMain>
         </SplitPane>

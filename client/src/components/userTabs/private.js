@@ -49,7 +49,6 @@ export class PrivateFields extends Component {
               name='password-wrapper'
               id='currentPassword'
               inputType='password'
-              label={t('current_password')}
               onChange={this.handleCurrentPassword}
               value={this.state.currentPassword}
             />
@@ -60,7 +59,6 @@ export class PrivateFields extends Component {
               name='password-wrapper'
               id='newPassword'
               inputType='password'
-              label={t('new_password')}
               onChange={this.handleNewPassword}
               value={this.state.newPassword}
             />

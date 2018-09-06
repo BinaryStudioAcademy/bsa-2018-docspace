@@ -9,11 +9,14 @@ import spaceReducer from 'src/components/space/spaceContainer/logic/spaceReducer
 import pageReducer from 'src/components/page/logic/pageReducer'
 import blogReducer from 'src/components/blog/logic/blogReducer'
 import {verificationReducer} from 'src/components/auth/verification/logic/verificationReducer'
-import commentReducer from '../components/page/commentsLogic/commentsReducer'
 import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
-import searchReducer from 'src/components/searchPage/logic/searchReducer'
+// import searchReducer from 'src/components/searchPage/logic/searchReducer'
+import searchReducer from 'src/commonLogic/search/searchReducer'
+import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
+import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
+import permissionsReducer from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
@@ -21,15 +24,17 @@ const baseReducer = combineReducers({
   user: userReducers,
   pages: pageReducer,
   spaces: spaceReducer,
+  currentSpacePermissions: permissionsReducer,
   blog: blogReducer,
   groups: groupsReducer,
+  search: searchReducer,
   matchingUsers: matchingUsersReducer,
   verification: verificationReducer,
-  comments: commentReducer,
   activity: activityReducer,
   reset: resetReducer,
   setNewPassword: setNewPasswordReducer,
-  search: searchReducer,
+  allUsers: allUsersReducer,
+  warningModal: warningModalReducer,
   routing
 })
 

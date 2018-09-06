@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import DashboardInput from '../input'
 import PropTypes from 'prop-types'
 import './spacesContent.css'
-import logo from './space-logo.png'
 import { NavLink } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
 
@@ -38,12 +37,17 @@ class SpacesContent extends Component {
         }
       })
     })
-    const spaces = filteredSpaces.map((space, index) =>
-      (
+    const spaces = filteredSpaces.map((space, index) => {
+      const {icon, color} = space.spaceSettings ? space.spaceSettings : {icon: 'folder', color: '#1c80ff'}
+      return (
         <tr key={index} className='space-item'>
           <td className='space-image'>
             <NavLink className='link_view' to={`/spaces/${space._id}/overview`}>
-              <img src={logo} alt='' />
+              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+                <span className='icon-avatar' >
+                  <i className={`fa fa-${icon.toLowerCase()}`} />
+                </span>
+              </div>
             </NavLink>
           </td>
           <td>
@@ -64,17 +68,18 @@ class SpacesContent extends Component {
           </td>
         </tr>
       )
+    }
     )
     return spaces
   }
 
   render () {
-    const { isFetching } = this.props
+    const { isFetching, t } = this.props
     return (
       <div className={'spaces-content-body'}>
         <div className={'header-spaces-content'}>
           <h2>{this.props.activeTab}</h2>
-          <DashboardInput dashboardValue={this.state.filterField} ref='filterInput' placeholder='Filter' onChange={this.handleFilterField} />
+          <DashboardInput dashboardValue={this.state.filterField} ref='filterInput' placeholder={t('filter')} onChange={this.handleFilterField} />
         </div>
         { isFetching
           ? <div className='body-spaces-loader'>
@@ -90,9 +95,9 @@ class SpacesContent extends Component {
             <table className='table-paces'>
               <thead className='list-header'>
                 <tr>
-                  <td className='column-heading name-heading' colSpan='2'>Space</td>
-                  <td className='column-heading desc-heading'>Description</td>
-                  <td className='column-heading labels-heading'>Categories</td>
+                  <td className='column-heading name-heading' colSpan='2'>{t('space')}</td>
+                  <td className='column-heading desc-heading'>{t('description')}</td>
+                  <td className='column-heading labels-heading'>{t('categories')}</td>
                   <td className='column-heading icon-column-heading' />
                 </tr>
               </thead>
@@ -109,6 +114,7 @@ class SpacesContent extends Component {
 SpacesContent.propTypes = {
   spaces: PropTypes.array,
   isFetching: PropTypes.bool,
-  activeTab: PropTypes.string
+  activeTab: PropTypes.string,
+  t: PropTypes.func
 }
 export default SpacesContent

@@ -11,6 +11,8 @@ import { getPageByIdRequest, deleteBlogPageRequest } from 'src/components/page/l
 import { bindActionCreators } from 'redux'
 
 import CommentsList from 'src/components/commentsList'
+import Like from 'src/components/common/like'
+import {putLikeOnPageRequest, deleteLikeFromPageRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from 'src/components/page/likesLogic/likesAction'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 
@@ -55,6 +57,26 @@ class Page extends Component {
     this.props.actions.deleteBlogPageRequest(this.props.page)
   }
 
+  likeAction = (isLiked) => {
+    this.likePage(isLiked, 'page')
+  }
+
+  likePage = (isLiked, type, comment) => {
+    if (type === 'page') {
+      isLiked
+        ? this.props.actions.deleteLikeFromPageRequest(this.props.user, this.props.page)
+        : this.props.actions.putLikeOnPageRequest(this.props.user, this.props.page)
+    } else {
+      isLiked
+        ? this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, comment)
+        : this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, comment)
+    }
+  }
+
+  likeComment = (isLiked, comment) => {
+    this.likePage(isLiked, 'comment', comment)
+  }
+
   render () {
     const { firstName, lastName, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
@@ -64,7 +86,6 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -87,16 +108,27 @@ class Page extends Component {
               />
               <PageContent content={page.content} />
             </div>
-
+            <Like
+              t={t}
+              user={this.props.user}
+              likes={this.props.page.usersLikes || []}
+              likePage={this.likeAction}
+            />
             <div className='comments-section'>
-              {this.props.page.commentsArr.length
-                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+              {this.props.page.comments.length
+                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr}
+                comments={this.props.page.comments}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
+                addNewComment={this.addNewComment}
+                firstName={firstName}
+                lastName={lastName}
+                userId={_id}
+                user={this.props.user}
+                likeAction={this.likeComment}
               />
               <AddComment
                 firstName={firstName}
@@ -118,7 +150,8 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array
+    comments: PropTypes.array,
+    usersLikes: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -157,7 +190,11 @@ function mapDispatchToProps (dispatch) {
         deleteBlogPageRequest,
         addCommentRequest,
         deleteCommentRequest,
-        editCommentRequest
+        editCommentRequest,
+        deleteLikeFromPageRequest,
+        putLikeOnPageRequest,
+        deleteLikeFromCommentRequest,
+        putLikeOnCommentRequest
       }
       , dispatch)
   }

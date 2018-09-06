@@ -157,9 +157,7 @@
 }
 
 .profile-avatar-wrapper .profile-avatar-cover-btn {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: cover;
   border-radius: 50%;
   display: flex;
   flex: 1 1 100%;
@@ -287,6 +285,7 @@
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
   margin: 0px -2px;
+  cursor: pointer;
 }
 
 .profile-fields-wrapper .user-general-errors-user {
@@ -298,11 +297,23 @@
 .edit-manage-btn .manage-btn {
   flex: 1 0 auto;
   margin: 0px 2px;
+  cursor: pointer;
+}
+
+.edit-manage-btn .manage-btn .active{
+  background-color: rgb(0, 82, 204) ;
+  color: white;
+}
+
+.edit-manage-btn .manage-btn .active:hover{
+  background-color: #0065ff ;
+  color: white;
 }
 
 .profile-fields-wrapper .edit-btn {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  margin-left: 8px;
   max-width: 400px;
 }
 
@@ -326,6 +337,7 @@
   padding: 0px 8px;
   text-decoration: none;
   transition: background 0.1s ease-out;
+  cursor: pointer;
 }
 
 .edit-manage-btn .manage-btn button {
@@ -344,7 +356,7 @@
 }
 
 .current-new-passwords .edit-btn button:hover,
-.profile-fields-wrapper .edit-btn button {
+.profile-fields-wrapper .edit-btn button:hover {
   cursor: pointer;
   background: #0065ff;
 }
@@ -443,7 +455,7 @@ h2.recent-work-list-wrapper-header {
   overflow: hidden;
   text-decoration: none;
   color: #172b4d;
-  flex-basis: 65%;
+  flex-basis: 55%;
   padding-right: 20px;
 }
 
@@ -593,10 +605,33 @@ h2.recent-work-list-wrapper-header {
 .language-choise {
   display: flex;
   align-items: center;
+  padding-left: 8px;
   color: $blueText;
   margin: 20px 0;
 }
 .language-choise select {
-  padding: 0 5px;
+  padding: 2px 15px;
   margin-left: 10px;
+}
+.user-settings-nav-bar{
+  margin: 20px 0;
+  padding: 4px 0;
+  list-style: none;
+  box-shadow: 0px 3px 0px 0px #ccc;
+  width: 100%;
+  a.active-link {
+    box-shadow: 0px 3px 0px 0px rgb(0, 82, 204);
+    color: rgb(0, 82, 204);
+  }
+  a {
+   font-weight: 500;
+    padding: 4px 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    &:hover {
+      color: rgb(0, 82, 204);
+    }
+  }
 }

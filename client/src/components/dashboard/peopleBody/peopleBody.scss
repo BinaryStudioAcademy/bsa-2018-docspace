@@ -1,0 +1,37 @@
+.spaces-body{
+    width: 100%;
+}
+.people-list-container{
+    width: 100%;
+    padding-left: 10px;
+    table{
+        margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table .name{
+        width: 30%;
+    }
+    table .tags{
+        width: 30%;
+    }
+    table .description{
+        width: 40%;
+    }
+    td {
+        vertical-align: middle;
+        border-bottom: 1px solid #ddd;
+        text-overflow: ellipsis;
+        height: 35px;
+        padding: 5px 0;
+    }
+    th{
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+}
+.dashboard-admin{
+    .people-list-container h1{
+        margin-top: 15px;
+    }
+}

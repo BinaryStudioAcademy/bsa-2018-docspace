@@ -13,13 +13,14 @@ import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
+import {putLikeOnPageRequest, deleteLikeFromPageRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
+import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
-
-import ElasticsearchService from 'src/services/elasticsearchService'
+import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 class Page extends Component {
   constructor (props) {
@@ -33,8 +34,8 @@ class Page extends Component {
   }
 
   componentDidMount () {
-    ElasticsearchService.search({entityToSearch: 'page', input: 'text'}).then(res => console.log(res)).catch(err => console.log(err))
-    !this.props.isFetching && this.props.actions.getPageByIdRequest(this.props.match.params.page_id)
+    const {page_id: pageId, version} = this.props.match.params
+    !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
   }
 
   addNewComment (obj) {
@@ -54,10 +55,6 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/pages/${page._id}/edit`)
   }
 
-  handleDeletePage = () => {
-    this.props.actions.deletePageRequest(this.props.page)
-  }
-
   exportPageToPdf = () => {
     this.props.actions.exportPageToPdf(this.props.page)
   }
@@ -70,6 +67,12 @@ class Page extends Component {
     this.refs.fileUploader.click()
   }
 
+  handleOpenWarningModal = () => {
+    if (!this.props.match.params.version) {
+      this.props.actions.openWarningModal(true, this.props.page._id)
+    }
+  }
+
   handleChoosenFile = (e) => {
     if (e.target.files[0]) {
       this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
@@ -78,19 +81,40 @@ class Page extends Component {
     }
   }
 
+ likeAction = (isLiked) => {
+   this.likePage(isLiked, 'page')
+ }
+
+  likePage = (isLiked, type, comment) => {
+    if (type === 'page') {
+      isLiked
+        ? this.props.actions.deleteLikeFromPageRequest(this.props.user, this.props.page)
+        : this.props.actions.putLikeOnPageRequest(this.props.user, this.props.page)
+    } else {
+      isLiked
+        ? this.props.actions.deleteLikeFromCommentRequest(this.props.user._id, this.props.page, comment)
+        : this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, comment)
+    }
+  }
+
+  likeComment = (isLiked, comment) => {
+    this.likePage(isLiked, 'comment', comment)
+  }
+
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const user = page ? page.userModified : null
     return (
       <React.Fragment>
         <PageHeader
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
-          handleDeletePage={this.handleDeletePage}
           onWordImport={this.handleCallSystemDialogWindow}
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
+          openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -105,26 +129,29 @@ class Page extends Component {
           : <div className='page-container'>
             <PageTitle text={page.title} />
             <PageInfo
-              avatar={fakeImg}
-              firstName={firstName}
-              lastName={lastName}
-              date={page.created ? page.created.date : ''}
+              avatar={user ? user.avatar : avatar}
+              firstName={user ? user.firstName : firstName}
+              lastName={user ? user.lastName : lastName}
+              date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+              login={user ? user.login : login}
             />
             <PageContent content={page.content} />
+            <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.commentsArr && this.props.page.commentsArr.length
-                ? <h2>{this.props.page.commentsArr.length} {t('Comments')}</h2>
+              {this.props.page && this.props.page.comments && this.props.page.comments.length &&
+              this.props.page.comments.length
+                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.commentsArr || []}
+                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 firstName={firstName}
                 lastName={lastName}
-                userId={_id}
-
+                user={this.props.user}
+                likeAction={this.likeComment}
               />
               <AddComment
                 firstName={firstName}
@@ -144,10 +171,12 @@ class Page extends Component {
 
 Page.propTypes = {
   page: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
-    commentsArr: PropTypes.array
+    comments: PropTypes.array,
+    usersLikes: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -170,7 +199,12 @@ Page.defaultProps = {
     created: {
       date: 'it is a date! TRUST ME'
     },
-    content: ''
+    content: '',
+    userModified: {
+      firstName: '',
+      lastName: '',
+      avatar: ''
+    }
   },
 
   user: {
@@ -184,7 +218,6 @@ const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
     user: state.verification.user,
-    comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)
   }
@@ -198,7 +231,12 @@ function mapDispatchToProps (dispatch) {
         deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
-        sendDocFileRequest
+        sendDocFileRequest,
+        deleteLikeFromPageRequest,
+        putLikeOnPageRequest,
+        deleteLikeFromCommentRequest,
+        putLikeOnCommentRequest,
+        openWarningModal
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
