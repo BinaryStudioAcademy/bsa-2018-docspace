@@ -68,7 +68,7 @@ class MinSidebar extends Component {
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
-        {this.state.showSearchModal && <SearchModal closeModal={this.toggleSearchModal} />}
+        {this.state.showSearchModal && <SearchModal closeModal={this.toggleSearchModal} history={this.props.history} />}
         <div className='top-icons'>
           <NavLink to={'/spacedirectory'}>
             <img src={logo} alt='DocSpace logo' />
@@ -98,7 +98,8 @@ MinSidebar.propTypes = {
   tabs: PropTypes.element,
   isGray: PropTypes.bool,
   userLogin: PropTypes.string,
-  t: PropTypes.func
+  t: PropTypes.func,
+  history: PropTypes.object
 }
 
 MinSidebar.defaultProps = {

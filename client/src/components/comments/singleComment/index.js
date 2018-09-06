@@ -4,6 +4,7 @@ import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import AddComment from '../addComment'
+import formatDate from 'src/helpers/formatDate'
 import UserAvatarLink from 'src/resources/icons/user-comment.png'
 import { Link } from 'react-router-dom'
 
@@ -42,33 +43,6 @@ export class Comment extends Component {
     this.props.likeAction(obj, this.props.comment)
   }
 
-  transformData () {
-    let { createdAt } = this.props.comment
-    if (typeof createdAt === 'string') {
-      createdAt = new Date(createdAt)
-    }
-    let hours = createdAt.getHours()
-    let minutes = createdAt.getMinutes()
-    let day = createdAt.getDate()
-    let month = createdAt.getMonth() + 1
-    const year = createdAt.getFullYear()
-
-    if (hours < 10) {
-      hours = `0${hours}`
-    }
-    if (minutes < 10) {
-      minutes = `0${minutes}`
-    }
-    if (day < 10) {
-      day = `0${day}`
-    }
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    return `${hours}:${minutes} ${day}/${month}/${year}`
-  }
-
   render () {
     const comparingCurrentAndCommentUsers = this.props.comment.userId._id === this.props.user._id || this.props.comment.userId === this.props.user._id
     return (
@@ -102,7 +76,7 @@ export class Comment extends Component {
                 onDeleteComment={this.onDeleteComment}
                 onLikeComment={this.onLikeComment}
                 editComment={this.props.editComment}
-                creationDate={this.transformData()}
+                creationDate={formatDate(this.props.comment.createdAt)}
                 likes={this.props.comment.userLikes}
                 comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
                 t={this.props.t}

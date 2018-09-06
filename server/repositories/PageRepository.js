@@ -69,16 +69,40 @@ class PageRepository extends GeneralRepository {
   // }
 
   // update (id, data) {
+  //   return this.model.findById(id)
+  //     .then(page => {
+  //       Object.keys(data).forEach(key => { page[key] = data[key] })
+  //       page.save()
+  //     })
+  //     .then((page) => this.getById(id))
+  // }
+
+  // update (id, data) {
   //   return super.update(id, data)
   //     .then(() => this.getById(id))
   // }
 
-  advancedSearch (input) {
-    return this.model.search({
+  advancedSearch (query) {
+    return this.model.esSearch({
       // query for match some input in field 'title' OR 'content'
-      multi_match: {
-        query: input,
-        fields: [ 'title', 'content' ]
+      query,
+      highlight: {
+        pre_tags: [ '<b>' ],
+        post_tags: [ '</b>' ],
+        fields: {
+          '*': { }
+        }
+        // encoder: 'html',
+        // boundary_scanner: 'chars',
+        // boundary_chars: '<.,!? \t\n'
+
+        // fields: {
+        //   _all: {
+        //       "fragment_size": 400,
+        //       "number_of_fragments": 1,
+        //       "no_match_size": 20
+        //   }
+        // }
       }
     })
   }

@@ -20,6 +20,8 @@ import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
 import Page404 from 'src/components/common/page404'
 
+import SearchPage from 'src/components/searchPage'
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -72,7 +74,7 @@ class App extends Component {
     const { error } = this.props
     // const showIconsInMinimizeDashboard = true
     return (
-      // <Group />
+
       <React.Fragment>
         { error.status && error.status === 404
           ? <Page404 />
@@ -98,6 +100,7 @@ class App extends Component {
                   <Route path='/spaces/:id' component={SpaceContainer} />
                   <Route path='/group/:id' exact component={GroupPage} />
                   <Route path='/admin' component={Administration} />
+                  <Route path='/advanced_search_page' component={SearchPage} />
                   <Redirect to={'/'} />
                 </Switch>
               </DashboardMain>

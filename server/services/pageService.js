@@ -77,7 +77,7 @@ module.exports = {
   },
 
   add: (req, res) => {
-    PageRepository.create(req.body)
+    PageRepository.create({ ...req.body, creatorId: req.user._id })
       .then(page => {
         if (page.blogId) {
           BlogRepository.addPageToBlog(page)

@@ -269,8 +269,8 @@ PermissionsPage.defaultProps = {
 const mapStateToProps = (state, props) => {
   return {
     permissions: currentSpacePermissions(state),
-    isFetching: isFetchingForPermissions(state),
-    seachedEntities: state.searchResults
+    isFetching: isFetchingForPermissions(state)
+    // seachedEntities: state.searchResults
   }
 }
 
