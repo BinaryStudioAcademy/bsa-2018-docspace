@@ -109,7 +109,7 @@ class SearchConfigDashboard extends Component {
          getEntityName={(user) => user.login}
          additionalHookForInputHandler={this.inputUserHook}
          actions={this.props.actions}
-
+         isSearching={this.props.isSearching}
        />
 
        <hr className='config-separator' />
@@ -124,6 +124,7 @@ class SearchConfigDashboard extends Component {
          additionalHookForInputHandler={this.inputSpaceHook}
          getEntityName={(space) => space.name}
          actions={this.props.actions}
+         isSearching={this.props.isSearching}
        />
 
        <hr className='config-separator' />
@@ -184,7 +185,8 @@ SearchConfigDashboard.propTypes = {
   t: PropTypes.func,
   setFilter: PropTypes.func,
   searchedEntities: PropTypes.array,
-  targetToSearch: PropTypes.string
+  targetToSearch: PropTypes.string,
+  isSearching: PropTypes.bool
 }
 
 export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(SearchConfigDashboard))
