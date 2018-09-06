@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deleteBlogPageRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deleteBlogPageRequest, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 
 import CommentsList from 'src/components/commentsList'
@@ -127,13 +127,21 @@ class Page extends Component {
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                type={'blog'}
+                sendMention={this.props.actions.sendMention}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
                 userId={_id}
                 avatar={avatar}
+                type={'blog'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 t={t}
               />
             </div>
@@ -146,6 +154,7 @@ class Page extends Component {
 
 Page.propTypes = {
   page: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
@@ -160,7 +169,8 @@ Page.propTypes = {
   match: PropTypes.object,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  sendMention: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -196,7 +206,8 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromPageRequest,
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
-        putLikeOnCommentRequest
+        putLikeOnCommentRequest,
+        sendMention
       }
       , dispatch)
   }

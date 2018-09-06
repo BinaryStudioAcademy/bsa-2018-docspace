@@ -22,6 +22,9 @@ export class AddComment extends Component {
   }
 
   createComment = () => {
+    const re = /(?:^|\W)@(\w+)(?!\w)/g
+    const resultOfFinding = this.state.text.match(re) ? this.state.text.match(re).map(match => match.trim().slice(1)) : []
+    console.log(this.props.sendMention)
     if (this.state.text.length === 0) {
     } else {
       this.setState({
@@ -38,6 +41,7 @@ export class AddComment extends Component {
         })
         this.props.onEditComment()
       } else {
+        this.props.sendMention && resultOfFinding.length && this.props.sendMention(resultOfFinding, this.props.userLogin, this.props.pageId, this.props.spaceId, this.props.type)
         this.props.addNewComment && this.props.addNewComment({
           userId: this.props.userId,
           text: this.state.text,
@@ -113,6 +117,7 @@ export class AddComment extends Component {
 }
 
 AddComment.propTypes = {
+  type: PropTypes.string,
   addNewComment: PropTypes.func,
   userId: PropTypes.string,
   t: PropTypes.func,
@@ -123,6 +128,10 @@ AddComment.propTypes = {
   ReplyComment: PropTypes.func,
   parentId: PropTypes.string,
   style: PropTypes.object,
-  avatar: PropTypes.string
+  avatar: PropTypes.string,
+  sendMention: PropTypes.func,
+  userLogin: PropTypes.string,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string
 }
 export default translate('translations')(AddComment)

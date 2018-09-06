@@ -33,6 +33,10 @@ class GroupRepository extends GeneralRepository {
     return this.model.findOne({'title': title})
   }
 
+  getByTitleFind (title) {
+    return this.model.find({'title': title})
+  }
+
   searchByTitlePart (titlePart) {
     return this.model.aggregate([
       {$match: {title: { $regex: titlePart, $options: 'i' }}}
