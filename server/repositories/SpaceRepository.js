@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
-
 const GeneralRepository = require('./GeneralRepository')
 const SpaceModel = require('../models/spaceScheme')
 
@@ -274,13 +273,27 @@ class SpaceRepository extends GeneralRepository {
   searchByTitle (filter) {
     return this.model.aggregate([
       {
-        $match: {name: { $regex: filter, $options: 'i' }}
+        $match: {
+          name: { $regex: filter, $options: 'i' },
+          isDeleted: false
+        }
       },
       {
         $project: {
           _id: 1,
           name: 1,
           key: 1
+        }
+      }
+    ])
+  }
+
+  searchNotDeletedByName (name) {
+    return this.model.aggregate([
+      {
+        $match: {
+          name: { $regex: name, $options: 'i' },
+          isDeleted: false
         }
       }
     ])

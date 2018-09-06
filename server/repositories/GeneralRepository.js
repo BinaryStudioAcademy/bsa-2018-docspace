@@ -40,7 +40,7 @@ class GeneralRepository {
   }
 
   searchByTitle (filter) {
-    return this.model.find({title: { $regex: filter, $options: 'i' }})
+    return this.model.find({title: { $regex: filter, $options: 'i' }, isDeleted: false})
       .populate({ path: 'spaceId', select: '_id' })
       .populate({ path: 'spaceId', select: 'name' })
   }

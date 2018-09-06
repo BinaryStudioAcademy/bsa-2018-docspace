@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import './searchModal.css'
-import {searchRequest, cleanSearchResults} from 'src/commonLogic/search/searchActions'
+import {searchRequest, cleanSearchResults, advancedSearchRequest} from 'src/commonLogic/search/searchActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 class SearchModal extends Component {
   constructor (props) {
@@ -29,6 +29,19 @@ class SearchModal extends Component {
     }
   }, 200);
 
+  handleAdvancedSearch = () => {
+    this.props.closeModal()
+    this.props.actions.advancedSearchRequest({ input: this.state.filter, targetToSearch: 'all_advanced' })
+  }
+
+  // Redirect to advanced search by enter press
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.history.push('/advanced_search_page')
+      this.handleAdvancedSearch()
+    }
+  }
+
   renderResults = () => {
     let blogsList = []
     let spacesList = []
@@ -42,9 +55,7 @@ class SearchModal extends Component {
         postList.push(result)
       }
     })
-    console.log(blogsList)
-    console.log(spacesList)
-    console.log(postList)
+
     const blogRender = blogsList.map(blog =>
       <div className='search-result-wrapper'>
         {blog.spaceId
@@ -79,8 +90,18 @@ class SearchModal extends Component {
         </NavLink>
       </div>
     )
-    console.log(postList)
+
     const result = <React.Fragment>
+      {
+        this.state.filter !== '' &&
+        <div className='search-link'>
+          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearchClick}>
+            <i className='fas fa-search' />
+            {`Search '${this.state.filter}'`}
+          </Link >
+        </div>
+      }
+
       {postList.length ? <div className='search-title-wrapper'>
         <p>PAGES</p>
       </div> : null
@@ -96,12 +117,6 @@ class SearchModal extends Component {
       </div> : null
       }
       {SpaceRender}
-      {this.state.filter !== '' && <div className='search-link'>
-        <NavLink to='#'>
-          <i className='fas fa-search' />
-          {`Search '${this.state.filter}'`}
-        </NavLink>
-      </div>}
     </React.Fragment>
 
     return result
@@ -118,9 +133,6 @@ class SearchModal extends Component {
   }
 
   render () {
-    console.log(this.props)
-    console.log(this.props.searchResults)
-
     return (
       <div className='search-modal'>
         <div className='search-modal-body'>
@@ -128,7 +140,14 @@ class SearchModal extends Component {
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
           <div className='search-content'>
-            <input autoFocus='true' onChange={({target}) => this.setFilterValue(target)} className='search-field' placeholder='Search' value={this.state.filter} />
+            <input
+              autoFocus='true'
+              onChange={({target}) => this.setFilterValue(target)}
+              className='search-field'
+              placeholder='Search'
+              value={this.state.filter}
+              onKeyPress={this._handleKeyPress}
+            />
             {this.renderResults()}
           </div>
         </div>
@@ -148,7 +167,8 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         searchRequest,
-        cleanSearchResults
+        cleanSearchResults,
+        advancedSearchRequest
       }
       , dispatch)
   }
@@ -157,7 +177,8 @@ function mapDispatchToProps (dispatch) {
 SearchModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
-  searchResults: PropTypes.object
+  searchResults: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchModal)

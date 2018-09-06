@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const timestamps = require('mongoose-timestamp')
 const { Schema } = mongoose
 
 const spaceSchema = new mongoose.Schema({
@@ -34,6 +35,17 @@ const spaceSchema = new mongoose.Schema({
 },
 {
   versionKey: false
+})
+
+spaceSchema.plugin(timestamps, {
+  createdAt: {
+    name: 'createdAt',
+    type: Date
+  },
+  updatedAt: {
+    name: 'updatedAt',
+    type: Date
+  }
 })
 
 const SpaceModel = mongoose.model('Space', spaceSchema)
