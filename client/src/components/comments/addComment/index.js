@@ -24,7 +24,6 @@ export class AddComment extends Component {
   createComment = () => {
     const re = /(?:^|\W)@(\w+)(?!\w)/g
     const resultOfFinding = this.state.text.match(re) ? this.state.text.match(re).map(match => match.trim().slice(1)) : []
-    console.log(this.props.sendMention)
     if (this.state.text.length === 0) {
     } else {
       this.setState({

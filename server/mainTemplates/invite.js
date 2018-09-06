@@ -1,5 +1,5 @@
 module.exports = {
-  inviteTemplateMessage: (name, host, headerText, mainMessage, btnMessage, link) => (
+  inviteTemplateMessage: (nameAndMessage, host, headerText, mainMessage, btnMessage, link) => (
     `<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -51,9 +51,9 @@ module.exports = {
           padding-top: 20px;
           padding-bottom: 20px;">
     
-        <div style="display: flex; flex-direction: row; align-items: center;">
+        <div style="display: flex; align-items: center;">
           <a target="_blank" style="text-decoration: none;"
-            href="https://${host}"><img border="0" vspace="0" hspace="0"
+            href="http://${host}"><img border="0" vspace="0" hspace="0"
             src="https://image.ibb.co/fdngue/logo_Animal_Black.png"
             width="40" height="40"
             alt="Logo" title="DocSpace" style="
@@ -84,7 +84,7 @@ module.exports = {
           padding-top: 5px;
           color: #000000;
           font-family: sans-serif;" class="subheader">
-          <span style="text-decoration: underline;">${name}</span> invites you
+          ${nameAndMessage}
         </td>
       </tr>
       <tr>
