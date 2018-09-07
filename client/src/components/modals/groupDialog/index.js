@@ -118,7 +118,6 @@ class GroupDialog extends Component {
   }
 
   manageUser = (id, name, email) => {
-    console.log(this.state)
     let isInGroup = 0
     this.state.usersInGroup.forEach(user => {
       if (user.id === id) {
@@ -139,7 +138,6 @@ class GroupDialog extends Component {
   }
 
   deleteUserFromGroup = (memberId) => {
-    console.log(memberId)
     this.setState(prevState => ({
       usersInGroup: prevState.usersInGroup.filter(user => user.id !== memberId)
     }))
