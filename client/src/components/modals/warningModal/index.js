@@ -10,7 +10,6 @@ import { closeWarningModal } from 'src/components/modals/warningModal/logic/warn
 import { deletePageRequest } from 'src/components/page/logic/pageActions'
 class WarningModal extends Component {
   handleDeleteMethod = () => {
-    console.log(this.props.deleteId)
     this.props.forPage ? this.props.deletePage(this.props.deleteId) : this.props.deleteSpace(this.props.deleteId)
     this.props.closeWarningModal()
   }

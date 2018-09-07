@@ -49,6 +49,8 @@ function * createBlogPage (action) {
 function * updatePage (action) {
   try {
     const target = action.payload
+    // FIX conflict with mongodb and timestamp. Same for blog
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))
@@ -61,6 +63,7 @@ function * updatePage (action) {
 function * updateBlogPage (action) {
   try {
     const target = action.payload
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     const spaceId = yield select(spaceIdFromPathname)
     yield put(push(`/spaces/${spaceId}/blog/${updated._id}`))
@@ -138,6 +141,14 @@ function * exportPageToWord (action) {
   }
 }
 
+function * mentionInComment (action) {
+  try {
+    yield PageService.mentionInComment(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
@@ -150,4 +161,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.SEND_DOC_FILE_REQUEST, sendFile)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
+  yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
 }
