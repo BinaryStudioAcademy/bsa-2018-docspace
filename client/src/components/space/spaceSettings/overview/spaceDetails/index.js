@@ -1,35 +1,35 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import './spaceDetails.css'
-import spaceLogo from 'src/resources/logo.png'
 
 class SpaceDetails extends Component {
   render () {
     const { space, t } = this.props
-
-    let name = ''
-
-    if (space.owner) {
-      name = space.owner.firstName + ' ' + space.owner.lastName
-    }
-
+    const {spaceSettings} = space
+    const icon = spaceSettings ? spaceSettings.icon : 'folder'
+    const color = spaceSettings ? spaceSettings.color : '#1c80ff'
     return (
       <table className='space-details-table'>
         <tbody>
           <tr>
-            <td className='avatar-label-cell'>Space logo</td>
+            <td className='avatar-label-cell'>{t('space_logo')}</td>
             <td className='avatar-cell'>
-              <img id='space-logo' className='field-value space-avatar' src={spaceLogo} alt='space-logo' />
+              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+                <span className='icon-avatar' >
+                  <i className={`fa fa-${icon.toLowerCase()}`} />
+                </span>
+              </div>
             </td>
           </tr>
           <tr>
-            <td>{t('Name')}</td>
+            <td>{t('name')}</td>
             <td>{space.name}</td>
           </tr>
           <tr>
-            <td>{t('Key')}</td>
+            <td>{t('key')}</td>
             <td>{space.key}</td>
           </tr>
           <tr>
@@ -43,23 +43,28 @@ class SpaceDetails extends Component {
             </td>
           </tr>
           <tr>
-            <td>{t('Created_by')}</td>
-            <td> <span className='link'>{name}</span></td>
+            <td>{t('created_by')}</td>
+            <td> <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link></td>
           </tr>
-          {/*
-          TEMPORALLY HIDE FOR DEMO
           <tr>
-            <td>{t('Categoies')}</td>
-            <td />
-          </tr> */}
+            <td>{t('categories')}</td>
+            <td >
+              {space.categories.length
+                ? space.categories.map((category, index) =>
+                  <Link key={index} to='#' className='space-category'>
+                    {category.name}
+                  </Link>)
+                : `(${t('none')})` }
+            </td>
+          </tr>
           <tr>
-            <td>{t('Description')}</td>
+            <td>{t('description')}</td>
             <td>{space.description}</td>
           </tr>
           <tr>
-            <td>{t('Administrators')}</td>
+            <td>{t('administrators')}</td>
             <td>
-              <span className='link'>{name}</span>
+              <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link>
             </td>
           </tr>
         </tbody>
@@ -70,7 +75,10 @@ class SpaceDetails extends Component {
 
 SpaceDetails.propTypes = {
   t: PropTypes.func.isRequired,
-  space: PropTypes.object.isRequired
+  space: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.stringgi
+  })
 }
 
 export default translate('translations')(SpaceDetails)

@@ -10,7 +10,18 @@
     width: 20%;
     text-align: right;
   }
-
+  .space-edit-avatar {
+    color: #ffffff;
+    background: #1c80ff;
+    padding: 7px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    width: 15px;
+    height: 20px;
+  }
 
   input, select, textarea{
     background: white;
@@ -64,7 +75,7 @@
     margin-top: 0.7rem;
     padding-left: 1rem;
 
-    button{
+    .save-btn, .delete-btn{
       margin: 5px;
       box-sizing: border-box;
       background: #f5f5f5;
@@ -74,7 +85,6 @@
       cursor: pointer;
       display: inline-block;
       height: 2.14285714em;
-      // line-height: 1.42857143;
       vertical-align: middle;
       padding: 4px 10px;
       text-decoration: none;

@@ -2,16 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Button from 'src/components/dashboard/sidebar/button'
-import spaceLogo from 'src/resources/logo.png'
 import './spaceSidebarButtons.css'
 
 const SpaceSidebarButtons = (props) => {
-  const { spaceId } = props
-
+  const { spaceId, spaceSettings } = props
+  const icon = spaceSettings ? spaceSettings.icon : 'folder'
+  const color = spaceSettings ? spaceSettings.color : '#1c80ff'
   return (
-    <div className='tabs-wrapper'>
-      <div className='logo'>
-        <img src={spaceLogo} alt='space logo' />
+    <div className='full-sidebar'>
+      <div className='space-sidebar-header-icon logo' style={{backgroundColor: color}}>
+        <i className={`fa fa-${icon}`} />
       </div>
       <Button
         path={`/spaces/${spaceId}/overview`}
@@ -33,7 +33,8 @@ const SpaceSidebarButtons = (props) => {
 }
 
 SpaceSidebarButtons.propTypes = {
-  spaceId: PropTypes.string
+  spaceId: PropTypes.string,
+  spaceSettings: PropTypes.object
 }
 
 SpaceSidebarButtons.defaultProps = {

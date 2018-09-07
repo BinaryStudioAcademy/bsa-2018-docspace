@@ -7,51 +7,46 @@ import { translate } from 'react-i18next'
 import './fullSidebar.css'
 
 class FullSidebar extends Component {
-  renderButtons () {
-    const {t} = this.props
-    const navButtonClass = this.props.showLabels ? 'full-button' : 'minimize-button'
-    return <div className='tabs-wrapper'>
-      {this.props.showLabels && <NavLink to={'/spacedirectory'}><h1 id='docspace-logo-label'> docspace </h1></NavLink>}
-      <Button
-        title={this.props.showLabels ? t('Activity') : null}
-        path='/activity' type={navButtonClass}
-        icon='fa fa-compass'
-      />
-      <Button
-        title={this.props.showLabels ? t('Your_work') : null}
-        path='/works' type={navButtonClass}
-        icon='fa  fa-clipboard'
-      />
-      <Button
-        title={this.props.showLabels ? t('Spaces') : null}
-        path='/spacedirectory' type={navButtonClass}
-        icon='fa fa-folder'
-      />
-      <Button
-        title={this.props.showLabels ? t('People') : null}
-        path='/people' type={navButtonClass}
-        icon='fa fa-users'
-      />
-      <Button
-        title={this.props.showLabels ? t('Settings') : null}
-        path='/settings'
-        type={navButtonClass}
-        icon='fa fa-cog'
-      />
-    </div>
-  }
-
-  renderRightSidebarContent () {
-    if (this.props.showIcons) {
-      return this.renderButtons()
-    }
-  }
-
   render () {
+    const { t } = this.props
+    const navButtonClass = this.props.showLabels ? 'full-button' : 'minimize-button'
+
     return (
-      <React.Fragment>
-        {this.renderRightSidebarContent()}
-      </React.Fragment>
+      <div className='full-sidebar'>
+        {this.props.showLabels && <NavLink to={'/spacedirectory'}><h1 className='docspace-logo-label'> docspace </h1></NavLink>}
+        {
+          this.props.showIcons && (
+            <React.Fragment>
+              <Button
+                title={this.props.showLabels ? t('activity') : null}
+                path='/activity' type={navButtonClass}
+                icon='fa fa-compass'
+              />
+              <Button
+                title={this.props.showLabels ? t('your_work') : null}
+                path='/works' type={navButtonClass}
+                icon='fa fa-clipboard'
+              />
+              <Button
+                title={this.props.showLabels ? t('spaces') : null}
+                path='/spacedirectory' type={navButtonClass}
+                icon='fa fa-folder'
+              />
+              <Button
+                title={this.props.showLabels ? t('people') : null}
+                path='/people' type={navButtonClass}
+                icon='fa fa-users'
+              />
+              <Button
+                title={this.props.showLabels ? t('settings') : null}
+                path='/settings'
+                type={navButtonClass}
+                icon='fa fa-cog'
+              />
+            </React.Fragment>
+          )
+        }
+      </div>
     )
   }
 }

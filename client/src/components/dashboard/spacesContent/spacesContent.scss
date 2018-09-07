@@ -50,6 +50,9 @@
   text-align: left;
   text-decoration: none;
 }
+.space-item .space-edit-avatar {
+  margin: 0px;
+}
 .space-item-link {
   text-decoration: none;
   color: $blue;
@@ -82,4 +85,12 @@
 }
 .fa-info-circle:hover {
   color: black;
+}
+.body-spaces-loader {
+  display: flex;
+  height: 100%;
+  align-self: center;
+}
+.sweet-loading {
+  align-self: center;
 }

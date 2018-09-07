@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Carme');
+
+.page404-main-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Carme', sans-serif;
+    height: 100%;
+    .page404-part-label {
+        opacity: .8;
+    }
+    .page404-header-oops {
+        font-weight: bold;
+        font-size: 120px;
+        margin-bottom: 40px;
+    }
+    .page404-label-error {
+        font-size: 24px;
+        display: flex;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+    .page404-helpful-links p {
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    }
+    .page404-helpful-links ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+    }
+    .page404-helpful-link a {
+        display: inline-block;
+        font-size: 15px;
+        text-decoration: none;
+        margin: 12px 0px;
+        height: 15px;
+        transition: all 1s;
+        color: #08367C;
+    }
+    .page404-helpful-link a:visited {
+        color: #08367C;
+    }
+    .page404-img {
+        width: 50%;
+    }
+}

@@ -10,11 +10,14 @@
   }
 
   &-image {
-    width: 45px;
-    height: 45px;
+    #user-avatar-icon-page {
+      font-size: 35px;
+      color: black;
+    }
 
     & img {
-      width: 100%;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
     }
   }

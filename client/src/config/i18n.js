@@ -11,8 +11,12 @@ export default i18n.init({
   ns: 'translations',
   defaultNS: 'translations',
   lngs: ['en', 'uk'],
-  lng: 'en',
+  lng: localStorage.getItem('language'),
   react: {
     wait: true
   }
 })
+
+export function getT () {
+  return i18n.getFixedT(null, 'translations')
+}

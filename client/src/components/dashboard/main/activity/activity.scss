@@ -1,26 +1,38 @@
+@import "globalStyles/variables.scss";
+
 .dashboard-activity {
   display: flex;
   height: 100%;
+  .dashboard-activity-header {
+    padding: 8px;
+  }
   .content-header {
     padding: 4px 8px;
   }
-  .dashboard-content-body {
+  .dashboard-activity-body {
     margin-left: 30px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     width: 70%;
-    ul.menu {
-      display: flex;
-      padding: 0;
+    .dashboard-activity-nav-bar {
+      margin: 20px 0;
+      padding: 4px 0;
       list-style: none;
       box-shadow: 0px 3px 0px 0px #ccc;
-      li {
+      a.active-link {
+        box-shadow: 0px 3px 0px 0px rgb(0, 82, 204);
+        color: rgb(0, 82, 204);
+      }
+      a {
         font-weight: 500;
         padding: 4px 8px;
         cursor: pointer;
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
         &:hover {
-          color: blue;
+          color: rgb(0, 82, 204);
         }
       }
     }
@@ -44,7 +56,7 @@
       margin-bottom: 20px;
       justify-content: center;
       button {
-        align-self: center
+        align-self: center;
       }
     }
     .side-main {
@@ -56,4 +68,11 @@
       }
     }
   }
+}
+.update-items-list {
+  display: flex;
+  overflow: auto;
+}
+.update-items{
+  width: 100%;
 }

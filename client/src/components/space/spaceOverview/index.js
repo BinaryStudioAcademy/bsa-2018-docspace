@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getPageByIdRequest } from 'src/components/page/logic/pageActions'
-import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import { getPageByIdRequest, exportPageToPdf, exportPageToWord, createPageRequest, sendDocFileRequest } from 'src/components/page/logic/pageActions'
 import SpaceOverviewHeader from './spaceOverviewHeader'
+import { translate } from 'react-i18next'
+import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 import PageContent from 'src/components/common/pageContent'
 
@@ -14,8 +15,26 @@ class SpaceOverview extends Component {
     history.push(`/spaces/${space._id}/pages/${space.homePage._id}/edit`)
   }
 
-  handleDeleteSpace = () => {
-    this.props.actions.deleteSpaceRequest(this.props.space._id)
+  handleOpenWarningModal = () => {
+    this.props.actions.openWarningModal(false, this.props.space._id)
+  }
+  exportPageToPdf = () => {
+    this.props.actions.exportPageToPdf(this.props.homePage)
+  }
+
+  exportPageToWord = () => {
+    this.props.actions.exportPageToWord(this.props.homePage)
+  }
+  handleCallSystemDialogWindow = () => {
+    this.refs.fileUploader.click()
+  }
+
+  handleChoosenFile = (e) => {
+    if (e.target.files[0]) {
+      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+    } else {
+      console.log('cancel')
+    }
   }
 
   render () {
@@ -25,7 +44,10 @@ class SpaceOverview extends Component {
         <SpaceOverviewHeader
           space={space}
           handleEditBtnClick={this.handleEditBtnClick}
-          handleDeleteSpace={this.handleDeleteSpace}
+          onPdfExport={this.exportPageToPdf}
+          onWordExport={this.exportPageToWord}
+          onWordImport={this.handleCallSystemDialogWindow}
+          openWarningModal={this.handleOpenWarningModal}
         />
         {
           homePage &&
@@ -33,6 +55,8 @@ class SpaceOverview extends Component {
             <PageContent content={homePage.content} />
           </div>
         }
+        <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
+
       </React.Fragment>
     )
   }
@@ -52,10 +76,15 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getPageByIdRequest, deleteSpaceRequest
+        getPageByIdRequest,
+        exportPageToPdf,
+        exportPageToWord,
+        sendDocFileRequest,
+        createPageRequest,
+        openWarningModal
       }
       , dispatch)
   }
 }
 
-export default connect(null, mapDispatchToProps)(SpaceOverview)
+export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverview))

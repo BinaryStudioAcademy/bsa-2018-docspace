@@ -4,7 +4,8 @@ import { combineReducers } from 'redux'
 
 const initialState = {
   all: [],
-  byId: {}
+  byId: {},
+  isFetching: false
 }
 
 function all (state = initialState.all, action) {
@@ -12,7 +13,8 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_ALL_SPACES_SUCCESS:
       return action.payload.all
 
-    case actionTypes.DELETE_SPACE_SUCCESS: {
+    case actionTypes.DELETE_SPACE_SUCCESS:
+    case actionTypes.DELETE_CATEGORY_SUCCESS: {
       return state.filter(id => id !== action.payload._id)
     }
 
@@ -34,6 +36,8 @@ function byId (state = initialState.byId, action) {
 
     case actionTypes.GET_SPACE_SUCCESS:
     case actionTypes.CREATE_SPACE_SUCCESS:
+    case actionTypes.CREATE_CATEGORY_SUCCESS:
+    case actionTypes.DELETE_CATEGORY_SUCCESS:
       return { ...state, [action.payload._id]: action.payload }
 
     // update target page title in pages list
@@ -74,9 +78,27 @@ function byId (state = initialState.byId, action) {
   }
 }
 
+function isFetching (state = initialState.isFetching, action) {
+  switch (action.type) {
+    case actionTypes.GET_ALL_SPACES_REQUEST:
+    case actionTypes.GET_SPACE_REQUEST:
+      return true
+    case actionTypes.GET_ALL_SPACES_SUCCESS:
+    case actionTypes.GET_ALL_SPACES_ERROR:
+    case actionTypes.UPDATE_SPACE_SUCCESS:
+    case actionTypes.UPDATE_SPACE_ERROR:
+    case actionTypes.GET_SPACE_SUCCESS:
+    case actionTypes.GET_SPACE_ERROR:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   all,
-  byId
+  byId,
+  isFetching
 })
 
 // SELECTOR
@@ -88,6 +110,9 @@ export const allSpaces = ({spaces}) => spaces.all.map(id => spaces.byId[id])
 
 export const spaceById = (state) => {
   const id = state.router.location.pathname.split('/')[2]
-
   return state.spaces.byId[id]
 }
+
+export const getUserId = ({verification}) => verification.user._id
+
+export const isSpacesFetching = ({ spaces }) => spaces.isFetching

@@ -7,14 +7,14 @@ export default class TemplateSelectionModal extends Component {
   renderModalHeader = () => {
     return (
       <h2 className='modal-header' >
-        Create a space
+        {this.props.t('create_space')}
         <div className='modal-help-link' >
-          <a href=''> Help </a>
+          <a href=''> {this.props.t('help')} </a>
         </div>
         <form className='modal-filter-form'>
           <input
             type='text'
-            placeholder='filter'
+            placeholder={this.props.t('filter')}
             onChange={({target}) => this.props.handleFilter(target)}
           />
         </form>
@@ -25,7 +25,6 @@ export default class TemplateSelectionModal extends Component {
   renderModalFooter = () => {
     // todo: change next btn color  whe it's disabled
     const disableNextButton = !this.props.selectedTemplate
-    console.log(disableNextButton)
     return (
       <div className='modal-footer'>
         <button
@@ -33,10 +32,10 @@ export default class TemplateSelectionModal extends Component {
           onClick={this.props.handleNextClick}
           disabled={disableNextButton}
         >
-           Next
+          {this.props.t('next')}
         </button>
         <button onClick={this.props.closeModal}>
-           Close
+          {this.props.t('close')}
         </button>
       </div>
     )
@@ -48,6 +47,7 @@ export default class TemplateSelectionModal extends Component {
          items={this.props.spaceTemplates}
          selectedItem={this.props.selectedTemplate}
          handleSelectItem={this.props.handleSelectTemplate}
+         handleDoubleClickOnItem={this.props.selectTemplateAngGoToNextStep}
        />
      )
    }
@@ -58,6 +58,7 @@ export default class TemplateSelectionModal extends Component {
          renderHeader={this.renderModalHeader}
          renderFooter={this.renderModalFooter}
          renderContent={this.renderModalContent}
+         closeModal={this.props.closeModal}
        />
      )
    }
@@ -69,5 +70,7 @@ TemplateSelectionModal.propTypes = {
   handleFilter: PropTypes.func.isRequired,
   handleNextClick: PropTypes.func.isRequired,
   handleSelectTemplate: PropTypes.func.isRequired,
-  spaceTemplates: PropTypes.arrayOf(PropTypes.object)
+  spaceTemplates: PropTypes.arrayOf(PropTypes.object),
+  selectTemplateAngGoToNextStep: PropTypes.func,
+  t: PropTypes.func
 }

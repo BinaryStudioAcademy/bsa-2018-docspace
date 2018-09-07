@@ -42,7 +42,7 @@ class SpaceOverviewTab extends Component {
     const { t } = this.props
     return (
       <React.Fragment>
-        <h3 className='space-details-header'> {t('Space_details')}
+        <h3 className='space-details-header'> {t('space_details')}
           <span className='edit-icons'>
             <i
               className={`fas fa-pen ${isEditing ? 'active' : ''}`}
@@ -58,11 +58,17 @@ class SpaceOverviewTab extends Component {
         <div className='space-overview-body'>
           {
             !isEditing
-              ? <SpaceDetails space={this.props.space} />
+              ? <SpaceDetails
+                space={this.props.space}
+                pathToCategories={`${this.props.match.url}/categories`}
+                user={this.props.user}
+              />
               : <EditSpaceDetailsForm
                 goBackToDetails={this.backToSpaceDetails}
                 updateSpace={this.props.updateSpace}
                 space={this.props.space}
+                deleteCategory={this.props.deleteCategory}
+                createCategory={this.props.createCategory}
               />
           }
         </div>
@@ -85,7 +91,13 @@ SpaceOverviewTab.propTypes = {
   t: PropTypes.func.isRequired,
   updateSpace: PropTypes.func.isRequired,
   space: PropTypes.object.isRequired,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  createCategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired
+  }),
+  user: PropTypes.object
 }
 
 export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverviewTab))

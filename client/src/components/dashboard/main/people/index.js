@@ -1,26 +1,33 @@
 import React, {Component} from 'react'
 import './people.css'
 import SpacesSideBar from '../../spacesSidebar'
-const sideBarTabs = ['All People', 'People with Personal Spaces']
+import PeopleBody from '../../peopleBody'
+import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 class People extends Component {
   state = {
-    active: ''
+    active: this.props.t('all_people')
   }
-  updateData = (tab) => {
+  handleClickNavTab = (tab) => {
     this.setState({ active: tab })
   }
   render () {
+    const {t} = this.props
+    const sideBarTabs = [t('all_people'), t('people_with_personal_spaces')]
     return (
       <div className='dashboard-spaces'>
         <div className='spaces-header'>
-          <h1>People Directory</h1>
+          <h1>{t('people_directory')}</h1>
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>
-            <SpacesSideBar menuTabs={sideBarTabs} updateData={this.updateData} />
+            <SpacesSideBar menuTabs={sideBarTabs} handleClickNavTab={this.handleClickNavTab} activeTab={this.state.active} />
           </div>
-          <div />
+          <div className='people-list-container' >
+            <h1>People</h1>
+            <PeopleBody />
+          </div>
         </div>
       </div>
 
@@ -28,4 +35,8 @@ class People extends Component {
   }
 }
 
-export default People
+People.propTypes = {
+  t: PropTypes.func
+}
+
+export default translate('translations')(People)

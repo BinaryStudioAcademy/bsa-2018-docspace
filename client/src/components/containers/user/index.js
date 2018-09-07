@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
-import { updateUser, checkPassword } from './logic/userActions'
+import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest } from './logic/userActions'
+import { isUserFetching } from './logic/userReducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ManagePhoto } from 'src/components/managePhotos/managePhotos'
 import { ProfileFields } from 'src/components/userTabs/general'
 import { PrivateFields } from 'src/components/userTabs/private'
-import RecentWorkListItem from 'src/components/recentWorkListItem/recentWorkListItem'
+import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWorkContainer'
 import { translate } from 'react-i18next'
-import { withRouter } from 'react-router-dom'
+import { MoonLoader } from 'react-spinners'
+import defaultAvatar from '../../../assets/user.png'
+import { Redirect, withRouter, NavLink } from 'react-router-dom'
 
 import './user.css'
 
@@ -38,7 +41,16 @@ class User extends Component {
     this.renderMainInfo = this.renderMainInfo.bind(this)
     this.renderRecentWorks = this.renderRecentWorks.bind(this)
   }
-
+  componentDidMount () {
+    this.props.actions.compareUserRequest(this.props.userLogin, this.props.match.params.login)
+    this.props.actions.getUserUpdatesRequest(this.props.match.params.login)
+  }
+  componentWillReceiveProps (nextProps) {
+    if (this.props.match.params.login !== nextProps.match.params.login) {
+      this.props.actions.compareUserRequest(this.props.userLogin, nextProps.match.params.login)
+      this.props.actions.getUserUpdatesRequest(nextProps.match.params.login)
+    }
+  }
   handlePassword (currentPassword, newPassword) {
     this.props.actions.checkPassword({
       email: this.props.userSettings.user.email,
@@ -58,6 +70,15 @@ class User extends Component {
   changePrivate () {
     this.setState({isShowGeneral: false})
   }
+
+  changeState (target) {
+    if (target.name === this.props.t('general')) {
+      this.setState({isShowGeneral: true})
+    } else {
+      this.setState({isShowGeneral: false})
+    }
+  }
+
   managePhoto () {
     this.setState(prevState => {
       return { isShowManagePhoto: !prevState.isShowManagePhoto }
@@ -99,20 +120,33 @@ class User extends Component {
     })
   }
 
-  renderAddPhoto (t) {
-    return (
-      <div className='profile-header-add-photo' onClick={this.managePhoto}>
-        <div className='add-photo-content'>
-          <button className='add-photo-button'>
-            <img src={Camera} alt='camera' className='add-photo-img' />
-            <span className='add-photo-label'>{t('add_cover_photo')}</span>
-          </button>
-        </div>
-      </div>
-    )
+  handleAvatarChoose = () => {
+    this.refs.avatarUploader.click()
   }
 
-  renderHeaderCenter (t, firstName, lastName) {
+  handleChoosenFile = (e) => {
+    if (e.target.files[0]) {
+      this.props.actions.sendAvatarRequest(e.target.files[0], this.props.userSettings.user._id)
+    } else {
+      console.log('cancel')
+    }
+  }
+
+  renderAddPhoto (t, resultOfComparing) {
+    return resultOfComparing
+      ? (
+        <div className='profile-header-add-photo' onClick={this.managePhoto}>
+          <div className='add-photo-content'>
+            <button className='add-photo-button'>
+              <img src={Camera} alt='camera' className='add-photo-img' />
+              <span className='add-photo-label'>{t('add_cover_photo')}</span>
+            </button>
+          </div>
+        </div>
+      ) : null
+  }
+
+  renderHeaderCenter (t, firstName, lastName, avatar, resultOfComparing) {
     return (
       <div className='profile-page-center'>
         <a className='profile-link-All-People' onClick={this.handleAllPeople}>
@@ -124,9 +158,10 @@ class User extends Component {
         <div className='profile-name-avatar'>
           <div className='profile-avatar-wrapper'>
             <button className='avatar-btn'>
-              <span className='profile-avatar-cover-btn' >''</span>
+              <img src={avatar || defaultAvatar} className='profile-avatar-cover-btn' alt='avatar' />
             </button>
-            <div className='profile-avatar-hover'>
+            <div className={resultOfComparing ? 'profile-avatar-hover' : ''} onClick={resultOfComparing ? this.handleAvatarChoose : undefined}>
+              <input type='file' ref='avatarUploader' accept='image/*' style={{display: 'none'}} onChange={this.handleChoosenFile} />
               <i className='fa fa-camera profile-avatar-camera' aria-hidden='true' style={{color: 'white', fontSize: '24px'}} />
             </div>
           </div>
@@ -152,22 +187,54 @@ class User extends Component {
     )
   }
 
-  renderEditButtons (t) {
+  renderEditButtons (t, isFetching, resultOfComparing) {
+    const TABS = [
+      {
+        name: t('general')
+      },
+      {
+        name: t('password')
+      }
+    ]
     return (
       <div className='profile-edit-buttons'>
-        <div className='edit-manage-btn'>
-          <div className='manage-btn'>
-            <button onClick={this.changeGeneral}>{t('general')}</button>
+        {resultOfComparing
+          ? <div className='user-settings-nav-bar'>
+            {TABS.map(({ name, path }) =>
+              <NavLink
+                key={name}
+                className={(this.state.isShowGeneral && name === t('general')) || (!this.state.isShowGeneral && name === t('password')) ? 'activity-nav-bar-tab active-link' : 'activity-nav-bar-tab'}
+                to='#'
+                activeClassName='active-link'
+                onClick={({target}) => this.changeState(target)}
+                name={name}
+              >
+                {name}
+              </NavLink>
+            )}
           </div>
-          <div className='manage-btn'>
-            <button onClick={this.changePrivate}>{t('private')}</button>
+          : <h2 className='recent-work-list-wrapper-header'>{t('general_information')}</h2>
+        }
+        { isFetching
+          ? <div className='sweet-loading'>
+            {
+              this.state.isShowGeneral
+                ? <span className='user-loading-info'>{t('data_is_changing')}</span>
+                : <span className='user-loading-info'>{t('password_is_changing')}</span>
+            }
+            <MoonLoader
+              sizeUnit={'px'}
+              size={16}
+              color={'#123abc'}
+            />
           </div>
-        </div>
+          : null
+        }
       </div>
     )
   }
 
-  renderMainInfo (t, errorsUser, user, successful, errors) {
+  renderMainInfo (t, i18n, errorsUser, user, successful, errors, resultOfComparing) {
     return (
       !this.state.isShowGeneral
         ? <PrivateFields
@@ -184,7 +251,9 @@ class User extends Component {
           editMode={this.editMode}
           user={user}
           errors={errorsUser}
+          resultOfComparing={resultOfComparing}
           t={t}
+          i18n={i18n}
         />
     )
   }
@@ -193,48 +262,32 @@ class User extends Component {
     return (
       <div className='recent-work-list-wrapper'>
         <h2 className='recent-work-list-wrapper-header'><span>{t('work')}</span></h2>
-        <ul className='recent-work-list-items'>
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'Web application'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-page-icon.svg'}
-            nameOfItem={'Mobile application'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-          <RecentWorkListItem
-            src={'https://home-static.us-east-1.prod.public.atl-paas.net/confluence-blogpost-icon.svg'}
-            nameOfItem={'Blog about adding new features'}
-            nameOfSpace={'DocSpace Project'}
-            contributors={''}
-          />
-        </ul>
+        <RecentWorkListContainer userHistory={this.props.userHistory} />
       </div>
     )
   }
 
   render () {
-    const { t } = this.props
-    const { user } = this.props.userSettings
+    if (this.props.isNotFound.hasOwnProperty('isNotFound') && this.props.match.params.login !== this.props.userLogin) {
+      return <Redirect to='/' />
+    }
+    const { t, i18n, isFetching } = this.props
+    const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
+    const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
-    const { firstName, lastName } = user
     const { successful, errors } = this.props.resultOfChecking
     return (
       <div className='main-wrapper'>
         <div className='profile-page-header'>
-          { this.renderAddPhoto(t) }
+          { this.renderAddPhoto(t, this.props.resultOfComparing) }
           <ManagePhoto display={this.handleManagePhoto} t={t} />
-          { this.renderHeaderCenter(t, firstName, lastName)}
+          { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
         </div>
         <div className='profile-page-center-content'>
           { this.renderClock() }
           <hr />
-          { this.renderEditButtons(t) }
-          { this.renderMainInfo(t, errorsUser, user, successful, errors) }
+          { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
+          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
           { this.renderRecentWorks(t) }
         </div>
       </div>
@@ -245,10 +298,17 @@ class User extends Component {
 User.propTypes = {
   userSettings: PropTypes.object,
   match: PropTypes.object,
+  isFetching: PropTypes.bool,
+  userHistory: PropTypes.array,
   params: PropTypes.array,
   id: PropTypes.string,
   history: PropTypes.object,
   t: PropTypes.func,
+  i18n: PropTypes.object,
+  resultOfComparing: PropTypes.bool,
+  userLogin: PropTypes.string,
+  compareUser: PropTypes.object,
+  isNotFound: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -258,18 +318,25 @@ User.propTypes = {
   })
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     userSettings: state.user.userReducer.messages.length
       ? state.user.userReducer
       : state.verification,
-    resultOfChecking: state.user.checkingReducer
+    resultOfChecking: state.user.checkingReducer,
+    isFetching: isUserFetching(state),
+    userLogin: state.verification.user.login,
+    userAvatar: state.verification.user.avatar,
+    userHistory: state.user.userHistory,
+    isNotFound: state.user.getUser,
+    compareUser: state.user.getUser._doc ? state.user.getUser._doc : state.verification.user,
+    resultOfComparing: state.user.getUser.resultOfComparing
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateUser, checkPassword }, dispatch)
+    actions: bindActionCreators({ updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest }, dispatch)
   }
 }
 

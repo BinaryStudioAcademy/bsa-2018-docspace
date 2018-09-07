@@ -1,61 +1,59 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
 import * as actions from 'src/components/space/spaceContainer/logic/spaceActions'
 import SpaceOverviewTab from './overview'
-import SpaceSettingsTab from './settings'
-import NavBar from './navBar'
+// import SpaceSettingsTab from './settings'
+import { Route, NavLink, withRouter } from 'react-router-dom'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
+import SpacePermissionsTab from './permissions'
+import { translate } from 'react-i18next'
 import './spaceSettings.css'
 
-// will be connected to store. Fetch for space with this name in didMount
-class SpaceSettings extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      activeTab: 'overview',
-      renderByActiveTab: {
-        'overview': this.renderOverviewTab,
-        'settings': this.renderSettingsTab
-      }
+const SpaceSettings = (props) => {
+  const TABS = [
+    {
+      name: props.t('overview'),
+      path: '/overview',
+      component: SpaceOverviewTab
+    },
+    {
+      name: props.t('permissions'),
+      path: '/permissions',
+      component: SpacePermissionsTab
     }
-  }
-
-  renderOverviewTab = () => {
-    return <SpaceOverviewTab updateSpace={this.props.updateSpace} space={this.props.space} />
-  }
-
-  renderSettingsTab = () => {
-    return <SpaceSettingsTab />
-  }
-
-  handleNavLinkCLick = (tabName) => {
-    this.setState({
-      activeTab: tabName
-    })
-  }
-
-  render () {
-    const {renderByActiveTab, activeTab} = this.state
-    return (
-      <div className='space-settings-page'>
-        <h2 className='space-settings-page-header'>Space settings</h2>
-        <NavBar
-          handleNavLinkCLick={this.handleNavLinkCLick}
-          allTabsName={Object.keys(renderByActiveTab)}
-          activeTabName={activeTab}
-        />
-        { renderByActiveTab[activeTab]() }
-      </div>
-    )
-  }
+  ]
+  return <div className='space-settings-page'>
+    <h2 className='space-settings-page-header'>{props.t('space_settings')}</h2>
+    <div className='nav-bar'>
+      {TABS.map(({ name, path }) =>
+        <NavLink
+          key={name}
+          className={`nav-bar-tab ${name}`}
+          to={`${props.match.url}${path}`}
+          activeClassName='active-link'
+        >
+          {name}
+        </NavLink>
+      )}
+    </div>
+    {TABS.map(({ name, path, component: TabComponent }) =>
+      <Route
+        key={name}
+        path={`${props.match.url}${path}`}
+        render={() => <TabComponent {...props} />}
+        t={props.t}
+      />
+    )}
+  </div>
 }
 
 SpaceSettings.propTypes = {
-  updateSpace: PropTypes.func.isRequired,
-  space: PropTypes.object
+  match: PropTypes.shape({
+    url: PropTypes.string
+  }),
+  t: PropTypes.func
 }
 
 SpaceSettings.defaultProps = {
@@ -65,16 +63,21 @@ SpaceSettings.defaultProps = {
   }
 }
 
-const mapStateToprops = (state) => {
+const mapStateToProps = (state) => {
   return {
-    space: spaceById(state)
+    space: spaceById(state),
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch)
+    updateSpace: bindActionCreators(actions.updateSpaceRequest, dispatch),
+    createCategory: bindActionCreators(actions.createCategoryRequest, dispatch),
+    deleteCategory: bindActionCreators(actions.deleteCategoryRequest, dispatch)
   }
 }
 
-export default connect(mapStateToprops, mapDispatchToProps)(SpaceSettings)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SpaceSettings)))
