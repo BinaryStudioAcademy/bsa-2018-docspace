@@ -171,6 +171,9 @@
     "a_few_days_ago": "a few days ago",
     "a_week_ago": "a week ago",
     "a_month_ago": "a month ago",
-    "a_months_ago": "a months ago"
+    "a_months_ago": "a months ago",
+    "added_users": "Added users",
+    "user_search": "User search",
+    "no_user": "No users in group yet"
   }
 }

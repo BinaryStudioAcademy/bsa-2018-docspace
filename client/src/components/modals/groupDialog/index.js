@@ -3,7 +3,7 @@ import Modal from 'src/components/common/modal'
 import Input from 'src/components/common/input'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createGroupRequest } from '../../group/logic/groupsAction'
+import { createGroupRequest, updateGroupRequest } from '../../group/logic/groupsAction'
 import { getAllUserGroupsRequest, cleanMatchingUser, sendInvitation } from './logic/matchingUserActions'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -37,6 +37,20 @@ class GroupDialog extends Component {
     this.search(target)
   }
 
+  renderUserList = () => {
+    const noUsers = this.props.t('no_user')
+    let userList = ''
+    if (this.state.usersInGroup.length) {
+      this.state.usersInGroup.forEach((user, i) => {
+        userList += user.name
+        userList += i !== this.state.usersInGroup.length - 1 ? ', ' : ''
+      })
+    } else {
+      userList = noUsers
+    }
+    return userList
+  }
+
   renderContent = () => {
     const {t} = this.props
     const forAutoFocus = true
@@ -64,9 +78,15 @@ class GroupDialog extends Component {
           /></div>
         </div>
         <div className='group-dialog-row'>
-          <div className='group-modal-label'><label htmlFor='user'>{t('User')}</label></div>
+          <div className='group-modal-label'><label htmlFor='user'>{t('added_users')}</label></div>
+          <div className='group-modal-input group-added-users'>
+            <p>{this.renderUserList()}</p>
+          </div>
+        </div>
+        <div className='group-dialog-row'>
+          <div className='group-modal-label'><label htmlFor='user'>{t('user_search')}</label></div>
           <div className='group-modal-input'>
-            <Input label={t('user')}
+            <Input label={t('user_name_contains')}
               value={this.state.user}
               onChange={({target}) => this.onChange(target)}
               name='user'
@@ -90,17 +110,37 @@ class GroupDialog extends Component {
   renderUsers = () => {
     let usersTable
     this.props.matchingUsers !== []
-      ? usersTable = this.props.matchingUsers.map((user, i) =>
-        user._id !== this.props.user._id &&
-        <button onClick={() => { this.addUsersInGroup(user._id, user.name, user.email) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
-      ) : usersTable = ''
+      ? usersTable = this.props.matchingUsers.map((user, i) => {
+        const {_id, name, email} = user
+        return user._id !== this.props.user._id &&
+          <button onClick={() => { this.manageUser(_id, name, email) }}
+            key={i}>{user.name + '  '}
+            <i className='fas fa-plus' />
+          </button>
+      })
+      : usersTable = ''
     return usersTable
   }
 
+  manageUser = (id, name, email) => {
+    const { usersInGroup } = this.state
+    const index = usersInGroup.findIndex(user => user.id === id)
+    if (index === -1) {
+      this.addUsersInGroup(id, name, email)
+    } else {
+      this.deleteUserFromGroup(id, name, email)
+    }
+  }
+
   addUsersInGroup = (id, name, email) => {
-    // this.props.actions.sendInvitation(name, email)
     this.setState(prevState => ({
       usersInGroup: [...prevState.usersInGroup, {id, name, email}]
+    }))
+  }
+
+  deleteUserFromGroup = (memberId) => {
+    this.setState(prevState => ({
+      usersInGroup: prevState.usersInGroup.filter(user => user.id !== memberId)
     }))
   }
 
@@ -121,6 +161,9 @@ class GroupDialog extends Component {
     }
     actions.createGroupRequest(group)
     actions.sendInvitation(usersInGroup, inviteNewUser, `${user.firstName} ${user.lastName}`, group.title)
+    this.state.user = ''
+    this.state.usersInGroup = []
+    this.props.cancelModal()
     cancelModal()
   }
 
@@ -174,6 +217,7 @@ function mapDispatchToProps (dispatch) {
         createGroupRequest,
         getAllUserGroupsRequest,
         cleanMatchingUser,
+        updateGroupRequest,
         sendInvitation
       }
       , dispatch)
