@@ -110,21 +110,20 @@ class GroupDialog extends Component {
   renderUsers = () => {
     let usersTable
     this.props.matchingUsers !== []
-      ? usersTable = this.props.matchingUsers.map((user, i) =>
-        user._id !== this.props.user._id &&
-        <button onClick={() => { this.manageUser(user._id, user.name, user.email) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
-      ) : usersTable = ''
+      ? usersTable = this.props.matchingUsers.map((user, i) => {
+        const {_id, name, email} = user
+        return user._id !== this.props.user._id &&
+          <button onClick={() => { this.manageUser(_id, name, email) }} key={i}>{user.name + '  '}
+            <i className='fas fa-plus' />
+          </button>
+      }) : usersTable = ''
     return usersTable
   }
 
   manageUser = (id, name, email) => {
-    let isInGroup = 0
-    this.state.usersInGroup.forEach(user => {
-      if (user.id === id) {
-        isInGroup = 1
-      }
-    })
-    if (isInGroup !== 1) {
+    const { usersInGroup } = this.state
+    const index = usersInGroup.findIndex(user => user.id === id)
+    if (index === -1) {
       this.addUsersInGroup(id, name, email)
     } else {
       this.deleteUserFromGroup(id, name, email)
