@@ -49,6 +49,8 @@ function * createBlogPage (action) {
 function * updatePage (action) {
   try {
     const target = action.payload
+    // FIX conflict with mongodb and timestamp. Same for blog
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))
@@ -61,6 +63,7 @@ function * updatePage (action) {
 function * updateBlogPage (action) {
   try {
     const target = action.payload
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     const spaceId = yield select(spaceIdFromPathname)
     yield put(push(`/spaces/${spaceId}/blog/${updated._id}`))
