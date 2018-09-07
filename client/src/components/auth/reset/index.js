@@ -70,9 +70,9 @@ class ResetPassword extends Component {
               <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('is_return_to_log_in_?')}</p>
             </form>
             { !!message &&
-              <h4 className='auth-reset-answer'>
+              <p className='auth-reset-answer'>
                 {message}
-              </h4>
+              </p>
             }
           </div>
         </div>
