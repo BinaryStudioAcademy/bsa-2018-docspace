@@ -44,8 +44,6 @@ class GroupDialog extends Component {
       this.state.usersInGroup.forEach((userId, i) => {
         this.props.matchingUsers.forEach(user => {
           if (userId === user._id) {
-            console.log(i)
-            console.log(this.state.usersInGroup.length)
             userList += user.name
             userList += i !== this.state.usersInGroup.length - 1 ? ', ' : ''
           }
@@ -60,7 +58,6 @@ class GroupDialog extends Component {
   renderContent = () => {
     const {t} = this.props
     const forAutoFocus = true
-    console.log(this.state)
     return <React.Fragment>
       <div className='group'>
         <div className='group-dialog-row'>
