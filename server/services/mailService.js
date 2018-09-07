@@ -67,7 +67,7 @@ module.exports = {
               htmlText: Invite.inviteTemplateMessage(
                 `<span style="text-decoration: underline;">${senderCommentLogin}</span> mentioned you`,
                 req.headers.host,
-                `You was mentioned in a comment by ${senderCommentLogin}`,
+                `You was mentioned in a comment`,
                 mainMessage, btnMessage, link)
             }
             mailSender.sendData(message)
