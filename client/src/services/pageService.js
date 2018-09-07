@@ -98,5 +98,13 @@ class PageService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+  mentionInComment = (users) => {
+    const args = { endpoint: `/api/mail/sendMention`, method: 'POST', body: JSON.stringify(users) }
+    callWebApi(args)
+    /* const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult */
+  }
 }
 export default new PageService()

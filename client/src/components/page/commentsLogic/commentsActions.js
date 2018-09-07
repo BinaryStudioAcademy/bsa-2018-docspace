@@ -46,7 +46,6 @@ export const addCommentToPageSuccess = (page, newComment) => {
 export const addCommentFailure = () => ({
   type: commentsActionTypes.CREATE_COMMENT_ERROR
 })
-
 // EDIT
 export const editCommentRequest = (comment, page) => ({
   type: commentsActionTypes.EDIT_COMMENT_REQUEST,

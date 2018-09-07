@@ -41,8 +41,12 @@ class CommentsList extends Component {
         replyComment={this.replyComment}
         level={comment.level}
         addNewComment={this.props.addNewComment}
+        sendMention={this.props.sendMention}
         user={this.props.user}
         userId={this.props.userId}
+        pageId={this.props.pageId}
+        spaceId={this.props.spaceId}
+        type={this.props.type}
         likeAction={this.props.likeAction}
       />
     )
@@ -57,11 +61,15 @@ class CommentsList extends Component {
 export default CommentsList
 
 CommentsList.propTypes = {
+  type: PropTypes.string,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string,
   comments: PropTypes.array,
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
   addNewComment: PropTypes.func,
   userId: PropTypes.string,
+  sendMention: PropTypes.func,
   user: PropTypes.object,
   likeAction: PropTypes.func
 }

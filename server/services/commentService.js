@@ -36,17 +36,20 @@ module.exports = {
       })
   },
 
-  add: async (req, res) => {
-    let savedComment = await CommentRepository.create(req.body.comment)
-      .then(comment => comment)
-      .catch(err => err)
-    await PageRepository.addNewComment(req.body.pageId, savedComment._id)
-      .then(page => {
-        console.log(page)
-        return page
+  add: (req, res) => {
+    CommentRepository.create(req.body.comment)
+      .then(comment => {
+        console.log(comment)
+        PageRepository.addNewComment(req.body.pageId, comment._id)
+          .then(() => {
+            CommentRepository.getById(comment._id)
+              .populate({
+                path: 'userId',
+                select: 'firstName lastName avatar login'
+              })
+              .then(populatedCommment => res.send(populatedCommment))
+          })
       })
-      .catch(err => res.status(500).send(err))
-    res.send(savedComment)
   },
 
   findOneAndUpdate: (req, res) => {
@@ -54,6 +57,10 @@ module.exports = {
       .populate({
         path: 'userLikes',
         select: 'firstName lastName'
+      })
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
       })
       .then(comment => res.send(comment))
       .catch(err => res.status(500).send(err))

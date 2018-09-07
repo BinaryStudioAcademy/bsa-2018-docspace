@@ -6,7 +6,6 @@ import {userService} from 'src/services/userService'
 function * getAllUsers () {
   try {
     const users = yield userService.getAllUsers()
-    console.log(users)
     yield put(actions.getAllUsersSuccess(users))
   } catch (e) {
     console.log(e)
