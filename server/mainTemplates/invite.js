@@ -48,10 +48,9 @@ module.exports = {
     
       <tr>
         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-          padding-top: 20px;
+          padding-top: 20px; display: flex; line-height: 40px;
           padding-bottom: 20px;">
-    
-        <div style="display: flex; align-items: center;">
+  
           <a target="_blank" style="text-decoration: none;"
             href="http://${host}"><img border="0" vspace="0" hspace="0"
             src="https://image.ibb.co/fdngue/logo_Animal_Black.png"
@@ -59,7 +58,6 @@ module.exports = {
             alt="Logo" title="DocSpace" style="
             color: #000000;
             font-size: 10px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;" /></a><span style="text-transform: uppercase; font-family: arial; letter-spacing: 1px; font-size: 18px; font-weight: 600;">DocSpace</span>
-          </div>
         </td>
       </tr>
     

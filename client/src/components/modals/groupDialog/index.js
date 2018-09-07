@@ -110,17 +110,18 @@ class GroupDialog extends Component {
 
   createGroup = () => {
     let inviteNewUser = false
+    const { actions, cancelModal, user } = this.props
+    const { name, description, usersInGroup } = this.state
     const members = this.state.usersInGroup.map(member => member.id)
     members.push(this.props.user._id)
     const group = {
       members: members,
-      title: this.state.name,
-      description: this.state.description
+      title: name,
+      description: description
     }
-    const newGroup = this.props.actions.createGroupRequest(group)
-    console.log(newGroup)
-    this.props.actions.sendInvitation(this.state.usersInGroup, inviteNewUser, `${this.props.user.firstName} ${this.props.user.lastName}`, group.title)
-    this.props.cancelModal()
+    actions.createGroupRequest(group)
+    actions.sendInvitation(usersInGroup, inviteNewUser, `${user.firstName} ${user.lastName}`, group.title)
+    cancelModal()
   }
 
   renderFooter = () => {

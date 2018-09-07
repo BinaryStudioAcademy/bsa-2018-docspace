@@ -34,18 +34,21 @@ class AdministrationUsers extends Component {
   handleSendInvitation = () => {
     let sendMembers = []
     let inviteNewUser = true
+    const { user, actions } = this.props
+    const { nameField1, nameField2, nameField3 } = this.state
+    const { emailField1, emailField2, emailField3 } = this.state
     if (this.state.nameField1 && this.state.emailField1) {
-      sendMembers.push({name: this.state.nameField1, email: this.state.emailField1})
+      sendMembers.push({name: nameField1, email: emailField1})
     }
     if (this.state.nameField2 && this.state.emailField2) {
-      sendMembers.push({name: this.state.nameField2, email: this.state.emailField2})
+      sendMembers.push({name: nameField2, email: emailField2})
     }
     if (this.state.nameField3 && this.state.emailField3) {
-      sendMembers.push({name: this.state.nameField3, email: this.state.emailField3})
+      sendMembers.push({name: nameField3, email: emailField3})
     }
     const validateEmails = sendMembers.length && sendMembers.every(member => this.validateEmail(member.email))
     if (validateEmails) {
-      this.props.actions.sendInvitation(sendMembers, inviteNewUser, `${this.props.user.firstName} ${this.props.user.lastName}`)
+      actions.sendInvitation(sendMembers, inviteNewUser, `${user.firstName} ${user.lastName}`)
       this.setState({
         nameField1: '',
         nameField2: '',

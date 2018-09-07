@@ -5,33 +5,43 @@ const GroupRepository = require('../repositories/GroupRepository')
 
 module.exports = {
   sendIviteToGroup: async (req, res) => {
-    if (req.body.isInviteNewUser) {
+    const { isInviteNewUser, invitedUsers, senderInvite } = req.body
+    if (isInviteNewUser) {
       const mainMessage = `<span style="text-decoration: underline;">DocSpace</span> is content collaboration software that changes how modern teams work. Create, share, and collaborate on projects all in one place to keep your projects moving forward, faster.`
       const btnMessage = `Create account`
       const link = 'http://' + req.headers.host + '/signup'
-      await req.body.invitedUsers.forEach((user) => {
+      await invitedUsers.forEach((user) => {
         const message = {
           senderName: 'DocSpaceTeam',
           subject: 'Invitation to application',
           text: 'You was invited to application',
           email: user.email,
-          htmlText: Invite.inviteTemplateMessage(`<span style="text-decoration: underline;">${req.body.senderInvite}</span> invites you`, req.headers.host, `You've got the invitation to the DocSpace`, mainMessage, btnMessage, link)
+          htmlText: Invite.inviteTemplateMessage(
+            `<span style="text-decoration: underline;">${senderInvite}</span> invites you`,
+            req.headers.host,
+            `You've got the invitation to the DocSpace`,
+            mainMessage, btnMessage, link)
         }
         mailSender.sendData(message)
       })
     } else {
       const mainMessage = `Work together on a whole new level. Create, share, and collaborate on projects all in one place to keep your projects moving forward, faster.`
       const btnMessage = `See the group`
-      GroupRepository.getByTitleFind(req.body.groupTitle)
+      const { groupTitle, senderInvite } = req.body
+      GroupRepository.getByTitleFind(groupTitle)
         .then(group => {
           const link = 'http://' + req.headers.host + '/group/' + group[0]._id
-          req.body.invitedUsers.forEach((user) => {
+          invitedUsers.forEach((user) => {
             const message = {
               senderName: 'DocSpaceTeam',
               subject: 'Invitation to group',
               text: 'You was invited to group',
               email: user.email,
-              htmlText: Invite.inviteTemplateMessage(`<span style="text-decoration: underline;">${req.body.senderInvite}</span> invites you`, req.headers.host, `You've got the invitation to the group`, mainMessage, btnMessage, link)
+              htmlText: Invite.inviteTemplateMessage(
+                `<span style="text-decoration: underline;">${senderInvite}</span> invites you`,
+                req.headers.host,
+                `You've got the invitation to the group`,
+                mainMessage, btnMessage, link)
             }
             mailSender.sendData(message)
           })
@@ -44,6 +54,7 @@ module.exports = {
     const mainMessage = `Teams change and teams grow. DocSpace is a flexible platform that supports the way your team works and can be customized to fit any and every type of need.`
     const btnMessage = `See the page`
     const link = 'http://' + req.headers.host + '/spaces/' + req.body.spaceId + '/' + req.body.BlogOrPage + '/' + req.body.pageId
+    const { senderCommentLogin } = req.body
     await UserRepository.getByLogins(req.body.mentionedUsersLogin)
       .then(users => {
         if (users.length) {
@@ -53,7 +64,11 @@ module.exports = {
               subject: 'You was mentioned in a comment',
               text: 'You was mentioned in a comment',
               email: user.email,
-              htmlText: Invite.inviteTemplateMessage(`<span style="text-decoration: underline;">${req.body.senderCommentLogin}</span> mentioned you`, req.headers.host, `You was mentioned in a comment by ${req.body.senderCommentLogin}`, mainMessage, btnMessage, link)
+              htmlText: Invite.inviteTemplateMessage(
+                `<span style="text-decoration: underline;">${senderCommentLogin}</span> mentioned you`,
+                req.headers.host,
+                `You was mentioned in a comment by ${senderCommentLogin}`,
+                mainMessage, btnMessage, link)
             }
             mailSender.sendData(message)
           })
