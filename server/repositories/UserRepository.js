@@ -15,6 +15,7 @@ class UserRepository extends GeneralRepository {
       [
         { $project: {
           name: { $concat: [ '$firstName', ' ', '$lastName' ] },
+          email: 1,
           _id: 1
         }},
         {$match: {name: { $regex: nameContains, $options: 'i' }}}
@@ -24,6 +25,10 @@ class UserRepository extends GeneralRepository {
 
   getByLogin (login) {
     return this.model.find({'login': login})
+  }
+
+  getByLogins (logins) {
+    return this.model.find({'login': {$in: logins}})
   }
 
   deleteSpace (id, spaceId) {

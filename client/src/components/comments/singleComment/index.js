@@ -49,6 +49,7 @@ export class Comment extends Component {
       <React.Fragment>
         {this.state.editMode
           ? <AddComment
+            userLogin={this.props.user.login}
             text={this.props.comment.text}
             onEditComment={this.onEditComment}
             editComment={this.props.editComment}
@@ -90,8 +91,13 @@ export class Comment extends Component {
           style={{'marginLeft': `${(this.props.level + 1) * 25}px`}}
           addNewComment={this.props.addNewComment}
           ReplyComment={this.onReplyComment}
+          userLogin={this.props.user.login}
+          sendMention={this.props.sendMention}
           avatar={this.props.user.avatar}
           userId={this.props.userId}
+          pageId={this.props.pageId}
+          spaceId={this.props.spaceId}
+          type={this.props.type}
         />}
       </React.Fragment>
     )
@@ -99,7 +105,10 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
+  type: PropTypes.string,
   comment: PropTypes.object,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string,
   margin: PropTypes.string,
   t: PropTypes.func,
   deleteComment: PropTypes.func,
@@ -110,6 +119,7 @@ Comment.propTypes = {
   lastName: PropTypes.string,
   likeAction: PropTypes.func,
   userId: PropTypes.string,
-  user: PropTypes.object
+  user: PropTypes.object,
+  sendMention: PropTypes.func
 }
 export default translate('translations')(Comment)
