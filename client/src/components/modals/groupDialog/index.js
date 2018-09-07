@@ -113,10 +113,12 @@ class GroupDialog extends Component {
       ? usersTable = this.props.matchingUsers.map((user, i) => {
         const {_id, name, email} = user
         return user._id !== this.props.user._id &&
-          <button onClick={() => { this.manageUser(_id, name, email) }} key={i}>{user.name + '  '}
+          <button onClick={() => { this.manageUser(_id, name, email) }}
+            key={i}>{user.name + '  '}
             <i className='fas fa-plus' />
           </button>
-      }) : usersTable = ''
+      })
+      : usersTable = ''
     return usersTable
   }
 
