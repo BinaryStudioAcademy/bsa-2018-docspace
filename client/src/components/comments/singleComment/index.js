@@ -44,7 +44,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const comparingCurrentAndCommentUsers = this.props.comment.userId && this.props.user ? this.props.comment.userId._id === this.props.user._id || this.props.comment.userId === this.props.user._id : null
+    const comparingCurrentAndCommentUsers = (this.props.comment.userId && this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
     return (
       <React.Fragment>
         {this.state.editMode
@@ -58,32 +58,36 @@ export class Comment extends Component {
             parentId={this.props.comment.parentId}
           />
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <Link to={this.props.comment.userId ? `/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}` : '#'} >
-              <CommentAvatar UserAvatarLink={this.props.comment.userId ? this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink : UserAvatarLink} />
-            </Link>
-            <div className='comment-body'>
-              <Link to={this.props.comment.userId ? `/users/${this.props.comment.userId.login ? this.props.comment.userId.login : this.props.user.login}` : '#'} >
-                <h4 className='comment-first-last-names'>
-                  <span>{this.props.comment.userId ? this.props.comment.userId.firstName ? this.props.comment.userId.firstName : this.props.user.firstName : null} {this.props.comment.userId ? this.props.comment.userId.lastName ? this.props.comment.userId.lastName : this.props.user.lastName : null}</span>
-                </h4>
+            {this.props.comment.userId &&
+            <React.Fragment>
+              <Link to={`/users/${this.props.user.login}`} >
+                <CommentAvatar UserAvatarLink={this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink} />
               </Link>
-              <div className='comment-body-content'>
-                <p>{this.props.comment.text}</p>
+              <div className='comment-body'>
+                <Link to={`/users/${this.props.comment.userId.login}`} >
+                  <h4 className='comment-first-last-names'>
+                    <span>{this.props.comment.userId.firstName} {this.props.comment.userId.lastName}</span>
+                  </h4>
+                </Link>
+                <div className='comment-body-content'>
+                  <p>{this.props.comment.text}</p>
+                </div>
+                <CommentActions
+                  onReplyComment={this.onReplyComment}
+                  onEditComment={this.onEditComment}
+                  onDeleteComment={this.onDeleteComment}
+                  onLikeComment={this.onLikeComment}
+                  editComment={this.props.editComment}
+                  creationDate={formatDate(this.props.comment.createdAt)}
+                  likes={this.props.comment.userLikes}
+                  comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
+                  t={this.props.t}
+                  user={this.props.user}
+                />
               </div>
-              <CommentActions
-                onReplyComment={this.onReplyComment}
-                onEditComment={this.onEditComment}
-                onDeleteComment={this.onDeleteComment}
-                onLikeComment={this.onLikeComment}
-                editComment={this.props.editComment}
-                creationDate={formatDate(this.props.comment.createdAt)}
-                likes={this.props.comment.userLikes}
-                comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
-                t={this.props.t}
-                user={this.props.user}
-              />
-            </div>
-          </div>}
+            </React.Fragment>
+            }
+          </div> }
         {this.state.replyMode &&
         <AddComment
           parentId={this.props.comment._id}

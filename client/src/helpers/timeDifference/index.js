@@ -1,3 +1,5 @@
+import {RecentWorks} from 'src/constants/recentWorks'
+
 export function timeDifference (current, previous) {
   const msPerMinute = 60 * 1000
   const msPerHour = msPerMinute * 60
@@ -8,16 +10,17 @@ export function timeDifference (current, previous) {
   const msPerTwoMonth = msPerDay * 60
   const elapsed = current - previous
   if (elapsed < msPerDay) {
-    return 'today'
+    return RecentWorks.TODAY
   } else if (elapsed < msPerTwoDays) {
-    return 'yesterday'
+    return RecentWorks.YERSTERDAY
   } else if (elapsed < msPerWeek) {
-    return 'a few days ago'
+    return RecentWorks.FEW_DAY_AGO
   } else if (elapsed < msEightDays) {
-    return 'a week ago'
+    return RecentWorks.WEEK_AGO
   } else if (elapsed < msPerTwoMonth) {
-    return 'a month ago'
+    return RecentWorks.MONTH_AGO
   } else {
-    return 'a months ago'
+    return RecentWorks.MONTHS_AGO
   }
 }
+// const timeMarkers = ['TODAY', 'YERSTERDAY', 'FEW_DAY_AGO', 'WEEK_AGO', 'MONTH_AGO', 'MONTHS_AGO']

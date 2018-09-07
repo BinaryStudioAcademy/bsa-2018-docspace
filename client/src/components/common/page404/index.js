@@ -13,7 +13,6 @@ class Page404 extends Component {
   }
   render () {
     const { response } = this.props
-    console.log(response.user)
     return (
       <Fragment>
         <div className='page404-main-wrapper'>

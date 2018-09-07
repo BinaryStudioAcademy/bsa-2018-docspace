@@ -1,6 +1,5 @@
 import {timeDifference} from 'src/helpers/timeDifference'
 export default (content) => {
-  console.log(content)
   switch (content._id.action) {
     case 'CREATE_PAGE_SUCCESS':
       return {
@@ -12,6 +11,7 @@ export default (content) => {
         isDeleted: content.isDeleted
       }
     case 'UPDATE_PAGE_SUCCESS':
+
       return {
         name: content.title,
         title: content.name,
