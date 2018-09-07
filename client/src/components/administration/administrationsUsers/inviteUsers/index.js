@@ -14,7 +14,7 @@ const InviteUsers = (props) => (
       onChange={({target}) => props.onChange(target)}
       name={props.nameEmail}
       value={props.valueEmail}
-      inputType='text'
+      inputType='email'
     />
   </div>
 )

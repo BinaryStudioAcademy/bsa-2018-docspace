@@ -4,7 +4,7 @@ import Input from 'src/components/common/input'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { createGroupRequest, updateGroupRequest } from '../../group/logic/groupsAction'
-import { getAllUserGroupsRequest, cleanMatchingUser } from './logic/matchingUserActions'
+import { getAllUserGroupsRequest, cleanMatchingUser, sendInvitation } from './logic/matchingUserActions'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
@@ -41,13 +41,9 @@ class GroupDialog extends Component {
     const noUsers = this.props.t('no_user')
     let userList = ''
     if (this.state.usersInGroup.length) {
-      this.state.usersInGroup.forEach((userId, i) => {
-        this.props.matchingUsers.forEach(user => {
-          if (userId === user._id) {
-            userList += user.name
-            userList += i !== this.state.usersInGroup.length - 1 ? ', ' : ''
-          }
-        })
+      this.state.usersInGroup.forEach((user, i) => {
+        userList += user.name
+        userList += i !== this.state.usersInGroup.length - 1 ? ', ' : ''
       })
     } else {
       userList = noUsers
@@ -116,32 +112,37 @@ class GroupDialog extends Component {
     this.props.matchingUsers !== []
       ? usersTable = this.props.matchingUsers.map((user, i) =>
         user._id !== this.props.user._id &&
-        <button onClick={() => { this.manageUser(user._id) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
+        <button onClick={() => { this.manageUser(user._id, user.name, user.email) }} key={i}>{user.name + '  '}<i className='fas fa-plus' /></button>
       ) : usersTable = ''
     return usersTable
   }
 
-  manageUser = (id) => {
-    const isInGroup = this.state.usersInGroup.indexOf(id)
-    if (isInGroup === -1) {
-      this.addUsersInGroup(id)
+  manageUser = (id, name, email) => {
+    console.log(this.state)
+    let isInGroup = 0
+    this.state.usersInGroup.forEach(user => {
+      if (user.id === id) {
+        isInGroup = 1
+      }
+    })
+    if (isInGroup !== 1) {
+      this.addUsersInGroup(id, name, email)
     } else {
-      this.deleteUserFromGroup(id)
+      this.deleteUserFromGroup(id, name, email)
     }
   }
 
-  addUsersInGroup = (id) => {
+  addUsersInGroup = (id, name, email) => {
     this.setState(prevState => ({
-      usersInGroup: [...prevState.usersInGroup, id]
+      usersInGroup: [...prevState.usersInGroup, {id, name, email}]
     }))
   }
 
   deleteUserFromGroup = (memberId) => {
+    console.log(memberId)
     this.setState(prevState => ({
-      usersInGroup: prevState.usersInGroup.filter(id => id !== memberId)
+      usersInGroup: prevState.usersInGroup.filter(user => user.id !== memberId)
     }))
-    // this.props.group[0].members = this.props.group[0].members.filter(id => id !== memberId)
-    // this.props.actions.updateGroupRequest(this.props.group[0])
   }
 
   handleChange = (target) => {
@@ -149,16 +150,22 @@ class GroupDialog extends Component {
   }
 
   createGroup = () => {
-    const members = [...this.state.usersInGroup, this.props.user._id]
+    let inviteNewUser = false
+    const { actions, cancelModal, user } = this.props
+    const { name, description, usersInGroup } = this.state
+    const members = this.state.usersInGroup.map(member => member.id)
+    members.push(this.props.user._id)
     const group = {
       members: members,
-      title: this.state.name,
-      description: this.state.description
+      title: name,
+      description: description
     }
-    this.props.actions.createGroupRequest(group)
+    actions.createGroupRequest(group)
+    actions.sendInvitation(usersInGroup, inviteNewUser, `${user.firstName} ${user.lastName}`, group.title)
     this.state.user = ''
     this.state.usersInGroup = []
     this.props.cancelModal()
+    cancelModal()
   }
 
   renderFooter = () => {
@@ -211,7 +218,8 @@ function mapDispatchToProps (dispatch) {
         createGroupRequest,
         getAllUserGroupsRequest,
         cleanMatchingUser,
-        updateGroupRequest
+        updateGroupRequest,
+        sendInvitation
       }
       , dispatch)
   }

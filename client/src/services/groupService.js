@@ -48,6 +48,10 @@ class GroupService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+  sendInvitation = (usersInGroup) => {
+    const args = {endpoint: '/api/mail/sendInvite', method: 'POST', body: JSON.stringify(usersInGroup)}
+    callWebApi(args)
+  }
 }
 
 export const groupService = new GroupService()

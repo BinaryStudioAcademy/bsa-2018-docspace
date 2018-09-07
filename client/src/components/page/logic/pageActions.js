@@ -16,7 +16,6 @@ export const allPagesFetchedAndNormalized = (all, byId) => ({
 export const getAllPagesError = () => ({
   type: actionTypes.GET_ALL_PAGES_ERROR
 })
-
 // GET ONE
 export const getPageByIdRequest = (id, version) => ({
   type: actionTypes.GET_PAGE_BY_ID_REQUEST,
@@ -160,4 +159,9 @@ export const exportPageToPdf = (page) => ({
 export const exportPageToWord = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_WORD,
   payload: page
+})
+// MENTION IN COMMENT
+export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
+  type: actionTypes.MENTION_COMMENT,
+  payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
 })

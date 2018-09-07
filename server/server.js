@@ -12,8 +12,6 @@ const port = process.env.PORT || 3001
 const io = require('socket.io')
 require('./config/passport')()
 
-const mailSender = require('./mailSender')
-
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: true, limit: '50mb'}))
 
@@ -41,14 +39,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
   })
 }
-
-const message = {
-  email: 'dolynskiy.eduard@gmail.com',
-  text: 'Production is updated!',
-  htmlText: '<h3>Production is updated!</h3>'
-}
-
-mailSender.sendData(message)
 
 const server = app.listen(port, () => console.log(`Listening on port  ${port}`))
 

@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -149,11 +149,20 @@ class Page extends Component {
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
+                type={'pages'}
+                sendMention={this.props.actions.sendMention}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
+                userLogin={this.props.user.login}
+                type={'pages'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 userId={_id}
                 avatar={avatar}
                 t={t}
@@ -237,7 +246,8 @@ function mapDispatchToProps (dispatch) {
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
-        openWarningModal
+        openWarningModal,
+        sendMention
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
