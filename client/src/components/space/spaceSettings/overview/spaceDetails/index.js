@@ -33,7 +33,7 @@ class SpaceDetails extends Component {
             <td>{space.key}</td>
           </tr>
           <tr>
-            <td>{t('Home_page')}</td>
+            <td>{t('home_page')}</td>
             <td>
 
               <span className='link'>
