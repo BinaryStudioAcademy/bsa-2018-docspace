@@ -87,6 +87,7 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
+          renderDeleteBtn={space.authUserPermissions.blog.delete}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

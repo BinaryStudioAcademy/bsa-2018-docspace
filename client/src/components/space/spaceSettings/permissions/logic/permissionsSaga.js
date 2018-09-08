@@ -1,4 +1,4 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, select } from 'redux-saga/effects'
 import * as actions from './permissionsActions'
 import * as actionsTypes from './permissionsActionsTypes'
 import PermissionsService from 'src/services/permissionsService'
@@ -46,7 +46,7 @@ function * updateSpacePermissions (action) {
       return byId
     }, {})
 
-    yield put(actions.updateSpacePermissionsSuccess(updatedPermissionsById))
+    yield put(actions.updateSpacePermissionsSuccess(updatedPermissionsById, action.spaceId))
   } catch (e) {
     console.log(e)
     yield put(actions.updateSpacePermissionsError(e))
@@ -77,9 +77,33 @@ function * addPermissionsForUser (action) {
   }
 }
 
+function * handleExternalUpdating (action) {
+  const {spaceId, payload} = action
+  const spacesById = yield select(({ spaces }) => spaces.byId)
+
+  if (spacesById[spaceId]) {
+    const space = spacesById[spaceId]
+    const authUserId = yield select(({verification}) => verification.user._id)
+    const permissions = Object.values(payload.updatedById)
+
+    for (let i = 0; i < permissions.length; i++) {
+      if (permissions[i].user && permissions[i].user._id === authUserId) {
+        yield put(actions.RefreshAuthUserPermissions(spaceId, permissions[i]))
+        break
+      }
+
+      if (space.ownerId._id !== authUserId && permissions[i].group &&
+         permissions[i].group.members.some(id => id === authUserId)) {
+        yield put(actions.RefreshAuthUserPermissions(spaceId, permissions[i]))
+      }
+    }
+  }
+}
+
 export default function * permissionsSaga () {
   yield takeEvery(actionsTypes.GET_SPACE_PERMISSIONS_REQUEST, getSpacePermissions)
   yield takeEvery(actionsTypes.UPDATE_SPACE_PERMISSIONS_REQUEST, updateSpacePermissions)
   yield takeEvery(actionsTypes.ADD_GROUP_PERMISSIONS_REQUEST, addPermissionsForGroup)
   yield takeEvery(actionsTypes.ADD_USER_PERMISSIONS_REQUEST, addPermissionsForUser)
+  yield takeEvery(actionsTypes.UPDATE_SPACE_PERMISSIONS_SUCCESS + '(EXTERNAL)', handleExternalUpdating)
 }
