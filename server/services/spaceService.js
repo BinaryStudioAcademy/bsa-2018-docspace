@@ -108,9 +108,6 @@ module.exports = {
       return res.end('Invalid data')
     }
 
-    console.log('IN SPACE CREATING _________________')
-    console.log(req.body)
-
     let spaceBlog, anonymousPermissions
     Promise.all([
       BlogRepository.create({}).then(blog => { spaceBlog = blog }),
