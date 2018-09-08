@@ -4,13 +4,6 @@ import PropTypes from 'prop-types'
 import './watchModal.css'
 
 class WatchModal extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isWatchingPage: this.props.isWatching,
-      isWatchingContent: true
-    }
-  }
   onClickAction = (target) => {
     // console.log(target)
     // this.setState({
@@ -35,12 +28,12 @@ class WatchModal extends Component {
           </React.Fragment>
         }
         <div className='watch-checkbox-wrapper'>
-          <input type='checkbox' name='isWatchingPage' onChange={({target}) => this.onClickAction(target)} checked={this.state.isWatchingPage} />
+          <input type='checkbox' name='isWatchingPage' onChange={({target}) => this.onClickAction(target)} checked={this.props.isWatching} />
           {/* <label className='watch-checkbox' /> */}
           <label>Watch page</label>
         </div>
         <div className='watch-checkbox-wrapper'>
-          <input type='checkbox' name='isWatchingContent' onChange={({target}) => this.onClickAction(target)} checked={this.state.isWatchingContent} />
+          <input type='checkbox' name='isWatchingContent' onChange={({target}) => this.onClickAction(target)} checked={this.props.isWatching} />
           {/* <label className='watch-checkbox' /> */}
           <label>Watch all content in this page</label>
         </div>

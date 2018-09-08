@@ -121,8 +121,7 @@ class Page extends Component {
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
     console.log(page)
-    const isWatching = page && page.watchedBy && this.props.user ? page.watchedBy.indexOf(this.props.user._id) + 1 : null
-    console.log(isWatching)
+    console.log(page.isWatched)
     return (
       <React.Fragment>
         <PageHeader
@@ -134,7 +133,7 @@ class Page extends Component {
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
           manageWatcher={this.manageWatcher}
-          isWatching={isWatching}
+          isWatching={page.isWatched}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

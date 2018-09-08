@@ -10,8 +10,8 @@ export const addWatcherRequest = (page, user) => ({
 
 export const addWatcherSuccess = (page, user) => ({
   type: actionTypes.ADD_WATCHER_SUCCESS,
-  payload: { page,
-    user: user }
+  payload: page
+
 })
 
 export const deleteWatcherRequest = (page, user) => ({
@@ -24,6 +24,5 @@ export const deleteWatcherRequest = (page, user) => ({
 
 export const deleteWatcherSuccess = (page, user) => ({
   type: actionTypes.DELETE_WATCHER_SUCCESS,
-  payload: { page,
-    user: user }
+  payload: page
 })

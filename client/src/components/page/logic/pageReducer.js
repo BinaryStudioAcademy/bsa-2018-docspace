@@ -77,9 +77,9 @@ function byId (state = initialState.byId, action) {
 
       return {
         ...state,
-        [action.payload.page._id]: {
-          ...action.payload.page,
-          watchedBy: [...action.payload.page.watchedBy.slice(), action.payload.user]
+        [action.payload._id]: {
+          ...action.payload,
+          isWatched: true
         }
       }
 
@@ -87,22 +87,22 @@ function byId (state = initialState.byId, action) {
       console.log('REDUCER delete')
       console.log(action.payload)
       console.log(state)
-      console.log([action.payload.page._id])
+      // console.log([action.payload.page._id])
 
-      const a = {
-        ...state,
-        [action.payload.page._id]: {
-          ...action.payload.page,
-          watchedBy: action.payload.page.watchedBy.filter(user => user !== action.payload.user)
-        }
-      }
+      // const a = {
+      //   ...state,
+      //   [action.payload.page._id]: {
+      //     ...action.payload.page,
+      //     watchedBy: action.payload.page.watchedBy.filter(user => user !== action.payload.user)
+      //   }
+      // }
 
-      console.log(a)
+      // console.log(a)
       return {
         ...state,
-        [action.payload.page._id]: {
-          ...action.payload.page,
-          watchedBy: action.payload.page.watchedBy.filter(user => user !== action.payload.user)
+        [action.payload._id]: {
+          ...action.payload,
+          isWatched: false
         }
       }
 

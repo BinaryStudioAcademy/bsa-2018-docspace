@@ -8,8 +8,10 @@ function * addWatcher (action) {
   console.log(user)
   console.log(page)
   try {
-    yield pageService.changeWatcher(page._id, user._id, true)
-    yield put(actions.deleteWatcherRequest(page, user._id))
+    const y = yield pageService.changeWatcher(page._id, user._id, true)
+    console.log(y)
+
+    yield put(actions.addWatcherSuccess(page))
   } catch (e) {
     console.log(e)
   }
@@ -21,9 +23,11 @@ function * removeWatcher (action) {
   console.log(user)
   console.log(page)
   try {
-    yield pageService.changeWatcher(page._id, user._id, false)
+    const y = yield pageService.changeWatcher(page._id, user._id, false)
+    console.log(y)
+    page.isWatched = !page.isWatched
     console.log('Remove reducer')
-    yield put(actions.deleteWatcherSuccess(page, user))
+    yield put(actions.deleteWatcherSuccess(page))
     // }
   } catch (e) {
     console.log(e)
