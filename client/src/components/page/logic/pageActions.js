@@ -161,7 +161,27 @@ export const exportPageToWord = (page) => ({
   payload: page
 })
 // MENTION IN COMMENT
-export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
+export const sendMention = (mentionedUsersLogin,
+  senderCommentLogin,
+  pageId,
+  spaceId,
+  BlogOrPage) => ({
   type: actionTypes.MENTION_COMMENT,
-  payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
+  payload: { mentionedUsersLogin,
+    senderCommentLogin,
+    pageId,
+    spaceId,
+    BlogOrPage }
+})
+export const sendReply = (parentCommentId,
+  senderCommentLogin,
+  pageId,
+  spaceId,
+  BlogOrPage) => ({
+  type: actionTypes.REPLY_COMMENT_SEND_MAIL,
+  payload: { parentCommentId,
+    senderCommentLogin,
+    pageId,
+    spaceId,
+    BlogOrPage }
 })

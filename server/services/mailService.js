@@ -2,6 +2,7 @@ const mailSender = require('../mailSender')
 const UserRepository = require('../repositories/UserRepository')
 const Invite = require('../mainTemplates/invite')
 const GroupRepository = require('../repositories/GroupRepository')
+const CommentRepository = require('../repositories/CommentRepository')
 
 module.exports = {
   sendIviteToGroup: async (req, res) => {
@@ -70,9 +71,41 @@ module.exports = {
                 `You was mentioned in a comment`,
                 mainMessage, btnMessage, link)
             }
-            mailSender.sendData(message)
+            if (senderCommentLogin !== user.login) {
+              mailSender.sendData(message)
+            }
           })
         }
       })
+  },
+  replyComment: async (req, res) => {
+    const { spaceId, BlogOrPage, pageId, parentCommentId, senderCommentLogin } = req.body
+    const mainMessage = `Teams change and teams grow. DocSpace is a flexible platform that supports the way your team works and can be customized to fit any and every type of need.`
+    const btnMessage = `See the page`
+    const link = 'http://' + req.headers.host + '/spaces/' + spaceId + '/' + BlogOrPage + '/' + pageId
+    console.log(`reply`, link)
+    await CommentRepository.getById(parentCommentId)
+      .populate({
+        path: 'userId',
+        select: 'email firstName lastName login'
+      })
+      .then(comment => {
+        const { email, firstName, lastName, login } = comment.userId
+        const message = {
+          senderName: 'DocSpaceTeam',
+          subject: `${senderCommentLogin} replied to your comment`,
+          text: `${senderCommentLogin} replied to your comment`,
+          email: email,
+          htmlText: Invite.inviteTemplateMessage(
+            `${firstName} ${lastName}, user <span style="text-decoration: underline;">${senderCommentLogin}</span> replied to your comment`,
+            req.headers.host,
+            `Someone replied to your comment on DocSpace`,
+            mainMessage, btnMessage, link)
+        }
+        if (senderCommentLogin !== login) {
+          mailSender.sendData(message)
+        }
+      })
+      .catch(err => console.log(err))
   }
 }
