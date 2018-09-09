@@ -35,7 +35,7 @@ class SpaceHeaderButtons extends Component {
   render () {
     console.log(this.state)
     console.log(this.props)
-    const { onEdit, onShare, onSave, children, type, t, hideEditBtn, openWarningModal, onPdfExport, onWordExport, onWordImport, isWatching, manageWatcher } = this.props
+    const { onEdit, onShare, onSave, children, type, t, hideEditBtn, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
     const dropdownMenuItems = [
       {
         name: t('export_to_PDF'),
@@ -70,7 +70,12 @@ class SpaceHeaderButtons extends Component {
         <div className='buttons-item' title={t('watch')}onClick={this.onWatch}>
           <i className='fas fa-eye' />
         </div>
-        {this.state.isWatchModalShowed ? <WatchModal manageWatcher={manageWatcher} isWatching={isWatching} /> : null}
+        {this.state.isWatchModalShowed
+          ? <WatchModal manageWatcher={manageWatcher}
+            isWatchingSpace={isWatchingSpace}
+            isWatching={isWatching}
+            manageSpaceWatcher={manageSpaceWatcher}
+          /> : null}
         <div className='buttons-item' title={t('share_this_page_with_others')} onClick={onShare}>
           <i className='fas fa-share-square' />
         </div>
@@ -105,7 +110,9 @@ SpaceHeaderButtons.propTypes = {
   openWarningModal: PropTypes.func,
   onWordImport: PropTypes.func,
   isWatching: PropTypes.bool,
-  manageWatcher: PropTypes.func
+  manageWatcher: PropTypes.func,
+  isWatchingSpace: PropTypes.bool,
+  manageSpaceWatcher: PropTypes.func
 }
 
 SpaceHeaderButtons.defaultProps = {

@@ -21,7 +21,7 @@ import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
-import { addWatcherRequest, deleteWatcherRequest } from './watcherLogic/watcherAction'
+import { addWatcherRequest, deleteWatcherRequest, addSpaceWatcherRequest, deleteSpaceWatcherRequest } from './watcherLogic/watcherAction'
 
 class Page extends Component {
   constructor (props) {
@@ -104,15 +104,20 @@ class Page extends Component {
   }
 
   manageWatcher = () => {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
-    console.log(this.props.user)
     const isWatching = this.props.page && this.props.page.isWatched ? this.props.page.isWatched : null
     if (isWatching) {
-      console.log('Im deleting')
       this.props.actions.deleteWatcherRequest(this.props.page, this.props.user)
     } else {
-      console.log('Im adding')
       this.props.actions.addWatcherRequest(this.props.page, this.props.user)
+    }
+  }
+
+  manageSpaceWatcher = () => {
+    const isWatching = this.props.space && this.props.space.isWatched ? this.props.space.isWatched : null
+    if (isWatching) {
+      this.props.actions.deleteSpaceWatcherRequest(this.props.space, this.props.user)
+    } else {
+      this.props.actions.addSpaceWatcherRequest(this.props.space, this.props.user)
     }
   }
 
@@ -120,8 +125,6 @@ class Page extends Component {
     const { firstName, lastName, avatar, login, _id } = this.props.user
     const { page, t, space, isFetching } = this.props
     const user = page ? page.userModified : null
-    console.log(page)
-    console.log(page.isWatched)
     return (
       <React.Fragment>
         <PageHeader
@@ -133,7 +136,9 @@ class Page extends Component {
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
           manageWatcher={this.manageWatcher}
+          manageSpaceWatcher={this.manageSpaceWatcher}
           isWatching={page.isWatched}
+          isWatchingSpace={space.isWatched}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -258,7 +263,9 @@ function mapDispatchToProps (dispatch) {
         putLikeOnCommentRequest,
         openWarningModal,
         addWatcherRequest,
-        deleteWatcherRequest
+        deleteWatcherRequest,
+        addSpaceWatcherRequest,
+        deleteSpaceWatcherRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

@@ -42,9 +42,6 @@ class SearchModal extends Component {
         postList.push(result)
       }
     })
-    console.log(blogsList)
-    console.log(spacesList)
-    console.log(postList)
     const blogRender = blogsList.map(blog =>
       <div className='search-result-wrapper'>
         {blog.spaceId
@@ -79,7 +76,6 @@ class SearchModal extends Component {
         </NavLink>
       </div>
     )
-    console.log(postList)
     const result = <React.Fragment>
       {postList.length ? <div className='search-title-wrapper'>
         <p>PAGES</p>
@@ -118,9 +114,6 @@ class SearchModal extends Component {
   }
 
   render () {
-    console.log(this.props)
-    console.log(this.props.searchResults)
-
     return (
       <div className='search-modal'>
         <div className='search-modal-body'>

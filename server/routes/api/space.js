@@ -9,6 +9,8 @@ router.post('/', spaceService.add)
 
 router.put('/:id', spaceService.findOneAndUpdate)
 
+router.put('/watcher/:id', spaceService.addRemoveWatcher)
+
 router.delete('/:id', spaceService.findOneAndDelete)
 
 module.exports = router

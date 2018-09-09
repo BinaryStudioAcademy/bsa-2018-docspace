@@ -33,7 +33,11 @@ const spaceSchema = new mongoose.Schema({
   spaceSettings: {
     icon: {type: String, default: 'folder'},
     color: {type: String, default: '#1c80ff'}
-  }
+  },
+  watchedBy: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 },
 {
   versionKey: false

@@ -2,6 +2,8 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 
 module.exports = {
   findAll: (req, res) => {
@@ -14,7 +16,7 @@ module.exports = {
       })
   },
 
-  findOne: (req, res) => {
+  findOne: async (req, res) => {
     const id = req.params.id
 
     if (id.length === 0) {
@@ -22,19 +24,42 @@ module.exports = {
 
       return res.end('Invalid id')
     }
-    SpaceRepository.getById(id)
-      .then((data) => {
-        if (data.length === 0) {
-          res.status(404)
-          return res.end()
-        }
-        res.json(data[0])
-      })
+    const space = await SpaceRepository.getById(id)
+      // .then((data) => {
+      //   if (data.length === 0) {
+      //     res.status(404)
+      //     return res.end()
+      //   }
+      //   res.json(data[0])
+      // })
+      .then(space => space)
       .catch((err) => {
         console.log(err)
         res.status(400)
         res.end()
       })
+    console.log(space)
+    const isWatched = space[0].watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+    console.log(isWatched)
+    const newSpace = {
+      blogId: space[0].blogId,
+      categories: space[0].categories,
+      createdAt: space[0].createdAt,
+      history: space[0].history,
+      isDeleted: space[0].isDeleted,
+      key: space[0].key,
+      name: space[0].name,
+      ownerId: space[0].ownerId,
+      pages: space[0].pages,
+      permissions: space[0].permissions,
+      rights: space[0].rights,
+      spaceSettings: space[0].spaceSettings,
+      updatedAt: space[0].updatedAt,
+      _id: space[0]._id,
+      isWatched: isWatched
+    }
+    console.log(newSpace)
+    return res.send(newSpace)
   },
 
   add: (req, res) => {
@@ -56,7 +81,10 @@ module.exports = {
               spaceId: space._id
             })
               .then(() => {
-                return res.json(space)
+                SpaceRepository.addWatcher(space._id, req.user._id)
+                  .then(() =>
+                    res.json(space)
+                  )
               })
               .catch(err => console.log(err))
           })
@@ -125,5 +153,21 @@ module.exports = {
         res.status(400)
         res.end()
       })
+  },
+
+  addRemoveWatcher: (req, res) => {
+    if (req.body.toAdd) {
+      SpaceRepository.addWatcher(req.params.id, req.body.userId)
+        .then(page => res.send({watched: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      SpaceRepository.deleteWatcher(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unwatched: true}))
+        .catch(err => res.status(500).send(err))
+    }
   }
 }

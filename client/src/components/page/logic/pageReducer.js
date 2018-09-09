@@ -49,20 +49,22 @@ function byId (state = initialState.byId, action) {
         ...state,
         [action.payload.page._id]: {
           ...action.payload.page,
-          comments: [...action.payload.page.comments.slice(), action.payload.newComment]
+          comments: [...action.payload.page.comments.slice(), action.payload.newComment],
+          isWatched: true
         }
       }
     case likesActionTypes.PUT_LIKE_ON_PAGE_SUCCESS:
+      console.log(action.payload)
       return {
         ...state,
         [action.payload.page._id]: {
           ...action.payload.page,
-          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser]
+          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser],
+          isWatched: true
         }
       }
 
     case likesActionTypes.DELETE_LIKE_FROM_PAGE_SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         [action.payload.page._id]: {
@@ -72,37 +74,12 @@ function byId (state = initialState.byId, action) {
       }
 
     case watcherTypes.ADD_WATCHER_SUCCESS:
-      console.log('REDUCER add')
-      console.log(action.payload)
-
-      return {
-        ...state,
-        [action.payload._id]: {
-          ...action.payload,
-          isWatched: true
-        }
-      }
-
     case watcherTypes.DELETE_WATCHER_SUCCESS:
-      console.log('REDUCER delete')
-      console.log(action.payload)
-      console.log(state)
-      // console.log([action.payload.page._id])
-
-      // const a = {
-      //   ...state,
-      //   [action.payload.page._id]: {
-      //     ...action.payload.page,
-      //     watchedBy: action.payload.page.watchedBy.filter(user => user !== action.payload.user)
-      //   }
-      // }
-
-      // console.log(a)
       return {
         ...state,
         [action.payload._id]: {
           ...action.payload,
-          isWatched: false
+          isWatched: !action.payload.isWatched
         }
       }
 

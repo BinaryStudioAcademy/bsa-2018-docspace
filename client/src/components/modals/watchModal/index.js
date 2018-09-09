@@ -5,19 +5,13 @@ import './watchModal.css'
 
 class WatchModal extends Component {
   onClickAction = (target) => {
-    // console.log(target)
-    // this.setState({
-    //   [target.name]: target.checked
-    // }, function () {
     this.props.manageWatcher()
-    // })
   }
   render () {
-    console.log(this.state)
-    console.log(this.props)
+    const { isWatching, isWatchingSpace } = this.props
     return (
       <div className='watch-modals-wrapper'>
-        {this.props.isWatching
+        {isWatchingSpace || isWatching
           ? <React.Fragment>
             <h2>You are watching this page</h2>
             <p>Reciving emails updates about changes to this page.</p>
@@ -28,13 +22,11 @@ class WatchModal extends Component {
           </React.Fragment>
         }
         <div className='watch-checkbox-wrapper'>
-          <input type='checkbox' name='isWatchingPage' onChange={({target}) => this.onClickAction(target)} checked={this.props.isWatching} />
-          {/* <label className='watch-checkbox' /> */}
+          <input type='checkbox' name='isWatchingPage' disabled={isWatchingSpace} onChange={this.props.manageWatcher} checked={isWatchingSpace || isWatching} />
           <label>Watch page</label>
         </div>
         <div className='watch-checkbox-wrapper'>
-          <input type='checkbox' name='isWatchingContent' onChange={({target}) => this.onClickAction(target)} checked={this.props.isWatching} />
-          {/* <label className='watch-checkbox' /> */}
+          <input type='checkbox' name='isWatchingContent' onChange={this.props.manageSpaceWatcher} checked={isWatchingSpace} />
           <label>Watch all content in this page</label>
         </div>
       </div>
@@ -44,7 +36,9 @@ class WatchModal extends Component {
 
 WatchModal.propTypes = {
   manageWatcher: PropTypes.func,
-  isWatching: PropTypes.bool
+  isWatching: PropTypes.bool,
+  isWatchingSpace: PropTypes.bool,
+  manageSpaceWatcher: PropTypes.func
 }
 WatchModal.defaultProps = {
   isWatching: false

@@ -37,16 +37,17 @@ module.exports = {
     const resPage = {
       _id: page._id,
       comments: page.comments,
-      usersLikes: page.userLikes,
+      usersLikes: page.usersLikes,
       isDeleted: page.isDeleted,
       title: page.title,
       spaceId: page.spaceId,
       createdAt: page.createdAt,
-      updatedAt: page.date,
+      updatedAt: page.updatedAt,
       content: page.content,
       userModified: page.userId,
       isWatched: isWatched
     }
+    console.log(resPage)
     if (req.body.version) {
       const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
         .populate({
@@ -91,13 +92,14 @@ module.exports = {
     const resPage = {
       _id: page._id,
       comments: page.comments,
+      usersLikes: page.usersLikes,
       isDeleted: page.isDeleted,
-      usersLikes: page.userLikes,
-      title: `${page.title}`,
+      title: page.title,
       spaceId: page.spaceId,
       createdAt: page.createdAt,
-      updatedAt: page.date,
+      updatedAt: page.updatedAt,
       content: page.content,
+      userModified: page.userId,
       isWatched: true
     }
     return res.send(resPage)
@@ -120,7 +122,7 @@ module.exports = {
       })
       .then(async (
         {
-          _id, comments, userLikes, title, spaceId, createdAt,
+          _id, comments, usersLikes, title, spaceId, createdAt, isDeleted,
           date: updatedAt, content, userId: userModified
         }
       ) => {
@@ -133,13 +135,14 @@ module.exports = {
         const resPage = {
           _id,
           comments,
-          userLikes,
+          usersLikes,
           title,
           spaceId,
           createdAt,
           updatedAt,
           content,
           userModified,
+          isDeleted,
           isWatched: true
         }
 
@@ -161,7 +164,8 @@ module.exports = {
   addRemoveLike: (req, res) => {
     if (req.body.toAdd) {
       PageRepository.addLike(req.params.id, req.body.userId)
-        .then(page => res.send({liked: true}))
+        .then(page => PageRepository.addWatcher(req.params.id, req.body.userId)
+          .then(() => res.send({liked: true})))
         .catch(err => res.status(500).send(err))
     } else {
       PageRepository.removeLike(req.params.id, req.body.userId)
@@ -207,7 +211,6 @@ module.exports = {
             } else {
               SpaceRepository.deletePageFromSpace(page.spaceId, page._id)
                 .then((space) => {
-                  console.log(space)
                   return res.json(page)
                 })
                 .catch(err => {
@@ -256,8 +259,6 @@ module.exports = {
         SpaceRepository.searchByTitle(req.params.filter)
       ])
       .then(([one, two]) => {
-        console.log(one)
-        console.log(two)
         res.send(one.concat(two))
       })
       .catch(err => {
