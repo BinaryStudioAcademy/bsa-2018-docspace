@@ -40,10 +40,10 @@ module.exports = {
   add: async (req, res) => {
     console.log(req.body)
     let savedComment = await CommentRepository.create(req.body.comment)
-      .populate({
-        path: 'userId',
-        select: 'firstName lastName avatar login'
-      })
+      // .populate({
+      //   path: 'userId',
+      //   select: 'firstName lastName avatar login'
+      // })
       .then(comment => comment)
       .catch(err => err)
     await PageRepository.addNewComment(req.body.pageId, savedComment._id)
@@ -59,7 +59,12 @@ module.exports = {
       console.log('in add')
       await PageRepository.addWatcher(req.body.pageId, req.user._id)
     }
-    res.send(savedComment)
+    const populatedComment = await CommentRepository.getById(savedComment._id)
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar login'
+      })
+    res.send(populatedComment)
     // add: (req, res) => {
     //   CommentRepository.create(req.body.comment)
     //     .then(comment => {
