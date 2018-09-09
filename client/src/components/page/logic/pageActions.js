@@ -116,9 +116,9 @@ export const deletePageSuccess = (deletedPage) => ({
   payload: deletedPage
 })
 
-export const deleteBlogPageRequest = (page) => ({
+export const deleteBlogPageRequest = (id) => ({
   type: actionTypes.DELETE_BLOG_PAGE_REQUEST,
-  payload: { ...page }
+  payload: { id }
 })
 
 export const deleteBlogPageSuccess = (deletedPage) => ({
