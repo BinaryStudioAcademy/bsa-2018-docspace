@@ -48,7 +48,8 @@ function * createBlogPage (action) {
 
 function * updatePage (action) {
   try {
-    const target = action.payload
+    const target = {...action.payload}
+    delete target.isWatched
     // FIX conflict with mongodb and timestamp. Same for blog
     target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)

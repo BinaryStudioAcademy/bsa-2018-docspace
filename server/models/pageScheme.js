@@ -80,29 +80,18 @@ const pageSchema = new mongoose.Schema({
     }],
     es_indexed: false
   },
-
-  // manualy set updatedAt and createdAt fields with es_indexes: true. They wil be indexing into Elasticsearch.
-  // After all updates, mongoose-timestaps will change updatedAt field, that causes it's updates in elastic.
-  // Strange: not working with createdAt, throw error while compoling
-
+  watchedBy: [{
+    type: Schema.Types.ObjectId,
+    es_indexed: false,
+    ref: 'User'
+  }],
   updatedAt: {
     type: Date,
     es_indexed: true
   }
-
 },
 { versionKey: false }
 )
-
-pageSchema.pre('findOneAndUpdate', async function () {
-  let pageQuery = this
-  let { version, title, content, modifiedVersions, isDeleted } = pageQuery.getUpdate()
-  if (!isDeleted) {
-    let newId = new mongoose.Types.ObjectId()
-    await modifiedVersions.push({_id: newId, version, title, content})
-    pageQuery.getUpdate().version += 1
-  }
-})
 
 pageSchema.plugin(mongoosastic, {
   esClient: elasticClient,
@@ -156,45 +145,3 @@ PageModel.createMapping({
 })
 
 module.exports = PageModel
-
-// TODO: try to change mapping and set createdAt and updatedAt manual
-// PageModel.createMapping({
-// "settings": {
-//   'analysis': {
-//     'analyzer': {
-//       'standard_with_html_strip': {
-//         "type":"custom",
-//         'char_filter': [ 'html_strip' ],
-//         'tokenizer': 'standard',
-//         'filter': [
-//           'standard',
-//           'lowercase'
-//         ]
-//       }
-//     }
-//   }
-// },
-// 'mapping': {
-//   "page": {
-//     "properties": {
-//       "content": {
-//         "type":     "text",
-//         "analyzer": "standard",
-//         "fields": {
-//           "english": {
-//             "type":     "text",
-//             "analyzer": "std_english"
-//           }
-//         }
-//       }
-//     }
-// }
-// }, function (err, mapping) {
-//   if (err) {
-//     console.log('ERROR WHILE MAPPING')
-//     console.log(err)
-//   } else {
-//     console.log('MAPPING SUCCESS:')
-//     console.log(mapping)
-//   }
-// })

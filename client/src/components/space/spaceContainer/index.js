@@ -35,7 +35,7 @@ class SpaceContainer extends Component {
     const {space, showModal} = this.props
     if (!space) return null
     const id = this.props.location.pathname.split('/')[2]
-
+    console.log(space)
     return (
       <div className='space'>
         <SpaceContent>

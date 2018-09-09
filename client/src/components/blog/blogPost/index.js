@@ -17,6 +17,7 @@ import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 
 import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/components/page/commentsLogic/commentsActions'
+import { addWatcherRequest, deleteWatcherRequest, addSpaceWatcherRequest, deleteSpaceWatcherRequest } from 'src/components/page/watcherLogic/watcherAction'
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
@@ -77,6 +78,24 @@ class Page extends Component {
     this.likePage(isLiked, 'comment', comment)
   }
 
+  manageWatcher = () => {
+    const isWatching = this.props.page && this.props.page.isWatched ? this.props.page.isWatched : null
+    if (isWatching) {
+      this.props.actions.deleteWatcherRequest(this.props.page, this.props.user)
+    } else {
+      this.props.actions.addWatcherRequest(this.props.page, this.props.user)
+    }
+  }
+
+  manageSpaceWatcher = () => {
+    const isWatching = this.props.space && this.props.space.isWatched ? this.props.space.isWatched : null
+    if (isWatching) {
+      this.props.actions.deleteSpaceWatcherRequest(this.props.space, this.props.user)
+    } else {
+      this.props.actions.addSpaceWatcherRequest(this.props.space, this.props.user)
+    }
+  }
+
   render () {
     const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
@@ -87,6 +106,10 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
+          isWatching={page && page.isWatched}
+          manageWatcher={this.manageWatcher}
+          manageSpaceWatcher={this.manageSpaceWatcher}
+          isWatchingSpace={space.isWatched}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -160,7 +183,8 @@ Page.propTypes = {
     content: PropTypes.string,
     pageCreator: PropTypes.array,
     comments: PropTypes.array,
-    usersLikes: PropTypes.array
+    usersLikes: PropTypes.array,
+    isWatched: PropTypes.bool
   }),
 
   user: PropTypes.object,
@@ -207,6 +231,10 @@ function mapDispatchToProps (dispatch) {
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
+        deleteWatcherRequest,
+        addWatcherRequest,
+        addSpaceWatcherRequest,
+        deleteSpaceWatcherRequest,
         sendMention
       }
       , dispatch)

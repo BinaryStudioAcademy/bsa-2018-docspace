@@ -17,6 +17,8 @@ router.put('/:id', pageService.findOneAndUpdate)
 
 router.put('/like/:id', pageService.addRemoveLike)
 
+router.put('/watcher/:id', pageService.addRemoveWatcher)
+
 router.delete('/:id', pageService.findOneAndDelete)
 
 module.exports = router

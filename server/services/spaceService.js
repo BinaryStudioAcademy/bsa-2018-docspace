@@ -2,7 +2,8 @@ const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 const PermissionsRepository = require('../repositories/PermissionsRepository')
 
 module.exports = {
@@ -16,29 +17,42 @@ module.exports = {
       })
   },
 
-  findOne: (req, res) => {
+  findOne: async (req, res) => {
     const id = req.params.id
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404)
       return res.end('Invalid id')
     }
-
-    SpaceRepository.getById(id)
-      .then((data) => {
-        if (data.length === 0) {
-          res.status(404)
-
-          return res.end()
-        }
-
-        res.json(data[0])
-      })
+    const space = await SpaceRepository.getById(id)
+      .then(space => space)
       .catch((err) => {
         console.log(err)
         res.status(400)
         res.end()
       })
+    console.log(space)
+    const isWatched = space[0].watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+    console.log(isWatched)
+    const newSpace = {
+      blogId: space[0].blogId,
+      categories: space[0].categories,
+      createdAt: space[0].createdAt,
+      history: space[0].history,
+      isDeleted: space[0].isDeleted,
+      key: space[0].key,
+      name: space[0].name,
+      ownerId: space[0].ownerId,
+      pages: space[0].pages,
+      permissions: space[0].permissions,
+      rights: space[0].rights,
+      spaceSettings: space[0].spaceSettings,
+      updatedAt: space[0].updatedAt,
+      _id: space[0]._id,
+      isWatched: isWatched
+    }
+    console.log(newSpace)
+    return res.send(newSpace)
   },
 
   add: (req, res) => {
@@ -66,9 +80,13 @@ module.exports = {
           .then(space => {
             UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
               .then(() => {
-                SpaceRepository.getById(space._id)
-                  .then(getSpace => res.json(getSpace[0]))
-                  .catch(err => console.log(err))
+                SpaceRepository.addWatcher(space._id, req.user._id)
+                  .then(() =>
+                    res.json(space)
+                  )
+                  // SpaceRepository.getById(space._id)
+                  // .then(getSpace => res.json(getSpace[0]))
+                  // .catch(err => console.log(err))
               })
               .catch(err => console.log(err))
           })
@@ -134,5 +152,21 @@ module.exports = {
         res.status(400)
         res.end()
       })
+  },
+
+  addRemoveWatcher: (req, res) => {
+    if (req.body.toAdd) {
+      SpaceRepository.addWatcher(req.params.id, req.body.userId)
+        .then(page => res.send({watched: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      SpaceRepository.deleteWatcher(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unwatched: true}))
+        .catch(err => res.status(500).send(err))
+    }
   }
 }
