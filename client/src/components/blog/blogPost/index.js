@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deleteBlogPageRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deleteBlogPageRequest, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 
 import CommentsList from 'src/components/commentsList'
@@ -97,9 +97,9 @@ class Page extends Component {
   }
 
   render () {
-    const { firstName, lastName, _id } = this.props.user
+    const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
-    console.log(page)
+    const user = page ? page.userId : null
     return (
       <React.Fragment>
         <PageHeader
@@ -125,10 +125,11 @@ class Page extends Component {
             <div className='page-body-wrp'>
               <PageTitle text={page.title} />
               <PageInfo
-                avatar={fakeImg}
-                firstName={firstName}
-                lastName={lastName}
-                date={page.created ? page.created.date : ''}
+                avatar={user ? user.avatar : ''}
+                firstName={user ? user.firstName : ''}
+                lastName={user ? user.lastName : ''}
+                date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
+                login={user ? user.login : ''}
               />
               <PageContent content={page.content} />
             </div>
@@ -144,21 +145,26 @@ class Page extends Component {
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.comments}
+                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
                 userId={_id}
+                type={'blog'}
+                sendMention={this.props.actions.sendMention}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
-                firstName={firstName}
-                lastName={lastName}
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                avatar={avatar}
+                type={'blog'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 t={t}
               />
             </div>
@@ -171,9 +177,11 @@ class Page extends Component {
 
 Page.propTypes = {
   page: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
+    pageCreator: PropTypes.array,
     comments: PropTypes.array,
     usersLikes: PropTypes.array,
     isWatched: PropTypes.bool
@@ -185,7 +193,8 @@ Page.propTypes = {
   match: PropTypes.object,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  sendMention: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -200,7 +209,9 @@ Page.defaultProps = {
 const mapStateToProps = (state, props) => {
   return {
     page: state.pages.byId[props.match.params.page_id],
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     comments: state.comments,
     space: spaceById(state),
     isFetching: isPagesFetching(state)
@@ -223,7 +234,8 @@ function mapDispatchToProps (dispatch) {
         deleteWatcherRequest,
         addWatcherRequest,
         addSpaceWatcherRequest,
-        deleteSpaceWatcherRequest
+        deleteSpaceWatcherRequest,
+        sendMention
       }
       , dispatch)
   }

@@ -158,8 +158,22 @@
     "my_updates": "My updates",
     "welcome_to_docspace": "Welcome to Docspace",
     "docspace_intro": "Docspace is where your team collaborates and shares knowledge — create, share and discuss your files, ideas, minutes,    specs, mockups, diagrams, and projects. Share useful links, ads and information here",
+    "anonymous_ccess": "Anonymous access",
+    "permissions_to_anonymous_users": "If your Dockspace is public, you can grant permissions to people who are not authorized on the site.",
+    "user_login": "User login",
+    "group_title": "Group title",
+    "nothing_found": "Nothing found",
     "general_information": "General information",
     "data_is_changing": "Data is changing",
-    "password_is_changing": "Password is changing"
+    "password_is_changing": "Password is changing",
+    "today": "today",
+    "yesterday": "yesterday",
+    "a_few_days_ago": "a few days ago",
+    "a_week_ago": "a week ago",
+    "a_month_ago": "a month ago",
+    "a_months_ago": "a months ago",
+    "added_users": "Added users",
+    "user_search": "User search",
+    "no_user": "No users in group yet"
   }
 }

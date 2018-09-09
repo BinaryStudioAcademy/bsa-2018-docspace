@@ -10,7 +10,7 @@ const SpaceOverviewHeader = ({ space, t, handleEditBtnClick, onPdfExport, onWord
     <div className='space-header-name'>{space.name}</div>
     <SpaceHeaderButtons
       type='space'
-      hideEditBtn={!space.homePage}
+      hideNotSpaceBtns={!space.homePage}
       onEdit={handleEditBtnClick}
       onPdfExport={onPdfExport}
       onWordExport={onWordExport}

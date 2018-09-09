@@ -12,19 +12,23 @@ import {verificationReducer} from 'src/components/auth/verification/logic/verifi
 import activityReducer from 'src/components/dashboard/main/activity/logic/activityReducer'
 import groupsReducer from 'src/components/group/logic/groupsReducer'
 import matchingUsersReducer from 'src/components/modals/groupDialog/logic/matchingUserReducer'
-import searchByTitle from 'src/components/modals/searchModal/logic/searchReducer'
+import searchReducer from 'src/commonLogic/search/searchReducer'
 import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersReducer'
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
+import errorReducer from 'src/components/common/app/logic/errorReducer'
+import permissionsReducer from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
 
 const baseReducer = combineReducers({
   signup: signupReducer,
   login: loginReducer,
   user: userReducers,
   pages: pageReducer,
+  error: errorReducer,
   spaces: spaceReducer,
+  currentSpacePermissions: permissionsReducer,
   blog: blogReducer,
   groups: groupsReducer,
-  searchResults: searchByTitle,
+  search: searchReducer,
   matchingUsers: matchingUsersReducer,
   verification: verificationReducer,
   activity: activityReducer,

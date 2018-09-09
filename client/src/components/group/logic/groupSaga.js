@@ -25,8 +25,9 @@ function * getGroupById (action) {
   try {
     const group = yield groupService.findById(action.payload)
     yield put(actions.getGroupSuccess(group))
-  } catch (e) {
-    console.log(e)
+  } catch (err) {
+    console.log(err)
+    yield put({type: actionTypes.GET_GROUP_ERROR, err})
   }
 }
 

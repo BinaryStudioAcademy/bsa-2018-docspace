@@ -12,10 +12,7 @@ class CommentsList extends Component {
 
   sortComments (comments) {
     comments.sort((a, b) => {
-      if (typeof a.createdAt === 'string') {
-        return a.createdAt > b.createdAt ? 1 : -1
-      }
-      return a.createdAt.toISOString() > b.createdAt.toISOString() ? 1 : -1
+      return a.createdAt > b.createdAt ? 1 : -1
     })
   }
   getComments (comments) {
@@ -34,8 +31,8 @@ class CommentsList extends Component {
   }
 
   render () {
-    const commentsList = this.state.commentTree.map(comment => {
-      return <Comment
+    const commentsList = this.state.commentTree.map(comment =>
+      <Comment
         margin={`${comment.level * 25}px`}
         comment={comment.item}
         key={comment.id}
@@ -44,12 +41,15 @@ class CommentsList extends Component {
         replyComment={this.replyComment}
         level={comment.level}
         addNewComment={this.props.addNewComment}
-        firstName={this.props.firstName}
-        lastName={this.props.lastName}
-        likeAction={this.props.likeAction}
+        sendMention={this.props.sendMention}
         user={this.props.user}
+        userId={this.props.userId}
+        pageId={this.props.pageId}
+        spaceId={this.props.spaceId}
+        type={this.props.type}
+        likeAction={this.props.likeAction}
       />
-    })
+    )
     return (
       <div className='comments-list-wrapper'>
         {commentsList}
@@ -61,12 +61,15 @@ class CommentsList extends Component {
 export default CommentsList
 
 CommentsList.propTypes = {
+  type: PropTypes.string,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string,
   comments: PropTypes.array,
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
   addNewComment: PropTypes.func,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
+  userId: PropTypes.string,
+  sendMention: PropTypes.func,
   user: PropTypes.object,
   likeAction: PropTypes.func
 }

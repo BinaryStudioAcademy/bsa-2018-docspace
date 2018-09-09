@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const commentSchema = new mongoose.Schema({
-  userId: Schema.Types.ObjectId,
-  firstName: String,
-  lastName: String,
+  userId: {type: Schema.Types.ObjectId, ref: 'User'},
   userLikes: [{type: Schema.Types.ObjectId, ref: 'User'}],
   text: String,
   isDeleted: {type: Boolean, default: false},

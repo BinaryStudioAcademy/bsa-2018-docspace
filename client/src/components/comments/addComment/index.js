@@ -22,34 +22,38 @@ export class AddComment extends Component {
   }
 
   createComment = () => {
+    const re = /(?:^|\W)@(\w+)(?!\w)/g
+    const resultOfFinding = this.state.text.match(re) ? this.state.text.match(re).map(match => match.trim().slice(1)) : []
+    const { text } = this.state
+    const { userLogin, pageId, spaceId, type, userId, parentId, _id } = this.props
+    const { editComment, onEditComment, addNewComment, sendMention, ReplyComment } = this.props
     if (this.state.text.length === 0) {
     } else {
       this.setState({
         text: ''
       })
       if (this.props.onEditComment) {
-        this.props.editComment && this.props.editComment({
-          userId: this.props.userId,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          text: this.state.text,
+        this.props.editComment && editComment({
+          userId: userId,
+          text: text,
           createdAt: new Date(),
           isDeleted: false,
-          parentId: this.props.parentId,
-          _id: this.props._id
+          parentId: parentId,
+          _id: _id
         })
-        this.props.onEditComment()
+        onEditComment()
       } else {
-        this.props.addNewComment && this.props.addNewComment({
-          userId: this.props.userId,
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          text: this.state.text,
+        if (this.props.sendMention && resultOfFinding.length) {
+          sendMention(resultOfFinding, userLogin, pageId, spaceId, type)
+        }
+        this.props.addNewComment && addNewComment({
+          userId: userId,
+          text: text,
           createdAt: new Date(),
           isDeleted: false,
-          parentId: this.props.parentId || null
+          parentId: parentId || null
         })
-        this.props.ReplyComment && this.props.ReplyComment()
+        this.props.ReplyComment && ReplyComment()
       }
     }
   }
@@ -75,7 +79,7 @@ export class AddComment extends Component {
     const { t } = this.props
     return (
       <div className='addComment' style={this.props.style || null}>
-        <CommentAvatar UserAvatarLink={UserAvatarLink} />
+        <CommentAvatar UserAvatarLink={this.props.avatar ? this.props.avatar : UserAvatarLink} />
         <div className='comment-body-container' >
           <div>
             <Input
@@ -117,9 +121,8 @@ export class AddComment extends Component {
 }
 
 AddComment.propTypes = {
+  type: PropTypes.string,
   addNewComment: PropTypes.func,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
   userId: PropTypes.string,
   t: PropTypes.func,
   editComment: PropTypes.func,
@@ -128,6 +131,11 @@ AddComment.propTypes = {
   _id: PropTypes.string,
   ReplyComment: PropTypes.func,
   parentId: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  avatar: PropTypes.string,
+  sendMention: PropTypes.func,
+  userLogin: PropTypes.string,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string
 }
 export default translate('translations')(AddComment)

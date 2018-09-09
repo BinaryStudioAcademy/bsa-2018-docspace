@@ -1,7 +1,5 @@
 const GeneralRepository = require('./GeneralRepository')
 const PageModel = require('../models/pageScheme')
-const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
 
 class PageRepository extends GeneralRepository {
   getAll () {
@@ -12,26 +10,19 @@ class PageRepository extends GeneralRepository {
     ])
   }
 
-  advancedSearch (input) {
-    return this.model.search({
+  advancedSearch (query) {
+    return this.model.esSearch({
       // query for match some input in field 'title' OR 'content'
-      multi_match: {
-        query: input,
-        fields: [ 'title', 'content' ]
+      query,
+      highlight: {
+        pre_tags: [ '<b>' ],
+        post_tags: [ '</b>' ],
+        fields: {
+          '*': { }
+        }
       }
     })
   }
-  // create (body, userId) {
-  //   console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-  //   // console.log(body)
-  //   return super.create(body)
-  //     .then(page => {
-  //     //   // this.addWatcher(page._id, userId)
-  //     console.log('HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-  //       console.log(page)
-  //     //   console.log(userId)
-  //     })
-  // }
 
   deleteFromElasticAndReturnById (id) {
     return new Promise((resolve, reject) => {
@@ -46,14 +37,6 @@ class PageRepository extends GeneralRepository {
           reject(err)
         })
     })
-  }
-
-  isWatchedByCurrentUser (page, userId) {
-    // console.log(id)
-    // console.log(userId)
-    // return this.model.findOne({_id: id})
-    //   .then(page => page.watchedBy.includes(userId))
-    return page.watchedBy.includes(new ObjectId(userId))
   }
 
   addNewComment (id, commentId) {
@@ -79,10 +62,6 @@ class PageRepository extends GeneralRepository {
   deleteWatcher (id, userId) {
     return super.updateOne(id, {'$pull': {'watchedBy': userId}})
   }
-
-  // isWatchedByCurrentUser (id, userId){
-  //   pa
-  // }
 }
 
 module.exports = new PageRepository(PageModel)

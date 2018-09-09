@@ -13,7 +13,7 @@ class SpaceService {
     const args = { endpoint: `/api/spaces/${id}`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .catch(err => { throw err })
     return apiResult
   }
 

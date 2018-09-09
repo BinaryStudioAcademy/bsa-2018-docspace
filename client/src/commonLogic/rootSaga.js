@@ -16,8 +16,9 @@ import activitySaga from 'src/components/dashboard/main/activity/logic/activityS
 import groupSaga from 'src/components/group/logic/groupSaga'
 import watcherSaga from 'src/components/page/watcherLogic/watcherSaga'
 import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
-import matchingPagesSaga from 'src/components/modals/searchModal/logic/searchSaga'
+import searchSaga from 'src/commonLogic/search/searchSaga'
 import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
+import permissionsSaga from 'src/components/space/spaceSettings/permissions/logic/permissionsSaga'
 import allUsersSaga from 'src/components/dashboard/peopleBody/logic/allUsersSaga'
 
 function * rootSaga () {
@@ -32,10 +33,11 @@ function * rootSaga () {
     fork(groupSaga),
     fork(watcherSaga),
     fork(matchingUsersSaga),
-    fork(matchingPagesSaga),
+    fork(searchSaga),
     fork(resetSaga),
     fork(setNewPasswordSaga),
     fork(clientsActionsExchangeSaga),
+    fork(permissionsSaga),
     fork(allUsersSaga),
     verificationWatcher(),
     signupWatcher(),

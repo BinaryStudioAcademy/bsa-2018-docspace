@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -122,9 +122,9 @@ class Page extends Component {
   }
 
   render () {
-    const { firstName, lastName, avatar, login, _id } = this.props.user
+    const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
-    const user = page ? page.userModified : null
+    const user = page ? page.userId : null
     return (
       <React.Fragment>
         <PageHeader
@@ -153,11 +153,11 @@ class Page extends Component {
           : <div className='page-container'>
             <PageTitle text={page.title} />
             <PageInfo
-              avatar={user ? user.avatar : avatar}
-              firstName={user ? user.firstName : firstName}
-              lastName={user ? user.lastName : lastName}
+              avatar={user ? user.avatar : ''}
+              firstName={user ? user.firstName : ''}
+              lastName={user ? user.lastName : ''}
               date={page.updatedAt ? new Date(page.updatedAt).toLocaleString() : ''}
-              login={user ? user.login : login}
+              login={user ? user.login : ''}
             />
             <PageContent content={page.content} />
             <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
@@ -172,16 +172,23 @@ class Page extends Component {
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
-                firstName={firstName}
-                lastName={lastName}
+                userId={_id}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
+                type={'pages'}
+                sendMention={this.props.actions.sendMention}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
-                firstName={firstName}
-                lastName={lastName}
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
+                userLogin={this.props.user.login}
+                type={'pages'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 userId={_id}
+                avatar={avatar}
                 t={t}
               />
             </div>
@@ -201,7 +208,8 @@ Page.propTypes = {
     content: PropTypes.string,
     comments: PropTypes.array,
     usersLikes: PropTypes.array,
-    isWatched: PropTypes.bool
+    isWatched: PropTypes.bool,
+    pageCreator: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -242,7 +250,9 @@ Page.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     page: pageByIdFromRoute(state),
-    user: state.verification.user,
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user,
     space: spaceById(state),
     isFetching: isPagesFetching(state)
   }
@@ -265,7 +275,8 @@ function mapDispatchToProps (dispatch) {
         addWatcherRequest,
         deleteWatcherRequest,
         addSpaceWatcherRequest,
-        deleteSpaceWatcherRequest
+        deleteSpaceWatcherRequest,
+        sendMention
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

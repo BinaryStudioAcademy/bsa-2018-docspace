@@ -16,7 +16,6 @@ export const allPagesFetchedAndNormalized = (all, byId) => ({
 export const getAllPagesError = () => ({
   type: actionTypes.GET_ALL_PAGES_ERROR
 })
-
 // GET ONE
 export const getPageByIdRequest = (id, version) => ({
   type: actionTypes.GET_PAGE_BY_ID_REQUEST,
@@ -43,10 +42,11 @@ export const createPageSuccess = (page) => ({
   payload: page
 })
 
-export const createBlogPageRequest = (page, spaceId) => ({
+export const createBlogPageRequest = (page, spaceId, userId) => ({
   type: actionTypes.CREATE_BLOG_PAGE_REQUEST,
   payload: {...page, spaceId: spaceId},
-  spaceId: spaceId
+  spaceId: spaceId,
+  userId: userId
   // This field we need for redirect to '/spaces/:space_id/blog/:page_id'
   // If we create blog page outside of some space ( at app root, for example),
   // we can't get spaceId. From server we receive page without spaceId. just blogId.
@@ -95,7 +95,6 @@ export const updateBlogPageSuccess = (updatedPage) => {
     comment.createdAt = new Date(comment.createdAt)
     return comment
   })
-  console.log(pageWithCorrectCommentTime)
   return {
     type: actionTypes.UPDATE_BLOG_PAGE_SUCCESS,
     payload: pageWithCorrectCommentTime
@@ -160,4 +159,9 @@ export const exportPageToPdf = (page) => ({
 export const exportPageToWord = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_WORD,
   payload: page
+})
+// MENTION IN COMMENT
+export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
+  type: actionTypes.MENTION_COMMENT,
+  payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
 })

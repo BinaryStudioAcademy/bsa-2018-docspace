@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 const GeneralRepository = require('./GeneralRepository')
 const SpaceModel = require('../models/spaceScheme')
 
@@ -89,10 +91,132 @@ class SpaceRepository extends GeneralRepository {
     return super.update(id, {'$set': {'history': []}})
   }
 
+  getPermissions (spaceId) {
+    return this.model.aggregate([
+      { $match: { _id: ObjectId(spaceId) } },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.users',
+          foreignField: '_id',
+          as: 'usersPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$usersPermissions',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'usersPermissions.userId',
+          foreignField: '_id',
+          as: 'usersPermissions.user'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$usersPermissions.user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$usersPermissions' },
+
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.groups',
+          foreignField: '_id',
+          as: 'groupsPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'groups',
+          localField: 'groupsPermissions.groupId',
+          foreignField: '_id',
+          as: 'groupsPermissions.group'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$groupsPermissions.group',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      { $unwind: '$groupsPermissions' },
+
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions.anonymous',
+          foreignField: '_id',
+          as: 'anonymousPermissions'
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$anonymousPermissions',
+          preserveNullAndEmptyArrays: true
+        } },
+
+      {
+        $group: {
+          '_id': '$_id',
+          'groupsPermissions': { '$addToSet': '$groupsPermissions' },
+          'usersPermissions': { '$addToSet': '$usersPermissions' },
+          'anonymousPermissions': { $first: '$anonymousPermissions' }
+        }
+      }
+
+    ])
+  }
+
+  addGroupPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.groups': permissionsId } }
+    )
+  }
+
+  addUserPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $push: { 'permissions.users': permissionsId } }
+    )
+  }
+
+  addAnonymousPermissions (spaceId, permissionsId) {
+    return this.model.update(
+      { _id: spaceId },
+      { $set: { 'permissions.anonymous': permissionsId } }
+    )
+  }
+
   searchByTitle (filter) {
     return this.model.aggregate([
       {
-        $match: {name: { $regex: filter, $options: 'i' }}
+        $match: {
+          name: { $regex: filter, $options: 'i' },
+          isDeleted: false
+        }
       },
       {
         $project: {
@@ -110,6 +234,16 @@ class SpaceRepository extends GeneralRepository {
 
   deleteWatcher (id, userId) {
     return super.updateOne(id, {'$pull': {'watchedBy': userId}})
+  }
+  searchNotDeletedByName (name) {
+    return this.model.aggregate([
+      {
+        $match: {
+          name: { $regex: name, $options: 'i' },
+          isDeleted: false
+        }
+      }
+    ])
   }
 }
 

@@ -1,0 +1,61 @@
+@import 'src/globalStyles/variables.scss';
+
+.search-input-with-dropdown-list{
+   input{
+      height: 2.14285714em;
+      line-height: 1.4285714285714;
+      padding: 4px 5px;
+      border: 1px solid #ccc;
+      border-radius: 3.01px;
+      box-sizing: border-box;
+      font-size: inherit;
+      margin: 0;
+      max-width: 500px;
+      vertical-align: baseline;
+      width: 100%;
+      background: #fff;
+      color: #333;
+    }
+     ul.select-searched-entities-list{
+        list-style: none;
+        display: flex;
+        // position: relative;
+        flex-direction: column;
+        z-index: 100000;
+        // min-width: 300px;
+        max-width: 500px;
+        box-sizing: border-box;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0,0,0,.12);
+        border: 1px solid rgba(0,0,0,.15);
+        padding: 0rem;
+        margin-top: 0;
+
+        li{
+          cursor: pointer;
+          padding: 5px;
+          display: block;
+          &:hover, &.selected{
+            color: white;
+            background-color: $blueLink
+          }
+
+          &.nothing-found-message{
+            i{
+              color: orange
+            }
+            span{
+              padding-left: 0.5rem;
+            }
+          }
+
+          .sweet-loading{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+          }
+
+        }
+  }
+}

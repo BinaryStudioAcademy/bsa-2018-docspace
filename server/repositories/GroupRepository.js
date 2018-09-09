@@ -19,14 +19,29 @@ class GroupRepository extends GeneralRepository {
       }
     ])
   }
+
   getAllForUser (id) {
-    console.log(id)
     return this.model.find(
       {
         members: {$in: [id]}
       }
     )
   }
+
+  getByTitle (title) {
+    return this.model.findOne({'title': title})
+  }
+
+  getByTitleFind (title) {
+    return this.model.find({'title': title})
+  }
+
+  searchByTitlePart (titlePart) {
+    return this.model.aggregate([
+      {$match: {title: { $regex: titlePart, $options: 'i' }}}
+    ])
+  }
+
   update (id, data) {
     return super.update(id, data)
       .then(() => this.getById(id))

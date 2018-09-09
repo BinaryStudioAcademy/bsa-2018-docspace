@@ -19,16 +19,35 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    const page = await PageRepository.getById(req.params.id)
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(404)
+      return res.end('Invalid id')
+    }
+    let page = await PageRepository.getById(req.params.id)
+      .populate({
+        path: 'comments',
+        populate: {path: 'userId', select: 'firstName lastName login avatar'}
+      })
       .populate({
         path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName'}
       })
       .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
+      })
+      .populate({
         path: 'usersLikes',
         select: 'firstName lastName'
       })
-      .then(page => page)
+      .then(page => {
+        if (!page) {
+          return res.status(404).send({
+            message: 'page not found with id ' + req.params.id
+          }).end()
+        }
+        return page
+      })
       .catch(err => {
         console.log(err)
         return err

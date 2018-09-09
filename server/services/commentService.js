@@ -40,6 +40,10 @@ module.exports = {
   add: async (req, res) => {
     console.log(req.body)
     let savedComment = await CommentRepository.create(req.body.comment)
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar login'
+      })
       .then(comment => comment)
       .catch(err => err)
     await PageRepository.addNewComment(req.body.pageId, savedComment._id)
@@ -56,10 +60,32 @@ module.exports = {
       await PageRepository.addWatcher(req.body.pageId, req.user._id)
     }
     res.send(savedComment)
+    // add: (req, res) => {
+    //   CommentRepository.create(req.body.comment)
+    //     .then(comment => {
+    //       console.log(comment)
+    //       PageRepository.addNewComment(req.body.pageId, comment._id)
+    //         .then(() => {
+    //           CommentRepository.getById(comment._id)
+    //             .populate({
+    //               path: 'userId',
+    //               select: 'firstName lastName avatar login'
+    //             })
+    //             .then(populatedCommment => res.send(populatedCommment))
+    //         })
+    //     })
   },
 
   findOneAndUpdate: (req, res) => {
     CommentRepository.update(req.params.id, req.body.comment)
+      .populate({
+        path: 'userLikes',
+        select: 'firstName lastName'
+      })
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
+      })
       .then(comment => res.send(comment))
       .catch(err => res.status(500).send(err))
   },
@@ -71,7 +97,13 @@ module.exports = {
           path: 'userLikes',
           select: 'firstName lastName'
         })
-        .then(comment => res.send(comment))
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
         .catch(err => res.status(500).send(err))
     } else {
       CommentRepository.removeLike(req.params.id, req.body.userId)
@@ -79,7 +111,13 @@ module.exports = {
           path: 'userLikes',
           select: 'firstName lastName'
         })
-        .then(comment => res.send(comment))
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
         .catch(err => res.status(500).send(err))
     }
   },

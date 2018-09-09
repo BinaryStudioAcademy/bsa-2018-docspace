@@ -4,6 +4,7 @@ const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
+const PermissionsRepository = require('../repositories/PermissionsRepository')
 
 module.exports = {
   findAll: (req, res) => {
@@ -19,19 +20,11 @@ module.exports = {
   findOne: async (req, res) => {
     const id = req.params.id
 
-    if (id.length === 0) {
-      res.status(400)
-
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404)
       return res.end('Invalid id')
     }
     const space = await SpaceRepository.getById(id)
-      // .then((data) => {
-      //   if (data.length === 0) {
-      //     res.status(404)
-      //     return res.end()
-      //   }
-      //   res.json(data[0])
-      // })
       .then(space => space)
       .catch((err) => {
         console.log(err)
@@ -68,29 +61,34 @@ module.exports = {
 
       return res.end('Invalid data')
     }
-    BlogRepository.create({})
-      .then(blog => {
-        const spaceWithOwnerAndEmptyBlog = { ...req.body,
+
+    let spaceBlog, anonymousPermissions
+    Promise.all([
+      BlogRepository.create({}).then(blog => { spaceBlog = blog }),
+      PermissionsRepository.create({}).then(permissions => { anonymousPermissions = permissions })
+    ])
+      .then(() => {
+        const spaceWithOwnerAndEmptyBlog = {
+          ...req.body,
           ownerId: req.user._id,
-          blogId: blog._id
+          blogId: spaceBlog._id,
+          permissions: {
+            anonymous: anonymousPermissions._id
+          }
         }
         SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
           .then(space => {
-            UserRepository.addSpaceToUser({
-              userId: spaceWithOwnerAndEmptyBlog.ownerId,
-              spaceId: space._id
-            })
+            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
               .then(() => {
                 SpaceRepository.addWatcher(space._id, req.user._id)
                   .then(() =>
                     res.json(space)
                   )
+                  // SpaceRepository.getById(space._id)
+                  // .then(getSpace => res.json(getSpace[0]))
+                  // .catch(err => console.log(err))
               })
               .catch(err => console.log(err))
-          })
-          .catch((err) => {
-            console.log(err)
-            res.status(400).end()
           })
       })
       .catch(err => {
@@ -107,11 +105,12 @@ module.exports = {
 
       return res.end('Invalid id')
     }
+
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
+      .populate('ownerId', 'firstName lastName login')
       .then(data => {
-        console.log(`anws`, data)
         return res.json(data)
       })
       .catch((err) => {

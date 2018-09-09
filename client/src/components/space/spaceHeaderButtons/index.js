@@ -33,9 +33,7 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    console.log(this.state)
-    console.log(this.props)
-    const { onEdit, onShare, onSave, children, type, t, hideEditBtn, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
+    const { onEdit, onShare, onSave, children, type, t, hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
     const dropdownMenuItems = [
       {
         name: t('export_to_PDF'),
@@ -53,7 +51,7 @@ class SpaceHeaderButtons extends Component {
     return (
       <div className='buttons-container'>
         {
-          !hideEditBtn &&
+          !hideNotSpaceBtns &&
           <div className='buttons-item' title={t('edit')} onClick={onEdit}>
             <i className='fas fa-pen' />
           </div>
@@ -79,11 +77,13 @@ class SpaceHeaderButtons extends Component {
         <div className='buttons-item' title={t('share_this_page_with_others')} onClick={onShare}>
           <i className='fas fa-share-square' />
         </div>
+        { !hideNotSpaceBtns &&
         <DropdownMenu
           icon='fas fa-ellipsis-h'
           type='buttons-item'
           menuItems={dropdownMenuItems}
         />
+        }
         {/* TEMP ADDED FOR DELETING PAGE */}
         {
           type === 'page' &&
@@ -106,7 +106,7 @@ SpaceHeaderButtons.propTypes = {
   onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
-  hideEditBtn: PropTypes.bool,
+  hideNotSpaceBtns: PropTypes.bool,
   openWarningModal: PropTypes.func,
   onWordImport: PropTypes.func,
   isWatching: PropTypes.bool,

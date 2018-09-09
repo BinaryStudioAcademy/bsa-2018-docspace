@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 import './pageEditor.css'
 
 // dummy avatar for user
-import logo from 'src/resources/logo.svg'
+import logo from 'src/resources/icons/user-comment.png'
 
 export default class PageEditor extends Component {
   constructor (props) {
@@ -85,7 +85,14 @@ export default class PageEditor extends Component {
              <i className='fas fa-question' />
            </span>
            <span className='avatar-wrp' data-hover-text-help="It's you!">
-             <img className='user-avatar' src={user.avatar} alt='' />
+             { user.avatar
+               ? <Link to={`/users/${user.login}`} >
+                 <img className='user-avatar' src={user.avatar} alt='' />
+               </Link>
+               : <Link className='page-info-image' to={`/users/${user.login}`}>
+                 <i id='user-avatar-icon-page' className='fas fa-user-circle' />
+               </Link>
+             }
            </span>
            <span data-hover-text-help='invite people for collaborative editing'>
              <i className='fas fa-plus' />
@@ -132,7 +139,8 @@ PageEditor.defaultProps = {
     name: 'Fake'
   },
   user: {
-    avatar: logo
+    avatar: logo,
+    login: ''
   }
 }
 

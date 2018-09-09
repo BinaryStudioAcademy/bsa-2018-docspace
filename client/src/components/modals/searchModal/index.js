@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import './searchModal.css'
-import {getMatchingPagesRequest, cleanMatchingPages} from './logic/searchActions'
+import {searchRequest, cleanSearchResults, advancedSearchRequest} from 'src/commonLogic/search/searchActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 class SearchModal extends Component {
   constructor (props) {
@@ -23,11 +23,24 @@ class SearchModal extends Component {
 
   search = _.debounce(target => {
     if (this.state.filter !== '') {
-      this.props.actions.getMatchingPagesRequest(this.state.filter)
+      this.props.actions.searchRequest({ input: this.state.filter, targetToSearch: 'all by name' })
     } else {
-      this.props.actions.cleanMatchingPages()
+      this.props.actions.cleanSearchResults()
     }
-  }, 1000);
+  }, 200);
+
+  handleAdvancedSearch = () => {
+    this.props.closeModal()
+    this.props.actions.advancedSearchRequest({ input: this.state.filter, targetToSearch: 'all_advanced' })
+  }
+
+  // Redirect to advanced search by enter press
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.history.push('/advanced_search_page')
+      this.handleAdvancedSearch()
+    }
+  }
 
   renderResults = () => {
     let blogsList = []
@@ -77,6 +90,16 @@ class SearchModal extends Component {
       </div>
     )
     const result = <React.Fragment>
+      {
+        this.state.filter !== '' &&
+        <div className='search-link'>
+          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
+            <i className='fas fa-search' />
+            {`Search '${this.state.filter}'`}
+          </Link >
+        </div>
+      }
+
       {postList.length ? <div className='search-title-wrapper'>
         <p>PAGES</p>
       </div> : null
@@ -92,12 +115,6 @@ class SearchModal extends Component {
       </div> : null
       }
       {SpaceRender}
-      {this.state.filter !== '' && <div className='search-link'>
-        <NavLink to='#'>
-          <i className='fas fa-search' />
-          {`Search '${this.state.filter}'`}
-        </NavLink>
-      </div>}
     </React.Fragment>
 
     return result
@@ -110,7 +127,7 @@ class SearchModal extends Component {
     this.setState({
       filter: ''
     })
-    this.props.actions.cleanMatchingPages()
+    this.props.actions.cleanSearchResults()
   }
 
   render () {
@@ -121,7 +138,14 @@ class SearchModal extends Component {
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
           <div className='search-content'>
-            <input autoFocus='true' onChange={({target}) => this.setFilterValue(target)} className='search-field' placeholder='Search' value={this.state.filter} />
+            <input
+              autoFocus='true'
+              onChange={({target}) => this.setFilterValue(target)}
+              className='search-field'
+              placeholder='Search'
+              value={this.state.filter}
+              onKeyPress={this._handleKeyPress}
+            />
             {this.renderResults()}
           </div>
         </div>
@@ -132,7 +156,7 @@ class SearchModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchResults
+    searchResults: state.search.results
   }
 }
 
@@ -140,8 +164,9 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getMatchingPagesRequest,
-        cleanMatchingPages
+        searchRequest,
+        cleanSearchResults,
+        advancedSearchRequest
       }
       , dispatch)
   }
@@ -150,7 +175,8 @@ function mapDispatchToProps (dispatch) {
 SearchModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
-  searchResults: PropTypes.object
+  searchResults: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchModal)
