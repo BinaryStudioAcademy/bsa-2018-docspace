@@ -15,7 +15,8 @@ class AdministrationUsers extends Component {
       emailField1: '',
       emailField2: '',
       emailField3: '',
-      filterValue: ''
+      filterValue: '',
+      invalidData: ''
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -34,7 +35,7 @@ class AdministrationUsers extends Component {
   handleSendInvitation = () => {
     let sendMembers = []
     let inviteNewUser = true
-    const { user, actions } = this.props
+    const { user, actions, allUsers } = this.props
     const { nameField1, nameField2, nameField3 } = this.state
     const { emailField1, emailField2, emailField3 } = this.state
     if (this.state.nameField1 && this.state.emailField1) {
@@ -46,8 +47,14 @@ class AdministrationUsers extends Component {
     if (this.state.nameField3 && this.state.emailField3) {
       sendMembers.push({name: nameField3, email: emailField3})
     }
-    const validateEmails = sendMembers.length && sendMembers.every(member => this.validateEmail(member.email))
-    if (validateEmails) {
+    const existEmail = sendMembers.length &&
+    sendMembers.some(member => allUsers.some(registeredUser => registeredUser.email === member.email))
+    if (existEmail) {
+      this.setState({
+        invalidData: `*user(s) with such email(s) already exist`
+      })
+    }
+    if (!existEmail) {
       actions.sendInvitation(sendMembers, inviteNewUser, `${user.firstName} ${user.lastName}`)
       this.setState({
         nameField1: '',
@@ -56,12 +63,14 @@ class AdministrationUsers extends Component {
         emailField1: '',
         emailField2: '',
         emailField3: '',
-        filterValue: ''
+        filterValue: '',
+        invalidData: ''
       })
     }
   }
   render () {
     const { t } = this.props
+    const { invalidData } = this.state
     return (
       <React.Fragment>
         <div>
@@ -92,6 +101,9 @@ class AdministrationUsers extends Component {
               t={t}
             />
           </form>
+          {!!invalidData &&
+            <p>{invalidData}</p>
+          }
         </div>
         <button onClick={this.handleSendInvitation}>{t('invite_users')}</button>
         <div className='admin-filter-container'>
@@ -113,7 +125,8 @@ class AdministrationUsers extends Component {
 AdministrationUsers.propTypes = {
   t: PropTypes.func,
   actions: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  allUsers: PropTypes.array
 }
 
 export default translate('translations')(AdministrationUsers)

@@ -50,7 +50,6 @@ export class AddComment extends Component {
           console.log(parentId)
           sendReply(parentId, userLogin, pageId, spaceId, type)
         }
-        console.log(`parent comment -------------------------- !!!!`, parentId)
         this.props.addNewComment && addNewComment({
           userId: userId,
           text: text,

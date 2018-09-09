@@ -151,7 +151,6 @@ function * mentionInComment (action) {
 
 function * relpyInComment (action) {
   try {
-    console.log(action.payload)
     yield PageService.replyInComment(action.payload)
   } catch (e) {
     console.log('export error', e)

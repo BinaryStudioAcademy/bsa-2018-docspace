@@ -103,7 +103,6 @@ class PageService {
     callWebApi(args)
   }
   replyInComment = (parentCommentIdWithInfo) => {
-    console.log(`service`, parentCommentIdWithInfo)
     const args = { endpoint: `/api/mail/replyComment`, method: 'POST', body: JSON.stringify(parentCommentIdWithInfo) }
     callWebApi(args)
   }

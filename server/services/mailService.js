@@ -83,7 +83,6 @@ module.exports = {
     const mainMessage = `Teams change and teams grow. DocSpace is a flexible platform that supports the way your team works and can be customized to fit any and every type of need.`
     const btnMessage = `See the page`
     const link = 'http://' + req.headers.host + '/spaces/' + spaceId + '/' + BlogOrPage + '/' + pageId
-    console.log(`reply`, link)
     await CommentRepository.getById(parentCommentId)
       .populate({
         path: 'userId',

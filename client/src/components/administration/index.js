@@ -73,7 +73,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.userReducer.messages.length
       ? state.user.userReducer.user
-      : state.verification.user
+      : state.verification.user,
+    allUsers: state.allUsers
   }
 }
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Administration)))
