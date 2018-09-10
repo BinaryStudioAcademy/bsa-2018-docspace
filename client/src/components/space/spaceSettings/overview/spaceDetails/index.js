@@ -12,10 +12,17 @@ class SpaceDetails extends Component {
     const {spaceSettings} = space
     const icon = spaceSettings ? spaceSettings.icon : 'folder'
     const color = spaceSettings ? spaceSettings.color : '#1c80ff'
-    let ownerSpace = allUsers.filter(user => {
-      console.log(user._id, space.ownerId._id)
-      return user._id === space.ownerId._id
-    })
+    let ownerSpace = ''
+    if (typeof space.ownerId === 'object') {
+      ownerSpace = allUsers.filter(user => {
+        return user._id === space.ownerId._id
+      })
+    } else {
+      ownerSpace = allUsers.filter(user => {
+        return user._id === space.ownerId
+      })
+    }
+
     console.log(`-------------------------------------`, ownerSpace)
     ownerSpace = ownerSpace.length ? ownerSpace[0] : {}
     return (

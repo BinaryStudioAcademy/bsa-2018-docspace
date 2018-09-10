@@ -19,7 +19,7 @@ class SpaceOverviewTab extends Component {
     }
   }
   componentDidMount () {
-    this.props.actions.getAlUsersRequest()
+    this.props.allUsers.length === 0 && this.props.actions.getAlUsersRequest()
   }
   handleDeleteSpace = () => {
     this.props.actions.deleteSpaceRequest(this.props.space._id)
