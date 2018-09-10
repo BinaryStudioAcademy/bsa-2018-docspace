@@ -5,7 +5,8 @@ const SpaceModel = require('../models/spaceScheme')
 
 class SpaceRepository extends GeneralRepository {
   addPageToSpace (page) {
-    return super.update(page.spaceId, {'$addToSet': {'pages': page._id}})
+    return super.update(page.spaceId,
+      {'$addToSet': {'pages': page._id}})
   }
 
   deletePageFromSpace (spaceId, pageId) {
