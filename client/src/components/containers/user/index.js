@@ -254,7 +254,6 @@ class User extends Component {
 
   render () {
     const { t, i18n, isFetching, compareUser } = this.props
-    console.log('cooooooooooooooooompareUser', compareUser)
     const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
     const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
