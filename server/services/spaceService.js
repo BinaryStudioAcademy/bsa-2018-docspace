@@ -5,10 +5,68 @@ const PageRepository = require('../repositories/PageRepository')
 var mongoose = require('mongoose')
 const PermissionsRepository = require('../repositories/PermissionsRepository')
 
+const adminPermissions = {
+  all: {
+    view: true
+  },
+
+  blog: {
+    add: true,
+    delete: true
+  },
+
+  pages: {
+    add: true,
+    delete: true
+  },
+
+  comments: {
+    add: true,
+    delete: true
+  },
+
+  space: {
+    export: true,
+    administrate: true
+  }
+}
+
 module.exports = {
   findAll: (req, res) => {
     SpaceRepository.getAll()
-      .then(data => res.json(data))
+      .populate({
+        path: 'permissions.groups',
+        populate: {path: 'groupId', select: 'members'}
+      })
+      .populate({
+        path: 'permissions.users'
+      })
+      .populate('categories')
+      .then(spaces => {
+        let authPermissions = []
+
+        let filtered = spaces.filter((space) => {
+          if (String(space.ownerId) === String(req.user._id)) {
+            authPermissions.push(adminPermissions)
+            return true
+          }
+
+          return space.permissions.users.some(perm => {
+            if (String(perm.userId) === String(req.user._id)) {
+              authPermissions.push(perm)
+              return true
+            }
+          }) ||
+          space.permissions.groups.some(perm => {
+            if (perm.groupId.members.some(id => String(id) === String(req.user._id))) {
+              authPermissions.push(perm)
+              return true
+            }
+          })
+        })
+
+        res.json(filtered.map((space, index) => ({ ...space._doc, authUserPermissions: authPermissions[index] })))
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -25,15 +83,17 @@ module.exports = {
     }
 
     SpaceRepository.getById(id)
-      .then((data) => {
-        if (data.length === 0) {
-          res.status(404)
 
-          return res.end()
+      .then(space => {
+        if (!space) {
+          return res.status(404).end()
         }
 
-        res.json(data[0])
+        returnSpaceWithAuthUserPermissions(req, res, space)
+
+        // return not authorized to see the space
       })
+
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -67,11 +127,18 @@ module.exports = {
             UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
               .then(() => {
                 SpaceRepository.getById(space._id)
-                  .then(getSpace => res.json(getSpace[0]))
-                  .catch(err => console.log(err))
+                  .then(space => res.json({ ...space._doc, authUserPermissions: adminPermissions }))
+                  .catch(err => {
+                    console.log(err)
+                    res.status(400).end()
+                  })
               })
-              .catch(err => console.log(err))
+              .catch(err => {
+                console.log(err)
+                res.status(400).end()
+              })
           })
+          .catch(err => console.log(err))
       })
       .catch(err => {
         console.log(err)
@@ -91,8 +158,10 @@ module.exports = {
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
-      .then(data => {
-        return res.json(data)
+      .populate('ownerId', 'firstName lastName login')
+      .populate('homePage')
+      .then(space => {
+        returnSpaceWithAuthUserPermissions(req, res, space)
       })
       .catch((err) => {
         console.log(err)
@@ -133,5 +202,26 @@ module.exports = {
         res.status(400)
         res.end()
       })
+  }
+}
+
+function returnSpaceWithAuthUserPermissions (req, res, space) {
+  const {users, groups} = space.permissions
+
+  if (String(space.ownerId._id) === String(req.user._id)) {
+    // If user is space owner - he can get it
+    return res.json({ ...space._doc, authUserPermissions: adminPermissions })
+  }
+
+  for (let i = 0; i < users.length; i++) {
+    if (String(users[i].userId) === String(req.user._id)) {
+      return res.json({ ...space._doc, authUserPermissions: users[i] })
+    }
+  }
+
+  for (let i = 0; i < groups.length; i++) {
+    if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
+      return res.json({ ...space._doc, authUserPermissions: groups[i] })
+    }
   }
 }

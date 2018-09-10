@@ -23,7 +23,9 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onWatch, onShare, onSave, children, type, t, hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport, onWordImport } = this.props
+    const { onEdit, onWatch, onShare, onSave, children, type, t,
+      hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport,
+      onWordImport, renderDeleteBtn } = this.props
     const dropdownMenuItems = [
       {
         name: t('export_to_PDF'),
@@ -71,7 +73,7 @@ class SpaceHeaderButtons extends Component {
         }
         {/* TEMP ADDED FOR DELETING PAGE */}
         {
-          type === 'page' &&
+          type === 'page' && renderDeleteBtn &&
           <div className='buttons-item' onClick={openWarningModal} >
             <i className='fas fa-trash' />
           </div>
@@ -94,7 +96,9 @@ SpaceHeaderButtons.propTypes = {
   type: PropTypes.string,
   hideNotSpaceBtns: PropTypes.bool,
   openWarningModal: PropTypes.func,
-  onWordImport: PropTypes.func
+  onWordImport: PropTypes.func,
+  renderDeleteBtn: PropTypes.bool
+
 }
 
 SpaceHeaderButtons.defaultProps = {

@@ -48,6 +48,7 @@ class CommentsList extends Component {
         spaceId={this.props.spaceId}
         type={this.props.type}
         likeAction={this.props.likeAction}
+        canDelete={this.props.canDelete}
       />
     )
     return (
@@ -71,5 +72,6 @@ CommentsList.propTypes = {
   userId: PropTypes.string,
   sendMention: PropTypes.func,
   user: PropTypes.object,
-  likeAction: PropTypes.func
+  likeAction: PropTypes.func,
+  canDelete: PropTypes.bool
 }

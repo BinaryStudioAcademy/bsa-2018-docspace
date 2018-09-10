@@ -124,6 +124,7 @@ class Page extends Component {
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
+          renderDeleteBtn={space.authUserPermissions.pages.delete}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -150,9 +151,10 @@ class Page extends Component {
               {this.props.page && this.props.page.comments && this.props.page.comments.length &&
               this.props.page.comments.length
                 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
-                : <h2>{t('add_comments')}</h2>
+                : space.authUserPermissions.comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList
+                canDelete={space.authUserPermissions.comments.delete}
                 comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
@@ -165,17 +167,20 @@ class Page extends Component {
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
-              <AddComment
-                sendMention={this.props.actions.sendMention}
-                addNewComment={this.addNewComment}
-                userLogin={this.props.user.login}
-                type={'pages'}
-                pageId={this.props.page._id}
-                spaceId={this.props.space._id}
-                userId={_id}
-                avatar={avatar}
-                t={t}
-              />
+              {
+                space.authUserPermissions.comments.add &&
+                <AddComment
+                  sendMention={this.props.actions.sendMention}
+                  addNewComment={this.addNewComment}
+                  userLogin={this.props.user.login}
+                  type={'pages'}
+                  pageId={this.props.page._id}
+                  spaceId={this.props.space._id}
+                  userId={_id}
+                  avatar={avatar}
+                  t={t}
+                />
+              }
             </div>
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
