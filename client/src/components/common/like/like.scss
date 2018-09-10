@@ -7,8 +7,11 @@
         border: none;
         font-size:18px;
     }
+    button:hover{
+        cursor: pointer;
+    }
     button:target{
-        border: none;   
+        outline: none;
     }
     .like-button:target{
         border: none;

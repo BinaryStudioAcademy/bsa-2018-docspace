@@ -20,6 +20,12 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
         <li className='comment-actions-item'>
           <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
         </li>
+        <li className='comment-actions-item comment-actions-time'>
+          <span className='comment-time'>{creationDate}</span>
+        </li>
+        {/* <li className='comment-actions-item'>
+          <span className='comment-time'>{creationDate}</span>
+        </li> */}
         <Like
           t={t}
           user={user || ''}
@@ -29,9 +35,7 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
         {/* <li className='comment-actions-item'>
           <span className='comment-like' onClick={onLikeComment}>{t('like')}</span>
         </li> */}
-        <li className='comment-actions-item'>
-          <span className='comment-time'>{creationDate}</span>
-        </li>
+
       </ul>
     </div>
   )

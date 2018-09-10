@@ -42,6 +42,25 @@ class SearchModal extends Component {
     }
   }
 
+  componentDidMount () {
+    document.addEventListener('mousedown', this.handleClickOutside)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  }
+
+  setWrapperRef = (node) => {
+    this.wrapperRef = node
+  }
+
+  handleClickOutside = (event) => {
+    console.log('event')
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.props.closeModal && this.props.closeModal()
+    }
+  }
+
   renderResults = () => {
     let blogsList = []
     let spacesList = []
@@ -90,35 +109,42 @@ class SearchModal extends Component {
         </NavLink>
       </div>
     )
+    let result
+    if (this.props.searchResults.length && this.state.filter !== '') {
+      result = <React.Fragment>
+        {
+          this.state.filter !== '' &&
+          <div className='search-link'>
+            <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
+              <i className='fas fa-search' />
+              {`Search '${this.state.filter}'`}
+            </Link >
+          </div>
+        }
 
-    const result = <React.Fragment>
-      {
-        this.state.filter !== '' &&
-        <div className='search-link'>
-          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
-            <i className='fas fa-search' />
-            {`Search '${this.state.filter}'`}
-          </Link >
-        </div>
-      }
-
-      {postList.length ? <div className='search-title-wrapper'>
-        <p>PAGES</p>
-      </div> : null
-      }
-      {PageRender}
-      {blogsList.length ? <div className='search-title-wrapper'>
-        <p>BLOGS</p>
-      </div> : null
-      }
-      {blogRender}
-      {spacesList.length ? <div className='search-title-wrapper'>
-        <p>SPACES</p>
-      </div> : null
-      }
-      {SpaceRender}
-    </React.Fragment>
-
+        {postList.length ? <div className='search-title-wrapper'>
+          <p>PAGES</p>
+        </div> : null
+        }
+        {PageRender}
+        {blogsList.length ? <div className='search-title-wrapper'>
+          <p>BLOGS</p>
+        </div> : null
+        }
+        {blogRender}
+        {spacesList.length ? <div className='search-title-wrapper'>
+          <p>SPACES</p>
+        </div> : null
+        }
+        {SpaceRender}
+      </React.Fragment>
+    } else if (this.state.filter !== '') {
+      result = <p>No results found</p>
+    } else {
+      result = ''
+    }
+    console.log(this.state.filter === '')
+    console.log(this.props.searchResults)
     return result
 
     // return blogRender.concat(PageRender).concat(SpaceRender)
@@ -135,7 +161,7 @@ class SearchModal extends Component {
   render () {
     return (
       <div className='search-modal'>
-        <div className='search-modal-body'>
+        <div className='search-modal-body' ref={this.setWrapperRef}>
           <div className='search-sidebar'>
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
