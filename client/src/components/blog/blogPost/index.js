@@ -20,7 +20,7 @@ import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/c
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-
+import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 import fakeImg from 'src/resources/logo.svg'
 import './blogPost.css'
 
@@ -53,14 +53,23 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/blog/${page._id}/edit`)
   }
 
-  handleDeletePage = () => {
-    this.props.actions.deleteBlogPageRequest(this.props.page)
-  }
-
   likeAction = (isLiked) => {
     this.likePage(isLiked, 'page')
   }
-
+  handleOpenWarningModal = () => {
+    const { actions, match, page, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_blog'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_blog_delete_short')}</p>
+          <p>{t('warning_blog_delete_long')}</p>
+        </div>),
+        action: actions.deleteBlogPageRequest,
+        args: {id: page._id}
+      })
+    }
+  }
   likePage = (isLiked, type, comment) => {
     if (type === 'page') {
       isLiked
@@ -88,6 +97,7 @@ class Page extends Component {
           t={t}
           handleEditPageClick={this.handleEditPageClick}
           renderDeleteBtn={space.authUserPermissions.blog.delete}
+          openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -208,7 +218,8 @@ function mapDispatchToProps (dispatch) {
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
-        sendMention
+        sendMention,
+        openWarningModal
       }
       , dispatch)
   }

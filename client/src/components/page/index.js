@@ -68,8 +68,17 @@ class Page extends Component {
   }
 
   handleOpenWarningModal = () => {
-    if (!this.props.match.params.version) {
-      this.props.actions.openWarningModal(true, this.props.page._id)
+    const { actions, match, page, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_page'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_page_delete_short')}</p>
+          <p>{t('warning_page_delete_long')}</p>
+        </div>),
+        action: actions.deletePageRequest,
+        args: {id: page._id}
+      })
     }
   }
 
@@ -243,7 +252,6 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         getPageByIdRequest,
-        deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
         sendDocFileRequest,
@@ -252,7 +260,8 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
-        sendMention
+        sendMention,
+        deletePageRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
