@@ -228,6 +228,7 @@ module.exports = {
     await SpaceRepository.deletePageFromSpace(req.body.fromSpaceId, req.params.id)
       .catch(err => console.log('deletePage', err))
     const pageWithNewSpace = await PageRepository.update(req.params.id, {'$set': {'spaceId': req.body.toSpaceId}})
+      .populate('userId', 'firstName lastName avatar login')
       .then(page => page)
       .catch(err => err)
     const allPagesInSpace = updatedSpace.pages
