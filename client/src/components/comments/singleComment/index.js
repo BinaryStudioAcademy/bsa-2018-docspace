@@ -36,17 +36,21 @@ export class Comment extends Component {
   }
 
   onDeleteComment () {
-    this.props.deleteComment && this.props.deleteComment({target: this})
+    const { deleteComment } = this.props
+    deleteComment && deleteComment({target: this})
   }
 
   onLikeComment (obj) {
-    this.props.likeAction(obj, this.props.comment)
+    const { likeAction } = this.props
+    likeAction(obj, this.props.comment)
   }
 
   render () {
-    const { comment } = this.props
-    const comparingCurrentAndCommentUsers = (this.props.comment.userId &&
-      this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
+    const { comment, user, editComment, margin, canDelete, t, level } = this.props
+    const { userId, pageId, spaceId, type, sendMention, addNewComment } = this.props
+    const { replyMode } = this.state
+    const isCurrentUserComment = (comment.userId ||
+      comment.userId._id) === user._id
     let avatarLink = UserAvatarLink
     if (comment.userId.avatar) {
       avatarLink = comment.userId.avatar
@@ -55,61 +59,61 @@ export class Comment extends Component {
       <React.Fragment>
         {this.state.editMode
           ? <AddComment
-            userLogin={this.props.user.login}
-            text={this.props.comment.text}
+            userLogin={user.login}
+            text={comment.text}
             onEditComment={this.onEditComment}
-            editComment={this.props.editComment}
-            userId={this.props.comment.userId._id}
-            avatar={this.props.user.avatar}
-            _id={this.props.comment._id}
-            parentId={this.props.comment.parentId}
+            editComment={editComment}
+            userId={comment.userId._id}
+            avatar={user.avatar}
+            _id={comment._id}
+            parentId={comment.parentId}
           />
-          : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            {this.props.comment.userId &&
+          : <div className='comment-wrapper' style={{marginLeft: margin}}>
+            {comment.userId &&
             <React.Fragment>
               <CommentAvatar
                 UserAvatarLink={avatarLink}
-                login={this.props.comment.userId.login}
+                login={comment.userId.login}
               />
               <div className='comment-body'>
-                <Link to={`/users/${this.props.comment.userId.login}`} >
+                <Link to={`/users/${comment.userId.login}`} >
                   <h4 className='comment-first-last-names'>
-                    <span>{this.props.comment.userId.firstName} {this.props.comment.userId.lastName}</span>
+                    <span>{comment.userId.firstName} {comment.userId.lastName}</span>
                   </h4>
                 </Link>
                 <div className='comment-body-content'>
-                  <p>{this.props.comment.text}</p>
+                  <p>{comment.text}</p>
                 </div>
                 <CommentActions
                   onReplyComment={this.onReplyComment}
                   onEditComment={this.onEditComment}
                   onDeleteComment={this.onDeleteComment}
                   onLikeComment={this.onLikeComment}
-                  editComment={this.props.editComment}
-                  creationDate={formatDate(this.props.comment.createdAt)}
-                  likes={this.props.comment.userLikes}
-                  comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
-                  t={this.props.t}
-                  user={this.props.user}
-                  canDelete={this.props.canDelete}
+                  editComment={editComment}
+                  creationDate={formatDate(comment.createdAt)}
+                  likes={comment.userLikes}
+                  comparingCurrentAndCommentUsers={isCurrentUserComment}
+                  t={t}
+                  user={user}
+                  canDelete={canDelete}
                 />
               </div>
             </React.Fragment>
             }
           </div> }
-        {this.state.replyMode &&
+        {replyMode &&
         <AddComment
-          parentId={this.props.comment._id}
-          style={{'marginLeft': `${(this.props.level + 1) * 25}px`}}
-          addNewComment={this.props.addNewComment}
+          parentId={comment._id}
+          style={{'marginLeft': `${(level + 1) * 25}px`}}
+          addNewComment={addNewComment}
           ReplyComment={this.onReplyComment}
-          userLogin={this.props.user.login}
-          sendMention={this.props.sendMention}
-          avatar={this.props.user.avatar}
-          userId={this.props.userId}
-          pageId={this.props.pageId}
-          spaceId={this.props.spaceId}
-          type={this.props.type}
+          userLogin={user.login}
+          sendMention={sendMention}
+          avatar={user.avatar}
+          userId={userId}
+          pageId={pageId}
+          spaceId={spaceId}
+          type={type}
         />}
       </React.Fragment>
     )
@@ -127,8 +131,6 @@ Comment.propTypes = {
   editComment: PropTypes.func,
   addNewComment: PropTypes.func,
   level: PropTypes.number,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
   likeAction: PropTypes.func,
   userId: PropTypes.string,
   user: PropTypes.object,
