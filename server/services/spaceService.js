@@ -91,7 +91,6 @@ module.exports = {
     SpaceRepository.update(id, req.body)
       .populate('categories', 'name')
       .populate('pages', 'title')
-      .populate('ownerId', 'firstName lastName login')
       .then(data => {
         return res.json(data)
       })

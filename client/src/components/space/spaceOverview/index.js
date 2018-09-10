@@ -8,7 +8,6 @@ import { translate } from 'react-i18next'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 import PageContent from 'src/components/common/pageContent'
-
 class SpaceOverview extends Component {
   handleEditBtnClick = () => {
     const { space, history } = this.props

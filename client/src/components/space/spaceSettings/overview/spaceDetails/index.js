@@ -7,10 +7,17 @@ import './spaceDetails.css'
 
 class SpaceDetails extends Component {
   render () {
-    const { space, t } = this.props
+    const { space, t, allUsers } = this.props
+    // console.log(space)
     const {spaceSettings} = space
     const icon = spaceSettings ? spaceSettings.icon : 'folder'
     const color = spaceSettings ? spaceSettings.color : '#1c80ff'
+    let ownerSpace = allUsers.filter(user => {
+      console.log(user._id, space.ownerId._id)
+      return user._id === space.ownerId._id
+    })
+    console.log(`-------------------------------------`, ownerSpace)
+    ownerSpace = ownerSpace.length ? ownerSpace[0] : {}
     return (
       <table className='space-details-table'>
         <tbody>
@@ -44,7 +51,7 @@ class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>{t('created_by')}</td>
-            <td> <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link></td>
+            <td> <Link className='link' to={`/users/${ownerSpace.login}`}>{ownerSpace.firstName + ' ' + ownerSpace.lastName}</Link></td>
           </tr>
           <tr>
             <td>{t('categories')}</td>
@@ -64,7 +71,7 @@ class SpaceDetails extends Component {
           <tr>
             <td>{t('administrators')}</td>
             <td>
-              <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link>
+              <Link className='link' to={`/users/${ownerSpace.login}`}>{ownerSpace.firstName + ' ' + ownerSpace.lastName}</Link>
             </td>
           </tr>
         </tbody>
@@ -78,7 +85,8 @@ SpaceDetails.propTypes = {
   space: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.stringgi
-  })
+  }),
+  allUsers: PropTypes.array
 }
 
 export default translate('translations')(SpaceDetails)
