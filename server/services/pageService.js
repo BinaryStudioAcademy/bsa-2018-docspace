@@ -237,12 +237,14 @@ module.exports = {
 
   copyPage: async (req, res) => {
     const page = await PageRepository.getById(req.params.id)
+      .populate('userId', 'firstName lastName avatar login')
       .then(page => page)
       .catch(err => console.log('get PAGE BY ID ERROR', err))
     const newPage = {
       title: `${page.title}(copy)`,
       content: page.content,
-      spaceId: page.spaceId
+      spaceId: page.spaceId,
+      userId: page.userId
     }
 
     const copyOfPage = await PageRepository.create(newPage)
