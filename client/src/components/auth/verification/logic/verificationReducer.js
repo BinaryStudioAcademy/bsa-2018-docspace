@@ -17,7 +17,7 @@ export const verificationReducer = (state = initialState, action) => {
     case actionTypes.VERIFICATION_SUCCESS:
       return {
         requesting: false,
-        user: action.response.message,
+        user: action.response.user,
         isLoggedIn: action.response.isLoggedIn
       }
 

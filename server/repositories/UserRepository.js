@@ -40,6 +40,17 @@ class UserRepository extends GeneralRepository {
       {$match: {login: { $regex: loginPart, $options: 'i' }}}
     ])
   }
+
+  notifyUsers (notification, usersIdsArr) {
+    return this.model.updateMany(
+      { _id: { $in: usersIdsArr } },
+      { $push: {'notifications': notification._id} }
+    )
+  }
+
+  clearUsersNotifications (userId) {
+    return super.updateOne(userId, { $set: { 'notifications': [] } })
+  }
 }
 
 module.exports = new UserRepository(scheme.User)
