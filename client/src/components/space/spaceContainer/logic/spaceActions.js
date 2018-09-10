@@ -47,6 +47,11 @@ export const createSpaceError = () => ({
   type: actionTypes.CREATE_SPACE_ERROR
 })
 
+export const addNewInfoSpaceSuccess = (updatedSpace) => ({
+  type: actionTypes.ADD_NEW_INFO_SPACE_SUCCESS,
+  payload: updatedSpace
+})
+
 // UPDATE
 export const updateSpaceRequest = (newSpace) => {
   return {
@@ -106,4 +111,19 @@ export const deleteCategorySuccess = (updatedSpace) => ({
 
 export const deleteCategoryError = () => ({
   type: actionTypes.DELETE_CATEGORY_ERROR
+})
+
+export const addPageToSpace = (spaceId, page) => ({
+  type: actionTypes.ADD_PAGE_TO_SPACE,
+  payload: {spaceId, page}
+})
+
+export const removePageFromSpace = (spaceId, pageId) => ({
+  type: actionTypes.REMOVE_PAGE_FROM_SPACE,
+  payload: {spaceId, pageId}
+})
+
+export const refreshPagesInSpace = (spaceId, pages) => ({
+  type: actionTypes.REFRESH_PAGES_IN_SPACE,
+  payload: {spaceId, pages}
 })
