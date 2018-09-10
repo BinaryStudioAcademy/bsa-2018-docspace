@@ -15,7 +15,7 @@ class PageService {
     const args = { endpoint: `/api/pages/${obj.id}`, method: 'POST', body: JSON.stringify({version: obj.version}) }
     const apiResult = callWebApi(args)
       .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .catch(err => { throw err })
     return apiResult
   }
 
@@ -113,6 +113,15 @@ class PageService {
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
+  }
+
+  mentionInComment = (users) => {
+    const args = { endpoint: `/api/mail/sendMention`, method: 'POST', body: JSON.stringify(users) }
+    callWebApi(args)
+    /* const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult */
   }
 }
 export default new PageService()

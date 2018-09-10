@@ -16,7 +16,6 @@ export const allPagesFetchedAndNormalized = (all, byId) => ({
 export const getAllPagesError = () => ({
   type: actionTypes.GET_ALL_PAGES_ERROR
 })
-
 // GET ONE
 export const getPageByIdRequest = (id, version) => ({
   type: actionTypes.GET_PAGE_BY_ID_REQUEST,
@@ -117,9 +116,9 @@ export const deletePageSuccess = (deletedPage) => ({
   payload: deletedPage
 })
 
-export const deleteBlogPageRequest = (page) => ({
+export const deleteBlogPageRequest = (id) => ({
   type: actionTypes.DELETE_BLOG_PAGE_REQUEST,
-  payload: { ...page }
+  payload: { id }
 })
 
 export const deleteBlogPageSuccess = (deletedPage) => ({
@@ -186,4 +185,9 @@ export const copyPageSuccess = () => ({
 
 export const copyPageError = () => ({
   type: actionTypes.COPY_PAGE_ERROR
+})
+// MENTION IN COMMENT
+export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
+  type: actionTypes.MENTION_COMMENT,
+  payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
 })

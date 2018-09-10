@@ -38,11 +38,11 @@ before_deploy:
 
 branches:
   only:
-  - develop
+  - demo-4
 
 deploy:
   - provider: script
     script: bash ./deploy-staging.sh
     skip_cleanup: true
     on:
-      branch: develop
+      branch: demo-4

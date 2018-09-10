@@ -17,6 +17,7 @@ import allUsersReducer from 'src/components/dashboard/peopleBody/logic/allUsersR
 import { warningModalReducer } from 'src/components/modals/warningModal/logic/warningModalReducer'
 import { movePageModalReducer } from 'src/components/modals/movePageModal/logic/movePageModalReducer'
 import { copyPageModalReducer } from 'src/components/modals/copyPageModal/logic/copyPageModalReducer'
+import errorReducer from 'src/components/common/app/logic/errorReducer'
 import permissionsReducer from 'src/components/space/spaceSettings/permissions/logic/permissionsReducer'
 
 const baseReducer = combineReducers({
@@ -24,6 +25,7 @@ const baseReducer = combineReducers({
   login: loginReducer,
   user: userReducers,
   pages: pageReducer,
+  error: errorReducer,
   spaces: spaceReducer,
   currentSpacePermissions: permissionsReducer,
   blog: blogReducer,

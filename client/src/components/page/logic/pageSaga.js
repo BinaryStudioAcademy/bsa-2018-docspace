@@ -50,6 +50,8 @@ function * createBlogPage (action) {
 function * updatePage (action) {
   try {
     const target = action.payload
+    // FIX conflict with mongodb and timestamp. Same for blog
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))
@@ -62,6 +64,7 @@ function * updatePage (action) {
 function * updateBlogPage (action) {
   try {
     const target = action.payload
+    target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
     const spaceId = yield select(spaceIdFromPathname)
     yield put(push(`/spaces/${spaceId}/blog/${updated._id}`))
@@ -85,10 +88,9 @@ function * deletePage (action) {
 
 function * deleteBlogPage (action) {
   try {
-    yield PageService.deletePage(action.payload)
-    yield put(actions.deleteBlogPageSuccess(action.payload))
-    const spaceId = yield select(spaceIdFromPathname)
-    yield put(push(`/spaces/${spaceId}/blog`))
+    const deletedPage = yield PageService.deletePage(action.payload.id)
+    yield put(actions.deleteBlogPageSuccess(deletedPage))
+    yield put(push(`/spaces/${deletedPage.spaceId}/blog`))
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())
@@ -107,8 +109,9 @@ function * getPage (action) {
     const page = yield PageService.getPage(action.payload)
     yield commentsActions.allCommentsFetched(page.comments)
     yield put(actions.getPageByIdSuccess(page))
-  } catch (e) {
+  } catch (err) {
     yield put(actions.getPageByIdError())
+    yield put({type: actionTypes.GET_PAGE_BY_ID_ERROR, err})
   }
 }
 
@@ -166,6 +169,13 @@ function * copyPage (action) {
     yield put(action.copyPageError())
   }
 }
+function * mentionInComment (action) {
+  try {
+    yield PageService.mentionInComment(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
 
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
@@ -181,4 +191,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
   yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
   yield takeEvery(actionTypes.COPY_PAGE_REQUEST, copyPage)
+  yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
 }

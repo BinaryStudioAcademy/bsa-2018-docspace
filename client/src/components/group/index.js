@@ -8,6 +8,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 import GroupDialog from 'src/components/modals/groupDialog'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
+import { cleanMatchingUser } from 'src/components/modals/groupDialog/logic/matchingUserActions'
 
 import './groups.css'
 
@@ -56,6 +57,7 @@ class Group extends Component {
 
   closeModal = () => {
     this.setState({modalIsOpened: false})
+    this.props.actions.cleanMatchingUser()
   }
 
   handleChange (target) {
@@ -119,7 +121,8 @@ function mapDispatchToProps (dispatch) {
       {
         createGroupRequest,
         getAllUserGroupsRequest,
-        deleteGroupRequest
+        deleteGroupRequest,
+        cleanMatchingUser
       }
       , dispatch)
   }

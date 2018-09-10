@@ -29,7 +29,7 @@ class GroupService {
     const args = {endpoint: `/api/groups/${id}`, method: 'GET'}
     const apiResult = callWebApi(args)
       .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
+      .catch(err => { throw err })
     return apiResult
   }
 
@@ -47,6 +47,10 @@ class GroupService {
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
+  }
+  sendInvitation = (usersInGroup) => {
+    const args = {endpoint: '/api/mail/sendInvite', method: 'POST', body: JSON.stringify(usersInGroup)}
+    callWebApi(args)
   }
 }
 

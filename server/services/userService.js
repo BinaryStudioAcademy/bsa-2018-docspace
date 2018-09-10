@@ -142,7 +142,8 @@ module.exports = {
         UserRepository.getByLogin(req.body.RequestedUserLogin)
           .then(reqUser => {
             if (!reqUser.length) {
-              return res.send({isNotFound: true})
+              console.log(`error`)
+              return res.status(404).send({status: 404, message: 'Invalid login'})
             }
             if (reqUser[0].login === curUser[0].login) {
               return res.send({...reqUser[0], resultOfComparing: true})

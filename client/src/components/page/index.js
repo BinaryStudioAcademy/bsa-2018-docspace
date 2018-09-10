@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -72,8 +72,17 @@ class Page extends Component {
   }
 
   handleOpenWarningModal = () => {
-    if (!this.props.match.params.version) {
-      this.props.actions.openWarningModal(true, this.props.page._id)
+    const { actions, match, page, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_page'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_page_delete_short')}</p>
+          <p>{t('warning_page_delete_long')}</p>
+        </div>),
+        action: actions.deletePageRequest,
+        args: {id: page._id}
+      })
     }
   }
 
@@ -167,11 +176,20 @@ class Page extends Component {
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
+                type={'pages'}
+                sendMention={this.props.actions.sendMention}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
+                userLogin={this.props.user.login}
+                type={'pages'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 userId={_id}
                 avatar={avatar}
                 t={t}
@@ -254,7 +272,6 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         getPageByIdRequest,
-        deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
         sendDocFileRequest,
@@ -264,7 +281,9 @@ function mapDispatchToProps (dispatch) {
         putLikeOnCommentRequest,
         openWarningModal,
         openMovePageModal,
-        openCopyPageModal
+        openCopyPageModal,
+        sendMention,
+        deletePageRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

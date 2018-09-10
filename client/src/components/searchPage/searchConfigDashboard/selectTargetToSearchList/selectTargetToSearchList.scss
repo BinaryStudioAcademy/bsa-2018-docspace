@@ -1,0 +1,25 @@
+@import 'src/globalStyles/variables.scss';
+
+.select-target-to-search-list{
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        z-index: 100000;
+        max-width: 500px;
+        box-sizing: border-box;
+        background: #fff;
+        padding: 0rem;
+        margin-top: 0;
+
+        li{
+          color: $blueLink;
+          padding: 5px;
+          display: block;
+          &:hover, &.active{
+            cursor: pointer;
+            color: $black;
+            font-weight: bold;
+            background-color: #eee
+          }
+        }
+}

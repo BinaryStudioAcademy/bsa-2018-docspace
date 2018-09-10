@@ -11,7 +11,14 @@ function * getAllMatchingUser (action) {
     console.log(e)
   }
 }
-
+function * sendInvitationSaga (action) {
+  try {
+    yield groupService.sendInvitation(action.payload)
+  } catch (e) {
+    console.log(e)
+  }
+}
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_MATCHING_USERS_REQUEST, getAllMatchingUser)
+  yield takeEvery(actionTypes.SEND_INVITATION, sendInvitationSaga)
 }

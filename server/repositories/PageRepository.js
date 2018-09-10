@@ -12,12 +12,97 @@ class PageRepository extends GeneralRepository {
     ])
   }
 
-  advancedSearch (input) {
-    return this.model.search({
+  // getById (id) {
+  //   console.log('aaaa')
+  //   return this.model.aggregate([
+  //     {
+  //       '$match': { _id: ObjectId(id) }
+  //     },
+  //     {
+  //       '$lookup': {
+  //         from: 'comments',
+  //         localField: 'comments',
+  //         foreignField: '_id',
+  //         as: 'commentsArr'
+  //       }
+  //     },
+  //     {
+  //       '$lookup': {
+  //         from: 'users',
+  //         localField: 'usersLikes',
+  //         foreignField: '_id',
+  //         as: 'likes'
+  //       }
+  //     },
+  //     {
+  //       '$unwind': {
+  //         path: '$commentsArr',
+  //         preserveNullAndEmptyArrays: true
+  //       }
+  //     },
+  //     {
+  //       '$lookup': {
+  //         from: 'users',
+  //         localField: 'commentsArr.userLikes',
+  //         foreignField: '_id',
+  //         as: 'commentsArr.likes'
+  //       }
+  //     },
+  //     {
+  //       '$group': {
+  //         '_id': '$_id',
+  //         'commentsArr': {'$addToSet': '$commentsArr'},
+  //         'title': {'$first': '$title'},
+  //         'spaceId': {'$first': '$spaceId'},
+  //         'createdAt': {'$first': '$createdAt'},
+  //         'updatedAt': {'$first': '$updatedAt'},
+  //         'isDeleted': {'$first': '$isDeleted'},
+  //         'comments': {'$first': '$comments'},
+  //         'usersLikes': {'$first': '$usersLikes'},
+  //         'likes': {'$first': '$likes'},
+  //         'modifiedVersions': {'$first': '$modifiedVersions'},
+  //         'version': {'$first': '$version'},
+  //         'content': {'$first': '$content'}
+  //       }
+  //     }
+  //   ])
+  // }
+
+  // update (id, data) {
+  //   return this.model.findById(id)
+  //     .then(page => {
+  //       Object.keys(data).forEach(key => { page[key] = data[key] })
+  //       page.save()
+  //     })
+  //     .then((page) => this.getById(id))
+  // }
+
+  // update (id, data) {
+  //   return super.update(id, data)
+  //     .then(() => this.getById(id))
+  // }
+
+  advancedSearch (query) {
+    return this.model.esSearch({
       // query for match some input in field 'title' OR 'content'
-      multi_match: {
-        query: input,
-        fields: [ 'title', 'content' ]
+      query,
+      highlight: {
+        pre_tags: [ '<b>' ],
+        post_tags: [ '</b>' ],
+        fields: {
+          '*': { }
+        }
+        // encoder: 'html',
+        // boundary_scanner: 'chars',
+        // boundary_chars: '<.,!? \t\n'
+
+        // fields: {
+        //   _all: {
+        //       "fragment_size": 400,
+        //       "number_of_fragments": 1,
+        //       "no_match_size": 20
+        //   }
+        // }
       }
     })
   }

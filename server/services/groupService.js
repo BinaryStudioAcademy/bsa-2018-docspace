@@ -1,9 +1,9 @@
 const GroupRepository = require('../repositories/GroupRepository')
 const scheme = require('../models/groupScheme')
+var mongoose = require('mongoose')
 
 module.exports = {
   findAll: (req, res) => {
-    console.log('GET ALL')
     GroupRepository.getAllForUser(req.params.id)
       .then(group => {
         if (!group) {
@@ -20,11 +20,15 @@ module.exports = {
       })
   },
   findById: (req, res) => {
-    console.log('GET BY ID')
+    const id = req.params.id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404)
+      return res.end('Invalid id')
+    }
     GroupRepository.getById(req.params.id)
       .then(group => {
         if (!group) {
-          res.status(404).send({
+          return res.status(404).send({
             message: 'Cannot find group with id ' + req.params.id
           })
         }

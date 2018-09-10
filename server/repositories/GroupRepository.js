@@ -21,7 +21,6 @@ class GroupRepository extends GeneralRepository {
   }
 
   getAllForUser (id) {
-    console.log(id)
     return this.model.find(
       {
         members: {$in: [id]}
@@ -31,6 +30,10 @@ class GroupRepository extends GeneralRepository {
 
   getByTitle (title) {
     return this.model.findOne({'title': title})
+  }
+
+  getByTitleFind (title) {
+    return this.model.find({'title': title})
   }
 
   searchByTitlePart (titlePart) {

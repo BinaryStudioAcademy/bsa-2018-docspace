@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deleteBlogPageRequest } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deleteBlogPageRequest, sendMention } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 
 import CommentsList from 'src/components/commentsList'
@@ -20,7 +20,7 @@ import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/c
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-
+import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 import fakeImg from 'src/resources/logo.svg'
 import './blogPost.css'
 
@@ -53,14 +53,23 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/blog/${page._id}/edit`)
   }
 
-  handleDeletePage = () => {
-    this.props.actions.deleteBlogPageRequest(this.props.page)
-  }
-
   likeAction = (isLiked) => {
     this.likePage(isLiked, 'page')
   }
-
+  handleOpenWarningModal = () => {
+    const { actions, match, page, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_blog'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_blog_delete_short')}</p>
+          <p>{t('warning_blog_delete_long')}</p>
+        </div>),
+        action: actions.deleteBlogPageRequest,
+        args: {id: page._id}
+      })
+    }
+  }
   likePage = (isLiked, type, comment) => {
     if (type === 'page') {
       isLiked
@@ -87,6 +96,7 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
+          openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -127,13 +137,21 @@ class Page extends Component {
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 userId={_id}
+                type={'blog'}
+                sendMention={this.props.actions.sendMention}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
               <AddComment
+                sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
                 userId={_id}
                 avatar={avatar}
+                type={'blog'}
+                pageId={this.props.page._id}
+                spaceId={this.props.space._id}
                 t={t}
               />
             </div>
@@ -146,6 +164,7 @@ class Page extends Component {
 
 Page.propTypes = {
   page: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
@@ -160,7 +179,8 @@ Page.propTypes = {
   match: PropTypes.object,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  sendMention: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -196,7 +216,9 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromPageRequest,
         putLikeOnPageRequest,
         deleteLikeFromCommentRequest,
-        putLikeOnCommentRequest
+        putLikeOnCommentRequest,
+        sendMention,
+        openWarningModal
       }
       , dispatch)
   }
