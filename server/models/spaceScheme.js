@@ -19,7 +19,10 @@ const spaceSchema = new mongoose.Schema({
   },
   description: String,
   categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
-  homePageId: Schema.Types.ObjectId,
+  homePageId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Page'
+  },
   blogId: Schema.Types.ObjectId,
   pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
   history: [{type: Schema.Types.ObjectId, ref: 'History'}],
@@ -31,7 +34,11 @@ const spaceSchema = new mongoose.Schema({
   spaceSettings: {
     icon: {type: String, default: 'folder'},
     color: {type: String, default: '#1c80ff'}
-  }
+  },
+  watchedBy: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 },
 {
   versionKey: false

@@ -1,6 +1,7 @@
 const CommentRepository = require('../repositories/CommentRepository')
 const PageRepository = require('../repositories/PageRepository')
-// const scheme = require('../models/commentScheme')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 
 module.exports = {
   findAllCommentsForPage: (req, res) => {
@@ -36,20 +37,48 @@ module.exports = {
       })
   },
 
-  add: (req, res) => {
-    CommentRepository.create(req.body.comment)
-      .then(comment => {
-        console.log(comment)
-        PageRepository.addNewComment(req.body.pageId, comment._id)
-          .then(() => {
-            CommentRepository.getById(comment._id)
-              .populate({
-                path: 'userId',
-                select: 'firstName lastName avatar login'
-              })
-              .then(populatedCommment => res.send(populatedCommment))
-          })
+  add: async (req, res) => {
+    console.log(req.body)
+    let savedComment = await CommentRepository.create(req.body.comment)
+      // .populate({
+      //   path: 'userId',
+      //   select: 'firstName lastName avatar login'
+      // })
+      .then(comment => comment)
+      .catch(err => err)
+    await PageRepository.addNewComment(req.body.pageId, savedComment._id)
+      .then(page => page)
+      .catch(err => res.status(500).send(err))
+    const page = await PageRepository.getById(req.body.pageId)
+      .then(page => page)
+      .catch(err => res.status(500).send(err))
+    console.log('Comments rep')
+    console.log(page)
+    console.log(page.isWatched)
+    if (page.watchedBy.indexOf(ObjectId(req.user._id)) === -1) {
+      console.log('in add')
+      await PageRepository.addWatcher(req.body.pageId, req.user._id)
+    }
+    const populatedComment = await CommentRepository.getById(savedComment._id)
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName avatar login'
       })
+    res.send(populatedComment)
+    // add: (req, res) => {
+    //   CommentRepository.create(req.body.comment)
+    //     .then(comment => {
+    //       console.log(comment)
+    //       PageRepository.addNewComment(req.body.pageId, comment._id)
+    //         .then(() => {
+    //           CommentRepository.getById(comment._id)
+    //             .populate({
+    //               path: 'userId',
+    //               select: 'firstName lastName avatar login'
+    //             })
+    //             .then(populatedCommment => res.send(populatedCommment))
+    //         })
+    //     })
   },
 
   findOneAndUpdate: (req, res) => {

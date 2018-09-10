@@ -1,6 +1,7 @@
 import * as actionTypes from './spaceActionTypes'
 import { UPDATE_PAGE_SUCCESS, DELETE_PAGE_SUCCESS } from 'src/components/page/logic/pageActionTypes'
 import { combineReducers } from 'redux'
+import * as watcherTypes from 'src/components/page/watcherLogic/watcherActionType'
 
 const initialState = {
   all: [],
@@ -73,6 +74,16 @@ function byId (state = initialState.byId, action) {
         }
       }
     }
+
+    case watcherTypes.ADD_WATCHER_SPACE_SUCCESS:
+    case watcherTypes.DELETE_WATCHER_SPACE_SUCCESS:
+      return {
+        ...state,
+        [action.payload._id]: {
+          ...state[action.payload._id],
+          isWatched: !action.payload.isWatched
+        }
+      }
 
     default: return state
   }

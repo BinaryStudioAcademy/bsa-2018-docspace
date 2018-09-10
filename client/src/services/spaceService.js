@@ -40,6 +40,18 @@ class SpaceService {
       .catch(err => console.log(`Error: ${err}`))
     return apiResult
   }
+
+  changeWatcher = (id, userId, toAdd) => {
+    console.log(id)
+    console.log(userId)
+    console.log(toAdd)
+    const args = { endpoint: `/api/spaces/watcher/${id}`, method: 'PUT', body: JSON.stringify({userId, toAdd}) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    console.log(apiResult)
+    return apiResult
+  }
 }
 
 export default new SpaceService()

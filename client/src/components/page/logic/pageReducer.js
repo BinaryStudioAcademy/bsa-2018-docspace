@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import * as actionTypes from './pageActionTypes'
 import * as likesActionTypes from '../likesLogic/likesActionTypes'
 import * as commentsActionTypes from '../commentsLogic/commentsActionTypes'
+import * as watcherTypes from '../watcherLogic/watcherActionType'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
@@ -48,15 +49,18 @@ function byId (state = initialState.byId, action) {
         ...state,
         [action.payload.page._id]: {
           ...action.payload.page,
-          comments: [...action.payload.page.comments.slice(), action.payload.newComment]
+          comments: [...action.payload.page.comments.slice(), action.payload.newComment],
+          isWatched: true
         }
       }
     case likesActionTypes.PUT_LIKE_ON_PAGE_SUCCESS:
+      console.log(action.payload)
       return {
         ...state,
         [action.payload.page._id]: {
           ...action.payload.page,
-          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser]
+          usersLikes: [...action.payload.page.usersLikes.slice(), action.payload.likedUser],
+          isWatched: true
         }
       }
 
@@ -66,6 +70,16 @@ function byId (state = initialState.byId, action) {
         [action.payload.page._id]: {
           ...action.payload.page,
           usersLikes: action.payload.page.usersLikes.filter(user => user._id !== action.payload.unlikedUser._id)
+        }
+      }
+
+    case watcherTypes.ADD_WATCHER_SUCCESS:
+    case watcherTypes.DELETE_WATCHER_SUCCESS:
+      return {
+        ...state,
+        [action.payload._id]: {
+          ...action.payload,
+          isWatched: !action.payload.isWatched
         }
       }
 

@@ -55,7 +55,6 @@ class SearchModal extends Component {
         postList.push(result)
       }
     })
-
     const blogRender = blogsList.map(blog =>
       <div className='search-result-wrapper'>
         {blog.spaceId
@@ -90,7 +89,6 @@ class SearchModal extends Component {
         </NavLink>
       </div>
     )
-
     const result = <React.Fragment>
       {
         this.state.filter !== '' &&
