@@ -5,7 +5,7 @@ const commentSchema = new mongoose.Schema({
   userLikes: [{type: Schema.Types.ObjectId, ref: 'User'}],
   text: String,
   isDeleted: {type: Boolean, default: false},
-  parentId: {type: Schema.Types.ObjectId, default: null},
+  parentId: {type: Schema.Types.ObjectId, default: null, ref: 'Comment'},
   createdAt: Date
 },
 {

@@ -101,10 +101,10 @@ class PageService {
   mentionInComment = (users) => {
     const args = { endpoint: `/api/mail/sendMention`, method: 'POST', body: JSON.stringify(users) }
     callWebApi(args)
-    /* const apiResult = callWebApi(args)
-      .then(res => res.json())
-      .catch(err => console.log(`Error: ${err}`))
-    return apiResult */
+  }
+  replyInComment = (parentCommentIdWithInfo) => {
+    const args = { endpoint: `/api/mail/replyComment`, method: 'POST', body: JSON.stringify(parentCommentIdWithInfo) }
+    callWebApi(args)
   }
 }
 export default new PageService()

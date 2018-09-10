@@ -42,6 +42,7 @@ class CommentsList extends Component {
         level={comment.level}
         addNewComment={this.props.addNewComment}
         sendMention={this.props.sendMention}
+        sendReply={this.props.sendReply}
         user={this.props.user}
         userId={this.props.userId}
         pageId={this.props.pageId}
@@ -71,5 +72,6 @@ CommentsList.propTypes = {
   userId: PropTypes.string,
   sendMention: PropTypes.func,
   user: PropTypes.object,
-  likeAction: PropTypes.func
+  likeAction: PropTypes.func,
+  sendReply: PropTypes.func
 }

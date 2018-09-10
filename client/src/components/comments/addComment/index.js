@@ -26,7 +26,7 @@ export class AddComment extends Component {
     const resultOfFinding = this.state.text.match(re) ? this.state.text.match(re).map(match => match.trim().slice(1)) : []
     const { text } = this.state
     const { userLogin, pageId, spaceId, type, userId, parentId, _id } = this.props
-    const { editComment, onEditComment, addNewComment, sendMention, ReplyComment } = this.props
+    const { editComment, onEditComment, addNewComment, sendMention, ReplyComment, sendReply } = this.props
     if (this.state.text.length === 0) {
     } else {
       this.setState({
@@ -45,6 +45,10 @@ export class AddComment extends Component {
       } else {
         if (this.props.sendMention && resultOfFinding.length) {
           sendMention(resultOfFinding, userLogin, pageId, spaceId, type)
+        }
+        if (parentId) {
+          console.log(parentId)
+          sendReply(parentId, userLogin, pageId, spaceId, type)
         }
         this.props.addNewComment && addNewComment({
           userId: userId,
@@ -136,6 +140,7 @@ AddComment.propTypes = {
   sendMention: PropTypes.func,
   userLogin: PropTypes.string,
   pageId: PropTypes.string,
-  spaceId: PropTypes.string
+  spaceId: PropTypes.string,
+  sendReply: PropTypes.func
 }
 export default translate('translations')(AddComment)

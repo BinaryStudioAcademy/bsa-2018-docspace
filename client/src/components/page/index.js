@@ -7,13 +7,15 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf,
+  exportPageToWord, sendMention, sendReply } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 import * as commentsActions from './commentsLogic/commentsActions'
-import {putLikeOnPageRequest, deleteLikeFromPageRequest, putLikeOnCommentRequest, deleteLikeFromCommentRequest} from './likesLogic/likesAction'
+import {putLikeOnPageRequest, deleteLikeFromPageRequest, putLikeOnCommentRequest,
+  deleteLikeFromCommentRequest} from './likesLogic/likesAction'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import fakeImg from 'src/resources/logo.svg'
@@ -138,13 +140,16 @@ class Page extends Component {
             <PageContent content={page.content} />
             <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.comments && this.props.page.comments.length &&
+              {this.props.page &&
+              this.props.page.comments &&
+              this.props.page.comments.length &&
               this.props.page.comments.length
                 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
                 : <h2>{t('add_comments')}</h2>
               }
               <CommentsList
-                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
+                comments={this.props.page.comments &&
+                  this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
@@ -153,6 +158,7 @@ class Page extends Component {
                 spaceId={this.props.space._id}
                 type={'pages'}
                 sendMention={this.props.actions.sendMention}
+                sendReply={this.props.actions.sendReply}
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
@@ -198,7 +204,8 @@ Page.propTypes = {
   exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  sendReply: PropTypes.func
 }
 
 Page.defaultProps = {
@@ -247,7 +254,8 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
-        sendMention
+        sendMention,
+        sendReply
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

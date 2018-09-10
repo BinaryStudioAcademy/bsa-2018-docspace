@@ -149,6 +149,14 @@ function * mentionInComment (action) {
   }
 }
 
+function * relpyInComment (action) {
+  try {
+    yield PageService.replyInComment(action.payload)
+  } catch (e) {
+    console.log('export error', e)
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_PAGES_REQUEST, getPages)
   yield takeEvery(actionTypes.CREATE_PAGE_REQUEST, createPage)
@@ -162,4 +170,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
   yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
+  yield takeEvery(actionTypes.REPLY_COMMENT_SEND_MAIL, relpyInComment)
 }

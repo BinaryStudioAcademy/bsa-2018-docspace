@@ -97,6 +97,7 @@ export class Comment extends Component {
           ReplyComment={this.onReplyComment}
           userLogin={this.props.user.login}
           sendMention={this.props.sendMention}
+          sendReply={this.props.sendReply}
           avatar={this.props.user.avatar}
           userId={this.props.userId}
           pageId={this.props.pageId}
@@ -124,6 +125,7 @@ Comment.propTypes = {
   likeAction: PropTypes.func,
   userId: PropTypes.string,
   user: PropTypes.object,
-  sendMention: PropTypes.func
+  sendMention: PropTypes.func,
+  sendReply: PropTypes.func
 }
 export default translate('translations')(Comment)
