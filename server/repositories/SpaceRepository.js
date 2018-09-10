@@ -320,6 +320,10 @@ class SpaceRepository extends GeneralRepository {
     ])
   }
 
+  addPageById (spaceId, pageId) {
+    return super.update(spaceId, {'$addToSet': {'pages': pageId}})
+  }
+
   searchNotDeletedByName (name) {
     return this.model.aggregate([
       {
