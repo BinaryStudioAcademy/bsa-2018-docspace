@@ -16,14 +16,16 @@ export const getSpacePermissionsError = (err) => ({
 })
 
 // UPDATE MANY
-export const updateSpacePermissionsRequest = (spacePermissionsArr) => ({
+export const updateSpacePermissionsRequest = (spacePermissionsArr, spaceId) => ({
   type: actionsTypes.UPDATE_SPACE_PERMISSIONS_REQUEST,
-  payload: spacePermissionsArr
+  payload: spacePermissionsArr,
+  spaceId
 })
 
-export const updateSpacePermissionsSuccess = (updatedById) => ({
+export const updateSpacePermissionsSuccess = (updatedById, spaceId) => ({
   type: actionsTypes.UPDATE_SPACE_PERMISSIONS_SUCCESS,
-  payload: { updatedById }
+  payload: { updatedById },
+  spaceId
 })
 
 export const updateSpacePermissionsError = (error) => ({
@@ -63,4 +65,9 @@ export const addGroupPermissionsSuccess = (permissions) => ({
 export const addGroupPermissionsError = (err) => ({
   type: actionsTypes.ADD_GROUP_PERMISSIONS_ERROR,
   payload: err
+})
+
+export const RefreshAuthUserPermissions = (spaceId, permissions) => ({
+  type: actionsTypes.REFRESH_AUTH_USER_PERMISSIONS,
+  payload: { spaceId, permissions }
 })

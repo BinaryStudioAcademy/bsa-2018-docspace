@@ -1,5 +1,6 @@
 import * as actionTypes from './spaceActionTypes'
 import { UPDATE_PAGE_SUCCESS, DELETE_PAGE_SUCCESS } from 'src/components/page/logic/pageActionTypes'
+import { REFRESH_AUTH_USER_PERMISSIONS } from 'src/components/space/spaceSettings/permissions/logic/permissionsActionsTypes'
 import { combineReducers } from 'redux'
 
 const initialState = {
@@ -100,6 +101,17 @@ function byId (state = initialState.byId, action) {
         [spaceId]: {
           ...state[spaceId],
           pages: filteredPage
+        }
+      }
+    }
+
+    case REFRESH_AUTH_USER_PERMISSIONS: {
+      const { spaceId, permissions } = action.payload
+      return {
+        ...state,
+        [spaceId]: {
+          ...state[spaceId],
+          authUserPermissions: permissions
         }
       }
     }

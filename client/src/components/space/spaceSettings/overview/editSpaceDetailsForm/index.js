@@ -145,7 +145,7 @@ class EditSpaceDetailsForm extends Component {
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
           <label>{t('home_page')}</label>
-          <select name='homePageId'
+          <select name='homePage'
             onChange={({target}) => this.handleFieldChange(target)}
             defaultValue={homePage ? homePage._id : 'none'}
           >
