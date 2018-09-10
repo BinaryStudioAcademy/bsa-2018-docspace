@@ -23,7 +23,6 @@ class SpaceDetails extends Component {
       })
     }
 
-    console.log(`-------------------------------------`, ownerSpace)
     ownerSpace = ownerSpace.length ? ownerSpace[0] : {}
     return (
       <table className='space-details-table'>
