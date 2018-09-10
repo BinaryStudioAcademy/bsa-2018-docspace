@@ -49,7 +49,7 @@ export class PermissionsPage extends Component {
 
   renderGroupsPermissionsSection = () => {
     const items = this.permissionsFromState(this.props.permissions.groups)
-
+    const { space } = this.props
     return (
       <React.Fragment>
         <h3>{this.props.t('groups_permissions')}</h3>
@@ -71,7 +71,7 @@ export class PermissionsPage extends Component {
             renderSearchedEntityLiContent={this.renderGroupLiContent}
             handleSearchEntitiesToAddPermissions={this.handleSearchGroups}
             getEntityName={(group) => group.title}
-            handleAddPermissions={(targetGroup) => this.props.actions.addGroupPermissionsRequest(targetGroup, this.props.space._id)}
+            handleAddPermissions={(targetGroup) => this.props.actions.addGroupPermissionsRequest(targetGroup, space._id)}
             idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.groups.map(perm => perm.groupId)}
           />
         }
@@ -92,35 +92,38 @@ export class PermissionsPage extends Component {
     this.props.actions.searchRequest({ input: login, targetToSearch: 'users by login part' })
   }
 
-  renderUsersPermissionsSection = () => (
-    <React.Fragment>
-      <h3>{this.props.t('users_permissions')}</h3>
-      <p>{this.props.t('permissions_to_individual_users')}</p>
-      {
-        this.props.permissions.users.length > 0 &&
-        <PermissionsTable
-          isEditing={this.state.isEditing}
-          items={this.props.permissions.users}
-          restictionsCategory={'users'}
-          permissionsByItemsId={this.permissionsFromState(this.props.permissions.users)}
-          handleChangePermission={this.handleChangePermission}
-          handleToggleAllCLick={this.setPermissionsForAllEntityTo}
-        />
-      }
+  renderUsersPermissionsSection = () => {
+    const { space, permissions, t } = this.props
+    return (
+      <React.Fragment>
+        <h3>{this.props.t('users_permissions')}</h3>
+        <p>{this.props.t('permissions_to_individual_users')}</p>
+        {
+          this.props.permissions.users.length > 0 &&
+          <PermissionsTable
+            isEditing={this.state.isEditing}
+            items={permissions.users}
+            restictionsCategory={'users'}
+            permissionsByItemsId={this.permissionsFromState(permissions.users)}
+            handleChangePermission={this.handleChangePermission}
+            handleToggleAllCLick={this.setPermissionsForAllEntityTo}
+          />
+        }
 
-      {
-        this.state.isEditing &&
-        <AddPermissionsForm
-          searchPlaceholder={this.props.t('user_login')}
-          renderSearchedEntityLiContent={this.renderUserLiContent}
-          handleSearchEntitiesToAddPermissions={this.handleSearchUsers}
-          getEntityName={(user) => user.firstName + ' ' + user.lastName + ' @' + user.login}
-          handleAddPermissions={(targetUser) => this.props.actions.addUserPermissionsRequest(targetUser, this.props.space._id)}
-          idsOfEntitiesThatAlreadyHavePermissions={this.props.permissions.users.map(perm => perm.userId)}
-        />
-      }
-    </React.Fragment>
-  )
+        {
+          this.state.isEditing &&
+          <AddPermissionsForm
+            searchPlaceholder={t('user_login')}
+            renderSearchedEntityLiContent={this.renderUserLiContent}
+            handleSearchEntitiesToAddPermissions={this.handleSearchUsers}
+            getEntityName={(user) => user.firstName + ' ' + user.lastName + ' @' + user.login}
+            handleAddPermissions={(targetUser) => this.props.actions.addUserPermissionsRequest(targetUser, space._id)}
+            idsOfEntitiesThatAlreadyHavePermissions={[ ...permissions.users.map(perm => perm.userId), space.ownerId._id ]}
+          />
+        }
+      </React.Fragment>
+    )
+  }
 
   renderUserLiContent = (user) => {
     return (
@@ -180,7 +183,7 @@ export class PermissionsPage extends Component {
 
   handleSaveEditingClick = () => {
     const changedPermissions = Object.values(this.state.permissionsById).filter(permissions => permissions.isChanged)
-    this.props.actions.updateSpacePermissionsRequest(changedPermissions)
+    this.props.actions.updateSpacePermissionsRequest(changedPermissions, this.props.space._id)
 
     this.setState({
       isEditing: false

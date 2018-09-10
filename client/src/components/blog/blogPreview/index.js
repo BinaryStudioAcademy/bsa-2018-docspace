@@ -16,6 +16,7 @@ class Blog extends Component {
 
   render () {
     const {space, t} = this.props
+    const canAddBlog = space && space.authUserPermissions ? space.authUserPermissions.blog.add : false
     return (
       <React.Fragment>
         <BlogHeader space={space} />
@@ -23,12 +24,15 @@ class Blog extends Component {
           <div className='empty-blog-message'>
             <div className='empty-blog-message-title'>{t('got_something_to_share')}</div>
             <div className='empty-blog-message-text'>{t('blog_posts_are_a_great')}</div>
-            <button
-              className='empty-blog-message-button'
-              onClick={this.handleCreateBlogPage}
-            >
-              {t('create_blog_post')}
-            </button>
+            {
+              canAddBlog &&
+              <button
+                className='empty-blog-message-button'
+                onClick={this.handleCreateBlogPage}
+              >
+                {t('create_blog_post')}
+              </button>
+            }
           </div>
         </div>
       </React.Fragment>

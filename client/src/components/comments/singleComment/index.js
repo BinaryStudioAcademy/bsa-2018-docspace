@@ -84,6 +84,7 @@ export class Comment extends Component {
                   comparingCurrentAndCommentUsers={comparingCurrentAndCommentUsers}
                   t={this.props.t}
                   user={this.props.user}
+                  canDelete={this.props.canDelete}
                 />
               </div>
             </React.Fragment>
@@ -124,6 +125,8 @@ Comment.propTypes = {
   likeAction: PropTypes.func,
   userId: PropTypes.string,
   user: PropTypes.object,
-  sendMention: PropTypes.func
+  sendMention: PropTypes.func,
+  canDelete: PropTypes.bool
 }
+
 export default translate('translations')(Comment)
