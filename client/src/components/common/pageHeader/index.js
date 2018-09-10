@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom'
 
 import './pageHeader.css'
 
-
 const PageHeader = ({ space, t, handleEditPageClick, onWordImport, onPdfExport, onWordExport, openWarningModal, openMovePageModal, openCopyPageModal, renderDeleteBtn }) => (
   <div className='space-page-header'>
     <div className='title'>

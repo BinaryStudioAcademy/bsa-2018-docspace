@@ -72,6 +72,7 @@ function * createSpace (action) {
 function * updateSpace (action) {
   try {
     const target = action.payload
+    target.createdAt && (delete target.createdAt)
     const updated = yield SpaceService.updateSpace(target._id, target)
     yield put(actions.updateSpaceSuccess(updated))
   } catch (e) {
