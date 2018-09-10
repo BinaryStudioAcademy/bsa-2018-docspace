@@ -44,7 +44,14 @@ export class Comment extends Component {
   }
 
   render () {
-    const comparingCurrentAndCommentUsers = (this.props.comment.userId && this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
+    const { comment, user } = this.props
+    const comparingCurrentAndCommentUsers = (this.props.comment.userId &&
+      this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
+    const userAvatar = user.avatar ? user.avatar : UserAvatarLink
+    const UserEqualCommentUser = this.props.comment.userId === user._id
+      ? userAvatar : UserAvatarLink
+    const commentUserAvatarIsExist = comment.userId.avatar
+      ? comment.userId.avatar : UserEqualCommentUser
     return (
       <React.Fragment>
         {this.state.editMode
@@ -62,13 +69,7 @@ export class Comment extends Component {
             {this.props.comment.userId &&
             <React.Fragment>
               <CommentAvatar
-                UserAvatarLink={this.props.comment.userId.avatar
-                  ? this.props.comment.userId.avatar
-                  : this.props.comment.userId === this.props.user._id
-                    ? this.props.user.avatar
-                      ? this.props.user.avatar
-                      : UserAvatarLink
-                    : UserAvatarLink}
+                UserAvatarLink={commentUserAvatarIsExist}
                 login={this.props.comment.userId.login}
               />
               <div className='comment-body'>
