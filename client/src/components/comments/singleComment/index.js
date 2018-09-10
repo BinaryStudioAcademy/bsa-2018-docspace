@@ -44,7 +44,13 @@ export class Comment extends Component {
   }
 
   render () {
-    const comparingCurrentAndCommentUsers = (this.props.comment.userId && this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
+    const { comment } = this.props
+    const comparingCurrentAndCommentUsers = (this.props.comment.userId &&
+      this.props.comment.userId._id) === this.props.user._id || this.props.comment.userId === this.props.user._id
+    let avatarLink = UserAvatarLink
+    if (comment.userId.avatar) {
+      avatarLink = comment.userId.avatar
+    }
     return (
       <React.Fragment>
         {this.state.editMode
@@ -61,9 +67,10 @@ export class Comment extends Component {
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
             {this.props.comment.userId &&
             <React.Fragment>
-              <Link to={`/users/${this.props.user.login}`} >
-                <CommentAvatar UserAvatarLink={this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink} />
-              </Link>
+              <CommentAvatar
+                UserAvatarLink={avatarLink}
+                login={this.props.comment.userId.login}
+              />
               <div className='comment-body'>
                 <Link to={`/users/${this.props.comment.userId.login}`} >
                   <h4 className='comment-first-last-names'>
