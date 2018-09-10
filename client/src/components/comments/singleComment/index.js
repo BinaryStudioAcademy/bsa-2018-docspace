@@ -61,9 +61,16 @@ export class Comment extends Component {
           : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
             {this.props.comment.userId &&
             <React.Fragment>
-              <Link to={`/users/${this.props.user.login}`} >
-                <CommentAvatar UserAvatarLink={this.props.comment.userId.avatar ? this.props.comment.userId.avatar : this.props.comment.userId === this.props.user._id ? this.props.user.avatar ? this.props.user.avatar : UserAvatarLink : UserAvatarLink} />
-              </Link>
+              <CommentAvatar
+                UserAvatarLink={this.props.comment.userId.avatar
+                  ? this.props.comment.userId.avatar
+                  : this.props.comment.userId === this.props.user._id
+                    ? this.props.user.avatar
+                      ? this.props.user.avatar
+                      : UserAvatarLink
+                    : UserAvatarLink}
+                login={this.props.comment.userId.login}
+              />
               <div className='comment-body'>
                 <Link to={`/users/${this.props.comment.userId.login}`} >
                   <h4 className='comment-first-last-names'>
