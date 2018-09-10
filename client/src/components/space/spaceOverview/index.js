@@ -6,7 +6,7 @@ import { getPageByIdRequest, exportPageToPdf, exportPageToWord, createPageReques
 import SpaceOverviewHeader from './spaceOverviewHeader'
 import { translate } from 'react-i18next'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
-
+import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import PageContent from 'src/components/common/pageContent'
 class SpaceOverview extends Component {
   handleEditBtnClick = () => {
@@ -15,7 +15,16 @@ class SpaceOverview extends Component {
   }
 
   handleOpenWarningModal = () => {
-    this.props.actions.openWarningModal(false, this.props.space._id)
+    const { actions, space, t } = this.props
+    actions.openWarningModal({
+      renderHeader: t('delete_space'),
+      renderMain: (<div className='space-delete-warning'>
+        <p>{t('warning_space_delete_short')}</p>
+        <p>{t('warning_space_delete_long')}</p>
+      </div>),
+      action: actions.deleteSpaceRequest,
+      args: {id: space._id}
+    })
   }
   exportPageToPdf = () => {
     this.props.actions.exportPageToPdf(this.props.homePage)
@@ -68,7 +77,8 @@ SpaceOverview.propTypes = {
   }),
   space: PropTypes.object,
   history: PropTypes.object,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  t: PropTypes.func
 }
 
 function mapDispatchToProps (dispatch) {
@@ -80,7 +90,8 @@ function mapDispatchToProps (dispatch) {
         exportPageToWord,
         sendDocFileRequest,
         createPageRequest,
-        openWarningModal
+        openWarningModal,
+        deleteSpaceRequest
       }
       , dispatch)
   }
