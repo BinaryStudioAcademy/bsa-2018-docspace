@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 class SearchModal extends Component {
   constructor (props) {
@@ -46,6 +47,7 @@ class SearchModal extends Component {
     let blogsList = []
     let spacesList = []
     let postList = []
+    const {t} = this.props
     this.props.searchResults.forEach(result => {
       if (result.key) {
         spacesList.push(result)
@@ -97,23 +99,23 @@ class SearchModal extends Component {
         <div className='search-link'>
           <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
             <i className='fas fa-search' />
-            {`Search '${this.state.filter}'`}
+            {t('search_0', {filter: this.state.filter})}
           </Link >
         </div>
       }
 
       {postList.length ? <div className='search-title-wrapper'>
-        <p>PAGES</p>
+        <p>{t('pages_uppercase')}</p>
       </div> : null
       }
       {PageRender}
       {blogsList.length ? <div className='search-title-wrapper'>
-        <p>BLOGS</p>
+        <p>{t('blogs_uppercase')}</p>
       </div> : null
       }
       {blogRender}
       {spacesList.length ? <div className='search-title-wrapper'>
-        <p>SPACES</p>
+        <p>{t('spaces_uppercase')}</p>
       </div> : null
       }
       {SpaceRender}
@@ -133,6 +135,7 @@ class SearchModal extends Component {
   }
 
   render () {
+    const {t} = this.props
     return (
       <div className='search-modal'>
         <div className='search-modal-body'>
@@ -144,7 +147,7 @@ class SearchModal extends Component {
               autoFocus='true'
               onChange={({target}) => this.setFilterValue(target)}
               className='search-field'
-              placeholder='Search'
+              placeholder={t('search')}
               value={this.state.filter}
               onKeyPress={this._handleKeyPress}
             />
@@ -178,7 +181,8 @@ SearchModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
   searchResults: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  t: PropTypes.func
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchModal)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchModal)))

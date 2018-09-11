@@ -26,7 +26,7 @@ class GroupDialog extends Component {
   }
   renderHeader = () => {
     const {t} = this.props
-    return <h2 className='modal-header-group'>{t('Create group')}</h2>
+    return <h2 className='modal-header-group'>{t('create_group')}</h2>
   }
   search = _.debounce(target => {
     this.state.user ? this.props.actions.getAllUserGroupsRequest(this.state.user) : this.props.actions.cleanMatchingUser()

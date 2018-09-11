@@ -72,14 +72,14 @@ class Login extends Component {
                 <img className='header-logo-img' src={logoInCircle} alt='logo' />
                 <p className='header-logo-label'>DOCSPACE</p>
               </div>
-              <h2>Log in to your account</h2>
+              <h2>{t('log_in_to_your_account')}</h2>
             </div>
             { requesting && <SplashScreen /> }
             <form className='auth-login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'
                 name='email'
-                label='Enter email'
+                label={t('enter_email_adress')}
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete='on'
@@ -87,7 +87,7 @@ class Login extends Component {
               <Input
                 inputType='password'
                 name='password'
-                label='Enter password'
+                label={t('create_password')}
                 value={password}
                 onChange={this.handleFieldChange}
                 autoComplete='off'
@@ -96,7 +96,7 @@ class Login extends Component {
                 inputType='submit'
                 disabled={!this.isSubmitAllowed()}
                 name='button'
-                value='Login'
+                value={t('login_btn')}
               />
               <div className='auth-notifications'>
                 {!requesting && !!errors.length && (

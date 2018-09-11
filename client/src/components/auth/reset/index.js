@@ -60,7 +60,7 @@ class ResetPassword extends Component {
               <Input
                 inputType='email'
                 name='email'
-                label='Enter email'
+                label={t('enter_email_adress')}
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete='on'

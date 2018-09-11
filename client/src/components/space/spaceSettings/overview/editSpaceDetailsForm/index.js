@@ -104,6 +104,7 @@ class EditSpaceDetailsForm extends Component {
           selectedColor={this.state.selectedColor}
           handleChangeCancel={this.handleChangeCancel}
           handleChangeSuccess={this.handleChangeSuccess}
+          t={t}
         />
 
         <div className='field-group'>
@@ -162,7 +163,7 @@ class EditSpaceDetailsForm extends Component {
 
         <div className='btn-group'>
           <label />
-          <button className='save-btn' type='submit' onClick={this.handleSave}> {t('Save')} </button>
+          <button className='save-btn' type='submit' onClick={this.handleSave}> {t('save')} </button>
           <button className='delete-btn' onClick={this.props.goBackToDetails}> {t('cancel')} </button>
         </div>
       </form>

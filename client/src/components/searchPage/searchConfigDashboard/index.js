@@ -97,9 +97,10 @@ class SearchConfigDashboard extends Component {
  }
 
  render () {
+   const {t} = this.props
    return (
      <div className='search-config-dashboard' >
-       <p className='config-label member-filter'> MEMBER </p>
+       <p className='config-label member-filter'> {t('member_uppercase')}</p>
        <SearchInputWithDropdownList
          searchPlaceholder={this.props.t('user_login')}
          handleSearchEntities={this.searchUserByLogin}
@@ -111,9 +112,8 @@ class SearchConfigDashboard extends Component {
          actions={this.props.actions}
          isSearching={this.props.isSearching}
        />
-
        <hr className='config-separator' />
-       <p className='config-label space-filter'> IN SPACE </p>
+       <p className='config-label space-filter'> {t('in_space_uppercase')} </p>
 
        <SearchInputWithDropdownList
          handleSearchEntities={this.searchSpaceByName}
@@ -128,8 +128,7 @@ class SearchConfigDashboard extends Component {
        />
 
        <hr className='config-separator' />
-       <p className='config-label date-filter'> DATE OF CHANGE </p>
-
+       <p className='config-label date-filter'> {t('date_of_change_uppercase')} </p>
        <DatePicker
          placeholderText='from'
          selected={this.state.from}
@@ -150,12 +149,12 @@ class SearchConfigDashboard extends Component {
 
        <hr className='config-separator' />
 
-       <p className='config-label '> RELATING TO TYPE </p>
+       <p className='config-label '> {t('relaving_to_type_uppercase')} </p>
 
        <SelectTargetToSearchList
          searchTargetsNames={this.targetsToSearch}
          activeName={this.props.targetToSearch}
-         handleSelect={(name) => this.handleSetTargetToSearchFilter(name)}
+         handleSelect={(name) => this.handleSetTargetToSearchFilter(name.value)}
        />
      </div>
    )
