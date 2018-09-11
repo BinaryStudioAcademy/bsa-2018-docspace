@@ -40,17 +40,16 @@ class SpaceHeaderButtons extends Component {
       {
         name: t('import_word'),
         onClick: () => onWordImport()
-      },
-      {
-        name: t('Move_page'),
-        onClick: () => openMovePageModal()
-      },
-      {
-        name: t('copy_page'),
-        onClick: () => openCopyPageModal()
       }
     ]
-
+    !!openMovePageModal && dropdownMenuItems.push({
+      name: t('Move_page'),
+      onClick: () => openMovePageModal()
+    })
+    !!openCopyPageModal && dropdownMenuItems.push({
+      name: t('copy_page'),
+      onClick: () => openCopyPageModal()
+    })
     return (
       <div className='buttons-container'>
         {

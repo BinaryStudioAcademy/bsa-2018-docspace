@@ -29,14 +29,17 @@
         }
       }
     }
-  }
-  .comment-edit::before,
-  .comment-delete::before,
-  .comment-like::before,
-  .comment-time::before {
-    content: "\2022";
-    color: #707070;
-    padding: 0 5px;
-    text-decoration: none;
+    .comment-edit::before,
+    .comment-delete::before,
+    .comment-like::before,
+    .comment-time::before {
+      content: "\2022";
+      color: #707070;
+      padding: 0 5px;
+      text-decoration: none;
+    }
+    .comment-actions-time {
+      cursor: default;
+    }
   }
 }

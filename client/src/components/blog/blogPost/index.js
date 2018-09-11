@@ -27,6 +27,9 @@ import './blogPost.css'
 class Page extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      selectedSpaceId: null
+    }
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
@@ -56,17 +59,27 @@ class Page extends Component {
   likeAction = (isLiked) => {
     this.likePage(isLiked, 'page')
   }
+  handleSelectSpace = (spaceId) => {
+    this.setState({
+      selectedSpaceId: spaceId
+    })
+  }
+
+  handleDeleteMethod = () => {
+    const { actions, page } = this.props
+    actions.deletePageRequest(page._id)
+    actions.closeWarningModal()
+  }
   handleOpenWarningModal = () => {
-    const { actions, match, page, t } = this.props
+    const { actions, match, t } = this.props
     if (!match.params.version) {
       actions.openWarningModal({
-        renderHeader: t('delete_blog'),
+        renderHeader: t('delete_page'),
         renderMain: (<div className='page-delete-warning'>
-          <p>{t('warning_blog_delete_short')}</p>
-          <p>{t('warning_blog_delete_long')}</p>
+          <p>{t('warning_page_delete_short')}</p>
+          <p>{t('warning_page_delete_long')}</p>
         </div>),
-        action: actions.deleteBlogPageRequest,
-        args: {id: page._id}
+        method: this.handleDeleteMethod
       })
     }
   }
