@@ -9,6 +9,7 @@ import { templates } from './logic/constants/templates'
 import PageFactory from './logic/pageFactory'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
+import * as templatesNames from './logic/constants/templatesNames'
 import './createPageModal.css'
 
 import PropTypes from 'prop-types'
@@ -21,6 +22,8 @@ class CreatePageModal extends Component {
       selectedTemplate: null,
       selectedSpace: null
     }
+
+    this.selectSpaceRef = React.createRef()
   }
 
   // TODO: add more templates and methods to PageFactory
@@ -48,6 +51,17 @@ class CreatePageModal extends Component {
     this.setState({
       selectedTemplate: template
     })
+
+    if (this.state.selectedSpace) {
+      const space = JSON.parse(this.state.selectedSpace)
+      if ((template.name === templatesNames.BLOG_PAGE && !space.authUserPermissions.blog.add) ||
+          (template.name === templatesNames.EMPTY_PAGE && !space.authUserPermissions.pages.add)) {
+        this.setState({
+          selectedSpace: null
+        })
+        this.selectSpaceRef.current.value = 'none'
+      }
+    }
   }
 
   handleSelectSpace = (space) => {
@@ -104,6 +118,29 @@ class CreatePageModal extends Component {
     )
   }
 
+  renderSpaceSelectOptions = () => {
+    let spaces = this.props.spaces
+    const selectedTemplate = this.state.selectedTemplate
+    if (selectedTemplate) {
+      switch (this.state.selectedTemplate.name) {
+        case templatesNames.EMPTY_PAGE: {
+          spaces = spaces.filter(space => space.authUserPermissions.pages.add)
+          break
+        }
+        case templatesNames.BLOG_PAGE: {
+          spaces = spaces.filter(space => space.authUserPermissions.blog.add)
+          break
+        }
+      }
+    }
+
+    return spaces.map((space, index) => (
+      <option value={JSON.stringify(space)} key={index}>
+        {space.name}
+      </option>
+    ))
+  }
+
    renderModalContent = () => {
      const {t} = this.props
      return (
@@ -115,14 +152,11 @@ class CreatePageModal extends Component {
            <select
              onChange={({target}) => this.handleSelectSpace(target.value)}
              defaultValue='none'
+             ref={this.selectSpaceRef}
            >
              <option value='none' disabled hidden>{t('choose_here')}</option>
              {
-               this.props.spaces.map((space, index) => (
-                 <option value={JSON.stringify(space)} key={index}>
-                   {space.name}
-                 </option>
-               ))
+               this.renderSpaceSelectOptions()
              }
            </select>
          </div>

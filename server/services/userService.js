@@ -146,9 +146,9 @@ module.exports = {
               return res.status(404).send({status: 404, message: 'Invalid login'})
             }
             if (reqUser[0].login === curUser[0].login) {
-              return res.send({...reqUser[0], resultOfComparing: true})
+              return res.send({requestedUser: reqUser[0], resultOfComparing: true})
             } else {
-              return res.send({...reqUser[0], resultOfComparing: false})
+              return res.send({requestedUser: reqUser[0], resultOfComparing: false})
             }
           })
           .catch(() => res.status(404))

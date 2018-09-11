@@ -6,6 +6,7 @@ import { normalize } from 'normalizr'
 import { pagesArray } from './pagesNormalizerSchema'
 import { push } from 'connected-react-router'
 import * as commentsActions from '../commentsLogic/commentsActions'
+import * as spaceActions from 'src/components/space/spaceContainer/logic/spaceActions'
 
 function * getPages (action) {
   try {
@@ -87,10 +88,9 @@ function * deletePage (action) {
 
 function * deleteBlogPage (action) {
   try {
-    yield PageService.deletePage(action.payload)
-    yield put(actions.deleteBlogPageSuccess(action.payload))
-    const spaceId = yield select(spaceIdFromPathname)
-    yield put(push(`/spaces/${spaceId}/blog`))
+    const deletedPage = yield PageService.deletePage(action.payload.id)
+    yield put(actions.deleteBlogPageSuccess(deletedPage))
+    yield put(push(`/spaces/${deletedPage.spaceId}/blog`))
   } catch (e) {
     console.log(e)
     yield put(actions.deletePageError())
@@ -141,6 +141,34 @@ function * exportPageToWord (action) {
   }
 }
 
+function * movePageToSpace (action) {
+  const {pageId, fromSpaceId, toSpaceId} = action.payload
+  try {
+    const data = yield PageService.movePage(pageId, fromSpaceId, toSpaceId)
+    yield put(spaceActions.refreshPagesInSpace(toSpaceId, data.allPagesInSpace))
+    yield put(spaceActions.removePageFromSpace(fromSpaceId, pageId))
+    yield put(actions.getPageByIdSuccess(data.pageWithNewSpace))
+    yield put(actions.movePageToSpaceSuccess())
+    yield put(push(`/spaces/${data.pageWithNewSpace.spaceId}/pages/${data.pageWithNewSpace._id}`))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.movePageToSpaceError())
+  }
+}
+
+function * copyPage (action) {
+  const {pageId, spaceId} = action.payload
+  try {
+    const copiedPage = yield PageService.copyPage(pageId)
+    yield put(spaceActions.addPageToSpace(spaceId, copiedPage))
+    yield put(actions.getPageByIdSuccess(copiedPage))
+    yield put(actions.copyPageSuccess())
+    yield put(push(`/spaces/${spaceId}/pages/${copiedPage._id}`))
+  } catch (err) {
+    console.log(err)
+    yield put(action.copyPageError())
+  }
+}
 function * mentionInComment (action) {
   try {
     yield PageService.mentionInComment(action.payload)
@@ -161,5 +189,7 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.SEND_DOC_FILE_REQUEST, sendFile)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_PDF, exportPageToPdf)
   yield takeEvery(actionTypes.EXPORT_PAGE_TO_WORD, exportPageToWord)
+  yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
+  yield takeEvery(actionTypes.COPY_PAGE_REQUEST, copyPage)
   yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
 }

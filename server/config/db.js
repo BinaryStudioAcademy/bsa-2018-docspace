@@ -6,7 +6,7 @@ const config = {
   mongodb: {
     production: {
       dbname: 'docspace',
-      uri: `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@ds113482.mlab.com:13482/docspace`,
+      uri: `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@ds151712-a0.mlab.com:51712,ds151712-a1.mlab.com:51712/docspace?replicaSet=rs-ds151712`,
       opts: {
         auto_reconnect: true,
         poolSize: 40,

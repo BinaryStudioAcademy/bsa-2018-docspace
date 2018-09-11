@@ -5,7 +5,7 @@ import Like from 'src/components/common/like'
 
 import './commentActions.css'
 
-export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes, comparingCurrentAndCommentUsers}) => {
+export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteComment, onLikeComment, t, creationDate, likes, comparingCurrentAndCommentUsers, canDelete}) => {
   return (
     <div className='comment-actions-wrapper'>
       <ul className='comment-actions-list'>
@@ -17,15 +17,15 @@ export const CommentActions = ({user, onReplyComment, onEditComment, onDeleteCom
           <span className='comment-edit' onClick={onEditComment}>{t('edit')}</span>
         </li>
         }
-        <li className='comment-actions-item'>
-          <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
-        </li>
+        {
+          canDelete &&
+          <li className='comment-actions-item'>
+            <span className='comment-delete' onClick={onDeleteComment}>{t('delete')}</span>
+          </li>
+        }
         <li className='comment-actions-item comment-actions-time'>
           <span className='comment-time'>{creationDate}</span>
         </li>
-        {/* <li className='comment-actions-item'>
-          <span className='comment-time'>{creationDate}</span>
-        </li> */}
         <Like
           t={t}
           user={user || ''}
@@ -54,6 +54,8 @@ CommentActions.propTypes = {
   t: PropTypes.func,
   user: PropTypes.object,
   likes: PropTypes.array,
-  comparingCurrentAndCommentUsers: PropTypes.bool
+  comparingCurrentAndCommentUsers: PropTypes.bool,
+  canDelete: PropTypes.bool
 }
+
 export default translate('translations')(CommentActions)

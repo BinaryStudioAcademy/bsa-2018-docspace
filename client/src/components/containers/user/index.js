@@ -12,7 +12,7 @@ import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWor
 import { translate } from 'react-i18next'
 import { MoonLoader } from 'react-spinners'
 import defaultAvatar from '../../../assets/user.png'
-import { Redirect, withRouter, NavLink } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 
 import './user.css'
 
@@ -215,21 +215,6 @@ class User extends Component {
           </div>
           : <h2 className='recent-work-list-wrapper-header'>{t('general_information')}</h2>
         }
-        { isFetching
-          ? <div className='sweet-loading'>
-            {
-              this.state.isShowGeneral
-                ? <span className='user-loading-info'>{t('data_is_changing')}</span>
-                : <span className='user-loading-info'>{t('password_is_changing')}</span>
-            }
-            <MoonLoader
-              sizeUnit={'px'}
-              size={16}
-              color={'#123abc'}
-            />
-          </div>
-          : null
-        }
       </div>
     )
   }
@@ -268,29 +253,39 @@ class User extends Component {
   }
 
   render () {
-    if (this.props.isNotFound.hasOwnProperty('isNotFound') && this.props.match.params.login !== this.props.userLogin) {
-      return <Redirect to='/' />
-    }
     const { t, i18n, isFetching } = this.props
     const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
     const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
     return (
-      <div className='main-wrapper'>
-        <div className='profile-page-header'>
-          { this.renderAddPhoto(t, this.props.resultOfComparing) }
-          <ManagePhoto display={this.handleManagePhoto} t={t} />
-          { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
-        </div>
-        <div className='profile-page-center-content'>
-          { this.renderClock() }
-          <hr />
-          { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
-          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
-          { this.renderRecentWorks(t) }
-        </div>
-      </div>
+      <React.Fragment>
+        { isFetching
+          ? <div className='profile-page-loader'>
+            <div className='sweet-loading'>
+              <MoonLoader
+                sizeUnit={'px'}
+                size={48}
+                color={'#123abc'}
+              />
+            </div>
+          </div>
+          : <div className='main-wrapper'>
+            <div className='profile-page-header'>
+              { this.renderAddPhoto(t, this.props.resultOfComparing) }
+              <ManagePhoto display={this.handleManagePhoto} t={t} />
+              { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
+            </div>
+            <div className='profile-page-center-content'>
+              { this.renderClock() }
+              <hr />
+              { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
+              { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
+              { this.renderRecentWorks(t) }
+            </div>
+          </div>
+        }
+      </React.Fragment>
     )
   }
 }
@@ -308,7 +303,6 @@ User.propTypes = {
   resultOfComparing: PropTypes.bool,
   userLogin: PropTypes.string,
   compareUser: PropTypes.object,
-  isNotFound: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -329,7 +323,7 @@ const mapStateToProps = (state) => {
     userAvatar: state.verification.user.avatar,
     userHistory: state.user.userHistory,
     isNotFound: state.user.getUser,
-    compareUser: state.user.getUser._doc ? state.user.getUser._doc : state.verification.user,
+    compareUser: state.user.getUser.requestedUser ? state.user.getUser.requestedUser : state.verification.user,
     resultOfComparing: state.user.getUser.resultOfComparing
   }
 }

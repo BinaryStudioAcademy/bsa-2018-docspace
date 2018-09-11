@@ -21,6 +21,10 @@ import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
 import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
+import MoveToPageModal from 'src/components/modals/movePageModal'
+import { openMovePageModal } from 'src/components/modals/movePageModal/logic/movePageModalActions'
+import CopyPageModal from 'src/components/modals/copyPageModal'
+import { openCopyPageModal } from 'src/components/modals/copyPageModal/logic/copyPageModalActions'
 
 class Page extends Component {
   constructor (props) {
@@ -68,8 +72,29 @@ class Page extends Component {
   }
 
   handleOpenWarningModal = () => {
+    const { actions, match, page, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_page'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_page_delete_short')}</p>
+          <p>{t('warning_page_delete_long')}</p>
+        </div>),
+        action: actions.deletePageRequest,
+        args: {id: page._id}
+      })
+    }
+  }
+
+  handleOpenMovePageModal = () => {
     if (!this.props.match.params.version) {
-      this.props.actions.openWarningModal(true, this.props.page._id)
+      this.props.actions.openMovePageModal(this.props.page._id, this.props.page.spaceId)
+    }
+  }
+
+  handleOpenCopyPageModal = () => {
+    if (!this.props.match.params.version) {
+      this.props.actions.openCopyPageModal(this.props.page._id, this.props.page.spaceId)
     }
   }
 
@@ -103,7 +128,7 @@ class Page extends Component {
 
   render () {
     const { _id, avatar } = this.props.user
-    const { page, t, space, isFetching } = this.props
+    const { page, t, space, isFetching, showMovePageModal, showCopyPageModal } = this.props
     const user = page ? page.userId : null
     return (
       <React.Fragment>
@@ -115,6 +140,9 @@ class Page extends Component {
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
+          openMovePageModal={this.handleOpenMovePageModal}
+          openCopyPageModal={this.handleOpenCopyPageModal}
+          renderDeleteBtn={space.authUserPermissions.pages.delete}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -140,11 +168,11 @@ class Page extends Component {
             <div className='comments-section'>
               {this.props.page && this.props.page.comments && this.props.page.comments.length &&
               this.props.page.comments.length
-                ? this.props.page.comments.length !== 1 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
-                  : <h2> {t('comment')}</h2>
-                : <h2>{t('add_comments')}</h2>
+                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
+                : space.authUserPermissions.comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList
+                canDelete={space.authUserPermissions.comments.delete}
                 comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
@@ -157,21 +185,26 @@ class Page extends Component {
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
-              <AddComment
-                sendMention={this.props.actions.sendMention}
-                addNewComment={this.addNewComment}
-                userLogin={this.props.user.login}
-                type={'pages'}
-                pageId={this.props.page._id}
-                spaceId={this.props.space._id}
-                userId={_id}
-                avatar={avatar}
-                t={t}
-              />
+              {
+                space.authUserPermissions.comments.add &&
+                <AddComment
+                  sendMention={this.props.actions.sendMention}
+                  addNewComment={this.addNewComment}
+                  userLogin={this.props.user.login}
+                  type={'pages'}
+                  pageId={this.props.page._id}
+                  spaceId={this.props.space._id}
+                  userId={_id}
+                  avatar={avatar}
+                  t={t}
+                />
+              }
             </div>
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
         }
+        {showMovePageModal && <MoveToPageModal />}
+        {showCopyPageModal && <CopyPageModal />}
       </React.Fragment>
     )
   }
@@ -183,6 +216,7 @@ Page.propTypes = {
     title: PropTypes.string,
     created: PropTypes.object,
     content: PropTypes.string,
+    spaceId: PropTypes.string,
     comments: PropTypes.array,
     pageCreator: PropTypes.array,
     usersLikes: PropTypes.array
@@ -199,7 +233,9 @@ Page.propTypes = {
   exportPageToWord: PropTypes.func,
   space: PropTypes.object,
   history: PropTypes.object,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  showMovePageModal: PropTypes.bool.isRequired,
+  showCopyPageModal: PropTypes.bool.isRequired
 }
 
 Page.defaultProps = {
@@ -230,7 +266,9 @@ const mapStateToProps = (state) => {
       ? state.user.userReducer.user
       : state.verification.user,
     space: spaceById(state),
-    isFetching: isPagesFetching(state)
+    isFetching: isPagesFetching(state),
+    showMovePageModal: state.movePageModal.showModal,
+    showCopyPageModal: state.copyPageModal.showModal
   }
 }
 
@@ -239,7 +277,6 @@ function mapDispatchToProps (dispatch) {
     actions: bindActionCreators(
       {
         getPageByIdRequest,
-        deletePageRequest,
         exportPageToPdf,
         exportPageToWord,
         sendDocFileRequest,
@@ -248,7 +285,10 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
-        sendMention
+        openMovePageModal,
+        openCopyPageModal,
+        sendMention,
+        deletePageRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),
