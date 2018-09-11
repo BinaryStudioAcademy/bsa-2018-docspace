@@ -1,0 +1,19 @@
+.current-user-info {
+  text-align: center;
+  #user-avatar {
+    font-size: 50px;
+  }
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
+  .current-user-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}

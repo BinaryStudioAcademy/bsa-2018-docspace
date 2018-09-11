@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import 'jodit'
 import 'jodit/build/jodit.min.css'
 import JoditEditor from 'jodit-react'
-import joditConfig from './joditConfig'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import './pageEditor.css'
 
 // dummy avatar for user
-import logo from 'src/resources/logo.svg'
+import logo from 'src/resources/icons/user-comment.png'
 
 export default class PageEditor extends Component {
   constructor (props) {
@@ -48,7 +47,7 @@ export default class PageEditor extends Component {
  }
 
  render () {
-   const {space, page, user} = this.props
+   const {space, page, user, joditEditorConfig} = this.props
    return (
      <div className='page-editor-wrp'>
        <div className='page-editor-header'>
@@ -86,7 +85,14 @@ export default class PageEditor extends Component {
              <i className='fas fa-question' />
            </span>
            <span className='avatar-wrp' data-hover-text-help="It's you!">
-             <img className='user-avatar' src={user.avatar} alt='' />
+             { user.avatar
+               ? <Link to={`/users/${user.login}`} >
+                 <img className='user-avatar' src={user.avatar} alt='' />
+               </Link>
+               : <Link className='page-info-image' to={`/users/${user.login}`}>
+                 <i id='user-avatar-icon-page' className='fas fa-user-circle' />
+               </Link>
+             }
            </span>
            <span data-hover-text-help='invite people for collaborative editing'>
              <i className='fas fa-plus' />
@@ -103,7 +109,7 @@ export default class PageEditor extends Component {
        />
        <JoditEditor
          value={this.state.page.content}
-         config={joditConfig}
+         config={joditEditorConfig}
          onChange={this.updatePageContent}
        />
        <div className='page-editor-footer'>
@@ -133,7 +139,8 @@ PageEditor.defaultProps = {
     name: 'Fake'
   },
   user: {
-    avatar: logo
+    avatar: logo,
+    login: ''
   }
 }
 
@@ -151,5 +158,6 @@ PageEditor.propTypes = {
   }),
   user: PropTypes.shape({
     avatar: PropTypes.string
-  })
+  }),
+  joditEditorConfig: PropTypes.object
 }

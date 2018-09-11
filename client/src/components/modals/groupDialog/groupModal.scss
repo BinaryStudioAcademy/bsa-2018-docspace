@@ -1,0 +1,85 @@
+.group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;  
+    td.group-modal-label{
+        padding-right: 20px;
+        padding-bottom: 10px;
+    }
+    .group-modal-label{
+        text-align: right;
+        vertical-align: bottom;
+        width:20%;
+        padding-right: 10px;
+        span{
+            color: red;
+            font-size: 18px;
+    }
+  }
+  .group-dialog-row{
+      width: 100%;
+      display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+
+  }
+  .group-modal-input{
+    width: 70%;  
+  }
+  .group-modal-input input{
+      margin: 0;
+  }
+  .modal-footer{
+    display: flex;
+    align-items: center;
+  }
+  button{
+    margin: 0 5px 0 0;  
+  }
+  button:hover{
+    background-color: #ccc;
+}
+}
+#name, #description, #user{
+    width: 70%;
+}
+.modal-footer-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+  }
+.modal-footer-group button{
+    border: 1px solid #ccc;
+    margin: 0 5px;
+}
+.modal-header-group{
+    text-align: center;
+}
+.group-user-wrapper{
+    margin-top: 10px;
+}
+.groups-user-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left; 
+    padding-top: 10px;
+}
+.modal-footer-group .accept-button:hover{
+    background: #08367C;
+}
+
+.modal-footer-group button:hover{
+    background-color: #EAECF0;
+}
+.group-modal-input p {
+    margin: 0;
+    min-height: 16px;
+}
+.group-added-users{
+    margin: 5px 0;
+}

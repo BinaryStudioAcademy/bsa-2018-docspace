@@ -1,18 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import './commentAvatar.css'
 
-export const CommentAvatar = ({UserAvatarLink}) => {
+export const CommentAvatar = ({UserAvatarLink, login}) => {
   return (
     <div className='comment-avatar'>
-      <a href='' className='comment-link-user-avatar'>
-        <img src={UserAvatarLink} alt='User icon' className='comment-icon-avatar' />
-      </a>
+      <span className='comment-link-user-avatar'>
+        <Link to={`/users/${login}`} >
+          <img src={UserAvatarLink} alt='' className='comment-icon-avatar' />
+        </Link>
+      </span>
     </div>
   )
 }
 CommentAvatar.propTypes = {
-  UserAvatarLink: PropTypes.string
+  UserAvatarLink: PropTypes.string,
+  login: PropTypes.string
 }
 export default CommentAvatar

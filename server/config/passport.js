@@ -41,7 +41,6 @@ module.exports = () => {
   }
   ))
 }
-
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: jwtConfig.secret

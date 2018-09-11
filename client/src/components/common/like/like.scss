@@ -1,21 +1,27 @@
 @import "src/globalStyles/variables.scss";
 
 .like-wrapper{
-    margin: 5px 15px;
+    margin: 15px 0;
     button{
         background-color: transparent;
         border: none;
         font-size:18px;
     }
+    button:target{
+        border: none;   
+    }
+    .like-button:target{
+        border: none;
+    }
     .unactive-like{
         color: $gray
     }
     .active-like{
-        color: $primalHover
+        color: $blue
     }
     i{
         transition-delay: .2s;
         transition-timing-function: ease-in-out;
-        padding: 5px
+        padding: 5px 0;
     }
 }

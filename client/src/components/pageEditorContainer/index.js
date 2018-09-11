@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import PageEditor from './pageEditor'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { pageByIdFromRoute } from 'src/components/page/logic/pageReducer'
 import { updatePageRequest, getPageByIdRequest } from 'src/components/page/logic/pageActions'
 import { getSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import joditEditorConfig from './joditConfig'
 
 // TODO: get user from state and pass to PageEditor
 class PageEditorContainer extends Component {
@@ -20,23 +20,29 @@ class PageEditorContainer extends Component {
   goToThePreviousLocation = () => {
     this.props.history.goBack()
   }
+
   render () {
     if (!this.props.page) return null
     return (
       <PageEditor
         page={this.props.page}
         space={this.props.space}
+        user={this.props.user}
         handlePublishBtnClick={this.props.actions.updatePageRequest}
         handleCancelBtnClick={this.goToThePreviousLocation}
+        joditEditorConfig={joditEditorConfig}
       />
     )
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, props) {
   return {
     space: spaceById(state),
-    page: pageByIdFromRoute(state)
+    page: state.pages.byId[props.match.params.page_id],
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
   }
 }
 
@@ -66,5 +72,6 @@ PageEditorContainer.propTypes = {
     _id: PropTypes.string
   }),
   history: PropTypes.object,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  user: PropTypes.object
 }

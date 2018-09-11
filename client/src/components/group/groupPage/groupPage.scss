@@ -1,0 +1,114 @@
+.group-page-container{
+    // display: flex;
+    // flex-direction: row;
+    width: 100%;
+    padding: 10px 0 0 15px;
+    margin: 10px 15px;
+    td {
+        border-bottom: 1px solid #ddd;
+        text-overflow: ellipsis;
+        padding: 0;
+    }
+    td a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        height: 35px;
+        width: 100%;
+        color: black;
+        opacity: .95;
+    }
+    th{
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    tr:hover {
+        background: #f4f5f7;
+        cursor: pointer;
+    }
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .group-content-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-right: 15px;
+    }
+    .group-title{
+        margin: 15px 0;
+    }
+    .group-description{
+        margin: 15px 0;
+    }
+    .group-user-filter{
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0;
+    }
+    
+    button {
+        box-sizing: border-box;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 3.01px;
+        color: #333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: inherit;
+        font-size: 14px;
+        font-variant: normal;
+        font-weight: 400;
+        height: 2.14285714em;
+        line-height: 1.42857143;
+        padding: 4px 10px;
+        text-decoration: none;
+        vertical-align: baseline;
+        white-space: nowrap;
+        margin: 0;      
+    }
+    button:hover{
+        background-color: #ccc;
+    }
+    .accept-button{
+        background: #0044a9;
+        border-color: transparent;
+        color: white;
+        font-weight: bold;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+    .accept-button:hover{
+        background: #08367C;
+    }
+    button:focus{
+        border: none;
+    }
+    input{
+        margin-bottom: 15px;
+    }
+    textarea{
+        width: 400px;
+        height: 100px;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    .group-users-list{
+        margin: 10px 0;
+    }
+    .group-users-list button{
+        margin: 5px 15px 0 0;
+    }
+    .fa-arrow-left{
+        font-size: 28px !important;
+        color: #333;
+    }
+    .fa-arrow-left:hover{
+        color: #42526E;
+    }
+}

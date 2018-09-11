@@ -12,7 +12,8 @@ export class ProfileFields extends Component {
       email: '',
       login: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      language: localStorage.getItem('language') || 'en'
     }
     this.renderEmail = this.renderEmail.bind(this)
     this.renderLogin = this.renderLogin.bind(this)
@@ -63,8 +64,13 @@ export class ProfileFields extends Component {
   }
 
   renderLabelButton () {
-    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: this.props.t('Edit')}
+    return !this.props.isEditMode ? {icon: <i className='fa fa-cog' aria-hidden='true' />, value: this.props.t('edit')}
       : {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('Save')}
+  }
+
+  renderCancelButton () {
+    return this.props.isEditMode
+      ? {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('cancel')} : null
   }
 
   propsToState () {
@@ -92,7 +98,13 @@ export class ProfileFields extends Component {
 
   render () {
     const {email, login, firstName, lastName} = this.props.user
-    const { t } = this.props
+    const { t, i18n } = this.props
+    const changeLanguage = lng => {
+      i18n.changeLanguage(lng)
+      localStorage.setItem('language', lng)
+      this.setState({language: lng})
+    }
+
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -128,17 +140,41 @@ export class ProfileFields extends Component {
               </div>
             </div>
           </li>
+          {this.props.resultOfComparing
+            ? <li className='profile-fields-item fields-item-btns'>
+              <div className='edit-btn'>
+                <Button
+                  icon={this.renderLabelButton().icon}
+                  value={this.renderLabelButton().value}
+                  onClick={this.handleSubmitDataUser}
+                />
+                {this.props.isEditMode &&
+                  <Button
+                    icon={<i className='fa fa-ban' aria-hidden='true' />}
+                    value={t('cancel')}
+                    onClick={this.props.changeIsEditMode}
+                    nameClass='cancel-btn'
+                  />
+                }
+              </div>
+            </li> : null
+          }
         </ul>
         {!!this.props.errors.length && (
           <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
         )}
-        <div className='edit-btn'>
-          <Button
-            icon={this.renderLabelButton().icon}
-            value={this.renderLabelButton().value}
-            onClick={this.handleSubmitDataUser}
-          />
-        </div>
+        {this.props.resultOfComparing
+          ? <React.Fragment>
+            <div className='language-choise'>
+              <span>{t('choose_language')}</span>
+              <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
+                <option value='en'>{t('english')}</option>
+                <option value='uk'>{t('ukrainian')}</option>
+              </select>
+            </div>
+          </React.Fragment>
+          : null
+        }
       </div>
     )
   }
@@ -153,6 +189,9 @@ ProfileFields.propTypes = {
   isEditMode: PropTypes.bool,
   editMode: PropTypes.func,
   errors: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  resultOfComparing: PropTypes.bool,
+  i18n: PropTypes.object,
+  changeIsEditMode: PropTypes.func
 }
 export default translate('translations')(ProfileFields)

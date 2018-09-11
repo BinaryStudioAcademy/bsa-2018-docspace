@@ -1,0 +1,14 @@
+@import 'src/globalStyles/variables.scss';
+
+.permissions-table-header{
+  tr{
+     border: 1px solid #ccc;
+     height: 40px;
+  }
+ 
+  &-columns-actions > th{
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px
+  }
+}

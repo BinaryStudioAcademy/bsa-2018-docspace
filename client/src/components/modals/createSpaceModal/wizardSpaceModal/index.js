@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import { translate } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
 // TODO : implement form validation
 
 class WizardSpaceModal extends Component {
@@ -42,27 +44,30 @@ class WizardSpaceModal extends Component {
   }
 
   renderModalHeader = () => {
+    const { name } = this.props.selectedTemplate
+    const {t} = this.props
     return (
       <h2 className='modal-header' >
-        {`Create a ${this.props.selectedTemplate.name}`}
+        { name === t('empty_space') ? t('create_an_0', {name: name}) : t('create_a_0', {name: name})}
       </h2>
     )
   }
 
   renderModalFooter = () => {
+    const {t} = this.props
     return (
       <div className='modal-footer'>
         <button onClick={this.props.handleBackClick}>
-           Back
+          {t('back')}
         </button>
         <button
           className='accept-button'
           onClick={this.handleCreateSpace}
         >
-           Create
+          {t('create')}
         </button>
         <button onClick={this.props.closeModal}>
-           Close
+          {t('close')}
         </button>
       </div>
     )
@@ -74,6 +79,7 @@ class WizardSpaceModal extends Component {
       handleFieldChange={this.handleFieldChange}
       handleCheckboxChange={this.handleCheckboxChange}
       isPrivateCheckboxChecked={this.state.isPrivate}
+      t={this.props.t}
     />
   )
 
@@ -83,6 +89,7 @@ class WizardSpaceModal extends Component {
         renderHeader={this.renderModalHeader}
         renderFooter={this.renderModalFooter}
         renderContent={this.renderModalContent}
+        closeModal={this.props.closeModal}
       />
     )
   }
@@ -94,7 +101,8 @@ WizardSpaceModal.propTypes = {
   handleBackClick: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     createSpaceRequest: PropTypes.func.isRequired
-  })
+  }),
+  t: PropTypes.func
 }
 
 function mapDispatchToProps (dispatch) {
@@ -103,4 +111,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(WizardSpaceModal)
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(WizardSpaceModal)))
