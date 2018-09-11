@@ -92,4 +92,7 @@ input.input.category-input {
   vertical-align: baseline;
   white-space: nowrap;
   margin-left: 5px;
+  &:hover {
+    background: #eae6e6;
+  }
 }
