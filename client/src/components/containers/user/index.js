@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
 import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest } from './logic/userActions'
 import { isUserFetching } from './logic/userReducer'
@@ -34,7 +33,6 @@ class User extends Component {
     this.changePrivate = this.changePrivate.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
-    this.renderAddPhoto = this.renderAddPhoto.bind(this)
     this.renderHeaderCenter = this.renderHeaderCenter.bind(this)
     this.renderClock = this.renderClock.bind(this)
     this.renderEditButtons = this.renderEditButtons.bind(this)
@@ -132,20 +130,6 @@ class User extends Component {
     }
   }
 
-  renderAddPhoto (t, resultOfComparing) {
-    return resultOfComparing
-      ? (
-        <div className='profile-header-add-photo' onClick={this.managePhoto}>
-          <div className='add-photo-content'>
-            <button className='add-photo-button'>
-              <img src={Camera} alt='camera' className='add-photo-img' />
-              <span className='add-photo-label'>{t('add_cover_photo')}</span>
-            </button>
-          </div>
-        </div>
-      ) : null
-  }
-
   renderHeaderCenter (t, firstName, lastName, avatar, resultOfComparing) {
     return (
       <div className='profile-page-center'>
@@ -232,6 +216,7 @@ class User extends Component {
         />
         : this.state.isShowGeneral &&
         <ProfileFields
+          changeIsEditMode={this.changeIsEditMode}
           isEditMode={this.state.isEditMode}
           editMode={this.editMode}
           user={user}
@@ -253,7 +238,7 @@ class User extends Component {
   }
 
   render () {
-    const { t, i18n, isFetching } = this.props
+    const { t, i18n, isFetching, resultOfComparing } = this.props
     const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
     const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
@@ -272,16 +257,16 @@ class User extends Component {
           </div>
           : <div className='main-wrapper'>
             <div className='profile-page-header'>
-              { this.renderAddPhoto(t, this.props.resultOfComparing) }
               <ManagePhoto display={this.handleManagePhoto} t={t} />
-              { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
+              { this.renderHeaderCenter(t, firstName, lastName, avatar, resultOfComparing)}
             </div>
-            <div className='profile-page-center-content'>
-              { this.renderClock() }
-              <hr />
-              { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
-              { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
-              { this.renderRecentWorks(t) }
+            <div className='profile-page-content-wrapper'>
+              <div className='profile-page-center-content'>
+                { this.renderClock() }
+                { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
+                { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, resultOfComparing) }
+                { this.renderRecentWorks(t) }
+              </div>
             </div>
           </div>
         }
