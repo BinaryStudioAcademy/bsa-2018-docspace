@@ -3,8 +3,8 @@ const { Schema } = mongoose
 
 const PermissionsSchema = new mongoose.Schema({
   spaceId: Schema.Types.ObjectId,
-  userId: Schema.Types.ObjectId,
-  groupId: Schema.Types.ObjectId,
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
+  groupId: { type: Schema.Types.ObjectId, ref: 'Group' },
 
   all: {
     view: { type: Boolean, default: true }

@@ -89,6 +89,7 @@ class Page extends Component {
   render () {
     const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const comments = space && space.authUserPermissions ? space.authUserPermissions.comments : {}
     const user = page ? page.userId : null
     return (
       <React.Fragment>
@@ -96,6 +97,7 @@ class Page extends Component {
           space={space}
           t={t}
           handleEditPageClick={this.handleEditPageClick}
+          renderDeleteBtn={space.authUserPermissions.blog.delete}
           openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
@@ -129,9 +131,10 @@ class Page extends Component {
             <div className='comments-section'>
               {this.props.page.comments.length
                 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
-                : <h2>{t('add_comments')}</h2>
+                : comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList
+                canDelete={comments.delete}
                 comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
@@ -144,6 +147,7 @@ class Page extends Component {
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
+              { comments.add &&
               <AddComment
                 sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
@@ -154,6 +158,7 @@ class Page extends Component {
                 spaceId={this.props.space._id}
                 t={t}
               />
+              }
             </div>
           </div>
         }

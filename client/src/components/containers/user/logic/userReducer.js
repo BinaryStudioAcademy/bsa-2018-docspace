@@ -75,7 +75,10 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.UPDATE_USER:
     case actionTypes.CHECK_USER_PASSWORD:
     case actionTypes.GET_USER_REQUEST:
+    case actionTypes.COMPARE_USER_REQUEST:
       return true
+    case actionTypes.COMPARE_USER_SUCCESS:
+    case actionTypes.COMPARE_USER_ERROR:
     case actionTypes.GET_USER_SUCCESS:
     case actionTypes.GET_USER_ERROR:
     case actionTypes.UPDATE_USER_SUCCESS:
