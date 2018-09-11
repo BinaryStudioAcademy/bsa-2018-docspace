@@ -6,8 +6,9 @@ import PageTitle from 'src/components/common/pageTitle'
 import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { pageByIdFromRoute, isPagesFetching } from 'src/components/page/logic/pageReducer'
-import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention } from 'src/components/page/logic/pageActions'
+import { spaceById, allSpaces } from 'src/components/space/spaceContainer/logic/spaceReducer'
+import { getSpacesRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import { getPageByIdRequest, copyPageRequest, deletePageRequest, sendDocFileRequest, exportPageToPdf, exportPageToWord, sendMention, movePageToSpaceRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 import CommentsList from 'src/components/commentsList'
 import { AddComment } from 'src/components/comments/addComment'
@@ -20,17 +21,14 @@ import fakeImg from 'src/resources/logo.svg'
 import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
-import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
-import MoveToPageModal from 'src/components/modals/movePageModal'
-import { openMovePageModal } from 'src/components/modals/movePageModal/logic/movePageModalActions'
-import CopyPageModal from 'src/components/modals/copyPageModal'
-import { openCopyPageModal } from 'src/components/modals/copyPageModal/logic/copyPageModalActions'
+import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 class Page extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isShowImportModal: true
+      isShowImportModal: true,
+      selectedSpaceId: null
     }
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
@@ -39,7 +37,9 @@ class Page extends Component {
 
   componentDidMount () {
     const {page_id: pageId, version} = this.props.match.params
-    !this.props.isFetching && this.props.actions.getPageByIdRequest(pageId, version)
+    const {spaces, actions, isFetching} = this.props
+    !isFetching && actions.getPageByIdRequest(pageId, version)
+    spaces.length < 2 && actions.getSpacesRequest()
   }
 
   addNewComment (obj) {
@@ -67,12 +67,37 @@ class Page extends Component {
     this.props.actions.exportPageToWord(this.props.page)
   }
 
+  handleSelectSpace = (spaceId) => {
+    this.setState({
+      selectedSpaceId: spaceId
+    })
+  }
+
+  handleDeleteMethod = () => {
+    const { actions, page } = this.props
+    actions.deletePageRequest(page._id)
+    actions.closeWarningModal()
+  }
+  handleMoveMethod = () => {
+    const {page, actions} = this.props
+    const toSpaceId = this.state.selectedSpaceId
+    if (this.state.selectedSpaceId) {
+      actions.movePageToSpaceRequest(page._id, page.spaceId, toSpaceId)
+      actions.closeWarningModal()
+    }
+  }
+  handleCopyMethod = () => {
+    const {page, space, actions} = this.props
+    actions.copyPageRequest(page._id, space._id)
+    actions.closeWarningModal()
+  }
+
   handleCallSystemDialogWindow = () => {
     this.refs.fileUploader.click()
   }
 
   handleOpenWarningModal = () => {
-    const { actions, match, page, t } = this.props
+    const { actions, match, t } = this.props
     if (!match.params.version) {
       actions.openWarningModal({
         renderHeader: t('delete_page'),
@@ -80,21 +105,55 @@ class Page extends Component {
           <p>{t('warning_page_delete_short')}</p>
           <p>{t('warning_page_delete_long')}</p>
         </div>),
-        action: actions.deletePageRequest,
-        args: {id: page._id}
+        method: this.handleDeleteMethod
       })
     }
   }
 
   handleOpenMovePageModal = () => {
-    if (!this.props.match.params.version) {
-      this.props.actions.openMovePageModal(this.props.page._id, this.props.page.spaceId)
+    const { actions, match, t, page, spaces, space } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('Move_page'),
+        renderMain: (<div className='page-move-warning'>
+          <div className='movepage-text'>
+            <p>{t('specify_new_space')}</p>
+          </div>
+          <div className='movepage-choose-space'>
+            <span>{t('choose_a_space')}</span>
+            <select
+              onChange={({target}) => this.handleSelectSpace(target.value)}
+              defaultValue='none'
+            >
+              <option value='none' disabled hidden>{spaces.length < 2
+                ? t('no_spaces_to_move') : t('choose_here')}</option>
+              {
+                spaces.map(space => (
+                  space._id !== page.spaceId &&
+                  <option value={space._id} key={space._id}>
+                    {space.name}
+                  </option>
+                ))
+              })
+            </select>
+            <span>{`${t('current_space')}: ${space.name}`}</span>
+          </div>
+        </div>),
+        method: this.handleMoveMethod
+      })
     }
   }
 
   handleOpenCopyPageModal = () => {
-    if (!this.props.match.params.version) {
-      this.props.actions.openCopyPageModal(this.props.page._id, this.props.page.spaceId)
+    const { actions, match, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('copy_page'),
+        renderMain: (<div className='page-copy-warning'>
+          <p>{this.props.t('copy_page_warning')}</p>
+        </div>),
+        method: this.handleCopyMethod
+      })
     }
   }
 
@@ -128,7 +187,7 @@ class Page extends Component {
 
   render () {
     const { _id, avatar } = this.props.user
-    const { page, t, space, isFetching, showMovePageModal, showCopyPageModal } = this.props
+    const { page, t, space, isFetching } = this.props
     const user = page ? page.userId : null
     return (
       <React.Fragment>
@@ -203,8 +262,6 @@ class Page extends Component {
             <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
           </div>
         }
-        {showMovePageModal && <MoveToPageModal />}
-        {showCopyPageModal && <CopyPageModal />}
       </React.Fragment>
     )
   }
@@ -234,8 +291,7 @@ Page.propTypes = {
   space: PropTypes.object,
   history: PropTypes.object,
   isFetching: PropTypes.bool,
-  showMovePageModal: PropTypes.bool.isRequired,
-  showCopyPageModal: PropTypes.bool.isRequired
+  spaces: PropTypes.array.isRequired
 }
 
 Page.defaultProps = {
@@ -267,8 +323,7 @@ const mapStateToProps = (state) => {
       : state.verification.user,
     space: spaceById(state),
     isFetching: isPagesFetching(state),
-    showMovePageModal: state.movePageModal.showModal,
-    showCopyPageModal: state.copyPageModal.showModal
+    spaces: allSpaces(state)
   }
 }
 
@@ -285,10 +340,12 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
-        openMovePageModal,
-        openCopyPageModal,
         sendMention,
-        deletePageRequest
+        deletePageRequest,
+        closeWarningModal,
+        movePageToSpaceRequest,
+        copyPageRequest,
+        getSpacesRequest
       }
       , dispatch),
     addComment: bindActionCreators(commentsActions.addCommentRequest, dispatch),

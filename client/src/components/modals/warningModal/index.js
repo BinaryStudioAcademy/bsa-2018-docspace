@@ -7,10 +7,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 class WarningModal extends Component {
-  handleDeleteMethod = () => {
-    const { request } = this.props
-    request.action(request.id)
-    this.props.closeWarningModal()
+  closeWarningModal = () => {
+    const { closeWarningModal } = this.props
+    closeWarningModal()
   }
 
   renderModalHeader = () => {
@@ -20,7 +19,7 @@ class WarningModal extends Component {
 
   renderModalFooter = () => (
     <div className='modal-footer'>
-      <button className='accept-button' onClick={this.handleDeleteMethod}>
+      <button className='accept-button' onClick={this.props.request.method}>
         {this.props.t('confirm')}
       </button>
       <button onClick={this.props.closeWarningModal}>
@@ -59,7 +58,6 @@ WarningModal.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    showModal: state.warningModal.showModal,
     request: state.warningModal
   }
 }
