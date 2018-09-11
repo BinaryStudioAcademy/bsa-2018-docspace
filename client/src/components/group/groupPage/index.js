@@ -8,6 +8,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 import Input from 'src/components/common/input'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
+import { MoonLoader } from 'react-spinners'
 
 import './groupPage.css'
 
@@ -173,24 +174,34 @@ class GroupPage extends Component {
 
   render () {
     const group = this.props.group[0]
-    const {t} = this.props
+    const {t, isFetching} = this.props
     return (
       <div className='group-page-container'>
         <NavLink to='/admin/groups'><i className='fas fa-arrow-left' /></NavLink>
-        <h1 className='group-title'>{group ? group.title : ''}</h1>
-        {this.renderDescription()}
-        {this.renderAddUser()}
-        <table>
-          <thead>
-            <th>{t('full_name')}</th>
-            <th>{t('email_address')}</th>
-            <th>{t('login')}</th>
-            <th />
-          </thead>
-          <tbody>
-            {this.renderTable()}
-          </tbody>
-        </table>
+        {isFetching || !group
+          ? <div className='moon-loader-container'>
+            <MoonLoader
+              sizeUnit={'px'}
+              size={32}
+              color={'#123abc'}
+            />
+          </div>
+          : <React.Fragment>
+            <h1 className='group-title'>{group ? group.title : ''}</h1>
+            {this.renderDescription()}
+            {this.renderAddUser()}
+            <table>
+              <thead>
+                <th>{t('full_name')}</th>
+                <th>{t('email_address')}</th>
+                <th>{t('login')}</th>
+                <th />
+              </thead>
+              <tbody>
+                {this.renderTable()}
+              </tbody>
+            </table>
+          </React.Fragment>}
       </div>
     )
   }
@@ -198,9 +209,10 @@ class GroupPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    group: state.groups,
+    group: state.groups.results,
     matchingUsers: state.matchingUsers,
-    user: state.verification.user
+    user: state.verification.user,
+    isFetching: state.groups.isFetching
   }
 }
 
@@ -223,7 +235,8 @@ GroupPage.propTypes = {
   actions: PropTypes.object,
   match: PropTypes.object,
   group: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  isFetching: PropTypes.bool
 }
 
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupPage)))

@@ -24,7 +24,7 @@ const SpaceSidebarButtons = (props) => {
         icon='fas fa-quote-right'
       />
       <Button
-        path={`/spaces/${spaceId}/settings`}
+        path={`/spaces/${spaceId}/settings/overview`}
         type='minimize-button'
         icon='fas fa-cog'
       />
