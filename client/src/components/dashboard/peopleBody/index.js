@@ -15,7 +15,7 @@ class PeopleBody extends Component {
   render () {
     const { isFetching, allUsers } = this.props
     const usersList = this.props.allUsers.map(user =>
-      <tr>
+      <tr key={user._id}>
         <td><NavLink to={`/users/${user.login}`}>{`${user.firstName} ${user.lastName}`}</NavLink></td>
         <td><NavLink to={`/users/${user.login}`}>{user.email}</NavLink></td>
         <td><NavLink to={`/users/${user.login}`}>{user.login}</NavLink></td>
