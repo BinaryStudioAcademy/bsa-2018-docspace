@@ -7,17 +7,17 @@ import templatesNames from './constants/templatesNames'
 const spaceCreatorsByTemplatesNames = {
   [templatesNames.EMPTY_SPACE]: (fields) => {
     // TODO: check if flag isPrivate is true. If so, add appropriate permissions to re return feilds
-    return fields
+    return {...fields, type: 'EMPTY_SPACE'}
   },
 
   [templatesNames.GROUP_SPACE]: (fields) => {
-    return fields
+    return {...fields, type: 'GROUP_SPACE'}
   },
   [templatesNames.KNOWLEDGE_BASE]: (fields) => {
-    return fields
+    return {...fields, type: 'KNOWLEDGE_BASE'}
   },
   [templatesNames.DOCUMENTATION_SPACE]: (fields) => {
-    return fields
+    return {...fields, type: 'DOCUMENTATION_SPACE'}
   }
 }
 

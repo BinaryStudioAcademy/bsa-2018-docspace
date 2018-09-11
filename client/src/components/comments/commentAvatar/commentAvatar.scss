@@ -1,18 +1,18 @@
 .comment-avatar {
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
-    float: left;
-    .comment-link-user-avatar {
-        display: inline-block;
-        position: relative;
-        vertical-align: top;
-        margin-top: 2px;
-    }
-    .comment-icon-avatar {
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        object-fit: contain;
-    }
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  float: left;
+  .comment-link-user-avatar {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: 2px;
+  }
+  .comment-icon-avatar {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+  }
 }
