@@ -54,7 +54,6 @@ class UserService {
     const args = { endpoint: `/api/user`, method: 'GET' }
     const apiResult = callWebApi(args)
       .then(res => {
-        console.log('HERE', res)
         return res.json()
       })
       .catch(err => console.log(err))
