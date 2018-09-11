@@ -23,7 +23,7 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onWatch, onShare, onSave, children,
+    const { onEdit, onWatch, children,
       type, t, hideNotSpaceBtns, openWarningModal, onPdfExport,
       onWordExport, onWordImport, openMovePageModal,
       openCopyPageModal, renderDeleteBtn } = this.props
@@ -40,17 +40,16 @@ class SpaceHeaderButtons extends Component {
       {
         name: t('import_word'),
         onClick: () => onWordImport()
-      },
-      {
-        name: t('Move_page'),
-        onClick: () => openMovePageModal()
-      },
-      {
-        name: t('copy_page'),
-        onClick: () => openCopyPageModal()
       }
     ]
-
+    !!openMovePageModal && dropdownMenuItems.push({
+      name: t('Move_page'),
+      onClick: () => openMovePageModal()
+    })
+    !!openCopyPageModal && dropdownMenuItems.push({
+      name: t('copy_page'),
+      onClick: () => openCopyPageModal()
+    })
     return (
       <div className='buttons-container'>
         {
@@ -59,20 +58,8 @@ class SpaceHeaderButtons extends Component {
             <i className='fas fa-pen' />
           </div>
         }
-        {
-          type === 'blog' || type === 'page'
-            ? (
-              <div className='buttons-item' title={t('save_for_later')} onClick={onSave}>
-                <i className='far fa-star' />
-              </div>
-            )
-            : null
-        }
         <div className='buttons-item' title={t('watch')}onClick={onWatch}>
           <i className='fas fa-eye' />
-        </div>
-        <div className='buttons-item' title={t('share_this_page_with_others')} onClick={onShare}>
-          <i className='fas fa-share-square' />
         </div>
         { !hideNotSpaceBtns &&
         <DropdownMenu
@@ -98,10 +85,8 @@ SpaceHeaderButtons.propTypes = {
   t: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
   onWatch: PropTypes.func,
-  onShare: PropTypes.func,
   onPdfExport: PropTypes.func,
   onWordExport: PropTypes.func,
-  onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
   hideNotSpaceBtns: PropTypes.bool,
@@ -115,10 +100,8 @@ SpaceHeaderButtons.propTypes = {
 SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
   onWatch: () => false,
-  onShare: () => false,
   onPdfExport: () => false,
   onWordExport: () => false,
-  onSave: () => false,
   onDelete: () => false,
   children: null,
   type: ''

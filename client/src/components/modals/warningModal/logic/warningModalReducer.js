@@ -11,14 +11,13 @@ export const warningModalReducer = (state = initialFunc, action) => {
         showModal: true,
         renderHeader: action.payload.renderHeader,
         renderMain: action.payload.renderMain,
-        action: action.payload.action,
-        id: action.payload.id
+        method: action.payload.method
       }
 
     case actionTypes.CLOSE_WARNING_MODAL:
       return {
         showModal: false,
-        action: null
+        method: null
       }
     default:
       return state

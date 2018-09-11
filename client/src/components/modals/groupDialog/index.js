@@ -161,8 +161,10 @@ class GroupDialog extends Component {
     }
     actions.createGroupRequest(group)
     actions.sendInvitation(usersInGroup, inviteNewUser, `${user.firstName} ${user.lastName}`, group.title)
-    this.state.user = ''
-    this.state.usersInGroup = []
+    this.setState({
+      user: '',
+      usersInGroup: []
+    })
     this.props.cancelModal()
     cancelModal()
   }

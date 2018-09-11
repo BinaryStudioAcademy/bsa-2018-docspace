@@ -1,21 +1,17 @@
 .inputDashboard {
-    width: 230px;
-    background-color: #fafbfc;
-    border-radius: 2px;
-    border: 2px solid #cccccc;
-    height: 20px;
-    padding: 6px;
-
-
+  width: 230px;
+  background-color: #fafbfc;
+  border-radius: 2px;
+  border: 1px solid #cccccc;
+  height: 20px;
+  padding: 6px;
 }
 .inputDashboard:hover {
-
-
-    background-color: #ebecf0;
+  background-color: #ebecf0;
 }
 .inputDashboard:active {
-    background: #dfdfdf;
-    }
+  background: #dfdfdf;
+}
 .inputDashboard:focus {
-        background: white;
+  background: white;
 }
