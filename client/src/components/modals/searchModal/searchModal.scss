@@ -1,6 +1,5 @@
 @import 'globalStyles/variables.scss';
 .search-modal{
-    box-sizing: border-box;
     z-index: 1000;
     // display: flex;
     // justify-content: left;
@@ -12,9 +11,16 @@
     right: 0;
     width: 100%;
     background-color: rgba(0,0,0,0.3);
+    transition: all 0.7s ease-in-out;
+    opacity: 0;
+}
+
+.search-modal.active{
+    opacity: 1;
 }
 .search-modal-body{
-    width: 50%;
+    width: 0%;
+    opacity: 0;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -22,16 +28,10 @@
     padding: 500px 15px;
     padding: 30px 0;
     text-overflow: ellipsis;
-    overflow: scroll;
+    transition: all 0.7s ease-in-out;
     button{
         border: none;
         background: transparent;
-    }
-    button:hover{
-        i{
-            color: #42526E;
-        }
-        cursor: pointer;
     }
     .search-field{
         font-size: 20px;
@@ -39,7 +39,6 @@
         border-bottom: 1px solid grey;
         background: #f5f5f5;
         width: 100%;
-        padding-left: 5px;
     }
     .search-field:focus{
         outline: none;
@@ -77,7 +76,6 @@
     .search-sidebar{
         width: 50px;
         text-align: center;
-        margin: 0 2px;
     }
     .search-sidebar button{
         padding: 7px 0;
@@ -120,7 +118,8 @@
     .search-link i{
        margin-right: 15px;
     }
-    .return-button i{
-        font-size: 20px !important;
-    }
+}
+.search-modal-body.active{
+    width: 50%;
+    opacity: 1;
 }
