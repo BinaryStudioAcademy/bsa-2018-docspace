@@ -29,12 +29,6 @@ class MinSidebar extends Component {
           path: '/login'
         }
       ],
-      help: [
-        {
-          name: this.props.t('help'),
-          path: '#'
-        }
-      ],
       notifications: [
         {
           name: this.props.t('notifications'),
@@ -89,9 +83,8 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={this.dropdownMenuItems.notifications} menuHeight={170} />
-          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={this.dropdownMenuItems.burger} menuHeight={130} />
-          <DropdownMenu icon='fa fa-question' type='round-button' menuItems={this.dropdownMenuItems.help} menuHeight={80} />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={this.dropdownMenuItems.notifications} menuHeight={130} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={this.dropdownMenuItems.burger} menuHeight={70} />
           <DropdownMenu icon='fa fa-user' type='round-button' menuItems={this.dropdownMenuItems.avatar} menuHeight={40} />
         </div>
       </div>
