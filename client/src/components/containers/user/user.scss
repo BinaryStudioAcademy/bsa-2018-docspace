@@ -276,12 +276,6 @@
   display: flex;
 }
 
-.profile-edit-buttons .sweet-loading .user-loading-info {
-  display: inline-block;
-  margin-right: 10px;
-  color: #505f79;
-}
-
 .profile-edit-buttons .edit-manage-btn {
   display: inline-flex;
   margin: 0px -2px;
@@ -634,4 +628,8 @@ h2.recent-work-list-wrapper-header {
       color: rgb(0, 82, 204);
     }
   }
+}
+
+.profile-page-loader {
+  margin: auto;
 }
