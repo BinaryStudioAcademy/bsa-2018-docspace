@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { NavLink, Link } from 'react-router-dom'
+import { MoonLoader } from 'react-spinners'
 
 class SearchModal extends Component {
   constructor (props) {
@@ -13,6 +14,8 @@ class SearchModal extends Component {
     this.state = {
       filter: ''
     }
+    // this.animation()
+    this.animation()
   }
 
   setFilterValue = (target) => {
@@ -27,7 +30,7 @@ class SearchModal extends Component {
     } else {
       this.props.actions.cleanSearchResults()
     }
-  }, 200);
+  }, 600);
 
   handleAdvancedSearch = () => {
     this.props.closeModal()
@@ -123,17 +126,36 @@ class SearchModal extends Component {
   }
 
   closeModal = () => {
-    this.props.closeModal()
+    const that = this
+    this.modal.className = 'search-modal-body'
     this.setState({
       filter: ''
     })
     this.props.actions.cleanSearchResults()
+    setTimeout(function () {
+      that.props.closeModal()
+    }, 1000)
+  }
+
+  animation () {
+    var that = this
+    console.log(that.modal)
+    setTimeout(function () {
+      console.log(that)
+      that.modal.className += ' active'
+    }, 100)
+  }
+
+  setRef = (elem) => {
+    this.modal = elem
   }
 
   render () {
+    console.log(this.props)
+    const {searchResults, isFetching} = this.props
     return (
       <div className='search-modal'>
-        <div className='search-modal-body'>
+        <div ref={elem => this.setRef(elem)} className={`search-modal-body`}>
           <div className='search-sidebar'>
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
@@ -146,7 +168,16 @@ class SearchModal extends Component {
               value={this.state.filter}
               onKeyPress={this._handleKeyPress}
             />
-            {this.renderResults()}
+            {isFetching || !searchResults
+              ? <div className='moon-loader-container'>
+                <MoonLoader
+                  sizeUnit={'px'}
+                  size={32}
+                  color={'#123abc'}
+                />
+              </div>
+              : this.renderResults()
+            }
           </div>
         </div>
       </div>
@@ -156,7 +187,8 @@ class SearchModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.search.results
+    searchResults: state.search.results,
+    isFetching: state.search.isSearching
   }
 }
 
@@ -176,7 +208,8 @@ SearchModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
   searchResults: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  isFetching: PropTypes.bool
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchModal)
