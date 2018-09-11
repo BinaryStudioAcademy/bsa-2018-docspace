@@ -2,7 +2,10 @@
 .dashboard-admin {
     box-sizing: border-box;
     width: 100%;
-    margin: 10px 15px;
+    .dashboard-admin-body{
+         height: 97%;
+         padding: 10px 15px;
+    }
     .dashboard-admin-body input {
        width: 300px;
        margin: 15px 10px 0 0;
