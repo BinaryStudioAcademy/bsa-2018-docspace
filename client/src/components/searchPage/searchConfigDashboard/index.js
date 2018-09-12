@@ -154,7 +154,7 @@ class SearchConfigDashboard extends Component {
        <SelectTargetToSearchList
          searchTargetsNames={this.targetsToSearch}
          activeName={this.props.targetToSearch}
-         handleSelect={(name) => this.handleSetTargetToSearchFilter(name.value)}
+         handleSelect={(name) => this.handleSetTargetToSearchFilter(name)}
        />
      </div>
    )
