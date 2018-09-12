@@ -18,7 +18,7 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
     padding: 0 8px;
   }
   .disabled-link {
@@ -60,7 +60,7 @@
       @extend a.content-card-name;
     }
   }
-  .content-card-history{
+  .content-card-history {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -76,14 +76,14 @@
   .content-card-action {
     color: $grey;
   }
-  .history-name-container{
+  .history-name-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 30%;
     text-align: left;
   }
-  .history-user-wrapper{
+  .history-user-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,15 +92,13 @@
     min-width: 150px;
     margin: 0 35px 0 0;
     text-align: center;
-
   }
-  .content-card-action{
+  .content-card-action {
     width: 20%;
   }
-  .content-card-time{
+  .content-card-time {
     text-align: right;
     width: 20%;
     margin-right: 10px;
   }
-
 }
