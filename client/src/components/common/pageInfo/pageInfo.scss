@@ -1,4 +1,4 @@
-@import 'globalStyles/variables.scss';
+@import "globalStyles/variables.scss";
 
 .page-info {
   margin-left: 5px;
@@ -18,7 +18,7 @@
     & img {
       width: 45px;
       height: 45px;
-      object-fit: contain;
+      object-fit: cover;
       border-radius: 50%;
     }
   }
@@ -40,4 +40,3 @@
     padding: 2px;
   }
 }
-
