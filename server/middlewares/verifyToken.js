@@ -7,6 +7,9 @@ module.exports = passport => (req, res, next) => {
       return res.status(500).json({ isLoggedIn: false, message: 'Can not find user' })
     }
 
+    console.log('VERIFICATIONS !!!!')
+    console.log(authUser)
+    console.log('_________________________________________')
     let user = {
       spaces: authUser.spaces,
       _id: authUser._id,

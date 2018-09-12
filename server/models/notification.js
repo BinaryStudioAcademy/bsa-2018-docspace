@@ -11,10 +11,15 @@ const NotificationSchema = new Schema({
   icon: {
     type: String
   },
+  link: String,
   receivers: [Schema.Types.ObjectId],
   createdDate: {
     type: Date,
     default: new Date()
+  },
+  undread: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -30,4 +35,6 @@ NotificationSchema.post('updateOne', notification => {
   }
 })
 
-module.exports.Notification = mongoose.model('Notification', NotificationSchema)
+const NotificationModel = mongoose.model('Notification', NotificationSchema)
+
+module.exports = NotificationModel

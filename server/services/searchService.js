@@ -82,6 +82,7 @@ class SearchService {
   }
 
   handleSearch (req, res) {
+    console.log(req.body)
     this.searchHandlers[req.body.targetToSearch](req, res)
       .catch(err => {
         console.log(err)

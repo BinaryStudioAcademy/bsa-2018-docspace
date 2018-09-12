@@ -22,7 +22,7 @@ function subscribe (socket) {
     //    type: 'page_updating'
     // }
 
-    socket.on('notification', (notification) => {
+    socket.on('new notification', (notification) => {
       emit({
         type: 'NOTIFICATION',
         payload: notification
@@ -48,7 +48,10 @@ function * handleUpdatePage (socket, action) {
   console.log(socket)
   console.log(action)
   if (action.payload.watchedBy) {
-    socket.emit('notify users', {message: 'updated'}, action.payload.watchedBy)
+    let notification = {
+      message: `Page ${action.payload.title} was updated`
+    }
+    socket.emit('notify users', notification, action.payload.watchedBy)
   }
 }
 
@@ -58,7 +61,8 @@ function * handleComment (socket, action) {
   if (page && page.watchedBy) {
     const notification = {
       message: `Page ${page.title} was commented by ${newComment.userId.login}`,
-      link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`
+      link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`,
+      icon: 'fas fa-comments'
     }
     socket.emit('notify users', notification, page.watchedBy)
   }

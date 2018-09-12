@@ -12,8 +12,8 @@
 //   })
 // }
 
-// const UserRepository = require('../repositories/UserRepository')
-// const NotificationRepository = require('../repositories/NotificationRepository')
+const UserRepository = require('../repositories/UserRepository')
+const NotificationRepository = require('../repositories/NotificationRepository')
 
 let connections = {
 
@@ -46,25 +46,25 @@ module.exports = (io) => {
       console.log(' NOTYFY USERS ___________________________')
       console.log(notificationParams)
       console.log(usersIdsArr)
-      // NotificationRepository.create(notificationParams)
-      //   .then(notification => {
-      //     UserRepository.notifyUsers(notification._id, usersIdsArr)
-      //       .then( () => {
-      //         usersIdsArr.forEach( (userId) => {
-      //           if (connections[userId]){
-      //             connections[userId].forEach( socketId => {
-      //               io.to(socketId).emit('new notification', notification)
-      //             })
-      //           }
-      //         })
-      //       })
-      //       .catch(err => {
-      //         console.log(err)
-      //       })
-      //   })
-      //   .catch( err => {
-      //     console.log('err')
-      //   })
+      NotificationRepository.create({ ...notificationParams, receivers: usersIdsArr })
+        .then(notification => {
+          UserRepository.notifyUsers(notification._id, usersIdsArr)
+            .then(() => {
+              usersIdsArr.forEach((userId) => {
+                if (connections[userId]) {
+                  connections[userId].forEach(socketId => {
+                    io.to(socketId).emit('new notification', notification)
+                  })
+                }
+              })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     })
 
     socket.on('disconnect', () => {

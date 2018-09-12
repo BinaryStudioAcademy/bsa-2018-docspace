@@ -10,7 +10,7 @@
         "prod": "yarn client-build && yarn server",
         "test": "",
         "pretest": "eslint --ignore-path .gitignore .",
-        "precommit": "yarn pretest",
+        // "precommit": "",
         "prepush": "yarn pretest"
     },
     "dependencies": {
