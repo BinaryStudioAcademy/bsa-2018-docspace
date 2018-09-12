@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
+import {lightColors} from 'src/components/iconColorPicker/defaultColors'
 import './spaceDetails.css'
 
 class SpaceDetails extends Component {
@@ -12,6 +12,7 @@ class SpaceDetails extends Component {
     const {spaceSettings} = space
     const icon = spaceSettings ? spaceSettings.icon : 'folder'
     const color = spaceSettings ? spaceSettings.color : '#1c80ff'
+    const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === color)
     let ownerSpace = ''
     if (typeof space.ownerId === 'object') {
       ownerSpace = allUsers.filter(user => {
@@ -22,7 +23,6 @@ class SpaceDetails extends Component {
         return user._id === space.ownerId
       })
     }
-
     ownerSpace = ownerSpace.length ? ownerSpace[0] : {}
     return (
       <table className='space-details-table'>
@@ -30,7 +30,7 @@ class SpaceDetails extends Component {
           <tr>
             <td className='avatar-label-cell'>{t('space_logo')}</td>
             <td className='avatar-cell'>
-              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+              <div className='space-edit-avatar' style={{backgroundColor: color, color: iconColorIsWhite ? 'grey' : 'white'}} onClick={this.handleShowColorPicker}>
                 <span className='icon-avatar' >
                   <i className={`fa fa-${icon.toLowerCase()}`} />
                 </span>
