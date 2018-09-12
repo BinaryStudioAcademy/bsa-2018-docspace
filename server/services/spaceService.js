@@ -4,6 +4,7 @@ const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
 var mongoose = require('mongoose')
 const PermissionsRepository = require('../repositories/PermissionsRepository')
+const helper = require('./spaceCreateHelper/spaceCreateHelper')
 
 const adminPermissions = {
   all: {
@@ -101,45 +102,50 @@ module.exports = {
       })
   },
 
-  add: (req, res) => {
+  add: async (req, res) => {
     if (typeof req.body !== 'object') {
       res.status(400)
 
       return res.end('Invalid data')
     }
-
-    let spaceBlog, anonymousPermissions
-    Promise.all([
-      BlogRepository.create({}).then(blog => { spaceBlog = blog }),
-      PermissionsRepository.create({}).then(permissions => { anonymousPermissions = permissions })
-    ])
-      .then(() => {
-        const spaceWithOwnerAndEmptyBlog = {
-          ...req.body,
-          ownerId: req.user._id,
-          blogId: spaceBlog._id,
-          permissions: {
-            anonymous: anonymousPermissions._id
-          }
-        }
-        SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
-          .then(space => {
-            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
-              .then(() => {
-                SpaceRepository.getById(space._id)
-                  .then(space => res.json({ ...space._doc, authUserPermissions: adminPermissions }))
-                  .catch(err => {
-                    console.log(err)
-                    res.status(400).end()
-                  })
-              })
-              .catch(err => {
-                console.log(err)
-                res.status(400).end()
-              })
-          })
-          .catch(err => console.log(err))
+    console.log('BODYYY', req.body)
+    const spaceObj = helper.spaceCreateHelper(req.body)
+    console.log('spaceOBJ----', spaceObj)
+    let pageWithDefaultContent
+    if (spaceObj.content) {
+      pageWithDefaultContent = await PageRepository.create({
+        title: spaceObj.pageTitle,
+        content: spaceObj.content
       })
+    }
+
+    const spaceBlog = await BlogRepository.create({}).then(blog => blog)
+    const anonymousPermissions = await PermissionsRepository.create({}).then(permissions => permissions)
+    const spaceWithOwnerAndEmptyBlog = {
+      name: req.body.name,
+      key: req.body.key,
+      homePage: pageWithDefaultContent ? pageWithDefaultContent._id : null,
+      ownerId: req.user._id,
+      blogId: spaceBlog._id,
+      permissions: {
+        anonymous: anonymousPermissions._id
+      }
+    }
+    let newSpace = await SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
+      .then(space => space)
+      .catch(err => {
+        console.log(err)
+        res.status(400).end()
+      })
+    if (pageWithDefaultContent) {
+      newSpace = await SpaceRepository.addPageById(newSpace._id, pageWithDefaultContent._id)
+        .then(space => space)
+        .catch(err => err)
+      await PageRepository.updateOne(pageWithDefaultContent._id, {spaceId: newSpace._id, userId: req.user._id})
+    }
+    await UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: newSpace._id})
+    await SpaceRepository.getById(newSpace._id)
+      .then(space => res.json({ ...space._doc, authUserPermissions: adminPermissions }))
       .catch(err => {
         console.log(err)
         res.status(400).end()

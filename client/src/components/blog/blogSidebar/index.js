@@ -8,6 +8,7 @@ import SpaceSidebarButtons from 'src/components/space/spaceSidebar/spaceSidebarB
 import { spaceById, isSpacesFetching } from 'src/components/space/spaceContainer/logic/spaceReducer'
 import { MoonLoader } from 'react-spinners'
 import BlogPagesList from 'src/components/blog/blogPagesList'
+import {lightColors} from 'src/components/iconColorPicker/defaultColors'
 
 import './blogSidebar.css'
 
@@ -17,7 +18,8 @@ class BlogSidebar extends Component {
     const sidebarWrapperClass = isOpened ? 'sidebar' : 'sidebar minimized'
     const sidebarClass = showLabels ? 'full-sidebar' : 'full-sidebar minimized'
     const sidebarButtons = isOpened ? null : <SpaceSidebarButtons spaceId={space._id} spaceSettings={space.spaceSettings} />
-
+    const color = space.spaceSettings ? space.spaceSettings.color : '#1c80ff'
+    const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === color)
     return (
       <div className={sidebarWrapperClass} >
         <MinSidebar tabs={sidebarButtons} isGray={!isOpened} />
@@ -29,7 +31,7 @@ class BlogSidebar extends Component {
                   <React.Fragment>
                     <div className='space-sidebar-header'>
                       { space.spaceSettings
-                        ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color}}>
+                        ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color, color: iconColorIsWhite ? 'grey' : 'white'}}>
                           <i className={`fa fa-${space.spaceSettings.icon}`} />
                         </div>
                         : null

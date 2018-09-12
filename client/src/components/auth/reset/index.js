@@ -71,7 +71,7 @@ class ResetPassword extends Component {
                 name='button'
                 value={t('send_recovery_link')}
               />
-              <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('is_return_to_log_in_?')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('return_to_login_page')}</p>
             </form>
             { !!message && isSend &&
               <p className='auth-reset-answer'>
