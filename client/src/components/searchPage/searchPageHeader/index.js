@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { translate } from 'react-i18next'
 
 import './searchPageHeader.css'
 
 class SearchPageHeader extends Component {
+  constructor (props) {
+    super(props)
+    this.searchInput = React.createRef()
+  }
   render () {
     const { searchInputVaule, handleSearchInput, handleSearchInputFormSubmit, t } = this.props
     return (
@@ -18,7 +21,7 @@ class SearchPageHeader extends Component {
           defaultValue={searchInputVaule}
           placeholder={t('search_docspace')}
           onInput={({target}) => handleSearchInput(target)}
-          ref={(input) => { this.searchInput = input }}
+          ref={this.searchInput}
         />
 
         <button onClick={handleSearchInputFormSubmit}>
@@ -37,4 +40,4 @@ SearchPageHeader.propTypes = {
   t: PropTypes.func
 }
 
-export default translate('translations')(SearchPageHeader)
+export default SearchPageHeader

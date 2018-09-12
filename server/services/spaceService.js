@@ -5,6 +5,7 @@ const PageRepository = require('../repositories/PageRepository')
 var mongoose = require('mongoose')
 const PermissionsRepository = require('../repositories/PermissionsRepository')
 const helper = require('./spaceCreateHelper/spaceCreateHelper')
+const returnSpaceWithAuthUserPermissions = require('./spaceCreateHelper/returnSpaceWithAuthUserPermissions')
 
 const adminPermissions = {
   all: {
@@ -208,26 +209,5 @@ module.exports = {
         res.status(400)
         res.end()
       })
-  }
-}
-
-function returnSpaceWithAuthUserPermissions (req, res, space) {
-  const {users, groups} = space.permissions
-
-  if (String(space.ownerId._id) === String(req.user._id)) {
-    // If user is space owner - he can get it
-    return res.json({ ...space._doc, authUserPermissions: adminPermissions })
-  }
-
-  for (let i = 0; i < users.length; i++) {
-    if (String(users[i].userId) === String(req.user._id)) {
-      return res.json({ ...space._doc, authUserPermissions: users[i] })
-    }
-  }
-
-  for (let i = 0; i < groups.length; i++) {
-    if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
-      return res.json({ ...space._doc, authUserPermissions: groups[i] })
-    }
   }
 }
