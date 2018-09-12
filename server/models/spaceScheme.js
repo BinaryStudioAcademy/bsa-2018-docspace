@@ -19,17 +19,21 @@ const spaceSchema = new mongoose.Schema({
   },
   description: String,
   categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
-  homePageId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Page'
-  },
+  // <<<<<<< HEAD
+  //   homePageId: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Page'
+  //   },
+  // =======
+  homePage: { type: Schema.Types.ObjectId, ref: 'Page' },
+  // >>>>>>> develop
   blogId: Schema.Types.ObjectId,
   pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
   history: [{type: Schema.Types.ObjectId, ref: 'History'}],
   permissions: {
-    users: [Schema.Types.ObjectId],
-    groups: [Schema.Types.ObjectId],
-    anonymous: Schema.Types.ObjectId
+    users: [ { type: Schema.Types.ObjectId, ref: 'Permissions' } ],
+    groups: [ { type: Schema.Types.ObjectId, ref: 'Permissions' } ],
+    anonymous: { type: Schema.Types.ObjectId, ref: 'Permissions' }
   },
   spaceSettings: {
     icon: {type: String, default: 'folder'},

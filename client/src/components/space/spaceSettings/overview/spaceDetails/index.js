@@ -2,22 +2,35 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
+import {lightColors} from 'src/components/iconColorPicker/defaultColors'
 import './spaceDetails.css'
 
 class SpaceDetails extends Component {
   render () {
-    const { space, t } = this.props
+    const { space, t, allUsers } = this.props
+    // console.log(space)
     const {spaceSettings} = space
     const icon = spaceSettings ? spaceSettings.icon : 'folder'
     const color = spaceSettings ? spaceSettings.color : '#1c80ff'
+    const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === color)
+    let ownerSpace = ''
+    if (typeof space.ownerId === 'object') {
+      ownerSpace = allUsers.filter(user => {
+        return user._id === space.ownerId._id
+      })
+    } else {
+      ownerSpace = allUsers.filter(user => {
+        return user._id === space.ownerId
+      })
+    }
+    ownerSpace = ownerSpace.length ? ownerSpace[0] : {}
     return (
       <table className='space-details-table'>
         <tbody>
           <tr>
             <td className='avatar-label-cell'>{t('space_logo')}</td>
             <td className='avatar-cell'>
-              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+              <div className='space-edit-avatar' style={{backgroundColor: color, color: iconColorIsWhite ? 'grey' : 'white'}} onClick={this.handleShowColorPicker}>
                 <span className='icon-avatar' >
                   <i className={`fa fa-${icon.toLowerCase()}`} />
                 </span>
@@ -44,7 +57,7 @@ class SpaceDetails extends Component {
           </tr>
           <tr>
             <td>{t('created_by')}</td>
-            <td> <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link></td>
+            <td> <Link className='link' to={`/users/${ownerSpace.login}`}>{ownerSpace.firstName + ' ' + ownerSpace.lastName}</Link></td>
           </tr>
           <tr>
             <td>{t('categories')}</td>
@@ -64,7 +77,7 @@ class SpaceDetails extends Component {
           <tr>
             <td>{t('administrators')}</td>
             <td>
-              <Link className='link' to={`/users/${space.ownerId.login}`}>{space.ownerId.firstName + ' ' + space.ownerId.lastName}</Link>
+              <Link className='link' to={`/users/${ownerSpace.login}`}>{ownerSpace.firstName + ' ' + ownerSpace.lastName}</Link>
             </td>
           </tr>
         </tbody>
@@ -78,7 +91,8 @@ SpaceDetails.propTypes = {
   space: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.stringgi
-  })
+  }),
+  allUsers: PropTypes.array
 }
 
 export default translate('translations')(SpaceDetails)

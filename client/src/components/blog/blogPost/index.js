@@ -21,13 +21,16 @@ import { addWatcherRequest, deleteWatcherRequest, addSpaceWatcherRequest, delete
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-
+import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 import fakeImg from 'src/resources/logo.svg'
 import './blogPost.css'
 
 class Page extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      selectedSpaceId: null
+    }
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
@@ -54,14 +57,33 @@ class Page extends Component {
     this.props.history.push(`/spaces/${space._id}/blog/${page._id}/edit`)
   }
 
-  handleDeletePage = () => {
-    this.props.actions.deleteBlogPageRequest(this.props.page)
-  }
-
   likeAction = (isLiked) => {
     this.likePage(isLiked, 'page')
   }
+  handleSelectSpace = (spaceId) => {
+    this.setState({
+      selectedSpaceId: spaceId
+    })
+  }
 
+  handleDeleteMethod = () => {
+    const { actions, page } = this.props
+    actions.deleteBlogPageRequest(page._id)
+    actions.closeWarningModal()
+  }
+  handleOpenWarningModal = () => {
+    const { actions, match, t } = this.props
+    if (!match.params.version) {
+      actions.openWarningModal({
+        renderHeader: t('delete_page'),
+        renderMain: (<div className='page-delete-warning'>
+          <p>{t('warning_page_delete_short')}</p>
+          <p>{t('warning_page_delete_long')}</p>
+        </div>),
+        method: this.handleDeleteMethod
+      })
+    }
+  }
   likePage = (isLiked, type, comment) => {
     if (type === 'page') {
       isLiked
@@ -99,6 +121,7 @@ class Page extends Component {
   render () {
     const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
+    const comments = space && space.authUserPermissions ? space.authUserPermissions.comments : {}
     const user = page ? page.userId : null
     return (
       <React.Fragment>
@@ -110,6 +133,8 @@ class Page extends Component {
           manageWatcher={this.manageWatcher}
           manageSpaceWatcher={this.manageSpaceWatcher}
           isWatchingSpace={space.isWatched}
+          renderDeleteBtn={space.authUserPermissions.blog.delete}
+          openWarningModal={this.handleOpenWarningModal}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
@@ -142,9 +167,10 @@ class Page extends Component {
             <div className='comments-section'>
               {this.props.page.comments.length
                 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
-                : <h2>{t('add_comments')}</h2>
+                : comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList
+                canDelete={comments.delete}
                 comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
@@ -157,6 +183,7 @@ class Page extends Component {
                 user={this.props.user}
                 likeAction={this.likeComment}
               />
+              { comments.add &&
               <AddComment
                 sendMention={this.props.actions.sendMention}
                 addNewComment={this.addNewComment}
@@ -167,6 +194,7 @@ class Page extends Component {
                 spaceId={this.props.space._id}
                 t={t}
               />
+              }
             </div>
           </div>
         }
@@ -235,7 +263,9 @@ function mapDispatchToProps (dispatch) {
         addWatcherRequest,
         addSpaceWatcherRequest,
         deleteSpaceWatcherRequest,
-        sendMention
+        sendMention,
+        openWarningModal,
+        closeWarningModal
       }
       , dispatch)
   }

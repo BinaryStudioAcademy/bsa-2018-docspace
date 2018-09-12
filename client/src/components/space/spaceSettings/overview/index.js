@@ -6,6 +6,7 @@ import EditSpaceDetailsForm from './editSpaceDetailsForm'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
+import {getAlUsersRequest} from 'src/components/dashboard/peopleBody/logic/allUsersActions'
 
 import './spaceOverviewTab.css'
 
@@ -16,6 +17,9 @@ class SpaceOverviewTab extends Component {
       isEditing: false,
       showDeleteSpaceModal: false // for the future
     }
+  }
+  componentDidMount () {
+    this.props.allUsers.length === 0 && this.props.actions.getAlUsersRequest()
   }
   handleDeleteSpace = () => {
     this.props.actions.deleteSpaceRequest(this.props.space._id)
@@ -62,6 +66,7 @@ class SpaceOverviewTab extends Component {
                 space={this.props.space}
                 pathToCategories={`${this.props.match.url}/categories`}
                 user={this.props.user}
+                allUsers={this.props.allUsers}
               />
               : <EditSpaceDetailsForm
                 goBackToDetails={this.backToSpaceDetails}
@@ -81,9 +86,16 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(
       {
-        deleteSpaceRequest
+        deleteSpaceRequest,
+        getAlUsersRequest
       }
       , dispatch)
+  }
+}
+
+function mapStateToProps (state) {
+  return {
+    allUsers: state.allUsers.results
   }
 }
 
@@ -97,7 +109,8 @@ SpaceOverviewTab.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
   }),
-  user: PropTypes.object
+  user: PropTypes.object,
+  allUsers: PropTypes.array
 }
 
-export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverviewTab))
+export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(SpaceOverviewTab))

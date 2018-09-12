@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Camera from 'src/assets/add-photo-img.png'
 import PropTypes from 'prop-types'
 import { updateUser, checkPassword, sendAvatarRequest, getUserUpdatesRequest, compareUserRequest } from './logic/userActions'
 import { isUserFetching } from './logic/userReducer'
@@ -12,7 +11,7 @@ import RecentWorkListContainer from 'src/components/recentWorkListItem/recentWor
 import { translate } from 'react-i18next'
 import { MoonLoader } from 'react-spinners'
 import defaultAvatar from '../../../assets/user.png'
-import { Redirect, withRouter, NavLink } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 
 import './user.css'
 
@@ -34,7 +33,6 @@ class User extends Component {
     this.changePrivate = this.changePrivate.bind(this)
     this.sendPassword = this.sendPassword.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
-    this.renderAddPhoto = this.renderAddPhoto.bind(this)
     this.renderHeaderCenter = this.renderHeaderCenter.bind(this)
     this.renderClock = this.renderClock.bind(this)
     this.renderEditButtons = this.renderEditButtons.bind(this)
@@ -132,20 +130,6 @@ class User extends Component {
     }
   }
 
-  renderAddPhoto (t, resultOfComparing) {
-    return resultOfComparing
-      ? (
-        <div className='profile-header-add-photo' onClick={this.managePhoto}>
-          <div className='add-photo-content'>
-            <button className='add-photo-button'>
-              <img src={Camera} alt='camera' className='add-photo-img' />
-              <span className='add-photo-label'>{t('add_cover_photo')}</span>
-            </button>
-          </div>
-        </div>
-      ) : null
-  }
-
   renderHeaderCenter (t, firstName, lastName, avatar, resultOfComparing) {
     return (
       <div className='profile-page-center'>
@@ -215,21 +199,6 @@ class User extends Component {
           </div>
           : <h2 className='recent-work-list-wrapper-header'>{t('general_information')}</h2>
         }
-        { isFetching
-          ? <div className='sweet-loading'>
-            {
-              this.state.isShowGeneral
-                ? <span className='user-loading-info'>{t('data_is_changing')}</span>
-                : <span className='user-loading-info'>{t('password_is_changing')}</span>
-            }
-            <MoonLoader
-              sizeUnit={'px'}
-              size={16}
-              color={'#123abc'}
-            />
-          </div>
-          : null
-        }
       </div>
     )
   }
@@ -247,6 +216,7 @@ class User extends Component {
         />
         : this.state.isShowGeneral &&
         <ProfileFields
+          changeIsEditMode={this.changeIsEditMode}
           isEditMode={this.state.isEditMode}
           editMode={this.editMode}
           user={user}
@@ -268,29 +238,39 @@ class User extends Component {
   }
 
   render () {
-    if (this.props.isNotFound.hasOwnProperty('isNotFound') && this.props.match.params.login !== this.props.userLogin) {
-      return <Redirect to='/' />
-    }
-    const { t, i18n, isFetching } = this.props
+    const { t, i18n, isFetching, resultOfComparing } = this.props
     const user = this.props.resultOfComparing ? this.props.userSettings.user : this.props.compareUser
     const { firstName, lastName, avatar } = user
     const errorsUser = this.props.userSettings.hasOwnProperty('errors') ? this.props.userSettings.errors : []
     const { successful, errors } = this.props.resultOfChecking
     return (
-      <div className='main-wrapper'>
-        <div className='profile-page-header'>
-          { this.renderAddPhoto(t, this.props.resultOfComparing) }
-          <ManagePhoto display={this.handleManagePhoto} t={t} />
-          { this.renderHeaderCenter(t, firstName, lastName, avatar, this.props.resultOfComparing)}
-        </div>
-        <div className='profile-page-center-content'>
-          { this.renderClock() }
-          <hr />
-          { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
-          { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, this.props.resultOfComparing) }
-          { this.renderRecentWorks(t) }
-        </div>
-      </div>
+      <React.Fragment>
+        { isFetching
+          ? <div className='profile-page-loader'>
+            <div className='sweet-loading'>
+              <MoonLoader
+                sizeUnit={'px'}
+                size={48}
+                color={'#123abc'}
+              />
+            </div>
+          </div>
+          : <div className='main-wrapper'>
+            <div className='profile-page-header'>
+              <ManagePhoto display={this.handleManagePhoto} t={t} />
+              { this.renderHeaderCenter(t, firstName, lastName, avatar, resultOfComparing)}
+            </div>
+            <div className='profile-page-content-wrapper'>
+              <div className='profile-page-center-content'>
+                { this.renderClock() }
+                { this.renderEditButtons(t, isFetching, this.props.resultOfComparing) }
+                { this.renderMainInfo(t, i18n, errorsUser, user, successful, errors, resultOfComparing) }
+                { this.renderRecentWorks(t) }
+              </div>
+            </div>
+          </div>
+        }
+      </React.Fragment>
     )
   }
 }
@@ -308,7 +288,6 @@ User.propTypes = {
   resultOfComparing: PropTypes.bool,
   userLogin: PropTypes.string,
   compareUser: PropTypes.object,
-  isNotFound: PropTypes.object,
   actions: PropTypes.object.isRequired,
   resultOfChecking: PropTypes.shape({
     requesting: PropTypes.bool,
@@ -329,7 +308,7 @@ const mapStateToProps = (state) => {
     userAvatar: state.verification.user.avatar,
     userHistory: state.user.userHistory,
     isNotFound: state.user.getUser,
-    compareUser: state.user.getUser._doc ? state.user.getUser._doc : state.verification.user,
+    compareUser: state.user.getUser.requestedUser ? state.user.getUser.requestedUser : state.verification.user,
     resultOfComparing: state.user.getUser.resultOfComparing
   }
 }

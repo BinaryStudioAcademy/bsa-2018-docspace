@@ -8,15 +8,19 @@ import SpacePagesList from 'src/components/space/spacePagesList'
 import SpaceSidebarButtons from './spaceSidebarButtons'
 import { spaceById, isSpacesFetching } from '../spaceContainer/logic/spaceReducer'
 import { MoonLoader } from 'react-spinners'
+import {lightColors} from 'src/components/iconColorPicker/defaultColors'
 
 import './spaceSidebar.css'
 
 class SpaceSidebar extends Component {
   render () {
     const { space, t, showLabels, showContent, isOpened, isFetching } = this.props
+    if (!space) return null
+    const userPermissions = space.authUserPermissions
     const sidebarWrapperClass = isOpened ? 'sidebar' : 'sidebar minimized'
     const sidebarClass = showLabels ? 'full-sidebar' : 'full-sidebar minimized'
     const sidebarButtons = isOpened ? null : <SpaceSidebarButtons spaceId={space._id} spaceSettings={space.spaceSettings} />
+    const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === space.spaceSettings.color)
     return (
       <div className={sidebarWrapperClass} >
         <MinSidebar tabs={sidebarButtons} isGray={!isOpened} />
@@ -28,7 +32,7 @@ class SpaceSidebar extends Component {
                   <React.Fragment>
                     <div className='space-sidebar-header'>
                       { space.spaceSettings
-                        ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color}}>
+                        ? <div className='space-sidebar-header-icon' style={{backgroundColor: space.spaceSettings.color, color: iconColorIsWhite ? 'grey' : 'white'}}>
                           <i className={`fa fa-${space.spaceSettings.icon}`} />
                         </div>
                         : null
@@ -43,18 +47,22 @@ class SpaceSidebar extends Component {
                           </div>
                           {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('overview')}</div>}
                         </NavLink>
+
                         <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/blog`} activeClassName='current'>
                           <div className='space-sidebar-main-navbar-section-icon'>
                             <i className='fas fa-quote-right' />
                           </div>
                           {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('blog')}</div>}
                         </NavLink>
-                        <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings/overview`} activeClassName='current'>
-                          <div className='space-sidebar-main-navbar-section-icon'>
-                            <i className='fas fa-cog' />
-                          </div>
-                          {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('space_settings')}</div>}
-                        </NavLink>
+                        {
+                          userPermissions.space.administrate &&
+                          <NavLink className='space-sidebar-main-navbar-section' to={`/spaces/${space._id}/settings/overview`} activeClassName='current'>
+                            <div className='space-sidebar-main-navbar-section-icon'>
+                              <i className='fas fa-cog' />
+                            </div>
+                            {showLabels && <div className='space-sidebar-main-navbar-section-name'>{t('space_settings')}</div>}
+                          </NavLink>
+                        }
                       </div>
                       { isFetching
                         ? <div className='space-sidebar-loader'>
@@ -89,7 +97,7 @@ SpaceSidebar.propTypes = {
 }
 
 SpaceSidebar.defaultProps = {
-  space: {}
+
 }
 
 const mapStateToProps = (state) => {

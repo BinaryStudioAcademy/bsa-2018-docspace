@@ -15,7 +15,8 @@ class ResetPassword extends Component {
     super(props)
     this.state = {
       redirectToLogin: false,
-      email: ''
+      email: '',
+      isSend: false
     }
   }
   handleRedirectToLogin = () => {
@@ -33,9 +34,12 @@ class ResetPassword extends Component {
     this.props.resetRequest({
       email: this.state.email
     })
+    this.setState({
+      isSend: true
+    })
   }
   render () {
-    const { email, redirectToLogin } = this.state
+    const { email, redirectToLogin, isSend } = this.state
     const { message } = this.props.reset
     const { t } = this.props
     if (redirectToLogin) {
@@ -56,7 +60,7 @@ class ResetPassword extends Component {
               <Input
                 inputType='email'
                 name='email'
-                label='Enter email'
+                label={t('enter_email_adress')}
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete='on'
@@ -67,12 +71,12 @@ class ResetPassword extends Component {
                 name='button'
                 value={t('send_recovery_link')}
               />
-              <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('is_return_to_log_in_?')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToLogin}>{t('return_to_login_page')}</p>
             </form>
-            { !!message &&
-              <h4 className='auth-reset-answer'>
+            { !!message && isSend &&
+              <p className='auth-reset-answer'>
                 {message}
-              </h4>
+              </p>
             }
           </div>
         </div>

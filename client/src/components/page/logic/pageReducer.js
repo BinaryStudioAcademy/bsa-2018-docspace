@@ -6,7 +6,6 @@ import * as watcherTypes from '../watcherLogic/watcherActionType'
 import getPageIdFromRouterLocation from 'src/helpers/pages/getPageIdFromRouterLocation'
 
 const initialState = {
-
   all: [],
   byId: {},
   htmlFile: {
@@ -136,6 +135,8 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.UPDATE_PAGE_REQUEST:
     case actionTypes.SEND_DOC_FILE_REQUEST:
     case actionTypes.UPDATE_BLOG_PAGE_REQUEST:
+    case actionTypes.MOVE_PAGE_TO_SPACE_REQUEST:
+    case actionTypes.COPY_PAGE_REQUEST:
       return true
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.GET_PAGE_BY_ID_ERROR:
@@ -146,6 +147,8 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.CREATE_PAGE_ERROR:
     case actionTypes.UPDATE_PAGE_SUCCESS:
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
+    case actionTypes.MOVE_PAGE_TO_SPACE_SUCCESS:
+    case actionTypes.COPY_PAGE_SUCCESS:
       return false
     default:
       return state

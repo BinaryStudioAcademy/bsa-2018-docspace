@@ -33,7 +33,14 @@ class SpaceHeaderButtons extends Component {
   }
 
   render () {
-    const { onEdit, onShare, onSave, children, type, t, hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
+    // <<<<<<< HEAD
+    //     const { onEdit, onShare, onSave, children, type, t, hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
+    // =======
+    const { onEdit, children,
+      type, t, hideNotSpaceBtns, openWarningModal, onPdfExport,
+      onWordExport, onWordImport, openMovePageModal,
+      openCopyPageModal, renderDeleteBtn, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
+
     const dropdownMenuItems = [
       {
         name: t('export_to_PDF'),
@@ -48,6 +55,16 @@ class SpaceHeaderButtons extends Component {
         onClick: () => onWordImport()
       }
     ]
+
+    !!openMovePageModal && dropdownMenuItems.push({
+      name: t('Move_page'),
+      onClick: () => openMovePageModal()
+    })
+    !!openCopyPageModal && dropdownMenuItems.push({
+      name: t('copy_page'),
+      onClick: () => openCopyPageModal()
+    })
+
     return (
       <div className='buttons-container'>
         {
@@ -56,15 +73,7 @@ class SpaceHeaderButtons extends Component {
             <i className='fas fa-pen' />
           </div>
         }
-        {
-          type === 'blog' || type === 'page'
-            ? (
-              <div className='buttons-item' title={t('save_for_later')} onClick={onSave}>
-                <i className='far fa-star' />
-              </div>
-            )
-            : null
-        }
+
         <div className='buttons-item' title={t('watch')}onClick={this.onWatch}>
           <i className='fas fa-eye' />
         </div>
@@ -74,9 +83,7 @@ class SpaceHeaderButtons extends Component {
             isWatching={isWatching}
             manageSpaceWatcher={manageSpaceWatcher}
           /> : null}
-        <div className='buttons-item' title={t('share_this_page_with_others')} onClick={onShare}>
-          <i className='fas fa-share-square' />
-        </div>
+
         { !hideNotSpaceBtns &&
         <DropdownMenu
           icon='fas fa-ellipsis-h'
@@ -86,7 +93,7 @@ class SpaceHeaderButtons extends Component {
         }
         {/* TEMP ADDED FOR DELETING PAGE */}
         {
-          type === 'page' &&
+          type === 'page' && renderDeleteBtn &&
           <div className='buttons-item' onClick={openWarningModal} >
             <i className='fas fa-trash' />
           </div>
@@ -100,10 +107,8 @@ class SpaceHeaderButtons extends Component {
 SpaceHeaderButtons.propTypes = {
   t: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
-  onShare: PropTypes.func,
   onPdfExport: PropTypes.func,
   onWordExport: PropTypes.func,
-  onSave: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
   hideNotSpaceBtns: PropTypes.bool,
@@ -112,16 +117,16 @@ SpaceHeaderButtons.propTypes = {
   isWatching: PropTypes.bool,
   manageWatcher: PropTypes.func,
   isWatchingSpace: PropTypes.bool,
-  manageSpaceWatcher: PropTypes.func
+  manageSpaceWatcher: PropTypes.func,
+  openMovePageModal: PropTypes.func,
+  openCopyPageModal: PropTypes.func,
+  renderDeleteBtn: PropTypes.bool
 }
 
 SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
-  onWatch: () => false,
-  onShare: () => false,
   onPdfExport: () => false,
   onWordExport: () => false,
-  onSave: () => false,
   onDelete: () => false,
   children: null,
   type: ''

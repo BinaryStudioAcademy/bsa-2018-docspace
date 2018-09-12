@@ -9,6 +9,7 @@ import GroupDialog from 'src/components/modals/groupDialog'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import { cleanMatchingUser } from 'src/components/modals/groupDialog/logic/matchingUserActions'
+import { MoonLoader } from 'react-spinners'
 
 import './groups.css'
 
@@ -65,7 +66,7 @@ class Group extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { t, isFetching, groups } = this.props
     return (
       <div className='group-container'>
         {this.state.modalIsOpened && <GroupDialog cancelModal={this.closeModal} />}
@@ -80,21 +81,30 @@ class Group extends Component {
             inputType='text'
           />
         </div>
-        <div className='group-body-container'>
-          <table>
-            <thead>
-              <tr>
-                <th className='name'>{t('name')}</th>
-                <th className='tags' />
-                <th className='description'>{t('description')}</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderTable()}
-            </tbody>
-          </table>
-        </div>
+        {isFetching || !groups
+          ? <div className='moon-loader-container'>
+            <MoonLoader
+              sizeUnit={'px'}
+              size={32}
+              color={'#123abc'}
+            />
+          </div>
+          : <div className='group-body-container'>
+            <table>
+              <thead>
+                <tr>
+                  <th className='name'>{t('name')}</th>
+                  <th className='tags' />
+                  <th className='description'>{t('description')}</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderTable()}
+              </tbody>
+            </table>
+          </div>
+        }
       </div>
     )
   }
@@ -104,14 +114,16 @@ Group.propTypes = {
   user: PropTypes.object,
   actions: PropTypes.object,
   groups: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  isFetching: PropTypes.bool
 
 }
 
 const mapStateToProps = (state) => {
   return {
-    groups: state.groups,
-    user: state.verification.user
+    groups: state.groups.results,
+    user: state.verification.user,
+    isFetching: state.groups.isFetching
   }
 }
 

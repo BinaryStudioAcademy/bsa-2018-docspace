@@ -1,24 +1,23 @@
 import * as actionTypes from './warningModalActionTypes'
 
-const initialState = {
-  showModal: false,
-  forPage: false,
-  deleteId: ''
+const initialFunc = () => {
+  return null
 }
 
-export const warningModalReducer = (state = initialState, action) => {
+export const warningModalReducer = (state = initialFunc, action) => {
   switch (action.type) {
     case actionTypes.OPEN_WARNING_MODAL:
       return {
         showModal: true,
-        forPage: action.payload.forPage,
-        deleteId: action.payload.id
+        renderHeader: action.payload.renderHeader,
+        renderMain: action.payload.renderMain,
+        method: action.payload.method
       }
 
     case actionTypes.CLOSE_WARNING_MODAL:
       return {
         showModal: false,
-        deleteId: ''
+        method: null
       }
     default:
       return state

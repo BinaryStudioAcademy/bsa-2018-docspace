@@ -5,11 +5,70 @@ const PageRepository = require('../repositories/PageRepository')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 const PermissionsRepository = require('../repositories/PermissionsRepository')
+const helper = require('./spaceCreateHelper/spaceCreateHelper')
+
+const adminPermissions = {
+  all: {
+    view: true
+  },
+
+  blog: {
+    add: true,
+    delete: true
+  },
+
+  pages: {
+    add: true,
+    delete: true
+  },
+
+  comments: {
+    add: true,
+    delete: true
+  },
+
+  space: {
+    export: true,
+    administrate: true
+  }
+}
 
 module.exports = {
   findAll: (req, res) => {
     SpaceRepository.getAll()
-      .then(data => res.json(data))
+      .populate({
+        path: 'permissions.groups',
+        populate: {path: 'groupId', select: 'members'}
+      })
+      .populate({
+        path: 'permissions.users'
+      })
+      .populate('categories')
+      .then(spaces => {
+        let authPermissions = []
+
+        let filtered = spaces.filter((space) => {
+          if (String(space.ownerId) === String(req.user._id)) {
+            authPermissions.push(adminPermissions)
+            return true
+          }
+
+          return space.permissions.users.some(perm => {
+            if (String(perm.userId) === String(req.user._id)) {
+              authPermissions.push(perm)
+              return true
+            }
+          }) ||
+          space.permissions.groups.some(perm => {
+            if (perm.groupId.members.some(id => String(id) === String(req.user._id))) {
+              authPermissions.push(perm)
+              return true
+            }
+          })
+        })
+
+        res.json(filtered.map((space, index) => ({ ...space._doc, authUserPermissions: authPermissions[index] })))
+      })
       .catch((err) => {
         console.log(err)
         res.status(400)
@@ -24,73 +83,71 @@ module.exports = {
       res.status(404)
       return res.end('Invalid id')
     }
-    const space = await SpaceRepository.getById(id)
-      .then(space => space)
+
+    SpaceRepository.getById(id)
+
+      .then(space => {
+        if (!space) {
+          return res.status(404).end()
+        }
+        console.log('In get by id ___________________')
+        console.log(space)
+        returnSpaceWithAuthUserPermissions(req, res, space)
+
+        // return not authorized to see the space
+      })
+
       .catch((err) => {
         console.log(err)
         res.status(400)
         res.end()
       })
-    console.log(space)
-    const isWatched = space[0].watchedBy.indexOf(ObjectId(req.user._id)) !== -1
-    console.log(isWatched)
-    const newSpace = {
-      blogId: space[0].blogId,
-      categories: space[0].categories,
-      createdAt: space[0].createdAt,
-      history: space[0].history,
-      isDeleted: space[0].isDeleted,
-      key: space[0].key,
-      name: space[0].name,
-      ownerId: space[0].ownerId,
-      pages: space[0].pages,
-      permissions: space[0].permissions,
-      rights: space[0].rights,
-      spaceSettings: space[0].spaceSettings,
-      updatedAt: space[0].updatedAt,
-      _id: space[0]._id,
-      isWatched: isWatched
-    }
-    console.log(newSpace)
-    return res.send(newSpace)
   },
 
-  add: (req, res) => {
+  add: async (req, res) => {
     if (typeof req.body !== 'object') {
       res.status(400)
 
       return res.end('Invalid data')
     }
+    const spaceObj = helper.spaceCreateHelper(req.body)
 
-    let spaceBlog, anonymousPermissions
-    Promise.all([
-      BlogRepository.create({}).then(blog => { spaceBlog = blog }),
-      PermissionsRepository.create({}).then(permissions => { anonymousPermissions = permissions })
-    ])
-      .then(() => {
-        const spaceWithOwnerAndEmptyBlog = {
-          ...req.body,
-          ownerId: req.user._id,
-          blogId: spaceBlog._id,
-          permissions: {
-            anonymous: anonymousPermissions._id
-          }
-        }
-        SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
-          .then(space => {
-            UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: space._id})
-              .then(() => {
-                SpaceRepository.addWatcher(space._id, req.user._id)
-                  .then(() =>
-                    res.json(space)
-                  )
-                  // SpaceRepository.getById(space._id)
-                  // .then(getSpace => res.json(getSpace[0]))
-                  // .catch(err => console.log(err))
-              })
-              .catch(err => console.log(err))
-          })
+    let pageWithDefaultContent
+    if (spaceObj.content) {
+      pageWithDefaultContent = await PageRepository.create({
+        title: spaceObj.pageTitle,
+        content: spaceObj.content
       })
+    }
+
+    const spaceBlog = await BlogRepository.create({}).then(blog => blog)
+    const anonymousPermissions = await PermissionsRepository.create({}).then(permissions => permissions)
+    const spaceWithOwnerAndEmptyBlog = {
+      name: req.body.name,
+      key: req.body.key,
+      homePage: pageWithDefaultContent ? pageWithDefaultContent._id : null,
+      ownerId: req.user._id,
+      blogId: spaceBlog._id,
+      permissions: {
+        anonymous: anonymousPermissions._id
+      }
+    }
+    let newSpace = await SpaceRepository.create(spaceWithOwnerAndEmptyBlog)
+      .then(space => space)
+      .catch(err => {
+        console.log(err)
+        res.status(400).end()
+      })
+    if (pageWithDefaultContent) {
+      newSpace = await SpaceRepository.addPageById(newSpace._id, pageWithDefaultContent._id)
+        .then(space => space)
+        .catch(err => err)
+      await PageRepository.updateOne(pageWithDefaultContent._id, {spaceId: newSpace._id, userId: req.user._id})
+    }
+    await UserRepository.addSpaceToUser({userId: spaceWithOwnerAndEmptyBlog.ownerId, spaceId: newSpace._id})
+    await SpaceRepository.addWatcher(newSpace._id, req.user._id)
+    await SpaceRepository.getById(newSpace._id)
+      .then(space => res.json({ ...space._doc, authUserPermissions: adminPermissions }))
       .catch(err => {
         console.log(err)
         res.status(400).end()
@@ -110,8 +167,9 @@ module.exports = {
       .populate('categories', 'name')
       .populate('pages', 'title')
       .populate('ownerId', 'firstName lastName login')
-      .then(data => {
-        return res.json(data)
+      .populate('homePage')
+      .then(space => {
+        returnSpaceWithAuthUserPermissions(req, res, space)
       })
       .catch((err) => {
         console.log(err)
@@ -167,6 +225,32 @@ module.exports = {
         })
         .then(page => res.send({unwatched: true}))
         .catch(err => res.status(500).send(err))
+    }
+  }
+}
+
+function returnSpaceWithAuthUserPermissions (req, res, space) {
+  const {users, groups} = space.permissions
+  console.log(' LOOOOK !!!!! ________________________')
+  console.log(space.watchedBy)
+  const isWatched = space.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+  console.log(isWatched)
+  let expandedSpace = { ...space._doc, isWatched }
+
+  if (String(space.ownerId._id) === String(req.user._id)) {
+    // If user is space owner - he can get it
+    return res.json({ ...expandedSpace, authUserPermissions: adminPermissions })
+  }
+
+  for (let i = 0; i < users.length; i++) {
+    if (String(users[i].userId) === String(req.user._id)) {
+      return res.json({ ...expandedSpace, authUserPermissions: users[i] })
+    }
+  }
+
+  for (let i = 0; i < groups.length; i++) {
+    if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
+      return res.json({ ...expandedSpace, authUserPermissions: groups[i] })
     }
   }
 }

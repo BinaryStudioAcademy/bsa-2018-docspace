@@ -5,7 +5,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
+import { MoonLoader } from 'react-spinners'
 
 class SearchModal extends Component {
   constructor (props) {
@@ -13,6 +15,8 @@ class SearchModal extends Component {
     this.state = {
       filter: ''
     }
+    // this.animation()
+    this.animation()
   }
 
   setFilterValue = (target) => {
@@ -27,7 +31,7 @@ class SearchModal extends Component {
     } else {
       this.props.actions.cleanSearchResults()
     }
-  }, 200);
+  }, 600);
 
   handleAdvancedSearch = () => {
     this.props.closeModal()
@@ -46,6 +50,7 @@ class SearchModal extends Component {
     let blogsList = []
     let spacesList = []
     let postList = []
+    const {t} = this.props
     this.props.searchResults.forEach(result => {
       if (result.key) {
         spacesList.push(result)
@@ -95,23 +100,23 @@ class SearchModal extends Component {
         <div className='search-link'>
           <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
             <i className='fas fa-search' />
-            {`Search '${this.state.filter}'`}
+            {t('search_0', {filter: this.state.filter})}
           </Link >
         </div>
       }
 
       {postList.length ? <div className='search-title-wrapper'>
-        <p>PAGES</p>
+        <p>{t('pages_uppercase')}</p>
       </div> : null
       }
       {PageRender}
       {blogsList.length ? <div className='search-title-wrapper'>
-        <p>BLOGS</p>
+        <p>{t('blogs_uppercase')}</p>
       </div> : null
       }
       {blogRender}
       {spacesList.length ? <div className='search-title-wrapper'>
-        <p>SPACES</p>
+        <p>{t('spaces_uppercase')}</p>
       </div> : null
       }
       {SpaceRender}
@@ -123,17 +128,41 @@ class SearchModal extends Component {
   }
 
   closeModal = () => {
-    this.props.closeModal()
+    const that = this
+    this.modal.className = 'search-modal-body'
+    that.modalParent.className = 'search-modal'
     this.setState({
       filter: ''
     })
     this.props.actions.cleanSearchResults()
+    setTimeout(function () {
+      that.props.closeModal()
+    }, 1000)
+  }
+
+  animation () {
+    var that = this
+    console.log(that.modal)
+    setTimeout(function () {
+      console.log(that)
+      that.modal.className += ' active'
+      that.modalParent.className += ' active'
+    }, 100)
+  }
+
+  setRef = (elem) => {
+    this.modal = elem
+  }
+
+  setModalRef = (elem) => {
+    this.modalParent = elem
   }
 
   render () {
+    const {t, searchResults, isFetching} = this.props
     return (
-      <div className='search-modal'>
-        <div className='search-modal-body'>
+      <div className='search-modal' ref={elem => this.setModalRef(elem)}>
+        <div ref={elem => this.setRef(elem)} className={`search-modal-body`}>
           <div className='search-sidebar'>
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
@@ -142,11 +171,20 @@ class SearchModal extends Component {
               autoFocus='true'
               onChange={({target}) => this.setFilterValue(target)}
               className='search-field'
-              placeholder='Search'
+              placeholder={t('search')}
               value={this.state.filter}
               onKeyPress={this._handleKeyPress}
             />
-            {this.renderResults()}
+            {isFetching || !searchResults
+              ? <div className='moon-loader-container'>
+                <MoonLoader
+                  sizeUnit={'px'}
+                  size={32}
+                  color={'#123abc'}
+                />
+              </div>
+              : this.renderResults()
+            }
           </div>
         </div>
       </div>
@@ -156,7 +194,8 @@ class SearchModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.search.results
+    searchResults: state.search.results,
+    isFetching: state.search.isSearching
   }
 }
 
@@ -176,7 +215,9 @@ SearchModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
   searchResults: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  t: PropTypes.func,
+  isFetching: PropTypes.bool
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchModal)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchModal)))

@@ -37,12 +37,6 @@ class FullSidebar extends Component {
                 path='/people' type={navButtonClass}
                 icon='fa fa-users'
               />
-              <Button
-                title={this.props.showLabels ? t('settings') : null}
-                path='/settings'
-                type={navButtonClass}
-                icon='fa fa-cog'
-              />
             </React.Fragment>
           )
         }

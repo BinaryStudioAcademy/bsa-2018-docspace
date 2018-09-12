@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import './searchPageHeader.css'
 
-export default class SearchPageHeader extends Component {
+class SearchPageHeader extends Component {
   render () {
-    const { searchInputVaule, handleSearchInput, handleSearchInputFormSubmit } = this.props
+    const { searchInputVaule, handleSearchInput, handleSearchInputFormSubmit, t } = this.props
     return (
       <div className='search-page-header'>
         <span className='search-page-header-text'>
-           Search
+          {t('search')}
         </span>
 
         <input
           type='text'
           defaultValue={searchInputVaule}
-          placeholder='Serach Dockspace'
+          placeholder={t('search_docspace')}
           onInput={({target}) => handleSearchInput(target)}
           ref={(input) => { this.searchInput = input }}
         />
@@ -32,5 +33,8 @@ export default class SearchPageHeader extends Component {
 SearchPageHeader.propTypes = {
   searchInputVaule: PropTypes.func,
   handleSearchInput: PropTypes.func,
-  handleSearchInputFormSubmit: PropTypes.func
+  handleSearchInputFormSubmit: PropTypes.func,
+  t: PropTypes.func
 }
+
+export default translate('translations')(SearchPageHeader)

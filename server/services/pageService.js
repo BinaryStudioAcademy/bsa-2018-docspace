@@ -286,5 +286,41 @@ module.exports = {
       .catch(err => {
         console.log(err)
       })
+  },
+
+  moveToSpace: async (req, res) => {
+    const updatedSpace = await SpaceRepository.addPageById(req.body.toSpaceId, req.params.id)
+      .populate('pages', 'title')
+      .then(space => space)
+      .catch(err => console.log('addPageById', err))
+    await SpaceRepository.deletePageFromSpace(req.body.fromSpaceId, req.params.id)
+      .catch(err => console.log('deletePage', err))
+    const pageWithNewSpace = await PageRepository.update(req.params.id, {'$set': {'spaceId': req.body.toSpaceId}})
+      .populate('userId', 'firstName lastName avatar login')
+      .then(page => page)
+      .catch(err => err)
+    const allPagesInSpace = updatedSpace.pages
+    const data = {pageWithNewSpace, allPagesInSpace}
+    res.send(data)
+  },
+
+  copyPage: async (req, res) => {
+    const page = await PageRepository.getById(req.params.id)
+      .populate('userId', 'firstName lastName avatar login')
+      .then(page => page)
+      .catch(err => console.log('get PAGE BY ID ERROR', err))
+    const newPage = {
+      title: `${page.title}(copy)`,
+      content: page.content,
+      spaceId: page.spaceId,
+      userId: page.userId
+    }
+
+    const copyOfPage = await PageRepository.create(newPage)
+      .then(page => page)
+      .catch(err => console.log('CREATE COPY OF PAGE ERROR', err))
+    await SpaceRepository.addPageById(copyOfPage.spaceId, copyOfPage._id)
+      .catch(err => console.log('addPageById', err))
+    res.send(copyOfPage)
   }
 }

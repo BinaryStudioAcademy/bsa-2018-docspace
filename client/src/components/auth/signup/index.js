@@ -78,28 +78,28 @@ class Signup extends Component {
             <Input
               inputType='email'
               name='email'
-              label='Enter email adress'
+              label={t('enter_email_adress')}
               value={email}
               onChange={this.handleFieldChange}
             />
             <Input
               inputType='text'
               name='fullName'
-              label='Enter full name'
+              label={t('enter_full_name')}
               value={fullName}
               onChange={this.handleFieldChange}
             />
             <Input
               inputType='text'
               name='login'
-              label='Enter nickname'
+              label={t('enter_nickname')}
               value={login}
               onChange={this.handleFieldChange}
             />
             <Input
               inputType='password'
               name='password'
-              label='Create password'
+              label={t('create_password')}
               value={password}
               onChange={this.handleFieldChange}
             />
@@ -107,7 +107,7 @@ class Signup extends Component {
               inputType='submit'
               disabled={!this.isSubmitAllowed()}
               name='button'
-              value='Sign up'
+              value={t('sign_up')}
             />
             <div className='auth-notifications'>
               {!requesting && !!errors.length && (

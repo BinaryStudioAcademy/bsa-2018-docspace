@@ -5,8 +5,14 @@ import { NavLink } from 'react-router-dom'
 
 import './pageHeader.css'
 
-const PageHeader = ({ space, t, handleEditPageClick, isWatchingSpace, manageSpaceWatcher, onWordImport, onPdfExport, onWordExport, openWarningModal, isWatching, manageWatcher }) => (
-  <div className='space-page-header'>
+const PageHeader = ({ space,
+  t,
+  handleEditPageClick,
+  onWordImport, onPdfExport,
+  onWordExport, openWarningModal,
+  openMovePageModal = '', openCopyPageModal = '',
+  renderDeleteBtn, isWatching, manageWatcher, isWatchingSpace, manageSpaceWatcher }) =>
+  (<div className='space-page-header'>
     <div className='title'>
       <NavLink className='space-name-link' to={`/spaces/${space._id}/overview`}>{space && space.name}</NavLink>
       <NavLink className='buttons-item restrictions' title={t('unrestricted')} to={''}>
@@ -24,9 +30,12 @@ const PageHeader = ({ space, t, handleEditPageClick, isWatchingSpace, manageSpac
       isWatching={isWatching}
       isWatchingSpace={isWatchingSpace}
       manageSpaceWatcher={manageSpaceWatcher}
+      openMovePageModal={openMovePageModal}
+      openCopyPageModal={openCopyPageModal}
+      renderDeleteBtn={renderDeleteBtn}
     />
   </div>
-)
+  )
 
 PageHeader.propTypes = {
   t: PropTypes.func,
@@ -39,7 +48,10 @@ PageHeader.propTypes = {
   isWatching: PropTypes.bool,
   manageWatcher: PropTypes.func,
   isWatchingSpace: PropTypes.bool,
-  manageSpaceWatcher: PropTypes.func
+  manageSpaceWatcher: PropTypes.func,
+  openMovePageModal: PropTypes.func,
+  openCopyPageModal: PropTypes.func,
+  renderDeleteBtn: PropTypes.bool
 }
 
 export default PageHeader

@@ -107,6 +107,23 @@ class PageService {
     return apiResult
   }
 
+  movePage = (pageId, fromSpaceId, toSpaceId) => {
+    const args = { endpoint: `/api/pages/move/${pageId}`, method: 'PUT', body: JSON.stringify({fromSpaceId, toSpaceId}) }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
+  copyPage = (pageId) => {
+    const args = { endpoint: `/api/pages/copy/${pageId}`, method: 'PUT' }
+
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
   mentionInComment = (users) => {
     const args = { endpoint: `/api/mail/sendMention`, method: 'POST', body: JSON.stringify(users) }
     callWebApi(args)

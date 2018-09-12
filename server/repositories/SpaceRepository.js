@@ -5,7 +5,8 @@ const SpaceModel = require('../models/spaceScheme')
 
 class SpaceRepository extends GeneralRepository {
   addPageToSpace (page) {
-    return super.update(page.spaceId, {'$addToSet': {'pages': page._id}})
+    return super.update(page.spaceId,
+      {'$addToSet': {'pages': page._id}})
   }
 
   deletePageFromSpace (spaceId, pageId) {
@@ -19,53 +20,116 @@ class SpaceRepository extends GeneralRepository {
   }
 
   getAll () {
-    return this.model.aggregate([
+    return this.model.find(
+      {isDeleted: false},
       {
-        $match: { isDeleted: false }
-      },
-      {
-        $lookup: {
-          from: 'categories',
-          localField: 'categories',
-          foreignField: '_id',
-          as: 'categories'
-        }
-      },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          description: 1,
-          ownerId: 1,
-          blogId: 1,
-          categories: {
-            _id: 1,
-            name: 1
-          },
-          spaceSettings: 1
-        }
+        _id: 1,
+        name: 1,
+        description: 1,
+        ownerId: 1,
+        blogId: 1,
+        categories: 1,
+        spaceSettings: 1,
+        permissions: 1
       }
-    ])
+    )
   }
 
   getById (id) {
-    return this.model.find({ _id: id })
+    return super.getById(id)
+      .populate('homePage')
+      .populate('ownerId')
+      .populate('pages')
+      .populate('categories')
       .populate({
-        path: 'pages',
-        select: '_id, title'
+        path: 'permissions.groups',
+        populate: {path: 'groupId', select: 'members'}
       })
       .populate({
-        path: 'homePageId'
-      })
-      .populate({
-        path: 'category',
-        select: '_id, name'
-      })
-      .populate({
-        path: 'ownerId',
-        select: '_id, firstName lastName'
+        path: 'permissions.users'
+
       })
   }
+
+  // getById (id) {
+  //   return this.model.aggregate([
+  //     {
+  //       $match: { _id: ObjectId(id) }
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'pages',
+  //         localField: 'pages',
+  //         foreignField: '_id',
+  //         as: 'pages'
+  //       }
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'pages',
+  //         localField: 'homePageId',
+  //         foreignField: '_id',
+  //         as: 'homePage'
+  //       }
+  //     },
+  //     { // return single object homePage instead of array with this one object
+  //       $unwind: {
+  //         path: '$homePage',
+  //         preserveNullAndEmptyArrays: true
+  //       }
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'categories',
+  //         localField: 'categories',
+  //         foreignField: '_id',
+  //         as: 'categories'
+  //       }
+  //     },
+  //     {
+  //       $lookup: {
+  //         from: 'users',
+  //         localField: 'ownerId',
+  //         foreignField: '_id',
+  //         as: 'ownerId'
+  //       }
+  //     },
+  //     {
+  //       $unwind: {
+  //         path: '$ownerId',
+  //         preserveNullAndEmptyArrays: true
+  //       }
+  //     },
+  //     {
+  //       $project: {
+  //         _id: 1,
+  //         name: 1,
+  //         key: 1,
+  //         isDeleted: 1,
+  //         ownerId: {
+  //           _id: 1,
+  //           firstName: 1,
+  //           lastName: 1,
+  //           login: 1
+  //         },
+  //         description: 1,
+  //         categories: {
+  //           _id: 1,
+  //           name: 1
+  //         },
+  //         blogId: 1,
+  //         homePage: 1,
+  //         pages: {
+  //           _id: 1,
+  //           title: 1
+  //         },
+  //         history: 1,
+  //         rights: 1,
+  //         spaceSettings: 1
+  //       }
+  //     }
+  //   ])
+  // }
 
   updateCategory (id, categoryId) {
     return super.update(id, {'$addToSet': {'categories': categoryId}})
@@ -235,6 +299,11 @@ class SpaceRepository extends GeneralRepository {
   deleteWatcher (id, userId) {
     return super.updateOne(id, {'$pull': {'watchedBy': userId}})
   }
+
+  addPageById (spaceId, pageId) {
+    return super.update(spaceId, {'$addToSet': {'pages': pageId}})
+  }
+
   searchNotDeletedByName (name) {
     return this.model.aggregate([
       {

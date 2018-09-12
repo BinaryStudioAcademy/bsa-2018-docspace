@@ -8,6 +8,7 @@ function * historySpaceFlow (action) {
     let history = yield call(HistoryService.createHistory, {spaceId: action.payload._id, action: action.type})
     yield put({ type: actionTypes.HISTORY_SPACE_SAVE_SUCCESS, payload: history })
   } catch (error) {
+    console.log(error)
     yield put({ type: actionTypes.HISTORY_SPACE_SAVE_ERROR, error })
   }
 }
@@ -15,10 +16,11 @@ function * historySpaceFlow (action) {
 function * historyPageFlow (action) {
   try {
     const { spaceId, _id: pageId, modifiedVersions, version } = action.payload
-    const modifiedVersion = modifiedVersions.length ? modifiedVersions[modifiedVersions.length - 1].version : version
+    const modifiedVersion = modifiedVersions && modifiedVersions.length ? modifiedVersions[modifiedVersions.length - 1].version : version
     let history = yield call(HistoryService.createHistory, {spaceId, pageId, modifiedVersion, action: action.type})
     yield put({ type: actionTypes.HISTORY_PAGE_SAVE_SUCCESS, payload: history })
   } catch (error) {
+    console.log(error)
     yield put({ type: actionTypes.HISTORY_PAGE_SAVE_ERROR, error })
   }
 }
@@ -29,6 +31,7 @@ function * historyBlogFlow (action) {
     let history = yield call(HistoryService.createHistory, {spaceId, pageId, action: action.type})
     yield put({ type: actionTypes.HISTORY_BLOG_SAVE_SUCCESS, payload: history })
   } catch (error) {
+    console.log(error)
     yield put({ type: actionTypes.HISTORY_BLOG_SAVE_ERROR, error })
   }
 }
@@ -38,6 +41,7 @@ function * historyCommentFlow (action) {
     let history = yield call(HistoryService.createHistory, {commentId: action.payload._id, action: action.type})
     yield put({ type: actionTypes.HISTORY_COMMENT_SAVE_SUCCESS, payload: history })
   } catch (error) {
+    console.log(error)
     yield put({ type: actionTypes.HISTORY_COMMENT_SAVE_ERROR, error })
   }
 }

@@ -23,7 +23,7 @@ export default class WizardModalBody extends Component {
          name='isPrivate'
          onChange={({target}) => this.props.handleCheckboxChange(target)}
        />
-       <label> {this.props.t('only_for_me')}</label>
+       <label className='field-group-for-me'> {this.props.t('only_for_me')}</label>
      </div>
    )
  }

@@ -116,9 +116,9 @@ export const deletePageSuccess = (deletedPage) => ({
   payload: deletedPage
 })
 
-export const deleteBlogPageRequest = (page) => ({
+export const deleteBlogPageRequest = (id) => ({
   type: actionTypes.DELETE_BLOG_PAGE_REQUEST,
-  payload: { ...page }
+  payload: { id }
 })
 
 export const deleteBlogPageSuccess = (deletedPage) => ({
@@ -159,6 +159,32 @@ export const exportPageToPdf = (page) => ({
 export const exportPageToWord = (page) => ({
   type: actionTypes.EXPORT_PAGE_TO_WORD,
   payload: page
+})
+
+export const movePageToSpaceRequest = (pageId, fromSpaceId, toSpaceId) => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_REQUEST,
+  payload: {pageId, fromSpaceId, toSpaceId}
+})
+
+export const movePageToSpaceSuccess = () => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_SUCCESS
+})
+
+export const movePageToSpaceError = () => ({
+  type: actionTypes.MOVE_PAGE_TO_SPACE_ERROR
+})
+
+export const copyPageRequest = (pageId, spaceId) => ({
+  type: actionTypes.COPY_PAGE_REQUEST,
+  payload: {pageId, spaceId}
+})
+
+export const copyPageSuccess = () => ({
+  type: actionTypes.COPY_PAGE_SUCCESS
+})
+
+export const copyPageError = () => ({
+  type: actionTypes.COPY_PAGE_ERROR
 })
 // MENTION IN COMMENT
 export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
