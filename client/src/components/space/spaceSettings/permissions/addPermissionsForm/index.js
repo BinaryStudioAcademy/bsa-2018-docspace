@@ -102,7 +102,7 @@ class AddPermissionsForm extends Component {
             ref={this.searchInputRef}
           />
           <span onClick={(this.handleAddBtnClick)} className='add-permissions-btn'>
-              Add
+            {t('add')}
           </span>
         </div>
 

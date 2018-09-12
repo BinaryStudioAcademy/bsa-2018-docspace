@@ -3,6 +3,7 @@ import PinguinImg from 'src/resources/icons/error404_3.png'
 import { NavLink, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { translate } from 'react-i18next'
 import { bindActionCreators } from 'redux'
 import { redirectToHelpfulLink } from 'src/components/common/app/logic/errorActions'
 
@@ -12,28 +13,28 @@ class Page404 extends Component {
     this.props.actions.redirectToHelpfulLink()
   }
   render () {
-    const { response } = this.props
+    const { response, t } = this.props
     return (
       <Fragment>
         <div className='page404-main-wrapper'>
           <div className='page404-part-label'>
             <div className='page404-header-oops'>
-              Ooops!
+              {t('ooops')}
             </div>
             <div className='page404-label-error'>
-              We can't seem to find the page you're looking for.
+              {t('we_cant_seem')}
             </div>
             <div className='page404-helpful-links'>
-              <p>Here are some helpful links instead:</p>
+              <p>{t('some_helpful_links')}</p>
               <ul>
                 <li className='page404-helpful-link'>
-                  <NavLink onClick={this.handleError} to={`/activity/allupdates`}>Activity</NavLink>
+                  <NavLink onClick={this.handleError} to={`/activity/allupdates`}>{t('activity')}</NavLink>
                 </li>
                 <li className='page404-helpful-link'>
-                  <NavLink onClick={this.handleError} to={`/spacedirectory`}>Spaces</NavLink>
+                  <NavLink onClick={this.handleError} to={`/spacedirectory`}>{t('spaces')}</NavLink>
                 </li>
                 <li className='page404-helpful-link'>
-                  <NavLink onClick={this.handleError} to={`/users/${response.user.login}`}>Home page</NavLink>
+                  <NavLink onClick={this.handleError} to={`/users/${response.user.login}`}>{t('home_page')}</NavLink>
                 </li>
               </ul>
             </div>
@@ -47,7 +48,8 @@ class Page404 extends Component {
 
 Page404.propTypes = {
   actions: PropTypes.object.isRequired,
-  response: PropTypes.object
+  response: PropTypes.object,
+  t: PropTypes.func
 }
 const mapStateToProps = (state) => {
   return {
@@ -61,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({ redirectToHelpfulLink }, dispatch)
   }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Page404))
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Page404)))

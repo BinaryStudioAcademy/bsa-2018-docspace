@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {getAlUsersRequest} from './logic/allUsersActions'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 import './peopleBody.css'
 import { MoonLoader } from 'react-spinners'
 
@@ -13,7 +14,7 @@ class PeopleBody extends Component {
   }
 
   render () {
-    const { isFetching, allUsers } = this.props
+    const {t, isFetching, allUsers} = this.props
     const usersList = this.props.allUsers.map(user =>
       <tr key={user._id}>
         <td><NavLink to={`/users/${user.login}`}>{`${user.firstName} ${user.lastName}`}</NavLink></td>
@@ -34,9 +35,9 @@ class PeopleBody extends Component {
           : <table>
             <tbody>
               <tr>
-                <th>Full name</th>
-                <th>Email</th>
-                <th>Login</th>
+                <th>{t('full_name')}</th>
+                <th>{t('email')}</th>
+                <th>{t('login')}</th>
               </tr>
               {usersList}
             </tbody>
@@ -59,7 +60,8 @@ const mapDispatchToProps = dispatch => ({
 PeopleBody.propTypes = {
   actions: PropTypes.object,
   allUsers: PropTypes.array,
+  t: PropTypes.func,
   isFetching: PropTypes.bool
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PeopleBody)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(PeopleBody)))

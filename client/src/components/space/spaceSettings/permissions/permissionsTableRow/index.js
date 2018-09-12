@@ -28,7 +28,7 @@ export default class PermissionsTableRow extends Component {
   }
 
   render () {
-    const { item, permissionsObject, isEditing, handleToggleAllCLick } = this.props
+    const { item, permissionsObject, isEditing, handleToggleAllCLick, t } = this.props
     return (
       <tr className={'permissions-table-row'} >
         <td className='permissions-table-row-ceil'>
@@ -36,7 +36,7 @@ export default class PermissionsTableRow extends Component {
           {
             isEditing &&
               <div className='toggle-all-permission-btn'>
-                <label htmlFor={'toggle-all-permission' + item._id}>Toggle all</label>
+                <label htmlFor={'toggle-all-permission' + item._id}>{t('toggle_all')}</label>
                 <input
                   id={'toggle-all-permission' + item._id}
                   type='checkbox'
@@ -75,5 +75,6 @@ PermissionsTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   permissionsObject: PropTypes.object,
   handleChangePermission: PropTypes.func.isRequired,
-  handleToggleAllCLick: PropTypes.func.isRequired
+  handleToggleAllCLick: PropTypes.func.isRequired,
+  t: PropTypes.func
 }

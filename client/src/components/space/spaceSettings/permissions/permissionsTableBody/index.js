@@ -4,7 +4,7 @@ import PermissionsTableRow from '../permissionsTableRow'
 
 export default class PermissionsTableBody extends Component {
   render () {
-    const { items, permissionsByItemsId, restictionsCategory, handleChangePermission, isEditing } = this.props
+    const { items, permissionsByItemsId, restictionsCategory, handleChangePermission, isEditing, t } = this.props
     return (
       <tbody>
         {
@@ -17,6 +17,7 @@ export default class PermissionsTableBody extends Component {
                 handleChangePermission={handleChangePermission}
                 restictionsCategory={restictionsCategory}
                 handleToggleAllCLick={this.props.handleToggleAllCLick}
+                t={t}
               />
             )
           })
@@ -32,5 +33,6 @@ PermissionsTableBody.propTypes = {
   permissionsByItemsId: PropTypes.object,
   restictionsCategory: PropTypes.string,
   handleChangePermission: PropTypes.func.isRequired,
-  handleToggleAllCLick: PropTypes.func.isRequired
+  handleToggleAllCLick: PropTypes.func.isRequired,
+  t: PropTypes.func
 }

@@ -62,6 +62,7 @@ class IconColorPicker extends Component {
   render () {
     const componentIcons = defaultIcons
     const componentColors = defaultColors
+    const {t} = this.props
     return (
 
       <div className={`dropdown icon-picker ${this.props.isShowColorPicker ? 'open' : ''}`} ref={this.setWrapperRef}>
@@ -99,8 +100,8 @@ class IconColorPicker extends Component {
             </ul>
             <hr />
             <div className='btns-cancel-success'>
-              <button type='button' className='btns btn-success' onClick={() => this.props.handleChangeSuccess()}>Save</button>
-              <button type='button' className='btns btn-danger' onClick={() => this.props.handleChangeCancel()}>Cancel</button>
+              <button type='button' className='btns btn-success' onClick={() => this.props.handleChangeSuccess()}>{t('save')}</button>
+              <button type='button' className='btns btn-danger' onClick={() => this.props.handleChangeCancel()}>{t('cancel')}</button>
             </div>
           </div>
         </ul>
@@ -115,6 +116,7 @@ IconColorPicker.propTypes = {
   selectedIcon: PropTypes.string,
   selectedColor: PropTypes.string,
   handleChangeSuccess: PropTypes.func,
-  handleChangeCancel: PropTypes.func
+  handleChangeCancel: PropTypes.func,
+  t: PropTypes.func
 }
 export default IconColorPicker
