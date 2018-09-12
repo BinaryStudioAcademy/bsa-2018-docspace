@@ -4,7 +4,6 @@
 
   label {
     color: #707070;
-    margin-top: 0.4rem;
     max-width: 130px;
     min-width: 75px;
     width: 20%;
@@ -55,8 +54,7 @@
   .field-group{
     display: flex;
     margin-bottom: 0.7rem;
-    margin-top: 7px;
-    // align-items: center;
+    align-items: center;
   }
 
   .avatar-field{
@@ -91,7 +89,12 @@
       vertical-align: baseline;
       white-space: nowrap;
     }
-
+    .delete-btn:hover {
+      background: #eae6e6;
+    }
+    .save-btn:hover {
+      background: #3880c9;
+    }
     button[type=submit]{
       background: #2a67a5;
       border-color: transparent;
@@ -106,5 +109,11 @@
     line-height: 1.25;
     text-transform: none;
     margin:0;
+  }
+}
+.space-editing-avatar{
+  opacity: 1;
+  &:hover {
+    opacity: 0.9;
   }
 }

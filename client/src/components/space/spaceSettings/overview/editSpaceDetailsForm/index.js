@@ -90,7 +90,7 @@ class EditSpaceDetailsForm extends Component {
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
           <label>{t('space_logo')}</label>
-          <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+          <div className='space-edit-avatar space-editing-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
             <span className='icon-avatar' >
               <i className={`fa fa-${iconName.toLowerCase()}`} />
             </span>

@@ -61,7 +61,7 @@
         "export_to_PDF": "Експорт у PDF",
         "export_to_Word": "Експорт у Word",
         "passwords_are_not_equal": "Паролі не рівні",
-        "is_return_to_log_In_?": "Повернутися на логін ?",
+        "return_to_login_page": "Повернутися на сторінку входу",
         "forgot_password_?": "Забули пароль ?",
         "send_recovery_link": "Надіслати посилання для відновлення",
         "create_new_password": "Створити новий пароль",
