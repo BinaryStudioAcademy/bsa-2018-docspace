@@ -95,7 +95,7 @@ function mapDispatchToProps (dispatch) {
 
 function mapStateToProps (state) {
   return {
-    allUsers: state.allUsers
+    allUsers: state.allUsers.results
   }
 }
 

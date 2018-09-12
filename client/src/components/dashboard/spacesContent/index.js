@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import './spacesContent.css'
 import { NavLink } from 'react-router-dom'
 import { MoonLoader } from 'react-spinners'
+import {lightColors} from 'src/components/iconColorPicker/defaultColors'
 
 class SpacesContent extends Component {
   constructor (props) {
@@ -39,11 +40,12 @@ class SpacesContent extends Component {
     })
     const spaces = filteredSpaces.map((space, index) => {
       const {icon, color} = space.spaceSettings ? space.spaceSettings : {icon: 'folder', color: '#1c80ff'}
+      const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === color)
       return (
         <tr key={index} className='space-item'>
           <td className='space-image'>
             <NavLink className='link_view' to={`/spaces/${space._id}/overview`}>
-              <div className='space-edit-avatar' style={{backgroundColor: color}} onClick={this.handleShowColorPicker}>
+              <div className='space-edit-avatar' style={{backgroundColor: color, color: iconColorIsWhite ? 'grey' : 'white'}} onClick={this.handleShowColorPicker}>
                 <span className='icon-avatar' >
                   <i className={`fa fa-${icon.toLowerCase()}`} />
                 </span>
