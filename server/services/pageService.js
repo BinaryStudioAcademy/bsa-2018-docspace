@@ -64,6 +64,7 @@ module.exports = {
       updatedAt: page.updatedAt,
       content: page.content,
       userModified: page.userId,
+      watchedBy: page.watchedBy,
       isWatched: isWatched
     }
     console.log(resPage)
@@ -119,6 +120,7 @@ module.exports = {
       updatedAt: page.updatedAt,
       content: page.content,
       userModified: page.userId,
+      watchedBy: page.watchedBy,
       isWatched: true
     }
     return res.send(resPage)
@@ -142,7 +144,7 @@ module.exports = {
       .then(async (
         {
           _id, comments, usersLikes, title, spaceId, createdAt, isDeleted,
-          date: updatedAt, content, userId: userModified
+          date: updatedAt, content, userId: userModified, watchedBy
         }
       ) => {
         await PageRepository.addWatcher(_id, req.user._id)
@@ -162,7 +164,8 @@ module.exports = {
           content,
           userModified,
           isDeleted,
-          isWatched: true
+          isWatched: true,
+          watchedBy
         }
 
         return res.send(resPage)

@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const NotificationSchema = new Schema({
   type: {
-    type: String,
-    required: 'Name is required!'
+    type: String
   },
   message: {
     type: String,

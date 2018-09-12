@@ -53,8 +53,8 @@ function * updatePage (action) {
     // FIX conflict with mongodb and timestamp. Same for blog
     target.createdAt && (delete target.createdAt)
     const updated = yield PageService.updatePage(target)
-    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
     yield put(actions.updatePageSuccess(updated))
+    yield put(push(`/spaces/${updated.spaceId}/pages/${updated._id}`))
   } catch (e) {
     console.log(e)
     yield put(actions.updatePageError())
