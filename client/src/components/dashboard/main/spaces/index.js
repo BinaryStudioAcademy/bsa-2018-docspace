@@ -9,7 +9,7 @@ import './spaces.css'
 const Spaces = (props) => (
   <div className={'dashboard-spaces'}>
     <div className={'spaces-header'}>
-      <h1>{props.t('space_directory')}</h1>
+      <h2>{props.t('space_directory')}</h2>
       <CreateSpaceButton />
     </div>
     <DashboardSpacesBody t={props.t} />

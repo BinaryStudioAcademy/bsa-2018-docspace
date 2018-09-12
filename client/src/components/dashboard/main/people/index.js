@@ -18,14 +18,14 @@ class People extends Component {
     return (
       <div className='dashboard-spaces'>
         <div className='spaces-header'>
-          <h1>{t('people_directory')}</h1>
+          <h2>{t('people_directory')}</h2>
         </div>
         <div className='spaces-body'>
           <div className='spaces-sidebar'>
             <SpacesSideBar menuTabs={sideBarTabs} handleClickNavTab={this.handleClickNavTab} activeTab={this.state.active} />
           </div>
           <div className='people-list-container' >
-            <h1>People</h1>
+            <h2>People</h2>
             <PeopleBody />
           </div>
         </div>

@@ -3,7 +3,7 @@
 }
 .people-list-container{
     width: 100%;
-    padding-left: 10px;
+    padding: 20px;
     table{
         margin-top: 20px;
         width: 100%;
@@ -18,20 +18,30 @@
     table .description{
         width: 40%;
     }
-    tr:hover {
+    tr.people-item {
+        border: 1px solid #ccc;
+    }
+    tr.people-item:hover {
         background: #f4f5f7;
         cursor: pointer;
     }
+    tbody:before {
+        content: "-";
+        display: block;
+        line-height: 1em;
+        color: transparent;
+    }
     td {
         vertical-align: middle;
-        border-bottom: 1px solid #ddd;
+        // border-bottom: 1px solid #ddd;
         text-overflow: ellipsis;
         padding: 0px;
     }
     td a {
         text-decoration: none;
         display: inline-block;
-        padding: 5px 0;
+        padding: 5px 10px;
+        line-height: 35px;
         height: 35px;
         width: 100%;
         color: black;
@@ -42,8 +52,10 @@
         opacity: .95;
     }
     th{
-        border-bottom: 1px solid #ddd;
+        // border-bottom: 1px solid #ddd;
         text-align: left;
+        padding-left: 10px;
+        font-weight: normal;
     }
 }
 .dashboard-admin{

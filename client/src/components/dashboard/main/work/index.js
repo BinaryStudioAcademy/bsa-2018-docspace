@@ -38,7 +38,7 @@ class Work extends Component {
     return (
       <div className='dashboard-work' >
         <div className='work-header'>
-          <h1>{t('work')}</h1>
+          <h2>{t('work')}</h2>
           <Input placeholder='Filter' className='work-filter' autoComplete={false} />
         </div>
         <div className='work-body'>
