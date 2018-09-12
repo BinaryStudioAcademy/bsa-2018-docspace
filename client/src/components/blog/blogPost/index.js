@@ -20,7 +20,7 @@ import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/c
 
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
+import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 import fakeImg from 'src/resources/logo.svg'
 import './blogPost.css'
 
@@ -67,7 +67,7 @@ class Page extends Component {
 
   handleDeleteMethod = () => {
     const { actions, page } = this.props
-    actions.deletePageRequest(page._id)
+    actions.deleteBlogPageRequest(page._id)
     actions.closeWarningModal()
   }
   handleOpenWarningModal = () => {
@@ -236,7 +236,8 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         sendMention,
-        openWarningModal
+        openWarningModal,
+        closeWarningModal
       }
       , dispatch)
   }

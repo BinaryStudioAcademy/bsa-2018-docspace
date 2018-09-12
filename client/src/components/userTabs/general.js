@@ -68,6 +68,11 @@ export class ProfileFields extends Component {
       : {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('Save')}
   }
 
+  renderCancelButton () {
+    return this.props.isEditMode
+      ? {icon: <i className='fa fa-check' aria-hidden='true' />, value: this.props.t('cancel')} : null
+  }
+
   propsToState () {
     if (!this.props.isEditMode) {
       this.setState({
@@ -135,19 +140,31 @@ export class ProfileFields extends Component {
               </div>
             </div>
           </li>
+          {this.props.resultOfComparing
+            ? <li className='profile-fields-item fields-item-btns'>
+              <div className='edit-btn'>
+                <Button
+                  icon={this.renderLabelButton().icon}
+                  value={this.renderLabelButton().value}
+                  onClick={this.handleSubmitDataUser}
+                />
+                {this.props.isEditMode &&
+                  <Button
+                    icon={<i className='fa fa-ban' aria-hidden='true' />}
+                    value={t('cancel')}
+                    onClick={this.props.changeIsEditMode}
+                    nameClass='cancel-btn'
+                  />
+                }
+              </div>
+            </li> : null
+          }
         </ul>
         {!!this.props.errors.length && (
           <div className='user-general-errors-user'><Errors errors={this.props.errors} /></div>
         )}
         {this.props.resultOfComparing
           ? <React.Fragment>
-            <div className='edit-btn'>
-              <Button
-                icon={this.renderLabelButton().icon}
-                value={this.renderLabelButton().value}
-                onClick={this.handleSubmitDataUser}
-              />
-            </div>
             <div className='language-choise'>
               <span>{t('choose_language')}</span>
               <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
@@ -174,6 +191,7 @@ ProfileFields.propTypes = {
   errors: PropTypes.array,
   t: PropTypes.func,
   resultOfComparing: PropTypes.bool,
-  i18n: PropTypes.object
+  i18n: PropTypes.object,
+  changeIsEditMode: PropTypes.func
 }
 export default translate('translations')(ProfileFields)

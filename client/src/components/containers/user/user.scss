@@ -17,7 +17,7 @@
   top: 0;
   bottom: 0;
   margin-left: -2px;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .profile-page-header {
@@ -230,15 +230,12 @@
   color: #fff;
   align-self: flex-end;
 }
-
-.profile-page-center-content {
+.profile-page-content-wrapper .profile-page-center-content {
   margin: 0 auto;
-  max-width: 944px;
-  padding: 0 64px;
-  min-width: 580px;
+  max-width: 720px;
 }
 
-.profile-page-center-content .profile-about {
+.profile-page-content-wrapper .profile-page-center-content .profile-about {
   margin-top: 24px;
   width: 100%;
 }
@@ -292,6 +289,27 @@
   flex: 1 0 auto;
   margin: 0px 2px;
   cursor: pointer;
+}
+
+.profile-fields-wrapper .edit-btn .cancel-btn {
+  margin-left: 10px;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #2a67a5;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  text-decoration: none;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.profile-fields-wrapper .edit-btn .cancel-btn:hover {
+  color: #2a67a5;
+  background: white;
+  border: 1px solid #ccc;
 }
 
 .edit-manage-btn .manage-btn .active{
@@ -360,18 +378,24 @@
 }
 
 .profile-fields-items {
-  max-width: 575px;
+  max-width: 720px;
   list-style: none;
   padding: 0;
-  margin: 14px 0px 14px 0px;
+  margin: 14px 0px 0px 0px;
   text-align: start;
 }
 
 .profile-fields-items .profile-fields-item {
   display: inline-block;
   vertical-align: top;
-  width: 250px;
+  width: 315px;
   height: 64px;
+  .edit-btn {
+    position: relative;
+    top: 15px;
+    font-size: 16px;
+    letter-spacing: .7px;
+  }
 }
 
 .profile-fields-items .profile-fields-item:nth-child(odd) {
@@ -385,7 +409,7 @@
 .profile-fields-item-labels {
   display: block;
   color: #6b778c;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
   padding: 8px 0px 0px 8px;
@@ -393,6 +417,7 @@
 
 .profile-fields-item-contents {
   padding: 10px 8px;
+  font-size: 16px;
 }
 
 .profile-fields-item-contents a {
@@ -420,6 +445,10 @@ h2.recent-work-list-wrapper-header {
   letter-spacing: -0.006em;
   color: #172b4d;
   margin-bottom: 10px;
+}
+.recent-work-list-items {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .recent-work-list-item:hover {
@@ -590,6 +619,7 @@ h2.recent-work-list-wrapper-header {
 
 .profile-fields-items .user-input-change-data {
   margin: 0;
+  font-size: 18px;
 }
 
 .Resizer {
@@ -601,7 +631,7 @@ h2.recent-work-list-wrapper-header {
   align-items: center;
   padding-left: 8px;
   color: $blueText;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
 }
 .language-choise select {
   padding: 2px 15px;
@@ -609,13 +639,14 @@ h2.recent-work-list-wrapper-header {
 }
 .user-settings-nav-bar{
   margin: 20px 0;
-  padding: 4px 0;
+  padding: 4px 0 0 0;
   list-style: none;
   box-shadow: 0px 3px 0px 0px #ccc;
   width: 100%;
   a.active-link {
     box-shadow: 0px 3px 0px 0px rgb(0, 82, 204);
     color: rgb(0, 82, 204);
+    display: inline-block;
   }
   a {
    font-weight: 500;

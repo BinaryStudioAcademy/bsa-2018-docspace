@@ -32,6 +32,7 @@ class PageEditorContainer extends Component {
         handleCancelBtnClick={this.goToThePreviousLocation}
         joditEditorConfig={joditEditorConfig}
         user={this.props.user}
+        history={this.props.history}
       />
     )
   }

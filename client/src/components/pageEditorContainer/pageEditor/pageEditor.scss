@@ -67,12 +67,17 @@
         vertical-align: baseline;
         white-space: nowrap;
         margin-left: 10px;
-
+        &:hover {
+          background: #eae6e6;
+        }
         &.accept-button{
             background: $primaryColor;
             border-color: transparent;
             color: white;
             font-weight: bold;
+            &:hover {
+              background: #3880c9;
+            }
         }
     }
   }
@@ -197,6 +202,10 @@
 
 .jodit_container:not(.jodit_inline) .jodit_workplace {
     border:none
+}
+
+dialog {
+  display: block;
 }
 
 // .jodit_container:not(.jodit_inline) .jodit_wysiwyg{

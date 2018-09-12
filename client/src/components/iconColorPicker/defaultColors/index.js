@@ -20,4 +20,17 @@ const defaultColors = [
   '#eee4fe',
   '#eeeeed'
 ]
+export const lightColors = [
+  '#d0e1ff',
+  '#d0f0fd',
+  '#c1f5e9',
+  '#ffdcf6',
+  '#ffdde6',
+  '#fee3d6',
+  '#ffeab7',
+  '#d1f6c5',
+  '#eee4fe',
+  '#eeeeed'
+]
+
 export default defaultColors

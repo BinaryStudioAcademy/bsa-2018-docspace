@@ -60,7 +60,7 @@
         "export_to_PDF": "Export to PDF",
         "export_to_Word": "Export to Word",
         "passwords_are_not_equal": "Passwords are not equal",
-        "is_return_to_log_in_?": "Is return to Log In ?",
+        "return_to_login_page": "Return to Login page",
         "forgot_password_?": "Forgot password ?",
         "send_recovery_link": "Send recovery link",
         "create_new_password": "Create new password",
