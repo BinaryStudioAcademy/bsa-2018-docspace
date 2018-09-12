@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { getPageByIdRequest, exportPageToPdf, exportPageToWord, createPageRequest, sendDocFileRequest } from 'src/components/page/logic/pageActions'
 import SpaceOverviewHeader from './spaceOverviewHeader'
 import { translate } from 'react-i18next'
-import { openWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
+import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 import { deleteSpaceRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import PageContent from 'src/components/common/pageContent'
 class SpaceOverview extends Component {
@@ -13,17 +13,20 @@ class SpaceOverview extends Component {
     const { space, history } = this.props
     history.push(`/spaces/${space._id}/pages/${space.homePage._id}/edit`)
   }
-
+  handleDeleteMethod = () => {
+    const { actions, space } = this.props
+    actions.deleteSpaceRequest(space._id)
+    actions.closeWarningModal()
+  }
   handleOpenWarningModal = () => {
-    const { actions, space, t } = this.props
+    const { actions, t } = this.props
     actions.openWarningModal({
       renderHeader: t('delete_space'),
       renderMain: (<div className='space-delete-warning'>
         <p>{t('warning_space_delete_short')}</p>
         <p>{t('warning_space_delete_long')}</p>
       </div>),
-      action: actions.deleteSpaceRequest,
-      args: {id: space._id}
+      method: this.handleDeleteMethod
     })
   }
   exportPageToPdf = () => {
@@ -91,7 +94,8 @@ function mapDispatchToProps (dispatch) {
         sendDocFileRequest,
         createPageRequest,
         openWarningModal,
-        deleteSpaceRequest
+        deleteSpaceRequest,
+        closeWarningModal
       }
       , dispatch)
   }
