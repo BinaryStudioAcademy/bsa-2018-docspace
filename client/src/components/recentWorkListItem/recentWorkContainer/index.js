@@ -14,12 +14,12 @@ const RecentWorkListContainer = ({userHistory}) => {
   })
   if (userHistory.length) {
     return (
-      <React.Fragment>
+      <div className='recent-work-list-items'>
         {filteredHistory.map((item, index) => {
           let content = getRightProps(item)
           return <RecentWorkListItem key={index} content={content} />
         })}
-      </React.Fragment>
+      </div>
     )
   } else {
     return null
