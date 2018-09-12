@@ -112,6 +112,7 @@ module.exports = {
         path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName avatar'}
       })
+      .populate('userId', 'firstName lastName avatar')
       .then(page => {
         console.log('after populate', page)
         return res.send(page)
