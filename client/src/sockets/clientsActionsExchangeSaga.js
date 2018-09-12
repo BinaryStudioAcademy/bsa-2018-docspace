@@ -26,8 +26,8 @@ function * read (socket) {
 function shareReduxActions (socket, action) {
   // Add (EXTERNAL) to action type and send it to another client via socket.
   // Now we can react on this external action in reducers or sagas
-  action.type = `${action.type}(EXTERNAL)`
-  socket.emit('share redux action', action)
+  const newAction = { ...action, type: `${action.type}(EXTERNAL)` }
+  socket.emit('share redux action', newAction)
 }
 
 export default function * clientsActionsExchangeSaga () {
