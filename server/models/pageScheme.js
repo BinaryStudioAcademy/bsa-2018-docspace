@@ -125,6 +125,17 @@ pageSchema.post('findOneAndUpdate', function (page) {
   }
 })
 
+pageSchema.post('save', function (page) {
+  // cut html tags from page content and manualy indexing the page to elasticsearch
+  if (page.content !== '' && page.content) {
+    page.content = page.content.replace(/(<([^>]+)>)/ig, '')
+
+    page.index(function (err, res) {
+      page.emit('es-indexed', err, res)
+    })
+  }
+})
+
 const PageModel = mongoose.model('Page', pageSchema)
 
 PageModel.search = Promise.promisify(PageModel.search, { context: PageModel })

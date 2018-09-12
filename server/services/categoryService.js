@@ -1,5 +1,6 @@
 const CategoryRepository = require('../repositories/CategoryRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
+const returnSpaceWithAuthUserPermissions = require('./spaceCreateHelper/returnSpaceWithAuthUserPermissions')
 
 module.exports = {
   findAll: (req, res) => {
@@ -46,7 +47,7 @@ module.exports = {
     SpaceRepository.updateCategory(req.body.spaceId, category._id)
       .populate('categories')
       .populate('pages')
-      .then(populatedSpace => res.json(populatedSpace))
+      .then(populatedSpace => { returnSpaceWithAuthUserPermissions(req, res, populatedSpace) })
       .catch(err => err)
   },
 
@@ -58,7 +59,7 @@ module.exports = {
     SpaceRepository.deleteCategory(req.body.spaceId, req.params.id)
       .populate('categories')
       .populate('pages')
-      .then(populatedSpace => res.json(populatedSpace))
+      .then(populatedSpace => { returnSpaceWithAuthUserPermissions(req, res, populatedSpace) })
       .catch(err => err)
   }
 }

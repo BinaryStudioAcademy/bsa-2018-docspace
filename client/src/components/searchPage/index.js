@@ -21,6 +21,7 @@ class SearchPage extends Component {
       updatedAtFilter: null,
       targetToSearch: 'all'
     }
+    this.header = React.createRef()
   }
 
   handleSearchInput = (input) => {
@@ -31,8 +32,8 @@ class SearchPage extends Component {
 
   componentWillReceiveProps (nextProps) {
     // Pass value from search page
-    if (nextProps.searchInputValue && !this.header.searchInput.value) {
-      this.header.searchInput.value = nextProps.searchInputValue
+    if (nextProps.searchInputValue && !this.header.current.searchInput.current.value) {
+      this.header.current.searchInput.current.value = nextProps.searchInputValue
     }
   }
 
@@ -51,14 +52,14 @@ class SearchPage extends Component {
   }
 
   render () {
-    // console.log(JSON.stringify(this.props.items))
     return (
       <div className='search-page'>
         <SearchPageHeader
-          ref={(header) => { this.header = header }}
+          ref={this.header}
           searchInputValue={this.state.searchInputValue}
           handleSearchInput={this.handleSearchInput}
           handleSearchInputFormSubmit={this.handleSearchSubmit}
+          t={this.props.t}
         />
         <div className='search-page-body-wrp'>
           <SearchCongigDashboard
@@ -84,7 +85,8 @@ SearchPage.propTypes = {
   searchInputValue: PropTypes.string,
   actions: PropTypes.object,
   searchResults: PropTypes.object,
-  isAdvancedSearching: PropTypes.bool
+  isAdvancedSearching: PropTypes.bool,
+  t: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
