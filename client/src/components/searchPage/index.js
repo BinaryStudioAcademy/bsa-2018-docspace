@@ -30,6 +30,12 @@ class SearchPage extends Component {
     })
   }
 
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSearchSubmit()
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     // Pass value from search page
     if (nextProps.searchInputValue && !this.header.current.searchInput.current.value) {
@@ -59,6 +65,7 @@ class SearchPage extends Component {
           searchInputValue={this.state.searchInputValue}
           handleSearchInput={this.handleSearchInput}
           handleSearchInputFormSubmit={this.handleSearchSubmit}
+          handleKeyPress={this.handleKeyPress}
           t={this.props.t}
         />
         <div className='search-page-body-wrp'>

@@ -9,7 +9,7 @@ class SearchPageHeader extends Component {
     this.searchInput = React.createRef()
   }
   render () {
-    const { searchInputVaule, handleSearchInput, handleSearchInputFormSubmit, t } = this.props
+    const { searchInputVaule, handleSearchInput, handleSearchInputFormSubmit, handleKeyPress, t } = this.props
     return (
       <div className='search-page-header'>
         <span className='search-page-header-text'>
@@ -21,6 +21,7 @@ class SearchPageHeader extends Component {
           defaultValue={searchInputVaule}
           placeholder={t('search_docspace')}
           onInput={({target}) => handleSearchInput(target)}
+          onKeyPress={handleKeyPress}
           ref={this.searchInput}
         />
 
@@ -37,6 +38,7 @@ SearchPageHeader.propTypes = {
   searchInputVaule: PropTypes.func,
   handleSearchInput: PropTypes.func,
   handleSearchInputFormSubmit: PropTypes.func,
+  handleKeyPress: PropTypes.func,
   t: PropTypes.func
 }
 
