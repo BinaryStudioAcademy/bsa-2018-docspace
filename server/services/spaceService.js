@@ -54,13 +54,13 @@ module.exports = {
           }
 
           return space.permissions.users.some(perm => {
-            if (String(perm.userId) === String(req.user._id)) {
+            if (String(perm.userId) === String(req.user._id) && perm.all.view) {
               authPermissions.push(perm)
               return true
             }
           }) ||
           space.permissions.groups.some(perm => {
-            if (perm.groupId.members.some(id => String(id) === String(req.user._id))) {
+            if (perm.groupId.members.some(id => (String(id) === String(req.user._id)) && perm.all.view)) {
               authPermissions.push(perm)
               return true
             }
