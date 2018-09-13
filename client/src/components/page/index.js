@@ -120,7 +120,6 @@ class Page extends Component {
           showValue: space.name
         }
       ))
-    console.log(filtereSpaces)
     if (!match.params.version) {
       actions.openWarningModal({
         renderHeader: t('Move_page'),

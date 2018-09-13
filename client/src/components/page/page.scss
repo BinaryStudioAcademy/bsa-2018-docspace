@@ -12,3 +12,11 @@
     align-self: center;
   }
 }
+
+.movepage-choose-space {
+  display: flex;
+  align-items: center;
+  .select {
+    margin-right: 15px;
+  }
+}
