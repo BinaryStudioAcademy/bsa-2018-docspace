@@ -188,7 +188,7 @@ class Page extends Component {
   render () {
     const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
-    const user = page ? page.userId : null
+    const user = page.userModified ? page.userModified : page.userId
     return (
       <React.Fragment>
         <PageHeader
