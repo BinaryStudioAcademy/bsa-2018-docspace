@@ -6,7 +6,11 @@ const initialState = {
   isSearching: false,
   isAdvancedSearching: false,
   searchString: '',
-  advancedResults: {}
+  advancedResults: {
+    pages: [],
+    blogs: [],
+    spaces: []
+  }
 }
 
 function results (state = initialState.results, action) {

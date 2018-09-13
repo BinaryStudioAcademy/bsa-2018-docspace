@@ -49,8 +49,20 @@ export class Comment extends Component {
     const { comment, user, editComment, margin, canDelete, t, level } = this.props
     const { userId, pageId, spaceId, type, sendMention, addNewComment } = this.props
     const { replyMode } = this.state
-    const isCurrentUserComment = (comment.userId ||
-      comment.userId._id) === user._id
+    console.log('COMPARING USER')
+    console.log('comment.userId')
+    console.log(comment.userId)
+    console.log('USER')
+    console.log(user)
+    console.log('_________________________________')
+    let isCurrentUserComment
+
+    if (typeof comment.userId === 'string') {
+      isCurrentUserComment = comment.userId === user._id
+    } else if (typeof comment.userId === 'object') {
+      isCurrentUserComment = comment.userId._id === user._id
+    }
+
     let avatarLink = UserAvatarLink
     if (comment.userId.avatar) {
       avatarLink = comment.userId.avatar

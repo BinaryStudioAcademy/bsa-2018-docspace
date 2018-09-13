@@ -50,6 +50,19 @@ function byId (state = initialState.byId, action) {
           comments: [...action.payload.page.comments.slice(), action.payload.newComment]
         }
       }
+
+    case commentsActionTypes.CREATE_COMMENT_SUCCESS + '(EXTERNAL)' : {
+      if (state[action.payload.page._id]) {
+        return {
+          ...state,
+          [action.payload.page._id]: {
+            ...action.payload.page,
+            comments: [...action.payload.page.comments.slice(), action.payload.newComment]
+          }
+        }
+      } else return state
+    }
+
     case likesActionTypes.PUT_LIKE_ON_PAGE_SUCCESS:
       return {
         ...state,
@@ -83,6 +96,24 @@ function byId (state = initialState.byId, action) {
           })
         }
       }
+
+    case commentsActionTypes.EDIT_COMMENT_SUCCESS + '(EXTERNAL)': {
+      if (state[action.payload.page._id]) {
+        return {
+          ...state,
+          [action.payload.page._id]: {
+            ...action.payload.page,
+            comments: action.payload.page.comments.map(comment => {
+              if (comment._id !== action.payload.editedComment._id) {
+                return comment
+              }
+              return action.payload.editedComment
+            })
+          }
+        }
+      } else return state
+    }
+
     case commentsActionTypes.DELETE_COMMENT_SUCCESS:
       return {
         ...state,
@@ -91,6 +122,18 @@ function byId (state = initialState.byId, action) {
           comments: action.payload.page.comments.filter(comment => comment._id !== action.payload.deletedComment._id)
         }
       }
+
+    case commentsActionTypes.DELETE_COMMENT_SUCCESS + '(EXTERNAL)': {
+      if (state[action.payload.page._id]) {
+        return {
+          ...state,
+          [action.payload.page._id]: {
+            ...action.payload.page,
+            comments: action.payload.page.comments.filter(comment => comment._id !== action.payload.deletedComment._id)
+          }
+        }
+      } else return state
+    }
 
     case actionTypes.GET_ALL_PAGES_SUCCESS:
       return action.payload.byId
