@@ -226,9 +226,10 @@ class Page extends Component {
             <PageContent content={page.content} />
             <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.comments && this.props.page.comments.length &&
+              {this.props.page && this.props.page.comments && this.props.page.comments.length && this.props.page.comments[0].userId &&
               this.props.page.comments.length
-                ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
+                ? this.props.page.comments.length !== 1 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
+                  : <h2> {t('comment')}</h2>
                 : space.authUserPermissions.comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList

@@ -18,4 +18,7 @@ html, body, #root, .app__root{
   a, i {
     font-size: 14px;
   }
+  button:focus, input:focus{
+    outline: none;
+  }
 }

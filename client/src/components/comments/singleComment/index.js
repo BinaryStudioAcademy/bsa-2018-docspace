@@ -58,9 +58,10 @@ export class Comment extends Component {
     }
 
     let avatarLink = UserAvatarLink
-    if (comment.userId.avatar) {
+    if (comment.userId && comment.userId.avatar) {
       avatarLink = comment.userId.avatar
     }
+
     return (
       <React.Fragment>
         {this.state.editMode

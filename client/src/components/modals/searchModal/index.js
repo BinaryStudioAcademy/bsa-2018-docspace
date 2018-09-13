@@ -15,6 +15,7 @@ class SearchModal extends Component {
     this.state = {
       filter: ''
     }
+    this.isDebounced = false
     // this.animation()
     this.animation()
   }
@@ -35,11 +36,13 @@ class SearchModal extends Component {
 
   search = _.debounce(target => {
     if (this.state.filter !== '') {
+      this.isDebounced = true
       this.props.actions.searchRequest({ input: this.state.filter, targetToSearch: 'all by name' })
     } else {
+      this.isDebounced = false
       this.props.actions.cleanSearchResults()
     }
-  }, 600);
+  }, 500);
 
   handleAdvancedSearch = () => {
     this.props.closeModal()
@@ -59,80 +62,85 @@ class SearchModal extends Component {
     let spacesList = []
     let postList = []
     const {t} = this.props
-    this.props.searchResults.forEach(result => {
-      if (result.key) {
-        spacesList.push(result)
-      } else if (result.blogId) {
-        blogsList.push(result)
-      } else {
-        postList.push(result)
-      }
-    })
-    const blogRender = blogsList.map(blog =>
-      <div className='search-result-wrapper'>
-        {blog.spaceId
-          ? <NavLink onClick={this.props.closeModal}
-            to={`/spaces/${blog.spaceId && blog.spaceId._id}/blogs/${blog._id}`}>
-            <i className='fas fa-rss-square result-big-icon' />
-            {blog.title}
-          </NavLink>
-          : null}
-      </div>
-
-    )
-    const PageRender = postList.map(page =>
-      <div className='search-result-wrapper'>
-        {page.spaceId
-          ? <NavLink onClick={this.props.closeModal}
-            to={`/spaces/${page.spaceId._id}/pages/${page._id}`}>
-            <i className='fas fa-file-alt result-big-icon' />
-            {page.title}
-          </NavLink>
-          : null
+    let result
+    if (this.props.searchResults.length && this.state.filter !== '') {
+      this.props.searchResults.forEach(result => {
+        if (result.key) {
+          spacesList.push(result)
+        } else if (result.blogId) {
+          blogsList.push(result)
+        } else {
+          postList.push(result)
         }
-      </div>
-    )
-
-    const SpaceRender = spacesList.map(space =>
-      <div className='search-result-wrapper'>
-        <NavLink onClick={this.props.closeModal}
-          to={`/spaces/${space._id}`}>
-          <i className='fa fa-folder result-big-icon' />
-          {space.name}
-        </NavLink>
-      </div>
-    )
-    const result = <React.Fragment>
-      {
-        this.state.filter !== '' &&
-        <div className='search-link'>
-          <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
-            <i className='fas fa-search' />
-            {t('search_0', {filter: this.state.filter})}
-          </Link >
+      })
+      const blogRender = blogsList.map(blog =>
+        <div className='search-result-wrapper'>
+          {blog.spaceId
+            ? <NavLink onClick={this.props.closeModal}
+              to={`/spaces/${blog.spaceId && blog.spaceId._id}/blogs/${blog._id}`}>
+              <i className='fas fa-rss-square result-big-icon' />
+              {blog.title}
+            </NavLink>
+            : null}
         </div>
-      }
 
-      {postList.length ? <div className='search-title-wrapper'>
-        <p>{t('pages_uppercase')}</p>
-      </div> : null
-      }
-      {PageRender}
-      {blogsList.length ? <div className='search-title-wrapper'>
-        <p>{t('blogs_uppercase')}</p>
-      </div> : null
-      }
-      {blogRender}
-      {spacesList.length ? <div className='search-title-wrapper'>
-        <p>{t('spaces_uppercase')}</p>
-      </div> : null
-      }
-      {SpaceRender}
-    </React.Fragment>
+      )
+      const PageRender = postList.map(page =>
+        <div className='search-result-wrapper'>
+          {page.spaceId
+            ? <NavLink onClick={this.props.closeModal}
+              to={`/spaces/${page.spaceId._id}/pages/${page._id}`}>
+              <i className='fas fa-file-alt result-big-icon' />
+              {page.title}
+            </NavLink>
+            : null
+          }
+        </div>
+      )
 
+      const SpaceRender = spacesList.map(space =>
+        <div className='search-result-wrapper'>
+          <NavLink onClick={this.props.closeModal}
+            to={`/spaces/${space._id}`}>
+            <i className='fa fa-folder result-big-icon' />
+            {space.name}
+          </NavLink>
+        </div>
+      )
+      result = <React.Fragment>
+        {
+          this.state.filter !== '' &&
+          <div className='search-link'>
+            <Link to='/advanced_search_page' onClick={this.handleAdvancedSearch}>
+              <i className='fas fa-search' />
+              {t('search_0', {filter: this.state.filter})}
+            </Link >
+          </div>
+        }
+
+        {postList.length ? <div className='search-title-wrapper'>
+          <p>{t('pages_uppercase')}</p>
+        </div> : null
+        }
+        {PageRender}
+        {blogsList.length ? <div className='search-title-wrapper'>
+          <p>{t('blogs_uppercase')}</p>
+        </div> : null
+        }
+        {blogRender}
+        {spacesList.length ? <div className='search-title-wrapper'>
+          <p>{t('spaces_uppercase')}</p>
+        </div> : null
+        }
+        {SpaceRender}
+      </React.Fragment>
+    } else if (this.state.filter !== '' && !this.props.isFetching && this.isDebounced) {
+      result = <p>Sorry, no results were found</p>
+    } else {
+      result = ''
+    }
+    this.isDebounced = false
     return result
-
-    // return blogRender.concat(PageRender).concat(SpaceRender)
   }
 
   closeModal = () => {
@@ -150,9 +158,6 @@ class SearchModal extends Component {
 
   animation () {
     var that = this
-    console.log(that)
-    console.log(that.modal)
-    console.log(this.modal)
     setTimeout(function () {
       console.log(that)
       that.modal.className += ' active'
