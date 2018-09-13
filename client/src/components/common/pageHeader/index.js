@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import './pageHeader.css'
 
 const PageHeader = ({ space,
-  t,
+  t, canExport,
   handleEditPageClick,
   onWordImport, onPdfExport,
   onWordExport, openWarningModal,
@@ -29,6 +29,7 @@ const PageHeader = ({ space,
       openMovePageModal={openMovePageModal}
       openCopyPageModal={openCopyPageModal}
       renderDeleteBtn={renderDeleteBtn}
+      canExport={canExport}
     />
   </div>
   )
@@ -43,7 +44,8 @@ PageHeader.propTypes = {
   openWarningModal: PropTypes.func,
   openMovePageModal: PropTypes.func,
   openCopyPageModal: PropTypes.func,
-  renderDeleteBtn: PropTypes.bool
+  renderDeleteBtn: PropTypes.bool,
+  canExport: PropTypes.bool
 }
 
 export default PageHeader

@@ -5,10 +5,14 @@
     .dashboard-admin-body{
          height: 97%;
          padding: 10px 15px;
+         overflow: hidden;
     }
     .dashboard-admin-body input {
        width: 300px;
        margin: 15px 10px 0 0;
+    }
+    .administration-header{
+        padding: 20px 0;
     }
     button{
         background: #0044a9;
@@ -57,10 +61,11 @@
     th{
         border-bottom: 1px solid #ddd;
         text-align: left;
-        padding: 10px 0;
+        padding: 10px 15px;
+        cursor: default;
     }
     .dashboard-admin-nav-bar{
-        width: 90%;
+        width: 100%;
         margin: 20px 0;
         padding: 4px 0;
         list-style: none;
@@ -81,5 +86,8 @@
           }
   
         }
-}
+    }
+    .people-list-container th.people-item-group{
+        font-weight: bold;
+    }
 }
