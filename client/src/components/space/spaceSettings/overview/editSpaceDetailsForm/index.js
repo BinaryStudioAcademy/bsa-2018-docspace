@@ -5,7 +5,7 @@ import Categories from './categories'
 import './editSpaceDetailsForm.css'
 import IconColorPicker from 'src/components/iconColorPicker'
 import {lightColors} from 'src/components/iconColorPicker/defaultColors'
-
+import Select from 'src/components/common/select'
 class EditSpaceDetailsForm extends Component {
   constructor (props) {
     super(props)
@@ -28,6 +28,7 @@ class EditSpaceDetailsForm extends Component {
   }
 
   handleFieldChange = (field) => {
+    console.log(field)
     this.setState({
       [field.name]: field.value
     })
@@ -81,7 +82,6 @@ class EditSpaceDetailsForm extends Component {
     this.props.updateSpace(changedSpace)
     this.props.goBackToDetails()
   }
-
   render () {
     const { name, description, homePage, pages } = this.state
     const { t, createCategory, deleteCategory } = this.props
@@ -89,7 +89,12 @@ class EditSpaceDetailsForm extends Component {
     const iconName = this.state.selectedIcon ? this.state.selectedIcon : 'folder'
     const color = this.state.selectedColor ? this.state.selectedColor : '#1c80ff'
     const iconColorIsWhite = lightColors.some(bgcolor => bgcolor === color)
-
+    const optionsPages = pages.map(page => {
+      return {
+        value: page._id,
+        showValue: page.title
+      }
+    })
     return (
       <form className='edit-space-details-form'>
         <div className='field-group avatar-field'>
@@ -150,19 +155,12 @@ class EditSpaceDetailsForm extends Component {
         {/* TEMPORALY using select instead of input with  feiltered dropdown as ABOWE */}
         <div className='field-group'>
           <label>{t('home_page')}</label>
-          <select name='homePage'
-            onChange={({target}) => this.handleFieldChange(target)}
-            defaultValue={homePage ? homePage._id : 'none'}
-          >
-            <option value='none' disabled hidden> {t('none')} </option>
-            {
-              pages.map((page, index) => (
-                <option value={page._id} key={index}>
-                  {page.title}
-                </option>
-              ))
-            }
-          </select>
+          <Select
+            selectValue={homePage ? homePage._id : 'none'}
+            onChange={(e) => this.handleFieldChange(e.target.value)}
+            options={optionsPages}
+            noneOption
+          />
         </div>
 
         <div className='btn-group'>
