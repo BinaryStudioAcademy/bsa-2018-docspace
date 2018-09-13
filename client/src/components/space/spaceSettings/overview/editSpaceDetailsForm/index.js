@@ -28,7 +28,6 @@ class EditSpaceDetailsForm extends Component {
   }
 
   handleFieldChange = (field) => {
-    console.log(field)
     this.setState({
       [field.name]: field.value
     })
@@ -157,7 +156,7 @@ class EditSpaceDetailsForm extends Component {
           <label>{t('home_page')}</label>
           <Select
             selectValue={homePage ? homePage._id : 'none'}
-            onChange={(e) => this.handleFieldChange(e.target.value)}
+            onChange={this.handleFieldChange}
             options={optionsPages}
             noneOption
           />
