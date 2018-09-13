@@ -21,6 +21,7 @@ import fakeImg from 'src/resources/logo.svg'
 import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
+import Select from 'src/components/common/select'
 import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
 class Page extends Component {
@@ -67,9 +68,9 @@ class Page extends Component {
     this.props.actions.exportPageToWord(this.props.page)
   }
 
-  handleSelectSpace = (spaceId) => {
+  handleSelectSpace = (target) => {
     this.setState({
-      selectedSpaceId: spaceId
+      selectedSpaceId: target.value // spaceId
     })
   }
 
@@ -112,6 +113,14 @@ class Page extends Component {
 
   handleOpenMovePageModal = () => {
     const { actions, match, t, page, spaces, space } = this.props
+    const filtereSpaces = spaces.filter(space => space._id !== page.spaceId)
+      .map(space => (
+        {
+          value: space._id,
+          showValue: space.name
+        }
+      ))
+    console.log(filtereSpaces)
     if (!match.params.version) {
       actions.openWarningModal({
         renderHeader: t('Move_page'),
@@ -121,21 +130,13 @@ class Page extends Component {
           </div>
           <div className='movepage-choose-space'>
             <span>{t('choose_a_space')}</span>
-            <select
-              onChange={({target}) => this.handleSelectSpace(target.value)}
-              defaultValue='none'
-            >
-              <option value='none' disabled hidden>{spaces.length < 2
-                ? t('no_spaces_to_move') : t('choose_here')}</option>
-              {
-                spaces.map(space => (
-                  space._id !== page.spaceId &&
-                  <option value={space._id} key={space._id}>
-                    {space.name}
-                  </option>
-                ))
-              })
-            </select>
+            <Select
+              selectValue={'none'}
+              noneOptionValue={spaces.length < 2 ? 'no_spaces_to_move' : 'choose_here'}
+              onChange={this.handleSelectSpace}
+              options={filtereSpaces}
+              noneOption
+            />
             <span>{`${t('current_space')}: ${space.name}`}</span>
           </div>
         </div>),

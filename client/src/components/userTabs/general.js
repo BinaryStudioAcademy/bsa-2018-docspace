@@ -99,7 +99,8 @@ export class ProfileFields extends Component {
   render () {
     const {email, login, firstName, lastName} = this.props.user
     const { t, i18n } = this.props
-    const changeLanguage = lng => {
+    const changeLanguage = target => {
+      let lng = target.value
       i18n.changeLanguage(lng)
       localStorage.setItem('language', lng)
       this.setState({language: lng})
@@ -178,7 +179,7 @@ export class ProfileFields extends Component {
               <span>{t('choose_language')}</span>
               <Select
                 selectValue={this.state.language}
-                onChange={(e) => changeLanguage(e.target.value)}
+                onChange={changeLanguage}
                 options={optionsLanguage}
               />
             </div>

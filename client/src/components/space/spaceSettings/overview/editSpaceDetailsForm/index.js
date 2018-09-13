@@ -72,6 +72,7 @@ class EditSpaceDetailsForm extends Component {
     //   name: this.state.name,
     //   description: this.state.description
     // }
+    console.log(`sssssssssssssssssssssssssssssss`, this.state)
     const changedSpace = {...this.state,
       categories: this.props.space.categories,
       spaceSettings: { icon: this.state.selectedIcon, color: this.state.selectedColor },
@@ -158,6 +159,7 @@ class EditSpaceDetailsForm extends Component {
             selectValue={homePage ? homePage._id : 'none'}
             onChange={this.handleFieldChange}
             options={optionsPages}
+            selectName={'homePage'}
             noneOption
           />
         </div>
