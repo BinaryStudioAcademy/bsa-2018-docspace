@@ -1,7 +1,9 @@
 
 .matched-content-wrp{
-  height: 100%;
-  width:100%;
+  padding-left: 2rem;
+  // padding-top: 2rem;
+  // height: 100%;
+  // width:100%;
 
   .no-adavnced-search-results-msg{
     display: flex;
@@ -28,7 +30,13 @@
   }
 
   .matched-content-list{
-    padding-top: 1rem;
+
+    margin: 0; 
+    padding-left:0;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
     height: 100%;
     width:100%;
   }

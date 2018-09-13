@@ -22,7 +22,7 @@ const ContentListItem = ({icon, path, title, time, content, iconColor}) => {
           </Link>
         </header>
         {
-          content && <div className='matched-content-list-item-content' dangerouslySetInnerHTML={{__html: content}} />
+          content && <span className='matched-content-list-item-content' dangerouslySetInnerHTML={{__html: content}} />
         }
         <div className='matched-content-list-item-meta'>
           { time && formatDate(time)}

@@ -34,16 +34,18 @@ const returnSpaceWithAuthUserPermissions = (req, res, space) => {
   }
 
   for (let i = 0; i < users.length; i++) {
-    if (String(users[i].userId) === String(req.user._id)) {
+    if ((String(users[i].userId) === String(req.user._id)) && users[i].all.view) {
       return res.json({ ...space._doc, authUserPermissions: users[i] })
     }
   }
 
   for (let i = 0; i < groups.length; i++) {
-    if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
+    if (groups[i].groupId.members.some(id => (String(id) === String(req.user._id)) && groups[i].all.view)) {
       return res.json({ ...space._doc, authUserPermissions: groups[i] })
     }
   }
+  // user dont have permissions to this space, so we return 404
+  return res.status(404).end()
 }
 
 module.exports = returnSpaceWithAuthUserPermissions
