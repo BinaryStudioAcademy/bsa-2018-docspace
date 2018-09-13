@@ -18,7 +18,23 @@ class MinSidebar extends Component {
       showPageModal: false,
       showSearchModal: false
     }
-    this.dropdownMenuItems = {
+  }
+
+  toggleModal = () => {
+    this.setState({
+      showPageModal: !this.state.showPageModal
+    })
+  }
+
+  toggleSearchModal = () => {
+    this.setState(prevState => ({
+      showSearchModal: !prevState.showSearchModal
+    }))
+  }
+
+  render () {
+    const logo = this.props.isGray ? grayLogo : whiteLogo
+    const dropdownMenuItems = {
       avatar: [
         {
           name: this.props.t('profile'),
@@ -42,23 +58,7 @@ class MinSidebar extends Component {
         }
       ]
     }
-  }
-
-  toggleModal = () => {
-    this.setState({
-      showPageModal: !this.state.showPageModal
-    })
-  }
-
-  toggleSearchModal = () => {
-    this.setState(prevState => ({
-      showSearchModal: !prevState.showSearchModal
-    }))
-  }
-
-  render () {
-    const logo = this.props.isGray ? grayLogo : whiteLogo
-    this.dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
+    dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}
@@ -83,9 +83,9 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={this.dropdownMenuItems.notifications} menuHeight={130} />
-          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={this.dropdownMenuItems.burger} menuHeight={70} />
-          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={this.dropdownMenuItems.avatar} menuHeight={40} />
+          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={130} />
+          <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={70} />
+          <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={40} />
         </div>
       </div>
     )
