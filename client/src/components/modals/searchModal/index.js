@@ -158,9 +158,6 @@ class SearchModal extends Component {
 
   animation () {
     var that = this
-    console.log(that)
-    console.log(that.modal)
-    console.log(this.modal)
     setTimeout(function () {
       console.log(that)
       that.modal.className += ' active'
