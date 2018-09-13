@@ -97,10 +97,8 @@ class GroupDialog extends Component {
         </div>
         <div className='group-dialog-row'>
           <div className='group-modal-label' />
-          <div className='group-modal-input'>
-            <div>
-              {this.renderUsers()}
-            </div>
+          <div className='group-modal-input matching-users-list'>
+            {this.renderUsers()}
           </div>
         </div>
       </div>

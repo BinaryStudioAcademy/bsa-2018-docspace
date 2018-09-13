@@ -2,7 +2,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    box-sizing: border-box;  
+    box-sizing: border-box; 
+    height: 100%;
+    overflow: auto; 
     td.group-modal-label{
         padding-right: 20px;
         padding-bottom: 10px;
@@ -82,4 +84,8 @@
 }
 .group-added-users{
     margin: 5px 0;
+}
+
+.group-modal-input button{
+    margin-bottom: 10px;
 }

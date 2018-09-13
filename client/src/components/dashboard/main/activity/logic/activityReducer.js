@@ -46,7 +46,21 @@ const currentUserHistory = (state = initialState, action) => {
   }
 }
 
+const isFetching = (state = false, action) => {
+  switch (action.type) {
+    case actionTypes.GET_ALL_UPDATES_REQUEST:
+    case actionTypes.GET_CURRENT_USER_UPDATES_REQUEST:
+      return true
+    case actionTypes.GET_ALL_UPDATES_SUCCESS:
+    case actionTypes.GET_CURRENT_USER_UPDATES_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   allHistory,
-  currentUserHistory
+  currentUserHistory,
+  isFetching
 })

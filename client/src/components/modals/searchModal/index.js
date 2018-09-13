@@ -19,6 +19,14 @@ class SearchModal extends Component {
     this.animation()
   }
 
+  componentDidMount () {
+    document.addEventListener('mousedown', this.handleClickOutside)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  }
+
   setFilterValue = (target) => {
     this.setState({
       filter: target.value
@@ -142,7 +150,9 @@ class SearchModal extends Component {
 
   animation () {
     var that = this
+    console.log(that)
     console.log(that.modal)
+    console.log(this.modal)
     setTimeout(function () {
       console.log(that)
       that.modal.className += ' active'
@@ -158,8 +168,14 @@ class SearchModal extends Component {
     this.modalParent = elem
   }
 
+  handleClickOutside = (event) => {
+    if (this.modal && !this.modal.contains(event.target)) {
+      this.closeModal()
+    }
+  }
   render () {
     const {t, searchResults, isFetching} = this.props
+    console.log(this.modal)
     return (
       <div className='search-modal' ref={elem => this.setModalRef(elem)}>
         <div ref={elem => this.setRef(elem)} className={`search-modal-body`}>

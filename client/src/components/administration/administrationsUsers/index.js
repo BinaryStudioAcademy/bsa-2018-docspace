@@ -65,7 +65,7 @@ class AdministrationUsers extends Component {
     return (
       <React.Fragment>
         <div>
-          <h1>{t('invite_new_users')}</h1>
+          <h1 className='administration-header'>{t('invite_new_users')}</h1>
           <form>
             <InviteUsers
               valueName={this.state.nameField1}
@@ -103,7 +103,7 @@ class AdministrationUsers extends Component {
           />
         </div>
         <div className='people-list-container' >
-          <PeopleBody />
+          <PeopleBody usedIn='group' />
         </div>
       </React.Fragment>
     )

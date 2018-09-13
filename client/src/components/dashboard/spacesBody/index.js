@@ -19,7 +19,7 @@ class DashboardSpacesBody extends Component {
       active: t('all_spaces'),
       spaces: []
     }
-    this.sideBarTabs = [ t('all_spaces'), t('personal_spaces'), t('my_spaces'), t('archived_spaces') ]
+    this.sideBarTabs = [ t('all_spaces'), t('my_spaces') ]
   }
   componentDidMount () {
     this.props.actions.getSpacesRequest()
@@ -30,7 +30,7 @@ class DashboardSpacesBody extends Component {
     if (tab === t('all_spaces')) {
       this.setState({spaces: this.props.spaces})
     }
-    if (tab === t('personal_spaces') || tab === t('my_spaces') || tab === t('archived_spaces')) {
+    if (tab === t('my_spaces')) {
       const filteredSpaces = this.props.spaces.filter(space => this.props.userSpaces.some(userSpaceId => userSpaceId === space._id))
       this.setState({ spaces: filteredSpaces })
     }
