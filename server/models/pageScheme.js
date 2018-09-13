@@ -117,13 +117,15 @@ pageSchema.post('findOneAndUpdate', function (page) {
     let oldContent = page.content
     let user = page.userId
 
-    page.content = page.content.replace(/(<([^>]+)>)/ig, '')
+    page.content = page.content.replace(/(<([^>]+)>)/ig, ' ')
     page.userId = user._id
 
     page.index(function (err, res) {
       if (err) {
         console.log('ELASTICSEARCH INDEXING ERROR!!')
         console.log(err)
+      } else {
+        page.emit('es-indexed')
       }
     })
 
@@ -135,11 +137,20 @@ pageSchema.post('findOneAndUpdate', function (page) {
 pageSchema.post('save', function (page) {
   // cut html tags from page content and manualy indexing the page to elasticsearch
   if (page.content !== '' && page.content) {
-    page.content = page.content.replace(/(<([^>]+)>)/ig, '')
+    let oldContent = page.content
+
+    page.content = page.content.replace(/(<([^>]+)>)/ig, ' ')
 
     page.index(function (err, res) {
-      page.emit('es-indexed', err, res)
+      if (err) {
+        console.log('ELASTICSEARCH INDEXING ERROR!!')
+        console.log(err)
+      } else {
+        page.emit('es-indexed')
+      }
     })
+
+    page.content = oldContent
   }
 })
 

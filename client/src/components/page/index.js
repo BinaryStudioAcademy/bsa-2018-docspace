@@ -188,7 +188,7 @@ class Page extends Component {
   render () {
     const { _id, avatar } = this.props.user
     const { page, t, space, isFetching } = this.props
-    const user = page ? page.userId : null
+    const user = page.userModified ? page.userModified : page.userId
     return (
       <React.Fragment>
         <PageHeader
@@ -202,6 +202,7 @@ class Page extends Component {
           openMovePageModal={this.handleOpenMovePageModal}
           openCopyPageModal={this.handleOpenCopyPageModal}
           renderDeleteBtn={space.authUserPermissions.pages.delete}
+          canExport={space.authUserPermissions.space.export}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>
