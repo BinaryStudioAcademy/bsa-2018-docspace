@@ -112,6 +112,7 @@ class Page extends Component {
           handleEditPageClick={this.handleEditPageClick}
           renderDeleteBtn={space.authUserPermissions.blog.delete}
           openWarningModal={this.handleOpenWarningModal}
+          canExport={space.authUserPermissions.space.export}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

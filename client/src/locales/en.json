@@ -217,6 +217,7 @@
         "log_in_to_your_account": "Log in to your account",
         "login_btn": "Login",
         "comment": "Comment",
-        "search_0": "Search '{{filter}}'"
+        "search_0": "Search '{{filter}}'",
+        "no_advanced_search_results_msg": "No search results. You may try to change search filters or change the search query and try again"
     }
 }

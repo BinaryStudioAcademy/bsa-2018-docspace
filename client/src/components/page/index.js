@@ -202,6 +202,7 @@ class Page extends Component {
           openMovePageModal={this.handleOpenMovePageModal}
           openCopyPageModal={this.handleOpenCopyPageModal}
           renderDeleteBtn={space.authUserPermissions.pages.delete}
+          canExport={space.authUserPermissions.space.export}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

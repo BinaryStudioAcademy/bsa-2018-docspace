@@ -22,7 +22,7 @@ const SelectTargetToSearchList = ({searchTargetsNames, handleSelect, activeName}
 }
 
 SelectTargetToSearchList.propTypes = {
-  searchTargetsNames: PropTypes.string,
+  searchTargetsNames: PropTypes.arrayOf(PropTypes.string),
   handleSelect: PropTypes.func,
   activeName: PropTypes.string
 }

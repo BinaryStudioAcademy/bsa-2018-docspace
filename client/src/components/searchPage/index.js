@@ -22,6 +22,11 @@ class SearchPage extends Component {
       targetToSearch: 'all'
     }
     this.header = React.createRef()
+    const { isAdvancedSearching, searchResults } = this.props
+    // search all if search page reload
+    if (!isAdvancedSearching && Object.values(searchResults).every(entities => entities && !entities.length)) {
+      this.handleSearchSubmit()
+    }
   }
 
   handleSearchInput = (input) => {
@@ -74,6 +79,7 @@ class SearchPage extends Component {
             targetToSearch={this.state.targetToSearch}
           />
           <MatchedContent
+            t={this.props.t}
             searchResults={this.props.searchResults}
             isAdvancedSearching={this.props.isAdvancedSearching}
           />

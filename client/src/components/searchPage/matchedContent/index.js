@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import ContentListItem from './contentListItem'
 import { MoonLoader } from 'react-spinners'
 
+import pinguin from 'src/resources/search_pinguin.png'
+
 import './matchedContent.css'
 
 const propsByEntityType = (entity, type, t) => {
@@ -49,6 +51,14 @@ export default class MatchedContent extends Component {
 
   renderSearchResults = () => {
     const { pages, blogs, spaces } = this.props.searchResults
+    if (pages && !pages.length && blogs && !blogs.length && spaces && !spaces.length) {
+      return (
+        <div className='no-adavnced-search-results-msg'>
+          <img src={pinguin} alt='' />
+          <p>{ this.props.t('no_advanced_search_results_msg') }</p>
+        </div>
+      )
+    }
     return (
       <ul className='matched-content-list'>
         {
