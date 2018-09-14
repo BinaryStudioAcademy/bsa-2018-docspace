@@ -117,7 +117,12 @@ function * getPage (action) {
 
 function * sendFile (action) {
   try {
-    const sendFile = yield PageService.sendDocFile({spaceId: action.payload.spaceId, title: action.payload.file.name, content: action.payload.file})
+    const sendFile = yield PageService.sendDocFile({
+      spaceId: action.payload.spaceId,
+      userId: action.payload.userId,
+      title: action.payload.file.name,
+      content: action.payload.file
+    })
     yield put(actions.sendDocFileSuccess(sendFile))
     // Go to the editor
     yield put(push(`/spaces/${sendFile.spaceId}/pages/${sendFile._id}/edit`))

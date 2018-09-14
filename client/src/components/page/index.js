@@ -158,8 +158,15 @@ class Page extends Component {
   }
 
   handleChoosenFile = (e) => {
+    const { user } = this.props
     if (e.target.files[0]) {
-      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+      this.props.actions.sendDocFileRequest(
+        {
+          spaceId: this.props.space._id,
+          userId: user._id,
+          file: e.target.files[0]
+        }
+      )
     } else {
       console.log('cancel')
     }

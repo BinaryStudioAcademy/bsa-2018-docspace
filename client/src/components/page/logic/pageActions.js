@@ -138,7 +138,7 @@ export const cancelPageByIdRequst = () => ({
 // SEND DOC FILE
 export const sendDocFileRequest = (fileAndSpaceId) => ({
   type: actionTypes.SEND_DOC_FILE_REQUEST,
-  payload: { spaceId: fileAndSpaceId.spaceId, file: fileAndSpaceId.file }
+  payload: fileAndSpaceId
 })
 
 export const sendDocFileSuccess = (pagefile) => ({
