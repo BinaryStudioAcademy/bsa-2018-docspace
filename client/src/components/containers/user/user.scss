@@ -634,8 +634,11 @@ h2.recent-work-list-wrapper-header {
   margin: 0 0 20px 0;
 }
 .language-choise select {
-  padding: 2px 15px;
-  margin-left: 10px;
+  padding: 2px 5px;
+  &:focus, &:active {
+    outline: none;
+    border: 0;
+  }
 }
 .user-settings-nav-bar{
   margin: 20px 0;

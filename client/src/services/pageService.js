@@ -63,14 +63,23 @@ class PageService {
   async sendDocFile (file) {
     let fd = new FormData()
     fd.append('docfile', file.content)
-    fd.append('docfileDescription', JSON.stringify({title: file.title.split('.')[0], spaceId: file.spaceId})) // split extension from name example.docx -> example
+    fd.append('docfileDescription', JSON.stringify({title: file.title.split('.')[0], spaceId: file.spaceId, userId: file.userId})) // split extension from name example.docx -> example
     const result = await fetch('/api/uploadFiles/convertWordToHTML', { method: 'POST',
       body: fd })
       .then(res => res.json())
       .catch(err => console.log(err))
     return result
   }
-
+  async sendFileBlog (data) {
+    let fd = new FormData()
+    fd.append('docfile', data.file)
+    fd.append('docfileDescription', JSON.stringify({title: data.file.name.split('.')[0], spaceId: data.spaceId, userId: data.userId, blogId: data.blogId}))
+    const result = await fetch('/api/uploadFiles/convertWordToHTML', { method: 'POST',
+      body: fd })
+      .then(res => res.json())
+      .catch(err => console.log(err))
+    return result
+  }
   exportPageToPdf = (page) => {
     const { content, _id } = page
     const options = {

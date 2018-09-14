@@ -7,7 +7,7 @@ import PageInfo from 'src/components/common/pageInfo'
 import PageContent from 'src/components/common/pageContent'
 import { isPagesFetching } from 'src/components/page/logic/pageReducer'
 import { spaceById } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { getPageByIdRequest, deleteBlogPageRequest, sendMention } from 'src/components/page/logic/pageActions'
+import { getPageByIdRequest, deleteBlogPageRequest, sendMention, sendDocFileBlogRequest } from 'src/components/page/logic/pageActions'
 import { bindActionCreators } from 'redux'
 
 import CommentsList from 'src/components/commentsList'
@@ -17,7 +17,6 @@ import { AddComment } from 'src/components/comments/addComment'
 import { MoonLoader } from 'react-spinners'
 
 import {addCommentRequest, deleteCommentRequest, editCommentRequest} from 'src/components/page/commentsLogic/commentsActions'
-
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
@@ -94,6 +93,25 @@ class Page extends Component {
         : this.props.actions.putLikeOnCommentRequest(this.props.user._id, this.props.page, comment)
     }
   }
+  handleCallSystemDialogWindow = () => {
+    this.refs.fileUploader.click()
+  }
+  handleChoosenFile = (e) => {
+    const { user, space } = this.props
+    if (e.target.files[0]) {
+      this.props.actions.sendDocFileBlogRequest(
+        {
+          blogId: space.blogId,
+          userId: user._id,
+          file: e.target.files[0]
+        },
+        space._id,
+        user._id
+      )
+    } else {
+      console.log('cancel')
+    }
+  }
 
   likeComment = (isLiked, comment) => {
     this.likePage(isLiked, 'comment', comment)
@@ -112,6 +130,7 @@ class Page extends Component {
           handleEditPageClick={this.handleEditPageClick}
           renderDeleteBtn={space.authUserPermissions.blog.delete}
           openWarningModal={this.handleOpenWarningModal}
+          onWordImport={this.handleCallSystemDialogWindow}
           canExport={space.authUserPermissions.space.export}
         />
         { isFetching || !this.props.page
@@ -174,6 +193,11 @@ class Page extends Component {
               />
               }
             </div>
+            <input
+              type='file' id='fileBlog' ref='fileUploader'
+              style={{display: 'none'}}
+              onChange={this.handleChoosenFile}
+            />
           </div>
         }
       </React.Fragment>
@@ -238,7 +262,8 @@ function mapDispatchToProps (dispatch) {
         putLikeOnCommentRequest,
         sendMention,
         openWarningModal,
-        closeWarningModal
+        closeWarningModal,
+        sendDocFileBlogRequest
       }
       , dispatch)
   }

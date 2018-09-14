@@ -28,6 +28,7 @@ function all (state = initialState.all, action) {
     case actionTypes.GET_PAGE_BY_ID_SUCCESS:
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_BLOG_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_BLOG_SUCCESS:
     case actionTypes.SEND_DOC_FILE_SUCCESS:
       return [ ...state, action.payload._id ]
 
@@ -175,6 +176,8 @@ function isFetching (state = initialState.isFetching, action) {
     case actionTypes.CREATE_PAGE_SUCCESS:
     case actionTypes.CREATE_PAGE_ERROR:
     case actionTypes.UPDATE_PAGE_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_BLOG_SUCCESS:
+    case actionTypes.SEND_DOC_FILE_BLOG_ERROR:
     case actionTypes.UPDATE_BLOG_PAGE_SUCCESS:
     case actionTypes.MOVE_PAGE_TO_SPACE_SUCCESS:
     case actionTypes.COPY_PAGE_SUCCESS:

@@ -4,7 +4,7 @@ import Button from '../../components/common/button'
 import Input from 'src/components/common/input'
 import Errors from 'src/components/common/error'
 import { translate } from 'react-i18next'
-
+import Select from 'src/components/common/select'
 export class ProfileFields extends Component {
   constructor (props) {
     super(props)
@@ -99,12 +99,22 @@ export class ProfileFields extends Component {
   render () {
     const {email, login, firstName, lastName} = this.props.user
     const { t, i18n } = this.props
-    const changeLanguage = lng => {
+    const changeLanguage = target => {
+      let lng = target.value
       i18n.changeLanguage(lng)
       localStorage.setItem('language', lng)
       this.setState({language: lng})
     }
-
+    const optionsLanguage = [
+      {
+        value: 'en',
+        showValue: 'english'
+      },
+      {
+        value: 'uk',
+        showValue: 'ukrainian'
+      }
+    ]
     return (
       <div className='profile-fields-wrapper'>
         <ul className='profile-fields-items'>
@@ -167,10 +177,11 @@ export class ProfileFields extends Component {
           ? <React.Fragment>
             <div className='language-choise'>
               <span>{t('choose_language')}</span>
-              <select value={this.state.language} onChange={(e) => changeLanguage(e.target.value)}>
-                <option value='en'>{t('english')}</option>
-                <option value='uk'>{t('ukrainian')}</option>
-              </select>
+              <Select
+                selectValue={this.state.language}
+                onChange={changeLanguage}
+                options={optionsLanguage}
+              />
             </div>
           </React.Fragment>
           : null
