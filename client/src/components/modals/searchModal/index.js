@@ -77,7 +77,7 @@ class SearchModal extends Component {
         <div className='search-result-wrapper'>
           {blog.spaceId
             ? <NavLink onClick={this.props.closeModal}
-              to={`/spaces/${blog.spaceId && blog.spaceId._id}/blogs/${blog._id}`}>
+              to={`/spaces/${blog.spaceId && blog.spaceId._id}/blog/${blog._id}`}>
               <i className='fas fa-rss-square result-big-icon' />
               {blog.title}
             </NavLink>
