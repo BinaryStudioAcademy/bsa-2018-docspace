@@ -39,9 +39,6 @@ class SpaceHeader extends Component {
             : (
               <div className='space-header-page'>
                 <NavLink className='space-header-name page' to={`/spaces/${id}/overview`}>{space.name}</NavLink>
-                <NavLink className='buttons-item restrictions' title={t('unrestricted')} to={''}>
-                  <i className='fas fa-lock-open' />
-                </NavLink>
               </div>
             )
         }

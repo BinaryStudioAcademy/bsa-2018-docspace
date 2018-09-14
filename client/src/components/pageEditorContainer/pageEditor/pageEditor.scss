@@ -5,7 +5,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-
+  overflow: hidden;
   input.page-title-input{
     max-width: 100%;
     margin: 0;
@@ -168,7 +168,7 @@
             color: white;
             top: 31.5px;
             left: -30px;
-            right: -30px;
+            right: 0px;
             content: attr(data-hover-text-help )
           }
 
@@ -183,6 +183,7 @@
      }
      .user-avatar {
       border-radius: 33px;
+      margin-right: 30px;
     }
      span.avatar-wrp ~ span:hover:after{
         left: -120px;
