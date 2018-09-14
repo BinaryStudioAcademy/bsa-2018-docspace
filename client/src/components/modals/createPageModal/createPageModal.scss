@@ -7,12 +7,17 @@
 
   select{
     color: #333;
-    margin-left: 2rem;
     border: 1px solid #ccc;
     height: 2.14285714em;
     line-height: 1.4285714285714;
     background: #f5f5f5;
-    width: 30%;
+    // width: 30%;
+    height: 100%;
     min-width: 200px;
+    color: rgba(0,0,0,1);
+    text-shadow: 0 0 0 #000;
+  }
+  .select::after{
+    background: #f5f5f5;
   }
 }

@@ -4,7 +4,11 @@ class GeneralRepository {
   }
 
   getAll () {
-    return this.model.find()
+    return this.getAllByCriteria({})
+  }
+
+  getAllByCriteria (criteria) {
+    return this.model.find(criteria)
   }
 
   getById (id) {
@@ -23,12 +27,22 @@ class GeneralRepository {
     return this.model.findOneAndUpdate({ _id: id }, data, {new: true})
   }
 
+  updateMany (filter, data) {
+    return this.model.updateMany(filter, data)
+  }
+
+  updateOne (id, data) {
+    return this.model.updateOne({ _id: id }, data)
+  }
+
   delete (id) {
     return this.model.deleteOne({ _id: id })
   }
 
-  deleteByCondition (condition) {
-    return this.model.deleteMany(condition)
+  searchByTitle (filter) {
+    return this.model.find({title: { $regex: filter, $options: 'i' }, isDeleted: false})
+      .populate({ path: 'spaceId', select: '_id' })
+      .populate({ path: 'spaceId', select: 'name' })
   }
 }
 

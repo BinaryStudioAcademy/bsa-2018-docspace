@@ -1,0 +1,80 @@
+@import 'globalStyles/variables.scss';
+
+.sidebar {
+  .full-sidebar.minimized {
+    .space-sidebar-main-navbar-section,
+    .space-sidebar-header {
+      justify-content: center;
+    }
+  }
+
+  .space-sidebar {
+    &-header {
+      margin: 15px;
+      padding: 10px 10px 10px 3px;
+      display: flex;
+      flex-shrink: 0;
+
+      &:hover {
+        background: $grayBackground;
+        cursor: pointer;
+      }
+
+      &-icon {
+        color: $white;
+        background:$blue;
+        padding: 8px 8px;
+        border: 2px solid $white;
+        border-radius: 6px;
+      }
+
+      &-name {
+        line-height: 2.3;
+        margin-left: 7px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &-main {
+      padding: 15px;
+      overflow-y: auto;
+      font-size: 15px;
+
+      &-navbar {
+        padding-bottom: 15px;
+
+        &-section {
+          display: flex;
+          text-decoration: none;
+          color: $grayDark;
+          padding: 10px;
+
+          &.current {
+            background: #eaecef;
+            color: $primaryColor;
+          }
+
+          &:hover {
+            background: $grayBackground;
+            cursor: pointer;
+          }
+
+          &-name {
+            margin-left: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+
+    &-loader {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

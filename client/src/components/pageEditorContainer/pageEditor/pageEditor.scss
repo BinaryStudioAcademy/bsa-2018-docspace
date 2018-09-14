@@ -5,7 +5,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-
+  overflow: hidden;
   input.page-title-input{
     max-width: 100%;
     margin: 0;
@@ -67,12 +67,17 @@
         vertical-align: baseline;
         white-space: nowrap;
         margin-left: 10px;
-
+        &:hover {
+          background: #eae6e6;
+        }
         &.accept-button{
             background: $primaryColor;
             border-color: transparent;
             color: white;
             font-weight: bold;
+            &:hover {
+              background: #3880c9;
+            }
         }
     }
   }
@@ -163,7 +168,7 @@
             color: white;
             top: 31.5px;
             left: -30px;
-            right: -30px;
+            right: 0px;
             content: attr(data-hover-text-help )
           }
 
@@ -176,7 +181,10 @@
         }
       }
      }
-     
+     .user-avatar {
+      border-radius: 33px;
+      margin-right: 30px;
+    }
      span.avatar-wrp ~ span:hover:after{
         left: -120px;
         right: -2px;
@@ -189,10 +197,17 @@
 }
 
 // It's may be usefull! Sometimes there are some bugs with dispaying jodit editor workarea
-// .jodit_container .jodit_workplace{
-//   padding-left: 5rem;
-//   width: 100%;
-// }
+.jodit_container {
+  margin: 0 auto
+}
+
+.jodit_container:not(.jodit_inline) .jodit_workplace {
+    border:none
+}
+
+dialog {
+  display: block;
+}
 
 // .jodit_container:not(.jodit_inline) .jodit_wysiwyg{
   // padding-left: 20px !important;

@@ -1,0 +1,16 @@
+.recent-work-list-item {
+    #recent-work-content-icon {
+        font-size: 16px;
+    }
+    .recent-work-name-deleted {
+        color: #ee7d7d;
+    }
+    .recent-work-disabled-link {
+        pointer-events: none; 
+    }
+    .recent-work-time{
+        font-size: 10px;
+        color: #7a869a;
+        margin-right: 15px;
+    }
+}

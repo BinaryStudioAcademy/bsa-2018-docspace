@@ -13,22 +13,4 @@
     white-space: nowrap;
     flex: 1;
   }
-
-  .space-link-block{
-    i{
-      margin-left: 0.5rem;
-    }
-    .space-name-link {
-      color: $gray;
-      font-size: 17px;
-      text-decoration: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      &:hover {
-        color: #949eb3;
-      }
-  }
-  }
-
 }

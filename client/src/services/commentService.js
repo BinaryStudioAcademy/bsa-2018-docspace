@@ -9,8 +9,8 @@ class CommentService {
       return apiResult
     }
 
-    createComment = (comment) => {
-      const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify(comment)}
+    createComment = (comment, pageId) => {
+      const args = {endpoint: '/api/comments', method: 'POST', body: JSON.stringify({comment, pageId: pageId})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))
@@ -18,15 +18,26 @@ class CommentService {
     }
 
     editComment = (id, comment) => {
-      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify(comment)}
+      const args = {endpoint: `/api/comments/${id}`, method: 'PUT', body: JSON.stringify({comment})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))
       return apiResult
     }
+    // toAdd = true - adds LIKE , false - removes LIKE
+    likeComment = (id, userId, toAdd) => {
+      const args = {endpoint: `/api/comments/like/${id}`, method: 'PUT', body: JSON.stringify({userId, toAdd})}
+      const apiResult = callWebApi(args)
+        .then(res => {
+          console.log(res.body)
+          return res.json()
+        })
+        .catch(err => console.log(`Error: ${err}`))
+      return apiResult
+    }
 
-    deleteComment = (id) => {
-      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE'}
+    deleteComment = (id, pageId) => {
+      const args = {endpoint: `/api/comments/${id}`, method: 'DELETE', body: JSON.stringify({pageId})}
       const apiResult = callWebApi(args)
         .then(res => res.json())
         .catch(err => console.log(`Error: ${err}`))

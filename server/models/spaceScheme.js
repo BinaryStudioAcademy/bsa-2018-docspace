@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const timestamps = require('mongoose-timestamp')
 const { Schema } = mongoose
 
 const spaceSchema = new mongoose.Schema({
@@ -10,26 +11,43 @@ const spaceSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isDeleted: Boolean,
+  isDeleted: {type: Boolean, default: false},
   ownerId: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'User'
   },
   description: String,
-  categories: [Schema.Types.ObjectId],
-  homePageId: Schema.Types.ObjectId,
+  categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
+  homePage: { type: Schema.Types.ObjectId, ref: 'Page' },
   blogId: Schema.Types.ObjectId,
-  pages: [Schema.Types.ObjectId],
-  history: [Schema.Types.ObjectId],
-  rights: {
-    users: [Schema.Types.ObjectId],
-    groups: [Schema.Types.ObjectId],
-    anonymous: Schema.Types.ObjectId
+  pages: [{type: Schema.Types.ObjectId, ref: 'Page'}],
+  history: [{type: Schema.Types.ObjectId, ref: 'History'}],
+  permissions: {
+    users: [ { type: Schema.Types.ObjectId, ref: 'Permissions' } ],
+    groups: [ { type: Schema.Types.ObjectId, ref: 'Permissions' } ],
+    anonymous: { type: Schema.Types.ObjectId, ref: 'Permissions' }
+  },
+  spaceSettings: {
+    icon: {type: String, default: 'folder'},
+    color: {type: String, default: '#1c80ff'}
   }
 },
 {
   versionKey: false
 })
+
+spaceSchema.plugin(timestamps, {
+  createdAt: {
+    name: 'createdAt',
+    type: Date
+  },
+  updatedAt: {
+    name: 'updatedAt',
+    type: Date
+  }
+})
+
 const SpaceModel = mongoose.model('Space', spaceSchema)
 
 module.exports = SpaceModel

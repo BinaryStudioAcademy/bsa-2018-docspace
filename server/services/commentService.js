@@ -1,10 +1,12 @@
 const CommentRepository = require('../repositories/CommentRepository')
-const scheme = require('../models/commentScheme')
+const PageRepository = require('../repositories/PageRepository')
+// const scheme = require('../models/commentScheme')
 
 module.exports = {
   findAllCommentsForPage: (req, res) => {
     CommentRepository.getByArray(req.body.commentsId)
       .then(comments => {
+        comments = comments.filter(comment => !comment.isDeleted)
         res.status(200)
         res.send(comments)
       })
@@ -33,59 +35,80 @@ module.exports = {
         console.log(err)
       })
   },
+
   add: (req, res) => {
-    const Comment = new scheme.Comment({
-      userId: req.body.userId,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      text: req.body.text,
-      isDeleted: req.body.isDeleted,
-      comments: req.body.comments,
-      usersLikes: req.body.usersLikes,
-      createdAt: req.body.createdAt,
-      parentId: req.body.parentId
-    })
-    Comment.save()
+    CommentRepository.create(req.body.comment)
       .then(comment => {
-        res.status(200)
-        res.send(comment)
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t add page'
-        })
-        console.log(err)
+        console.log(comment)
+        PageRepository.addNewComment(req.body.pageId, comment._id)
+          .then(() => {
+            CommentRepository.getById(comment._id)
+              .populate({
+                path: 'userId',
+                select: 'firstName lastName avatar login'
+              })
+              .then(populatedCommment => res.send(populatedCommment))
+          })
       })
   },
+
   findOneAndUpdate: (req, res) => {
-    CommentRepository.update(req.params.id, req.body)
-      .then(comment => {
-        if (!comment) {
-          res.status(404).send({
-            message: 'Comment not found with id ' + req.params.id
-          })
-        }
-        res.status(200)
-        res.send(comment[0])
+    CommentRepository.update(req.params.id, req.body.comment)
+      .populate({
+        path: 'userLikes',
+        select: 'firstName lastName'
       })
-      .catch(err => {
-        res.status(500).send({
-          message: 'Can\'t update comment with id' + req.params.id
-        })
-        console.log(err)
+      .populate({
+        path: 'userId',
+        select: 'firstName lastName login avatar'
       })
+      .then(comment => res.send(comment))
+      .catch(err => res.status(500).send(err))
   },
+
+  addRemoveLike: (req, res) => {
+    if (req.body.toAdd) {
+      CommentRepository.addLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
+        .catch(err => res.status(500).send(err))
+    } else {
+      CommentRepository.removeLike(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'userId',
+          select: 'firstName lastName login avatar'
+        })
+        .then(comment => {
+          return res.send(comment)
+        })
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
   findOneAndDelete: (req, res) => {
-    CommentRepository.delete(req.params.id)
+    CommentRepository.update(req.params.id, {'isDeleted': true})
       .then(comment => {
         if (!comment) {
           res.status(404).send({
             message: 'Comment not found with id ' + req.params.id
           })
         }
-        res.status(200).send({
-          message: 'Comment deleted successfully'
-        })
+        PageRepository.deleteComment(req.body.pageId, comment._id)
+          .then(() => res.status(200).send(comment))
+          .catch(err => res.status(500).send(err))
       })
       .catch(err => {
         res.status(500).send({

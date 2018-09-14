@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import loginRequest from './logic/loginActions'
@@ -8,6 +7,8 @@ import Input from '../../common/input'
 import Errors from '../../common/error'
 import SplashScreen from 'src/components/splashScreen'
 import logoInCircle from 'src/resources/icons/logoAnimalwhite.png'
+import { Redirect, withRouter } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import './login.css'
 
@@ -16,6 +17,7 @@ class Login extends Component {
     super(props)
     this.state = {
       redirectToSignup: false,
+      redirectToReset: false,
       email: '',
       password: ''
     }
@@ -24,6 +26,12 @@ class Login extends Component {
   handleRedirectToSignUp = () => {
     this.setState({
       redirectToSignup: !this.state.redirectToSignup
+    })
+  }
+
+  handleRedirectToReset = () => {
+    this.setState({
+      redirectToReset: !this.state.redirectToReset
     })
   }
 
@@ -42,15 +50,18 @@ class Login extends Component {
   isSubmitAllowed = () => this.state.email && this.state.password;
 
   render () {
-    const { redirectToSignup, email, password } = this.state
+    const { redirectToSignup, redirectToReset, email, password } = this.state
     const { requesting, errors, successful } = this.props.login
-
+    const { t } = this.props
     if (redirectToSignup) {
       return <Redirect to='/signup' />
     }
+    if (redirectToReset) {
+      return <Redirect to='/forgot' />
+    }
     if (successful) {
       // only for demo. change to '/'
-      return <Redirect to='/activity' />
+      return <Redirect to='/activity/allupdates' />
     }
     return (
       <Fragment>
@@ -61,14 +72,14 @@ class Login extends Component {
                 <img className='header-logo-img' src={logoInCircle} alt='logo' />
                 <p className='header-logo-label'>DOCSPACE</p>
               </div>
-              <h2>Log in to your account</h2>
+              <h2>{t('log_in_to_your_account')}</h2>
             </div>
             { requesting && <SplashScreen /> }
             <form className='auth-login' onSubmit={this.handleSubmit}>
               <Input
                 inputType='email'
                 name='email'
-                label='Enter email'
+                label={t('enter_email_adress')}
                 value={email}
                 onChange={this.handleFieldChange}
                 autoComplete='on'
@@ -76,7 +87,7 @@ class Login extends Component {
               <Input
                 inputType='password'
                 name='password'
-                label='Enter password'
+                label={t('create_password')}
                 value={password}
                 onChange={this.handleFieldChange}
                 autoComplete='off'
@@ -85,7 +96,7 @@ class Login extends Component {
                 inputType='submit'
                 disabled={!this.isSubmitAllowed()}
                 name='button'
-                value='Login'
+                value={t('login_btn')}
               />
               <div className='auth-notifications'>
                 {!requesting && !!errors.length && (
@@ -93,7 +104,8 @@ class Login extends Component {
 
                 )}
               </div>
-              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>Sign up for account</p>
+              <p className='auth-footer' onClick={this.handleRedirectToSignUp}>{t('sign_up_for_account')}</p>
+              <p className='auth-footer' onClick={this.handleRedirectToReset}>{t('forgot_password_?')}</p>
             </form>
           </div>
         </div>
@@ -109,7 +121,8 @@ Login.propTypes = {
     successful: PropTypes.bool,
     messages: PropTypes.array,
     errors: PropTypes.array
-  })
+  }),
+  t: PropTypes.func
 }
 Login.defaultProps = {
   login: {
@@ -128,4 +141,4 @@ const mapDispatchToProps = dispatch => ({
   loginRequest: bindActionCreators(loginRequest, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)))

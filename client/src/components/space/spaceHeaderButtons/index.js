@@ -1,69 +1,111 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
+import DropdownMenu from 'src/components/common/dropdownMenu'
 
 import './spaceHeaderButtons.css'
 
-const SpaceHeaderButtons = ({ onEdit, onWatch, onShare, onMenu, onSave, children, type, t, hideEditBtn, onDelete }) => {
-  return (
-    <div className='buttons-container'>
+class SpaceHeaderButtons extends Component {
+  constructor () {
+    super()
+
+    this.state = {
+      isMenuOpened: false
+    }
+  }
+
+  onMenu = () => {
+    this.setState((state) => {
+      return {
+        isMenuOpened: !state.isMenuOpened
+      }
+    })
+  }
+
+  render () {
+    const { onEdit, onWatch, children,
+      type, t, hideNotSpaceBtns, openWarningModal, onPdfExport,
+      onWordExport, onWordImport, openMovePageModal,
+      openCopyPageModal, renderDeleteBtn, canExport} = this.props
+
+    const dropdownMenuItems = [
       {
-        !hideEditBtn &&
-        <div className='buttons-item' title={t('Edit')} onClick={onEdit}>
-          <i className='fas fa-pen' />
+        name: t('import_word'),
+        onClick: () => onWordImport()
+      }
+    ]
+
+    canExport && dropdownMenuItems.push(
+      {
+        name: t('export_to_PDF'),
+        onClick: () => onPdfExport()
+      },
+      {
+        name: t('export_to_Word'),
+        onClick: () => onWordExport()
+      })
+
+    !!openMovePageModal && dropdownMenuItems.push({
+      name: t('Move_page'),
+      onClick: () => openMovePageModal()
+    })
+    !!openCopyPageModal && dropdownMenuItems.push({
+      name: t('copy_page'),
+      onClick: () => openCopyPageModal()
+    })
+    return (
+      <div className='buttons-container'>
+        {
+          !hideNotSpaceBtns &&
+          <div className='buttons-item' title={t('edit')} onClick={onEdit}>
+            <i className='fas fa-pen' />
+          </div>
+        }
+        <div className='buttons-item' title={t('watch')}onClick={onWatch}>
+          <i className='fas fa-eye' />
         </div>
-      }
-      {
-        type === 'blog' || type === 'page'
-          ? (
-            <div className='buttons-item' title={t('Save_for_later')} onClick={onSave}>
-              <i className='far fa-star' />
-            </div>
-          )
-          : null
-      }
-      <div className='buttons-item' title={t('Watch')}onClick={onWatch}>
-        <i className='fas fa-eye' />
+        { !hideNotSpaceBtns &&
+        <DropdownMenu
+          icon='fas fa-ellipsis-h'
+          type='buttons-item'
+          menuItems={dropdownMenuItems}
+        />
+        }
+        {/* TEMP ADDED FOR DELETING PAGE */}
+        {
+          type === 'page' && renderDeleteBtn &&
+          <div className='buttons-item' onClick={openWarningModal} >
+            <i className='fas fa-trash' />
+          </div>
+        }
+        {children}
       </div>
-      <div className='buttons-item' title={t('Share_this_page_with_others')} onClick={onShare}>
-        <i className='fas fa-share-square' />
-      </div>
-      {/*
-      TEMP HIDDEN
-      <div className='buttons-item' onClick={onMenu}>
-        <i className='fas fa-ellipsis-h' />
-      </div> */}
-      {/* TEMP ADDED FOR DELETING PAGE */}
-      {
-        type === 'page' &&
-        <div className='buttons-item' onClick={onDelete} >
-          <i className='fas fa-trash' />
-        </div>
-      }
-      {children}
-    </div>
-  )
+    )
+  }
 }
 
 SpaceHeaderButtons.propTypes = {
   t: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
   onWatch: PropTypes.func,
-  onShare: PropTypes.func,
-  onMenu: PropTypes.func,
-  onSave: PropTypes.func,
+  onPdfExport: PropTypes.func,
+  onWordExport: PropTypes.func,
   children: PropTypes.element,
   type: PropTypes.string,
-  hideEditBtn: PropTypes.bool,
-  onDelete: PropTypes.func
+  hideNotSpaceBtns: PropTypes.bool,
+  openWarningModal: PropTypes.func,
+  onWordImport: PropTypes.func,
+  openMovePageModal: PropTypes.func,
+  openCopyPageModal: PropTypes.func,
+  renderDeleteBtn: PropTypes.bool,
+  canExport: PropTypes.bool
 }
 
 SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
   onWatch: () => false,
-  onShare: () => false,
-  onMenu: () => false,
-  onSave: () => false,
+  onPdfExport: () => false,
+  onWordExport: () => false,
   onDelete: () => false,
   children: null,
   type: ''

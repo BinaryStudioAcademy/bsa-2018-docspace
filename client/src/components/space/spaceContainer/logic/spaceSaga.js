@@ -2,6 +2,7 @@ import { takeEvery, put, select } from 'redux-saga/effects'
 import * as actions from 'src/components/space/spaceContainer/logic/spaceActions'
 import * as actionTypes from 'src/components/space/spaceContainer/logic/spaceActionTypes'
 import SpaceService from 'src/services/spaceService'
+import CategoryService from 'src/services/categoryService'
 import { normalize } from 'normalizr'
 import { spacesArray } from './spacesNormalizerSchema'
 import { push } from 'connected-react-router'
@@ -39,7 +40,6 @@ function * getSpace (action) {
   try {
     const space = yield SpaceService.getSpace(action.payload)
     const spaces = yield select(spacesById)
-
     // PROBLEM : First we load a list of all spaces by route 'spacedirectory', then we choose a space
     // and send action GET_SPACE_REQUEST. As result, after getiing space there is appear new space
     // with pages , user and homepage. BUT. There are the space is state with same id, as id of this new space
@@ -48,12 +48,12 @@ function * getSpace (action) {
     // If true, then we just update info about the space. In other case - add new space to store.
 
     if (spaces[space._id]) {
-      yield put(actions.updateSpaceSuccess(space))
+      yield put(actions.addNewInfoSpaceSuccess(space))
     } else {
       yield put(actions.getSpaceSuccess(space))
     }
-  } catch (e) {
-    console.log(e)
+  } catch (err) {
+    yield put({ type: actionTypes.GET_SPACE_ERROR, err })
     yield put(actions.getSpaceError())
   }
 }
@@ -72,6 +72,7 @@ function * createSpace (action) {
 function * updateSpace (action) {
   try {
     const target = action.payload
+    target.createdAt && (delete target.createdAt)
     const updated = yield SpaceService.updateSpace(target._id, target)
     yield put(actions.updateSpaceSuccess(updated))
   } catch (e) {
@@ -91,10 +92,32 @@ function * deleteSpace (action) {
   }
 }
 
+function * createCategory (action) {
+  try {
+    const newCategory = yield CategoryService.createCategory(action.payload)
+    yield put(actions.createCategorySuccess(newCategory))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.createCategoryError())
+  }
+}
+
+function * deleteCategory (action) {
+  try {
+    const updatedSpace = yield CategoryService.deleteCategory(action.payload.categoryId, action.payload.spaceId)
+    yield put(actions.deleteCategorySuccess(updatedSpace))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.deleteCategoryError())
+  }
+}
+
 export default function * selectionsSaga () {
   yield takeEvery(actionTypes.GET_ALL_SPACES_REQUEST, getSpaces)
   yield takeEvery(actionTypes.GET_SPACE_REQUEST, getSpace)
   yield takeEvery(actionTypes.CREATE_SPACE_REQUEST, createSpace)
   yield takeEvery(actionTypes.DELETE_SPACE_REQUEST, deleteSpace)
   yield takeEvery(actionTypes.UPDATE_SPACE_REQUEST, updateSpace)
+  yield takeEvery(actionTypes.CREATE_CATEGORY_REQUEST, createCategory)
+  yield takeEvery(actionTypes.DELETE_CATEGORY_REQUEST, deleteCategory)
 }

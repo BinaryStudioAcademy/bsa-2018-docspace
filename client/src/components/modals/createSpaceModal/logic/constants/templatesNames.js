@@ -1,7 +1,8 @@
-const DOCUMENTATION_SPACE = 'documentation space'
-const KNOWLEDGE_BASE = 'knowledge base'
-const EMPTY_SPACE = 'empty space'
-const GROUP_SPACE = 'group space'
+
+const DOCUMENTATION_SPACE = 'documentation_space'
+const KNOWLEDGE_BASE = 'knowledge_base'
+const EMPTY_SPACE = 'empty_space'
+const GROUP_SPACE = 'group_space'
 
 export default {
   DOCUMENTATION_SPACE,

@@ -1,0 +1,47 @@
+@import "globalStyles/variables.scss";
+a.content-card-name-work {
+  color: $blueLink;
+  text-decoration: none;
+  &:visited,
+  &:active {
+    @extend a.content-card-name-work;
+  }
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: #0c0caa;
+  }
+  &.disabled-link {
+    pointer-events: none;
+  }
+  .work-card-history {
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    &:hover {
+      background: #f7f7f7;
+    }
+    .content-card-deleted {
+      color: #ee7d7d;
+    }
+    #content-icon {
+      font-size: 16px;
+      margin-right: 5px;
+    }
+    .fa-rss-square {
+      color: orange;
+    }
+    .fa-file-alt {
+      color: $blue;
+    }
+    i,
+    .content-card-name-work {
+      padding: 5px;
+    }
+    .content-card-history-name {
+      font-weight: 500;
+    }
+  }
+}
+

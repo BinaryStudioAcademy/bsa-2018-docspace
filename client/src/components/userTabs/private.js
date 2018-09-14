@@ -25,17 +25,22 @@ export class PrivateFields extends Component {
   }
 
   handlePasswordSend = () => {
-    if (this.props.handlePassword && this.props.sendPassword) {
-      this.props.handlePassword(this.state.currentPassword, this.state.newPassword)
+    const { newPassword, currentPassword } = this.state
+    const { handlePassword } = this.props
+    if (handlePassword &&
+      currentPassword && newPassword) {
+      handlePassword(currentPassword, newPassword)
       this.setState({
         newPassword: '',
-        currentPassword: ''
+        currentPassword: '',
+        isSent: true
       })
     }
   }
 
   render () {
     const { t } = this.props
+    const { isSent } = this.state
     return (
       <div className='change-password-wrapper'>
         <h3 className='change-password-header'>
@@ -49,7 +54,6 @@ export class PrivateFields extends Component {
               name='password-wrapper'
               id='currentPassword'
               inputType='password'
-              label={t('current_password')}
               onChange={this.handleCurrentPassword}
               value={this.state.currentPassword}
             />
@@ -60,15 +64,14 @@ export class PrivateFields extends Component {
               name='password-wrapper'
               id='newPassword'
               inputType='password'
-              label={t('new_password')}
               onChange={this.handleNewPassword}
               value={this.state.newPassword}
             />
           </div>
-          {!!this.props.errors.length && (
+          {!!this.props.errors.length && isSent && (
             <Errors message='Failure to login due to:' errors={this.props.errors} />
           )}
-          {this.props.successful && (
+          {this.props.successful && isSent && (
             <span>{t('password_is_changed')}</span>
           )}
           <div className='edit-btn'>
@@ -88,7 +91,6 @@ PrivateFields.propTypes = {
   handlePassword: PropTypes.func,
   errors: PropTypes.array,
   successful: PropTypes.bool,
-  sendPassword: PropTypes.func,
   t: PropTypes.func
 }
 export default translate('translations')(PrivateFields)

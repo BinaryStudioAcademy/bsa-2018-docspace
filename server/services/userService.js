@@ -136,7 +136,25 @@ module.exports = {
       })
       .catch(err => res.send(err))
   },
-
+  compareUsers: (req, res) => {
+    UserRepository.getByLogin(req.body.currentUserLogin)
+      .then(curUser => {
+        UserRepository.getByLogin(req.body.RequestedUserLogin)
+          .then(reqUser => {
+            if (!reqUser.length) {
+              console.log(`error`)
+              return res.status(404).send({status: 404, message: 'Invalid login'})
+            }
+            if (reqUser[0].login === curUser[0].login) {
+              return res.send({requestedUser: reqUser[0], resultOfComparing: true})
+            } else {
+              return res.send({requestedUser: reqUser[0], resultOfComparing: false})
+            }
+          })
+          .catch(() => res.status(404))
+      })
+      .catch(err => console.log(err))
+  },
   findOneAndDelete: (req, res) => {
     UserRepository.delete(req.params.id)
       .then(user => {
@@ -220,6 +238,28 @@ module.exports = {
           msg = err.message.includes('login') ? 'Such login already exist try another one' : 'Such email already exist try another one'
         }
         res.status(500).send({error: msg || err.message})
+      })
+  },
+
+  getByName: (req, res) => {
+    UserRepository.getByName(req.params.name)
+      .then(users => {
+        if (!users) {
+          return res.status(404).send({
+            message: 'user not found with id ' + req.params.id
+          })
+        }
+        res.send(users)
+      }).catch(err => {
+        if (err.kind === 'ObjectId') {
+          return res.status(404).send({
+            message: 'user not found with id ' + req.params.id
+          })
+        }
+
+        return res.status(500).send({
+          message: 'Error retrieving user with id ' + req.params.id
+        })
       })
   }
 }

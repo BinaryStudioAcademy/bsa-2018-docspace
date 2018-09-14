@@ -2,6 +2,8 @@
 
 .page-content {
   margin-top: 1rem;
+  width: 100%;
+  overflow-x: auto;
   // fix jodit bug
   table, td, tr{
     border : 1px solid lightgrey;

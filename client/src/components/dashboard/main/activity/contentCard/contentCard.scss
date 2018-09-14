@@ -1,0 +1,104 @@
+@import "globalStyles/variables.scss";
+
+.content-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
+  #user-avatar-icon {
+    font-size: 35px;
+  }
+  .content-card-user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 0 8px;
+  }
+  .disabled-link {
+    pointer-events: none;
+  }
+  .content-card-deleted {
+    color: #ee7d7d;
+    &:hover::after {
+      content: attr(data-title);
+    }
+  }
+  #content-icon {
+    font-size: 16px;
+  }
+  .fa-folder {
+    color: #762ea2;
+  }
+  .fa-rss-square {
+    color: orange;
+  }
+  .fa-file-alt {
+    color: $blue;
+  }
+  i,
+  .content-card-action,
+  .content-card-name,
+  .content-card-time {
+    padding: 5px;
+  }
+  .history-name-container .content-card-name {
+    font-weight: 500;
+    text-overflow: ellipsis;
+  }
+  a.content-card-name {
+    color: $blueLink;
+    text-decoration: none;
+    &:visited,
+    &:active {
+      @extend a.content-card-name;
+    }
+  }
+  .content-card-history {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 8px 0;
+  }
+  .content-card-history-name {
+    max-width: 150px;
+    font-weight: 500;
+    padding: 5px;
+  }
+  .content-card-time,
+  .content-card-action {
+    color: $grey;
+  }
+  .history-name-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 30%;
+    text-align: left;
+  }
+  .history-user-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    min-width: 150px;
+    margin: 0 35px 0 0;
+    text-align: center;
+  }
+  .content-card-action {
+    width: 20%;
+  }
+  .content-card-time {
+    text-align: right;
+    width: 20%;
+    margin-right: 10px;
+  }
+}

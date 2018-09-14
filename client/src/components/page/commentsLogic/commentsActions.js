@@ -8,12 +8,20 @@ export const getAllCommentsRequest = (commentsId) => ({
   }
 })
 
-export const allCommentsFetched = (comments) => ({
-  type: commentsActionTypes.GET_ALL_COMMENTS_SUCCESS,
-  payload: {
-    comments: comments
+export const allCommentsFetched = (comments) => {
+  const commentsWithCorrectTime = comments.map((comment) => {
+    comment.createdAt = new Date(comment.createdAt)
+
+    return comment
+  })
+
+  return {
+    type: commentsActionTypes.GET_ALL_COMMENTS_SUCCESS,
+    payload: {
+      comments: commentsWithCorrectTime
+    }
   }
-})
+}
 
 export const getAllCommentsFailure = () => ({
   type: commentsActionTypes.GET_ALL_COMMENTS_ERROR
@@ -23,34 +31,30 @@ export const getAllCommentsFailure = () => ({
 
 export const addCommentRequest = (comment, page) => ({
   type: commentsActionTypes.CREATE_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
-export const addCommentSuccessfully = (comment) => ({
-  type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
-  payload: {
-    comment: comment
+export const addCommentToPageSuccess = (page, newComment) => {
+  newComment.createdAt = new Date(newComment.createdAt)
+
+  return {
+    type: commentsActionTypes.CREATE_COMMENT_SUCCESS,
+    payload: {page, newComment}
   }
-})
+}
 
 export const addCommentFailure = () => ({
   type: commentsActionTypes.CREATE_COMMENT_ERROR
 })
-
 // EDIT
 export const editCommentRequest = (comment, page) => ({
   type: commentsActionTypes.EDIT_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
-export const editCommentSuccessfully = () => ({
-  type: commentsActionTypes.EDIT_COMMENT_SUCCESS
+export const editCommentSuccess = (page, editedComment) => ({
+  type: commentsActionTypes.EDIT_COMMENT_SUCCESS,
+  payload: {page, editedComment}
 })
 
 export const editCommentFailure = () => ({
@@ -60,14 +64,12 @@ export const editCommentFailure = () => ({
 // DELETE
 export const deleteCommentRequest = (comment, page) => ({
   type: commentsActionTypes.DELETE_COMMENT_REQUEST,
-  payload: {
-    comment: comment,
-    page: page
-  }
+  payload: {comment, page}
 })
 
-export const deleteCommentSuccessfully = () => ({
-  type: commentsActionTypes.DELETE_COMMENT_SUCCESS
+export const deleteCommentSuccess = (page, deletedComment) => ({
+  type: commentsActionTypes.DELETE_COMMENT_SUCCESS,
+  payload: {page, deletedComment}
 })
 
 export const deleteCommentFailure = () => ({

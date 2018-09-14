@@ -1,0 +1,32 @@
+
+.matched-content-list{
+  &-item{
+    display: flex;
+    max-height: 300px;
+    padding: 0.7rem;
+
+    &-content{
+      max-height: 65px;
+      // white-space:nowrap;
+      overflow:hidden ;
+      text-overflow:ellipsis;
+    }
+
+    &-body{
+      display: flex;
+      flex-direction: column;
+      padding-left: 0.5rem;
+      padding-right: 1rem;
+    }
+
+    &-header{
+      padding-bottom: 5px;
+    }
+
+    &-meta{
+      color: #707070;
+      font-size: 12px;
+      padding-top:5px;
+    }
+  }
+}

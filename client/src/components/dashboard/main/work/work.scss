@@ -4,6 +4,7 @@
   flex-direction: column;
   margin-left: 30px;
   padding: 20px;
+  min-width: 600px;
   .work-header {
     padding: 8px;
     display: flex;
@@ -13,18 +14,24 @@
     }
   }
   .work-body {
-    ul {
-      display: flex;
-      padding: 0;
-      list-style: none;
-      box-shadow: 0px 3px 0px 0px #0000002e;
-      li {
-        font-weight: 500;
-        padding: 4px 8px;
-        cursor: pointer;
-        &:hover {
-          color: blue;
-        }
+    margin-top: 9px;
+    margin-bottom: 20px;
+    padding: 4px 0;
+    list-style: none;
+    box-shadow: 0px 3px 0px 0px #ccc;
+    a.active-link {
+      box-shadow: 0px 3px 0px 0px rgb(0, 82, 204);
+      color: rgb(0, 82, 204);
+    }
+    a {
+      font-weight: 500;
+      padding: 4px 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+      &:hover {
+        color: rgb(0, 82, 204);
       }
     }
   }

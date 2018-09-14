@@ -1,6 +1,14 @@
 import { callWebApi } from 'src/helpers/requestHelper'
 
 class UserService {
+  getUser (id) {
+    const args = { endpoint: `/api/user/${id}`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => res.json())
+      .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
   updateUser (user) {
     const args = { endpoint: `/api/user/${user.id}/setting`, method: 'PUT', body: JSON.stringify(user) }
     const apiResult = callWebApi(args)
@@ -14,6 +22,41 @@ class UserService {
     const apiResult = callWebApi(args)
       .then(res => res.json())
       .catch(err => console.log(`Error: ${err}`))
+    return apiResult
+  }
+
+  compareUsers (data) {
+    const args = { endpoint: `/api/user/compareUsers`, method: 'POST', body: JSON.stringify(data) }
+    const apiResult = callWebApi(args)
+      .then(res => {
+        return res.json()
+      })
+      .catch(err => {
+        throw err
+      })
+    return apiResult
+  }
+
+  sendAvatarFile (file, userId) {
+    let fd = new FormData()
+    fd.append('avatar', file)
+    fd.append('userId', JSON.stringify({userId}))
+    const args = { endpoint: `/api/upload/avatar`, method: 'POST', body: fd, hasOwnHeaders: true }
+    const apiResult = callWebApi(args)
+      .then(res => {
+        return res.json()
+      })
+      .catch(err => console.log(err))
+    return apiResult
+  }
+
+  getAllUsers () {
+    const args = { endpoint: `/api/user`, method: 'GET' }
+    const apiResult = callWebApi(args)
+      .then(res => {
+        return res.json()
+      })
+      .catch(err => console.log(err))
     return apiResult
   }
 }

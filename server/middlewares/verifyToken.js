@@ -1,6 +1,5 @@
 module.exports = passport => (req, res, next) => {
   passport.authenticate('jwt', {session: false}, (err, authUser, info) => {
-    console.log(authUser)
     if (err) {
       return res.json({ isLoggedIn: false, message: 'Not authorized' })
     }
@@ -14,7 +13,8 @@ module.exports = passport => (req, res, next) => {
       firstName: authUser.firstName,
       lastName: authUser.lastName,
       email: authUser.email,
-      login: authUser.login
+      login: authUser.login,
+      avatar: authUser.avatar
     }
     req.user = user
     next()

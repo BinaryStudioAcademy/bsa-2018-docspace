@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-import UserAvatarLink from 'src/resources/icons/user-comment.png'
 import {CommentActions} from 'src/components/comments/commentActions'
 import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import AddComment from '../addComment'
+import formatDate from 'src/helpers/formatDate'
+import UserAvatarLink from 'src/resources/icons/user-comment.png'
+import { Link } from 'react-router-dom'
 
 import './singleComment.css'
 
@@ -22,7 +24,6 @@ export class Comment extends Component {
   }
 
   onReplyComment () {
-    this.props.replyComment({target: this.props.comment._id, level: this.props.level})
     this.setState(prevState => {
       return { replyMode: !prevState.replyMode }
     })
@@ -35,62 +36,91 @@ export class Comment extends Component {
   }
 
   onDeleteComment () {
-    this.props.deleteComment && this.props.deleteComment({target: this})
+    const { deleteComment } = this.props
+    deleteComment && deleteComment({target: this})
   }
 
-  onLikeComment () {
-  }
-
-  transformData () {
-    const time = this.props.comment.createdAt.substr(11, 5)
-    const year = this.props.comment.createdAt.substr(0, 4)
-    const mounth = this.props.comment.createdAt.substr(5, 2)
-    const day = this.props.comment.createdAt.substr(8, 2)
-    return `${time} ${day}.${mounth}.${year}`
+  onLikeComment (obj) {
+    const { likeAction } = this.props
+    likeAction(obj, this.props.comment)
   }
 
   render () {
+    const { comment, user, editComment, margin, canDelete, t, level } = this.props
+    const { userId, pageId, spaceId, type, sendMention, addNewComment } = this.props
+    const { replyMode } = this.state
+    let isCurrentUserComment
+
+    if (typeof comment.userId === 'string') {
+      isCurrentUserComment = comment.userId === user._id
+    } else if (typeof comment.userId === 'object') {
+      isCurrentUserComment = comment.userId._id === user._id
+    }
+
+    let avatarLink = UserAvatarLink
+    if (comment.userId && comment.userId.avatar) {
+      avatarLink = comment.userId.avatar
+    }
+
     return (
       <React.Fragment>
         {this.state.editMode
           ? <AddComment
-            text={this.props.comment.text}
+            userLogin={user.login}
+            text={comment.text}
             onEditComment={this.onEditComment}
-            editComment={this.props.editComment}
-            firstName={this.props.comment.firstName}
-            lastName={this.props.comment.lastName}
-            userId={this.props.comment.userId}
-            _id={this.props.comment._id}
-            parentId={this.props.comment.parentId}
+            editComment={editComment}
+            userId={comment.userId._id}
+            avatar={user.avatar}
+            _id={comment._id}
+            parentId={comment.parentId}
           />
-          : <div className='comment-wrapper' style={{marginLeft: this.props.margin}}>
-            <CommentAvatar UserAvatarLink={UserAvatarLink} />
-            <div className='comment-body'>
-              <h4 className='comment-first-last-names'>
-                <a href=''>{this.props.comment.firstName} {this.props.comment.lastName}</a>
-              </h4>
-              <div className='comment-body-content'>
-                <p>{this.props.comment.text}</p>
-              </div>
-              <CommentActions
-                onReplyComment={this.onReplyComment}
-                onEditComment={this.onEditComment}
-                onDeleteComment={this.onDeleteComment}
-                onLikeComment={this.onLikeComment}
-                editComment={this.props.editComment}
-                creationDate={this.transformData()}
-                t={this.props.t}
+          : <div className='comment-wrapper' style={{marginLeft: margin}}>
+            {comment.userId &&
+            <React.Fragment>
+              <CommentAvatar
+                UserAvatarLink={avatarLink}
+                login={comment.userId.login}
               />
-            </div>
-          </div>}
-        {this.state.replyMode &&
+              <div className='comment-body'>
+                <Link to={`/users/${comment.userId.login}`} >
+                  <h4 className='comment-first-last-names'>
+                    <span>{comment.userId.firstName} {comment.userId.lastName}</span>
+                  </h4>
+                </Link>
+                <div className='comment-body-content'>
+                  <p>{comment.text}</p>
+                </div>
+                <CommentActions
+                  onReplyComment={this.onReplyComment}
+                  onEditComment={this.onEditComment}
+                  onDeleteComment={this.onDeleteComment}
+                  onLikeComment={this.onLikeComment}
+                  editComment={editComment}
+                  creationDate={formatDate(comment.createdAt)}
+                  likes={comment.userLikes}
+                  comparingCurrentAndCommentUsers={isCurrentUserComment}
+                  t={t}
+                  user={user}
+                  canDelete={canDelete}
+                />
+              </div>
+            </React.Fragment>
+            }
+          </div> }
+        {replyMode &&
         <AddComment
-          parentId={this.props.comment._id}
-          style={{'marginLeft': `${(this.props.level + 1) * 25}px`}}
-          addNewComment={this.props.addNewComment}
+          parentId={comment._id}
+          style={{'marginLeft': `${(level + 1) * 25}px`}}
+          addNewComment={addNewComment}
           ReplyComment={this.onReplyComment}
-          firstName={this.props.firstName}
-          lastName={this.props.lastName}
+          userLogin={user.login}
+          sendMention={sendMention}
+          avatar={user.avatar}
+          userId={userId}
+          pageId={pageId}
+          spaceId={spaceId}
+          type={type}
         />}
       </React.Fragment>
     )
@@ -98,16 +128,21 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
+  type: PropTypes.string,
   comment: PropTypes.object,
+  pageId: PropTypes.string,
+  spaceId: PropTypes.string,
   margin: PropTypes.string,
   t: PropTypes.func,
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
-  replyComment: PropTypes.func,
   addNewComment: PropTypes.func,
   level: PropTypes.number,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string
-
+  likeAction: PropTypes.func,
+  userId: PropTypes.string,
+  user: PropTypes.object,
+  sendMention: PropTypes.func,
+  canDelete: PropTypes.bool
 }
+
 export default translate('translations')(Comment)
