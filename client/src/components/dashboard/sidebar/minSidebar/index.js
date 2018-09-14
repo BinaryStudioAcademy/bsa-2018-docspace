@@ -19,7 +19,23 @@ class MinSidebar extends Component {
       showPageModal: false,
       showSearchModal: false
     }
-    this.dropdownMenuItems = {
+  }
+
+  toggleModal = () => {
+    this.setState({
+      showPageModal: !this.state.showPageModal
+    })
+  }
+
+  toggleSearchModal = () => {
+    this.setState(prevState => ({
+      showSearchModal: !prevState.showSearchModal
+    }))
+  }
+
+  render () {
+    const logo = this.props.isGray ? grayLogo : whiteLogo
+    const dropdownMenuItems = {
       avatar: [
         {
           name: this.props.t('profile'),
@@ -37,23 +53,7 @@ class MinSidebar extends Component {
         }
       ]
     }
-  }
-
-  toggleModal = () => {
-    this.setState({
-      showPageModal: !this.state.showPageModal
-    })
-  }
-
-  toggleSearchModal = () => {
-    this.setState(prevState => ({
-      showSearchModal: !prevState.showSearchModal
-    }))
-  }
-
-  render () {
-    const logo = this.props.isGray ? grayLogo : whiteLogo
-    this.dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
+    dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
     return (
       <div className='min-sidebar' >
         {this.state.showPageModal && <CreatePageModal closeModal={this.toggleModal} />}

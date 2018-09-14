@@ -41,8 +41,15 @@ class SpaceOverview extends Component {
   }
 
   handleChoosenFile = (e) => {
+    const { user, space } = this.props
     if (e.target.files[0]) {
-      this.props.actions.sendDocFileRequest({spaceId: this.props.space._id, file: e.target.files[0]})
+      this.props.actions.sendDocFileRequest(
+        {
+          spaceId: space._id,
+          userId: user._id,
+          file: e.target.files[0]
+        }
+      )
     } else {
       console.log('cancel')
     }
@@ -81,7 +88,16 @@ SpaceOverview.propTypes = {
   space: PropTypes.object,
   history: PropTypes.object,
   actions: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
+  user: PropTypes.object
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.userReducer.messages.length
+      ? state.user.userReducer.user
+      : state.verification.user
+  }
 }
 
 function mapDispatchToProps (dispatch) {
@@ -101,4 +117,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default translate('translations')(connect(null, mapDispatchToProps)(SpaceOverview))
+export default translate('translations')(connect(mapStateToProps, mapDispatchToProps)(SpaceOverview))

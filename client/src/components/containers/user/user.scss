@@ -232,12 +232,22 @@
 }
 .profile-page-content-wrapper .profile-page-center-content {
   margin: 0 auto;
-  max-width: 720px;
+  width: 720px;
 }
 
 .profile-page-content-wrapper .profile-page-center-content .profile-about {
   margin-top: 24px;
   width: 100%;
+}
+
+.profile-page-content-wrapper{
+  display: flex;
+  flex: 1;
+}
+
+.profile-page-center-content{
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-about .profile-status {
@@ -264,9 +274,10 @@
 
 .profile-edit-buttons {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
+   margin: 20px 0;
+   padding: 4px 0 0;
+   list-style: none;
+   width: 100%;
 }
 
 .profile-edit-buttons .sweet-loading {
@@ -431,7 +442,9 @@
 }
 
 .recent-work-list-wrapper {
-  margin: 40px 0px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0px;
   width: 100%;
   max-width: 944px;
   text-align: start;
@@ -447,7 +460,6 @@ h2.recent-work-list-wrapper-header {
   margin-bottom: 10px;
 }
 .recent-work-list-items {
-  max-height: 200px;
   overflow-y: auto;
 }
 
@@ -547,6 +559,7 @@ h2.recent-work-list-wrapper-header {
 }
 
 .change-password-wrapper {
+  height: 284px;
   text-align: start;
 }
 
@@ -635,17 +648,20 @@ h2.recent-work-list-wrapper-header {
 }
 .language-choise select {
   padding: 2px 5px;
+  min-width: 200px;
   &:focus, &:active {
     outline: none;
     border: 0;
   }
 }
+.profile-fields-wrapper{
+  height: 285px;
+}
 .user-settings-nav-bar{
-  margin: 20px 0;
-  padding: 4px 0 0 0;
-  list-style: none;
-  box-shadow: 0px 3px 0px 0px #ccc;
-  width: 100%;
+  box-shadow: 0 3px 0 0 #ccc;
+   width: 100%;
+   display: flex;
+   height: 30px;
   a.active-link {
     box-shadow: 0px 3px 0px 0px rgb(0, 82, 204);
     color: rgb(0, 82, 204);

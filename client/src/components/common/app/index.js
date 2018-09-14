@@ -19,6 +19,7 @@ import FullSidebar from 'src/components/dashboard/sidebar/fullSidebar'
 import Administration from 'src/components/administration'
 import GroupPage from 'src/components/group/groupPage'
 import Page404 from 'src/components/common/page404'
+import { AutoSizer } from 'react-virtualized'
 
 import SearchPage from 'src/components/searchPage'
 
@@ -73,6 +74,7 @@ class App extends Component {
   render () {
     const { error } = this.props
     // const showIconsInMinimizeDashboard = true
+
     return (
 
       <React.Fragment>
@@ -89,21 +91,25 @@ class App extends Component {
               {
                 this.renderSidebarDependOnLocation()
               }
-              <DashboardMain>
-                <Switch>
-                  <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
-                  <Route path='/works' component={Work} />
-                  <Route path='/activity' component={Activity} />
-                  <Route path='/people' component={People} />
-                  <Route path='/spacedirectory' component={Spaces} />
-                  <Route path='/users/:login' component={User} />
-                  <Route path='/spaces/:id' component={SpaceContainer} />
-                  <Route path='/group/:id' exact component={GroupPage} />
-                  <Route path='/admin' component={Administration} />
-                  <Route path='/advanced_search_page' component={SearchPage} />
-                  <Redirect to={'/'} />
-                </Switch>
-              </DashboardMain>
+              <AutoSizer disableHeight>
+                {(({ width }) => {
+                  return <DashboardMain width={width}>
+                    <Switch>
+                      <Route path='/' exact render={() => <Redirect to='/activity/allupdates' />} />
+                      <Route path='/works' component={Work} />
+                      <Route path='/activity' component={Activity} />
+                      <Route path='/people' component={People} />
+                      <Route path='/spacedirectory' component={Spaces} />
+                      <Route path='/users/:login' component={User} />
+                      <Route path='/spaces/:id' component={SpaceContainer} />
+                      <Route path='/group/:id' exact component={GroupPage} />
+                      <Route path='/admin' component={Administration} />
+                      <Route path='/advanced_search_page' component={SearchPage} />
+                      <Redirect to={'/'} />
+                    </Switch>
+                  </DashboardMain>
+                })}
+              </AutoSizer>
             </SplitPane>
           </div>
         }

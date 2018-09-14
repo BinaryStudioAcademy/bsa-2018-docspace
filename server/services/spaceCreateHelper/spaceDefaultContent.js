@@ -7,14 +7,14 @@ module.exports = {
                 <div class="confluence-information-macro confluence-information-macro-tip conf-macro output-block" data-hasbody="true" data-macro-name="tip" data-macro-id="24785e6d-e070-4a63-b778-0f2d93f4c9dc" style="margin: 0px 0px 1em; padding: 10px 10px 10px 36px; background: rgb(243, 249, 244); border: 1px solid rgb(145, 200, 156); border-radius: 5px; color: rgb(51, 51, 51); min-height: 20px; position: relative;">
                     <p class="title" style="margin: 0px; padding: 0px; font-weight: bold;">Welcome!</p>
                     <div class="confluence-information-macro-body" style="margin: 0px; padding: 0px;">
-                        <p style="margin: 0px; padding: 0px;">This is the home page for your team space within Confluence. Team spaces are great for sharing knowledge and collaborating on projects, processes and procedures within your team.</p>
+                        <p style="margin: 0px; padding: 0px;">This is the home page for your team space within Docspace. Team spaces are great for sharing knowledge and collaborating on projects, processes and procedures within your team.</p>
                     </div>
                 </div>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><br>Next, you might want to:</p>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><strong>&nbsp; Customise the home page</strong><span>&nbsp;</span>- Click "Edit" to start editing your home page</p>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><strong>&nbsp; Create additional pages</strong><span>&nbsp;</span>- Click "Create" to choose a blank page or template</p>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><strong>&nbsp; Write a blog post</strong><span>&nbsp;</span>- Click "Create" and select "Blog Post" to share news</p>
-                <p style="margin: 10px 0px 0px; padding: 0px;"><strong>&nbsp; Manage permissions</strong><span>&nbsp;</span>- Click "Space Tools" and select "Permissions" in the sidebar to manage what team members see</p>
+                <p style="margin: 10px 0px 0px; padding: 0px;"><strong>&nbsp; Manage permissions</strong><span>&nbsp;</span>- Click "Space Settings" and select "Permissions" in the sidebar to manage what team members see</p>
                 <ul class="inline-task-list" data-inline-tasks-content-id="655575" resolved="" style="margin: 10px 0px 0px; list-style-type: disc;">
                 </ul>
             </div>
@@ -107,7 +107,7 @@ module.exports = {
                 <div class="confluence-information-macro confluence-information-macro-tip conf-macro output-block" data-hasbody="true" data-macro-name="tip" data-macro-id="" style="margin: 0px 0px 1em; padding: 10px 10px 10px 36px; background: rgb(243, 249, 244); border: 1px solid rgb(145, 200, 156); border-radius: 5px; color: rgb(51, 51, 51); min-height: 20px; position: relative;">
                     <p class="title" style="margin: 0px; padding: 0px; font-weight: bold;">Welcome to your new documentation space!</p>
                     <div class="confluence-information-macro-body" style="margin: 0px; padding: 0px;">
-                        <p style="margin: 0px; padding: 0px;">This is the home page for your documentation space within Confluence. Documentation spaces are great for keeping technical documentation organised and up to date.</p>
+                        <p style="margin: 0px; padding: 0px;">This is the home page for your documentation space within Docspace. Documentation spaces are great for keeping technical documentation organised and up to date.</p>
                     </div>
                 </div>
                 <div class="panel conf-macro output-block" data-hasbody="true" data-macro-name="panel" data-macro-id="" style="margin: 10px 0px; padding: 0px; color: rgb(51, 51, 51); border: 1px solid rgb(204, 204, 204); overflow: hidden; border-radius: 3px;">
@@ -115,7 +115,7 @@ module.exports = {
                     <div class="panelHeader" style="margin: 0px; padding: 10px; border-bottom: 1px solid rgb(204, 204, 204); background-color: rgb(247, 247, 247);"><strong>Customise the home page</strong>&nbsp;-&nbsp;Click "Edit" to start editing your home page</div>
                     <div class="panelHeader" style="margin: 0px; padding: 10px; border-bottom: 1px solid rgb(204, 204, 204); background-color: rgb(247, 247, 247);"><strong>Check out our sample pages</strong>&nbsp;-&nbsp;Browse the sample pages in the sidebar for layout ideas</div>
                     <div class="panelHeader" style="margin: 0px; padding: 10px; border-bottom: 1px solid rgb(204, 204, 204); background-color: rgb(247, 247, 247);"><strong>Create additional pages</strong>&nbsp;-&nbsp;Click "Create" and choose "Blank Page" to get started</div>
-                    <div class="panelHeader" style="margin: 0px; padding: 10px; border-bottom: 1px solid rgb(204, 204, 204); background-color: rgb(247, 247, 247);"><strong>Manage permissions</strong>&nbsp;-&nbsp;Click "Space Tools" and select "Permissions" in the sidebar to manage what users see</div>
+                    <div class="panelHeader" style="margin: 0px; padding: 10px; border-bottom: 1px solid rgb(204, 204, 204); background-color: rgb(247, 247, 247);"><strong>Manage permissions</strong>&nbsp;-&nbsp;Click "Space Settings" and select "Permissions" in the sidebar to manage what users see</div>
                 </div>
             </div>
         </div>
@@ -193,11 +193,10 @@ module.exports = {
                 <div class="confluence-information-macro confluence-information-macro-tip conf-macro output-block" data-hasbody="true" data-macro-name="tip" data-macro-id="" style="margin: 0px 0px 1em; padding: 10px 10px 10px 36px; background: rgb(243, 249, 244); border: 1px solid rgb(145, 200, 156); border-radius: 5px; color: rgb(51, 51, 51); min-height: 20px; position: relative;">
                     <p class="title" style="margin: 0px; padding: 0px; font-weight: bold;">Welcome!</p>
                     <div class="confluence-information-macro-body" style="margin: 0px; padding: 0px;">
-                        <p style="margin: 0px; padding: 0px;">This is the home page for your knowledge base space within Confluence. You can use your knowledge base to capture best practices and address common problems.</p>
+                        <p style="margin: 0px; padding: 0px;">This is the home page for your knowledge base space within Docspace. You can use your knowledge base to capture best practices and address common problems.</p>
                     </div>
                 </div>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><br>Next, you might want to:</p>
-                <p style="margin: 10px 0px 0px; padding: 0px;"><strong>Create your first knowledge base article</strong><span>&nbsp;</span>- Click "Create" and select a "How-to" or "Troubleshooting" article.</p>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><strong>Customise the home page</strong><span>&nbsp;</span>- Click "Edit" to get started. Include useful information like what users can expect to find in this knowledge base, frequently asked questions and links to other resources.</p>
                 <p style="margin: 10px 0px 0px; padding: 0px;"><br></p>
             </div>
