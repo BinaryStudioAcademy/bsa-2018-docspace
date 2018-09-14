@@ -24,7 +24,7 @@ class TemplateList extends React.Component {
                 <img className='template-preview' src={item.img} alt='template-preview' />
                 <div className='template-meta'>
                   <div className='template-name'>
-                    {item.name[0].toUpperCase() + item.name.slice(1)}
+                    {item.label[0].toUpperCase() + item.label.slice(1)}
                   </div>
                   <div className='template-description'> {item.previewText} </div>
                 </div>

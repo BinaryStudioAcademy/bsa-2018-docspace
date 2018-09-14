@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getSpacesRequest } from 'src/components/space/spaceContainer/logic/spaceActions'
 import { allSpaces } from 'src/components/space/spaceContainer/logic/spaceReducer'
-import { templates } from './logic/constants/templates'
+import { getTemplates } from './logic/constants/templates'
 import PageFactory from './logic/pageFactory'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
@@ -19,7 +19,7 @@ class CreatePageModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      templates: templates,
+      templates: getTemplates(),
       selectedTemplate: null,
       selectedSpace: null
     }
@@ -31,6 +31,7 @@ class CreatePageModal extends Component {
   handlecreateClick = () => {
     const selectedTemplate = this.state.selectedTemplate
     const selectedSpace = JSON.parse(this.state.selectedSpace)
+    console.log(selectedTemplate.name)
     PageFactory.createTemplatePage(selectedSpace, selectedTemplate.name, this.props.userId)
   }
 
@@ -39,7 +40,7 @@ class CreatePageModal extends Component {
   }
 
   handleFilter = (input) => {
-    let filtered = templates.filter(template => {
+    let filtered = getTemplates().filter(template => {
       return new RegExp(input.value, 'i').test(template.name)
     })
 

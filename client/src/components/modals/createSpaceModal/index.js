@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import WizardSpaceModal from './wizardSpaceModal'
-import items from './logic/constants/spaceTamplates'
+// import items from './logic/constants/spaceTamplates'
+import {getSpaceTemplates} from './logic/constants/spaceTamplates'
 import TemplateSelectionModal from './templateSelectionModal'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
@@ -10,7 +11,7 @@ class CreateSpaceModal extends Component {
   constructor () {
     super()
     this.state = {
-      spaceTemplates: items,
+      spaceTemplates: getSpaceTemplates(),
       selectedTemplate: null,
       firstStep: true
     }
@@ -24,7 +25,7 @@ class CreateSpaceModal extends Component {
   }
 
   handleFilter = (input) => {
-    let filtered = items.filter(template => {
+    let filtered = getSpaceTemplates().filter(template => {
       return new RegExp(input.value, 'i').test(template.name)
     })
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import { translate } from 'react-i18next'
 
 import './RecentWorkListItem.css'
 
-const RecentWorkListItem = ({content}) => {
+const RecentWorkListItem = ({content, t}) => {
   const disabledLink = content && content.isDeleted && 'recent-work-disabled-link'
   return (
     <React.Fragment>
@@ -17,7 +18,7 @@ const RecentWorkListItem = ({content}) => {
               ? <span className='recent-work-name-deleted'> <i className='far fa-trash-alt' aria-hidden='true' /></span>
               : null}
           </span>
-          <span className='recent-work-time'>{content.time}</span>
+          <span className='recent-work-time'>{t(`${content.time}`)}</span>
           <span className='recent-work-name-of-container'>{content.title}</span>
           <span className='recent-work-contributors'>{''}</span>
         </NavLink>
@@ -28,7 +29,8 @@ const RecentWorkListItem = ({content}) => {
 }
 
 RecentWorkListItem.propTypes = {
-  content: PropTypes.object
+  content: PropTypes.object,
+  t: PropTypes.func
 }
 
-export default RecentWorkListItem
+export default translate('translations')(RecentWorkListItem)
