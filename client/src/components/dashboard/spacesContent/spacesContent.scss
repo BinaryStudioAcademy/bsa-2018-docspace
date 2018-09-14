@@ -89,8 +89,12 @@
 .body-spaces-loader {
   display: flex;
   height: 100%;
+  width: 100%;
+  min-height: 400px;
   align-self: center;
+  justify-content: center;
 }
 .sweet-loading {
-  align-self: center;
+  align-items: center;
+  justify-content: center;
 }
