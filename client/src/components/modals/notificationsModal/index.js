@@ -53,8 +53,8 @@ class notificationsModal extends Component {
             <div className='notifications-list'>
               {
                 notifications.map(notif => (
-                  notif.link && <Link to={notif.link} className='notifications-list-item' onClick={this.closeModal}>
-
+                  notif.link &&
+                  <Link to={notif.link} className='notifications-list-item' onClick={this.closeModal} key={notif._id}>
                     <div className='notifications-list-item-content'>
 
                       <i className={notif.icon} />

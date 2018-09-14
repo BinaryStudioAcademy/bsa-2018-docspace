@@ -5,7 +5,9 @@ import { eventChannel } from 'redux-saga'
 import connectSocket from './connectSocket'
 import _ from 'lodash'
 
-const spaceWatchersBySpaceId = (state, id) => state.spaces.byId[id].watchedBy
+const spaceWatchersBySpaceId = (state, id) => {
+  return state.spaces.byId[id] && state.spaces.byId[id].watchedBy ? state.spaces.byId[id].watchedBy : []
+}
 
 function subscribe (socket) {
   return eventChannel(emit => {
@@ -35,8 +37,10 @@ function * read (socket) {
 }
 
 function * handleUpdatePage (socket, action) {
+  console.log('UPDATE PAGE SAGA')
   const page = action.payload
-  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId)
+  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId) || []
+  console.log(spaceWatchers)
   let watchers = _.uniq([ ...spaceWatchers, ...page.watchedBy ].filter(id => id !== socket.authUserId))
   console.log('WATCHERS')
   console.log(watchers)

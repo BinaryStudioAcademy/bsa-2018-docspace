@@ -30,7 +30,8 @@ class SpaceRepository extends GeneralRepository {
         blogId: 1,
         categories: 1,
         spaceSettings: 1,
-        permissions: 1
+        permissions: 1,
+        watchedBy: 1
       }
     )
   }
