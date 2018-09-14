@@ -67,26 +67,9 @@ class PageEditor extends Component {
                    <span>{`/ ${page.title}`}</span>
                  </Link>
                </div>
-               <div className='page-settings-btn-wrp'>
-                 <button data-hover-text-help={t('page location')}>
-                   <i className='fas fa-sitemap' />
-                 </button>
-                 <button data-hover-text-help={t('labels')}>
-                   <i className='fas fa-tags' />
-                 </button >
-                 <button data-hover-text-help={t('permissions_edit_page')}>
-                   <i className='fas fa-lock-open' />
-                 </button>
-               </div>
              </div>
 
              <div className='additional-icons'>
-               <span data-hover-text-help={t('find_replace')}>
-                 <i className='fas fa-search' />
-               </span>
-               <span data-hover-text-help={t('help')}>
-                 <i className='fas fa-question' />
-               </span>
                <span className='avatar-wrp' data-hover-text-help={t('its_you')}>
                  { user.avatar
                    ? <Link to={`/users/${user.login}`} >
@@ -96,9 +79,6 @@ class PageEditor extends Component {
                      <i id='user-avatar-icon-page' className='fas fa-user-circle' />
                    </Link>
                  }
-               </span>
-               <span data-hover-text-help={t('invite_for_collaborative_editing')}>
-                 <i className='fas fa-plus' />
                </span>
              </div>
            </div>
@@ -123,9 +103,6 @@ class PageEditor extends Component {
                </button>
                <button onClick={this.props.handleCancelBtnClick}>
                  {t('cancel')}
-               </button>
-               <button>
-                 <i className=' fas fa-ellipsis-h' />
                </button>
              </div>
            </div>
