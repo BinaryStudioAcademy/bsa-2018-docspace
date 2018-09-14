@@ -116,6 +116,21 @@ function byId (state = initialState.byId, action) {
         }
       }
 
+      // case watcherTypes.ADD_WATCHER_SPACE_SUCCESS + '(EXTERNAL)':
+      // case watcherTypes.DELETE_WATCHER_SPACE_SUCCESS+ '(EXTERNAL)':
+      // {
+      //   const { _id } = action.payload
+      //   if( state[_id]){
+      //     return {
+      //       ...state,
+      //       [_id]: {
+      //         ...state[_id],
+      //         isWatched: !action.payload.isWatched
+      //       }
+      //     }
+      //   } else return state
+      // }
+
     case REFRESH_AUTH_USER_PERMISSIONS: {
       const { spaceId, permissions } = action.payload
       return {

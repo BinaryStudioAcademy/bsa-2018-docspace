@@ -16,7 +16,7 @@ function * historySpaceFlow (action) {
 function * historyPageFlow (action) {
   try {
     const { spaceId, _id: pageId, modifiedVersions, version } = action.payload
-    const modifiedVersion = modifiedVersions && modifiedVersions.length ? modifiedVersions[modifiedVersions.length - 1].version : version
+    const modifiedVersion = modifiedVersions.length ? modifiedVersions[modifiedVersions.length - 1].version : version
     let history = yield call(HistoryService.createHistory, {spaceId, pageId, modifiedVersion, action: action.type})
     yield put({ type: actionTypes.HISTORY_PAGE_SAVE_SUCCESS, payload: history })
   } catch (error) {

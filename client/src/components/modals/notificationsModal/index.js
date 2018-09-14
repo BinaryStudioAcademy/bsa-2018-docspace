@@ -4,10 +4,10 @@ import './notificationsModal.css'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
-import { NavLink, Link, withRouter } from 'react-router-dom'
+import { clearNotificationsForUser } from './logic/actions'
+import { Link, withRouter } from 'react-router-dom'
 import { translate } from 'react-i18next'
-import { MoonLoader } from 'react-spinners'
+import formatDate from 'src/helpers/formatDate'
 
 class notificationsModal extends Component {
   constructor (props) {
@@ -18,21 +18,15 @@ class notificationsModal extends Component {
   }
 
   closeModal = () => {
-    const that = this
-    this.modal.className = 'notifications-modal-body'
-    that.modalParent.className = 'notifications-modal'
-
-    // this.props.actions.cleannotificationsResults()
-    setTimeout(function () {
-      that.props.closeModal()
-    }, 1000)
+    console.log(this.props.userId)
+    const notificationsIds = this.props.notifications.map(notif => notif._id)
+    this.props.actions.clearNotificationsForUser(this.props.userId, notificationsIds)
+    this.props.closeModal()
   }
 
   animation () {
     var that = this
-    console.log(that.modal)
     setTimeout(function () {
-      console.log(that)
       that.modal && (that.modal.className += ' active')
       that.modalParent && (that.modalParent.className += ' active')
     }, 100)
@@ -47,7 +41,7 @@ class notificationsModal extends Component {
   }
 
   render () {
-    const {t, notificationsResults, isFetching, notifications} = this.props
+    const { notifications } = this.props
     return (
       <div className='notifications-modal' ref={elem => this.setModalRef(elem)}>
         <div ref={elem => this.setRef(elem)} className={`notifications-modal-body`}>
@@ -55,17 +49,28 @@ class notificationsModal extends Component {
             <button onClick={this.closeModal} className='return-button'><i className='fas fa-arrow-left' /></button>
           </div>
           <div className='notifications-content'>
-            <header> What you are missed </header>
+            <header> What you have missed: </header>
             <div className='notifications-list'>
               {
                 notifications.map(notif => (
-                  notif.link && <Link to={notif.link} className='notifications-list-item'>
+                  notif.link && <Link to={notif.link} className='notifications-list-item' onClick={this.closeModal}>
 
-                    <i className={notif.icon} />
-                    <span>
-                      {notif.message}
-                    </span>
+                    <div className='notifications-list-item-content'>
 
+                      <i className={notif.icon} />
+
+                      <div className='notifications-list-item-body'>
+
+                        <div>
+                          {notif.message}
+                        </div>
+
+                        <span className='notifications-list-item-meta'>
+                          { notif.createdDate && formatDate(notif.createdDate)}
+                        </span>
+
+                      </div>
+                    </div>
                   </Link>
                 ))
               }
@@ -77,27 +82,21 @@ class notificationsModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    notifications: state.verification.user.notifications || []
-  }
-}
-
 function mapDispatchToProps (dispatch) {
   return {
-    // actions: bindActionCreators(
-    //   {
-
-    //   }
-    //   , dispatch)
+    actions: bindActionCreators(
+      {
+        clearNotificationsForUser
+      }
+      , dispatch)
   }
 }
 
 notificationsModal.propTypes = {
   closeModal: PropTypes.func,
   actions: PropTypes.object,
-  history: PropTypes.object,
-  t: PropTypes.func
+  userId: PropTypes.string,
+  notifications: PropTypes.array
 }
 
-export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(notificationsModal)))
+export default translate('translations')(withRouter(connect(null, mapDispatchToProps)(notificationsModal)))

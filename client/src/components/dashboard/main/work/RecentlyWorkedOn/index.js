@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import WorkCard from '../workCard'
 import { translate } from 'react-i18next'
 import {RecentWorks} from 'src/constants/recentWorks'
+import { MoonLoader } from 'react-spinners'
 
 import './RecentlyWorkedOn.css'
 function renderHistoryItem (history, timeMarker, t) {
@@ -39,9 +40,20 @@ const RecentlyWorkedOn = (props) => {
     {key: RecentWorks.MONTH_AGO, label: t('a_month_ago')},
     {key: RecentWorks.MONTHS_AGO, label: t('a_months_ago')}
   ]
+  console.log(userHistory)
   return (
     <React.Fragment>
-      {timeMarkers.map(item => renderHistoryItem(filteredHistory, item, t))}
+      {userHistory.length
+        ? <div className='recent-work-wrapper'>
+          {timeMarkers.map(item => renderHistoryItem(filteredHistory, item, t))}
+        </div>
+        : <div className='moon-loader-container'>
+          <MoonLoader
+            sizeUnit={'px'}
+            size={32}
+            color={'#123abc'}
+          />
+        </div>}
     </React.Fragment>
   )
 }

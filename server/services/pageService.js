@@ -23,7 +23,7 @@ module.exports = {
       res.status(404)
       return res.end('Invalid id')
     }
-    let page = await PageRepository.getById(req.params.id)
+    await PageRepository.getById(req.params.id)
       .populate({
         path: 'comments',
         populate: {path: 'userId', select: 'firstName lastName login avatar'}
@@ -40,50 +40,38 @@ module.exports = {
         path: 'usersLikes',
         select: 'firstName lastName'
       })
-      .then(page => {
+      .then(async (page) => {
         if (!page) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
           }).end()
         }
-        return page
+        console.log(' INSIDE GET PAGE')
+        console.log(page.watchedBy)
+        const isWatched = page.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+        let resPage = {...page._doc, isWatched}
+        console.log(resPage)
+        if (req.body.version) {
+          const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
+            .populate({
+              path: 'userId',
+              select: 'firstName lastName avatar login'
+            })
+            .then(pageCurrentHistory => pageCurrentHistory)
+            .catch(err => err)
+          const oldPage = page.modifiedVersions.find(old => old.version === Number(req.body.version))
+          resPage.title = oldPage.title
+          resPage.content = oldPage.content
+          resPage.updatedAt = pageCurrentHistory[0].date
+          resPage.userModified = pageCurrentHistory[0].userId
+        }
+
+        res.json(resPage)
       })
       .catch(err => {
         console.log(err)
         return err
       })
-    const isWatched = page.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
-    const resPage = {
-      _id: page._id,
-      comments: page.comments,
-      usersLikes: page.usersLikes,
-      isDeleted: page.isDeleted,
-      title: page.title,
-      spaceId: page.spaceId,
-      createdAt: page.createdAt,
-      updatedAt: page.updatedAt,
-      content: page.content,
-      userModified: page.userId,
-      watchedBy: page.watchedBy,
-      isWatched: isWatched
-    }
-    console.log(resPage)
-    if (req.body.version) {
-      const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
-        .populate({
-          path: 'userId',
-          select: 'firstName lastName avatar login'
-        })
-        .then(pageCurrentHistory => pageCurrentHistory)
-        .catch(err => err)
-      const oldPage = page.modifiedVersions.find(old => old.version === Number(req.body.version))
-      resPage.title = oldPage.title
-      resPage.content = oldPage.content
-      resPage.updatedAt = pageCurrentHistory[0].date
-      resPage.userModified = pageCurrentHistory[0].userId
-    }
-
-    res.send(resPage)
   },
 
   add: async (req, res) => {
@@ -109,66 +97,25 @@ module.exports = {
         res.status(500).send(err.message)
       })
 
-    const resPage = {
-      _id: page._id,
-      comments: page.comments,
-      usersLikes: page.usersLikes,
-      isDeleted: page.isDeleted,
-      title: page.title,
-      spaceId: page.spaceId,
-      createdAt: page.createdAt,
-      updatedAt: page.updatedAt,
-      content: page.content,
-      userModified: page.userId,
-      watchedBy: page.watchedBy,
-      isWatched: true
-    }
-    return res.send(resPage)
+    return res.json({...page._doc, isWatched: true})
   },
 
   findOneAndUpdate: async (req, res) => {
-    const oldPage = await PageRepository.getById(req.body._id)
-    const newId = new mongoose.Types.ObjectId()
-    const modifiedVersions = { _id: newId, version: oldPage.version + 1, title: oldPage.title, content: oldPage.content }
-    const data = {
-      ...req.body,
-      $inc: { version: 1 },
-      $addToSet: { 'modifiedVersions': modifiedVersions }
-    }
-
-    PageRepository.update(req.params.id, data)
+    PageRepository.update(req.params.id, req.body)
       .populate({
         path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName avatar'}
       })
-      .then(async (
-        {
-          _id, comments, usersLikes, title, spaceId, createdAt, isDeleted,
-          date: updatedAt, content, userId: userModified, watchedBy
-        }
-      ) => {
-        await PageRepository.addWatcher(_id, req.user._id)
+      .populate('userId', 'firstName lastName avatar')
+      .then(async (page) => {
+        console.log('after populate', page)
+        await PageRepository.addWatcher(page._id, req.user._id)
           .catch(err => {
             console.log(err)
             res.status(500).send(err.message)
           })
 
-        const resPage = {
-          _id,
-          comments,
-          usersLikes,
-          title,
-          spaceId,
-          createdAt,
-          updatedAt,
-          content,
-          userModified,
-          isDeleted,
-          isWatched: true,
-          watchedBy
-        }
-
-        return res.send(resPage)
+        return res.json({...page._doc, isWatched: true})
       })
       .catch(err => {
         console.log(err)

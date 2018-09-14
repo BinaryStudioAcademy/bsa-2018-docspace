@@ -49,7 +49,8 @@ class UserRepository extends GeneralRepository {
   }
 
   clearUsersNotifications (userId) {
-    return super.updateOne(userId, { $set: { 'notifications': [] } })
+    console.log(' DELETING NOTIFICATIONS FROM USER')
+    return super.updateOne({ _id: userId }, { $set: { 'notifications': [] } })
   }
 }
 

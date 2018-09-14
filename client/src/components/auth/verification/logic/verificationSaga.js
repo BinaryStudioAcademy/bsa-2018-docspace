@@ -8,6 +8,7 @@ function * verificationFlow () {
     if (!response.isLoggedIn) {
       throw new Error(response.message)
     }
+    response.user.notifications.reverse()
     yield put({ type: actionTypes.VERIFICATION_SUCCESS, response })
   } catch (error) {
     yield put({ type: actionTypes.VERIFICATION_ERROR, error })

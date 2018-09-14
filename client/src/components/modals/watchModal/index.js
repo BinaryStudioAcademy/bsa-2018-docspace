@@ -27,7 +27,7 @@ class WatchModal extends Component {
         </div>
         <div className='watch-checkbox-wrapper'>
           <input type='checkbox' name='isWatchingContent' onChange={this.props.manageSpaceWatcher} checked={isWatchingSpace} />
-          <label>Watch all content in this page</label>
+          <label>Watch all content in this space</label>
         </div>
       </div>
     )

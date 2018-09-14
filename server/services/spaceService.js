@@ -3,9 +3,9 @@ const BlogRepository = require('../repositories/BlogRepository')
 const UserRepository = require('../repositories/UserRepository')
 const PageRepository = require('../repositories/PageRepository')
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
 const PermissionsRepository = require('../repositories/PermissionsRepository')
 const helper = require('./spaceCreateHelper/spaceCreateHelper')
+const returnSpaceWithAuthUserPermissions = require('./spaceCreateHelper/returnSpaceWithAuthUserPermissions')
 
 const adminPermissions = {
   all: {
@@ -54,13 +54,13 @@ module.exports = {
           }
 
           return space.permissions.users.some(perm => {
-            if (String(perm.userId) === String(req.user._id)) {
+            if (String(perm.userId) === String(req.user._id) && perm.all.view) {
               authPermissions.push(perm)
               return true
             }
           }) ||
           space.permissions.groups.some(perm => {
-            if (perm.groupId.members.some(id => String(id) === String(req.user._id))) {
+            if (perm.groupId.members.some(id => (String(id) === String(req.user._id)) && perm.all.view)) {
               authPermissions.push(perm)
               return true
             }
@@ -215,42 +215,41 @@ module.exports = {
   addRemoveWatcher: (req, res) => {
     if (req.body.toAdd) {
       SpaceRepository.addWatcher(req.params.id, req.body.userId)
-        .then(page => res.send({watched: true}))
+        .then(() => res.send({watched: true}))
         .catch(err => res.status(500).send(err))
     } else {
       SpaceRepository.deleteWatcher(req.params.id, req.body.userId)
-        .populate({
-          path: 'userLikes',
-          select: 'firstName lastName'
-        })
-        .then(page => res.send({unwatched: true}))
+        .then(() => res.send({unwatched: true}))
         .catch(err => res.status(500).send(err))
     }
   }
 }
+// <<<<<<< HEAD
 
-function returnSpaceWithAuthUserPermissions (req, res, space) {
-  const {users, groups} = space.permissions
-  console.log(' LOOOOK !!!!! ________________________')
-  console.log(space.watchedBy)
-  const isWatched = space.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
-  console.log(isWatched)
-  let expandedSpace = { ...space._doc, isWatched }
+// function returnSpaceWithAuthUserPermissions (req, res, space) {
+//   const {users, groups} = space.permissions
+//   console.log(' LOOOOK !!!!! ________________________')
+//   console.log(space.watchedBy)
+//   const isWatched = space.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+//   console.log(isWatched)
+//   let expandedSpace = { ...space._doc, isWatched }
 
-  if (String(space.ownerId._id) === String(req.user._id)) {
-    // If user is space owner - he can get it
-    return res.json({ ...expandedSpace, authUserPermissions: adminPermissions })
-  }
+//   if (String(space.ownerId._id) === String(req.user._id)) {
+//     // If user is space owner - he can get it
+//     return res.json({ ...expandedSpace, authUserPermissions: adminPermissions })
+//   }
 
-  for (let i = 0; i < users.length; i++) {
-    if (String(users[i].userId) === String(req.user._id)) {
-      return res.json({ ...expandedSpace, authUserPermissions: users[i] })
-    }
-  }
+//   for (let i = 0; i < users.length; i++) {
+//     if (String(users[i].userId) === String(req.user._id)) {
+//       return res.json({ ...expandedSpace, authUserPermissions: users[i] })
+//     }
+//   }
 
-  for (let i = 0; i < groups.length; i++) {
-    if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
-      return res.json({ ...expandedSpace, authUserPermissions: groups[i] })
-    }
-  }
-}
+//   for (let i = 0; i < groups.length; i++) {
+//     if (groups[i].groupId.members.some(id => String(id) === String(req.user._id))) {
+//       return res.json({ ...expandedSpace, authUserPermissions: groups[i] })
+//     }
+//   }
+// }
+// =======
+// >>>>>>> develop

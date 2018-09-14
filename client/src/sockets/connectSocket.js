@@ -6,6 +6,7 @@ export default (user) => {
   return new Promise(resolve => {
     socket.on('connect', () => {
       socket.emit('save user connection', user._id)
+      socket.authUserId = user._id
       resolve(socket)
     })
   })

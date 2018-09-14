@@ -16,6 +16,7 @@
 
     header{
         padding: 7px;
+        font-size: 20px;
     }
 
     .notifications-list{
@@ -53,31 +54,73 @@
     }
 
     .notifications-content{
-
+        // box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+       
         a, a:hover, a:active{
-            color: rgb(66, 82, 110);
+            display: block;
+            color: #333;
             text-decoration: none;
             text-overflow: ellipsis;
         }
 
         .notifications-list{
-           padding-top: 1rem;
+           width: 100%;
+           padding-bottom: 1rem;
+           box-sizing: border-box;
            display: flex;
+            padding-right: 2rem;
            flex-direction: column;
-           overflow-y: auto;
            height: 100%;
+           overflow-y: auto;
 
            &-item{
-               display: flex;
-               padding: 0.5rem;
+               box-sizing: border-box;
+               padding: 1rem;
+               color: #333;
+               
                
                &:hover{
-                   background-color: #e5e5e5
+                   background-color: #ececec
                }
 
                i{
                    margin-right: 0.4rem;
+
+                       &.fa-rss-square{
+                            color: orange;
+                        }
+                        &.fa-file-alt{
+                            color: #762ea2;
+                        }
+
+                        &.fa-thumbs-up{
+                            color: teal
+                        }
+
+                        &.fa-comments{
+                            color: dodgerblue
+                        }
                }
+
+             &-content{
+                 display: flex;
+             }
+
+               &-body{
+                   box-sizing: border-box;
+                   display: flex;
+                   flex-direction: column;
+                   color: #333;
+                   height: 100%;
+               }
+               
+              &-meta{
+                color: #707070;
+                font-size: 12px;
+                padding-top:5px;
+              }
            }
         }
     }
@@ -98,19 +141,11 @@
 
     }
 
-    .fa-rss-square{
-        color: orange;
-    }
-    .fa-folder{
-        color: #762ea2;
-    }
-    span{
-        color: #707070;
-    }
-
 
 }
 .notifications-modal-body.active{
-    width: 50%;
+    width: 40%;
+    max-width: 450px;
+    min-width: 350px;
     opacity: 1;
 }

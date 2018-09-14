@@ -20,6 +20,7 @@ import searchSaga from 'src/commonLogic/search/searchSaga'
 import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
 import permissionsSaga from 'src/components/space/spaceSettings/permissions/logic/permissionsSaga'
 import allUsersSaga from 'src/components/dashboard/peopleBody/logic/allUsersSaga'
+import notificationsSaga from 'src/components/modals/notificationsModal/logic/saga'
 
 function * rootSaga () {
   yield all([
@@ -39,6 +40,7 @@ function * rootSaga () {
     fork(clientsActionsExchangeSaga),
     fork(permissionsSaga),
     fork(allUsersSaga),
+    fork(notificationsSaga),
     verificationWatcher(),
     signupWatcher(),
     loginWatcher(),

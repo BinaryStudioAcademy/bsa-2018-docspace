@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import ContentListItem from './contentListItem'
 import { MoonLoader } from 'react-spinners'
 
+import pinguin from 'src/resources/search_pinguin.png'
+
 import './matchedContent.css'
 
 const propsByEntityType = (entity, type, t) => {
@@ -19,7 +21,7 @@ const propsByEntityType = (entity, type, t) => {
     case ('blog'):
       return {
         icon: 'fas fa-rss-square',
-        path: `spaces/${entity._source.spaceId}/blogs/${entity._id}`,
+        path: `spaces/${entity._source.spaceId}/blog/${entity._id}`,
         title: entity.highlight && entity.highlight.title ? entity.highlight.title[0] : entity._source.title,
         time: entity._source.updatedAt,
         content: entity.highlight && entity.highlight.content ? entity.highlight.content[0] : entity._source.content
@@ -49,6 +51,14 @@ export default class MatchedContent extends Component {
 
   renderSearchResults = () => {
     const { pages, blogs, spaces } = this.props.searchResults
+    if (pages && !pages.length && blogs && !blogs.length && spaces && !spaces.length) {
+      return (
+        <div className='no-adavnced-search-results-msg'>
+          <img src={pinguin} alt='' />
+          <p>{ this.props.t('no_advanced_search_results_msg') }</p>
+        </div>
+      )
+    }
     return (
       <ul className='matched-content-list'>
         {

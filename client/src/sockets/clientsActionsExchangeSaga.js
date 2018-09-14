@@ -1,8 +1,11 @@
 import actionsToShareArr from 'src/commonLogic/actionsToShareWithOtherClients'
 import {VERIFICATION_SUCCESS} from 'src/components/auth/verification/logic/verificationActionTypes'
-import { fork, take, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { fork, take, call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
 import connectSocket from './connectSocket'
+import _ from 'lodash'
+
+const spaceWatchersBySpaceId = (state, id) => state.spaces.byId[id].watchedBy
 
 function subscribe (socket) {
   return eventChannel(emit => {
@@ -11,23 +14,11 @@ function subscribe (socket) {
       emit(action)
     })
 
-    // просто првоерял, работает ли такое
-    socket.on('fun', () => {
-      console.log('FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUN')
-    })
-
-    // todo on server: create notification object
-    // notification = {
-    //   text: 'page <default title> was updated by Zxc'
-    //    type: 'page_updating'
-    // }
-
     socket.on('new notification', (notification) => {
       emit({
         type: 'NOTIFICATION',
         payload: notification
-      }
-      )
+      })
     })
 
     return () => {}
@@ -44,42 +35,67 @@ function * read (socket) {
 }
 
 function * handleUpdatePage (socket, action) {
-  console.log('update handler')
-  console.log(socket)
-  console.log(action)
-  if (action.payload.watchedBy) {
-    let notification = {
-      message: `Page ${action.payload.title} was updated`
-    }
-    socket.emit('notify users', notification, action.payload.watchedBy)
+  const page = action.payload
+  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId)
+  let watchers = _.uniq([ ...spaceWatchers, ...page.watchedBy ].filter(id => id !== socket.authUserId))
+  console.log('WATCHERS')
+  console.log(watchers)
+
+  let notification = {
+    message: `${page.blogId ? 'Blog page' : 'Page'} ${page.title} was updated`,
+    link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`,
+    icon: page.blogId ? 'fas fa-rss-square' : 'fas fa-file-alt'
   }
+  socket.emit('notify users', notification, watchers)
+}
+
+function * handleUpdateBlogPage (socket, action) {
+  const page = action.payload
+
+  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId)
+
+  let watchers = _.uniq([ ...spaceWatchers, ...page.watchedBy ].filter(id => id !== socket.authUserId))
+
+  let notification = {
+    message: `'Blog page ${page.title} was updated`,
+    link: `/spaces/${page.spaceId}/blog/${page._id}`,
+    icon: 'fas fa-rss-square'
+  }
+  socket.emit('notify users', notification, watchers)
 }
 
 function * handleComment (socket, action) {
-  console.log('comment handler')
   const {page, newComment} = action.payload
-  if (page && page.watchedBy) {
-    const notification = {
-      message: `Page ${page.title} was commented by ${newComment.userId.login}`,
-      link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`,
-      icon: 'fas fa-comments'
-    }
-    socket.emit('notify users', notification, page.watchedBy)
+  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId)
+
+  let watchers = _.uniq([ ...spaceWatchers, ...page.watchedBy ].filter(id => id !== socket.authUserId))
+  const notification = {
+    message: `${page.blogId ? 'Blog page' : 'Page'} was commented by ${newComment.userId.firstName + ' ' + newComment.userId.lastName}`,
+    link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`,
+    icon: 'fas fa-comments'
   }
+  socket.emit('notify users', notification, watchers)
 }
 
 function * handleLike (socket, action) {
-  const page = action.payload.page
-  if (page && page.watchedBy) {
-    socket.emit('notify users', {message: 'liked'}, page.watchedBy)
+  const {page, likedUser} = action.payload
+  const spaceWatchers = yield select(spaceWatchersBySpaceId, page.spaceId)
+
+  let watchers = _.uniq([ ...spaceWatchers, ...page.watchedBy ].filter(id => id !== socket.authUserId))
+
+  const notification = {
+    message: `${page.blogId ? 'Blog page' : 'Page'} was liked by ${likedUser.firstName + ' ' + likedUser.lastName}`,
+    icon: 'fas fa-thumbs-up',
+    link: `/spaces/${page.spaceId}/${page.blogId ? 'blog' : 'pages'}/${page._id}`
   }
+  socket.emit('notify users', notification, watchers)
 }
 
 function shareReduxActions (socket, action) {
   // Add (EXTERNAL) to action type and send it to another client via socket.
   // Now we can react on this external action in reducers or sagas
-  let newAction = { ...action }
-  newAction.type = `${newAction.type}(EXTERNAL)`
+
+  const newAction = { ...action, type: `${action.type}(EXTERNAL)` }
   socket.emit('share redux action', newAction)
 }
 
@@ -92,6 +108,7 @@ function * clientsActionsExchangeSaga (verificationSuccessAction) {
   yield takeEvery('UPDATE_PAGE_SUCCESS', handleUpdatePage, socket)
   yield takeEvery('CREATE_COMMENT_SUCCESS', handleComment, socket)
   yield takeEvery('PUT_LIKE_ON_PAGE_SUCCESS', handleLike, socket)
+  yield takeEvery('UPDATE_BLOG_PAGE_SUCCESS', handleUpdateBlogPage, socket)
 
   // тут можно добаить функцию logouthandler, которая будет отключать конекшн сокета и эмитить на сервер логаут, чтобы тоже удалять там конекшн
   // это если уберут перезагрузку при логауте, т.к. сейчас все работает

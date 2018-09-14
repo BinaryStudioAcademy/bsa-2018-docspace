@@ -7,7 +7,7 @@ import DropdownMenu from 'src/components/common/dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
 import { translate } from 'react-i18next'
 import SearchModal from 'src/components/modals/searchModal'
-import NotificationsModal from 'src/components/modals/notificationsModal'
+import OpenNotificationsBtn from 'src/components/openNotificationsBtn'
 
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
 import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
@@ -17,8 +17,7 @@ class MinSidebar extends Component {
     super(props)
     this.state = {
       showPageModal: false,
-      showSearchModal: false,
-      showNotificationsModal: false
+      showSearchModal: false
     }
     this.dropdownMenuItems = {
       avatar: [
@@ -52,12 +51,6 @@ class MinSidebar extends Component {
     }))
   }
 
-  toggleNotificationsModal = () => {
-    this.setState({
-      showNotificationsModal: !this.state.showNotificationsModal
-    })
-  }
-
   render () {
     const logo = this.props.isGray ? grayLogo : whiteLogo
     this.dropdownMenuItems.avatar[0].path = `/users/${this.props.userLogin}`
@@ -70,12 +63,6 @@ class MinSidebar extends Component {
             history={this.props.history}
             isOpened={this.state.showSearchModal}
           />}
-        {this.state.showNotificationsModal &&
-        <NotificationsModal
-          closeModal={this.toggleNotificationsModal}
-          isOpened={this.state.showNotificationsModal}
-        />
-        }
         <div className='top-icons'>
           <NavLink to={'/spacedirectory'}>
             <img src={logo} alt='DocSpace logo' />
@@ -91,9 +78,7 @@ class MinSidebar extends Component {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <span className='toggle-search-btn round-button nav-button' onClick={this.toggleNotificationsModal}>
-            <i className='fa fa-bell' />
-          </span>
+          <OpenNotificationsBtn />
           <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={this.dropdownMenuItems.burger} menuHeight={70} />
           <DropdownMenu icon='fa fa-user' type='round-button' menuItems={this.dropdownMenuItems.avatar} menuHeight={40} />
         </div>

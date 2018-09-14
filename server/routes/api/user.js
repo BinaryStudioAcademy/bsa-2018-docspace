@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const userService = require('../../services/userService')
+const notificationService = require('../../services/notificationService')
 
 router.get('/', userService.findAll)
 
@@ -18,5 +19,7 @@ router.post('/changePassword', userService.changePassword)
 router.post('/compareUsers', userService.compareUsers)
 
 router.delete('/:id', userService.findOneAndDelete)
+
+router.delete('/:id/notifications', notificationService.deleteForUser)
 
 module.exports = router

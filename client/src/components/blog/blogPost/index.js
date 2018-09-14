@@ -135,6 +135,7 @@ class Page extends Component {
           isWatchingSpace={space.isWatched}
           renderDeleteBtn={space.authUserPermissions.blog.delete}
           openWarningModal={this.handleOpenWarningModal}
+          canExport={space.authUserPermissions.space.export}
         />
         { isFetching || !this.props.page
           ? <div className='page-loader'>

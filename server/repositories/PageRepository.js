@@ -62,6 +62,14 @@ class PageRepository extends GeneralRepository {
   deleteWatcher (id, userId) {
     return super.updateOne(id, {'$pull': {'watchedBy': userId}})
   }
+
+  addWatcherForPagesBySpaceId (spaceId, userId) {
+    return super.updateMany({'spaceId': spaceId}, {'$push': {'watchedBy': userId}})
+  }
+
+  deleteWatcherForPagesBySpaceId (spaceId, userId) {
+    return super.updateMany({'spaceId': spaceId}, {'$pull': {'watchedBy': userId}})
+  }
 }
 
 module.exports = new PageRepository(PageModel)

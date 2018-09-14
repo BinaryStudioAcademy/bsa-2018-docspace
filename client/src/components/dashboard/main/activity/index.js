@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Route, NavLink, Redirect } from 'react-router-dom'
 import { translate } from 'react-i18next'
 import AllUpdatesTab from './allUpdatesTab'
-import PopularTab from './popularTab'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -28,11 +27,6 @@ class Activity extends Component {
         name: t('my_updates'),
         path: '/myupdates',
         component: MyUpdatesTab
-      },
-      {
-        name: t('popular'),
-        path: '/popular',
-        component: PopularTab
       }
     ]
     return (
@@ -81,6 +75,7 @@ Activity.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     allUpdates: state.activity.allHistory.allUpdates,
+    isFetching: state.activity.isFetching,
     currentUserUpdates: state.activity.currentUserHistory.currentUserUpdates,
     userId: state.verification.user._id,
     user: state.user.userReducer.messages.length

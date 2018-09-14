@@ -16,7 +16,7 @@ class PeopleBody extends Component {
   render () {
     const {t, isFetching, allUsers} = this.props
     const usersList = this.props.allUsers.map(user =>
-      <tr key={user._id}>
+      <tr className={this.props.usedIn === 'group' ? 'people-item-group' : 'people-item'} key={user._id}>
         <td><NavLink to={`/users/${user.login}`}>{`${user.firstName} ${user.lastName}`}</NavLink></td>
         <td><NavLink to={`/users/${user.login}`}>{user.email}</NavLink></td>
         <td><NavLink to={`/users/${user.login}`}>{user.login}</NavLink></td>
@@ -33,12 +33,14 @@ class PeopleBody extends Component {
             />
           </div>
           : <table>
-            <tbody>
+            <thead>
               <tr>
-                <th>{t('full_name')}</th>
-                <th>{t('email')}</th>
-                <th>{t('login')}</th>
+                <th className={this.props.usedIn === 'group' ? 'people-item-group' : ''}>{t('full_name')}</th>
+                <th className={this.props.usedIn === 'group' ? 'people-item-group' : ''}>{t('email')}</th>
+                <th className={this.props.usedIn === 'group' ? 'people-item-group' : ''}>{t('login')}</th>
               </tr>
+            </thead>
+            <tbody>
               {usersList}
             </tbody>
           </table>
@@ -61,7 +63,8 @@ PeopleBody.propTypes = {
   actions: PropTypes.object,
   allUsers: PropTypes.array,
   t: PropTypes.func,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  usedIn: PropTypes.string
 }
 
 export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(PeopleBody)))

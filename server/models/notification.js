@@ -16,22 +16,6 @@ const NotificationSchema = new Schema({
   createdDate: {
     type: Date,
     default: new Date()
-  },
-  undread: {
-    type: Boolean,
-    default: true
-  }
-})
-
-NotificationSchema.post('updateOne', notification => {
-  console.log('INSIDE NOTIFICATION POST UPDATE HOOOK')
-  console.log(notification)
-  console.log('THIS __________')
-  console.log(this)
-  if (!notification.receivers.length) {
-    // удалить уведомление из базы
-    // notification.remove()
-    // notification.remove().exec()
   }
 })
 

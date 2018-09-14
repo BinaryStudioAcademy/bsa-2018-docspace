@@ -2,8 +2,8 @@ const GeneralRepository = require('./GeneralRepository')
 const Notification = require('../models/notification')
 
 class NotificationRepository extends GeneralRepository {
-  removeReceiver (notificationId, userId) {
-    return super.updateOne(notificationId, {
+  removeReceiverFromNotifications (notificationsIds, userId) {
+    return super.updateMany({ _id: {$in: notificationsIds} }, {
       $pull: { 'receivers': userId }
     })
   }
