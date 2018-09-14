@@ -2,13 +2,15 @@
 
 .page-container {
   padding: 10px 30px 10px 70px;
-.page-loader {
+.content .page-loader {
   display: flex;
   justify-content: center;
   height: 100%;
   width: 100%;
   .sweet-loading {
     align-self: center;
+    justify-content: center;
+    align-items: center
   }
 }
 
