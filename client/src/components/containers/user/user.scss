@@ -635,6 +635,7 @@ h2.recent-work-list-wrapper-header {
 }
 .language-choise select {
   padding: 2px 5px;
+  min-width: 200px;
   &:focus, &:active {
     outline: none;
     border: 0;
