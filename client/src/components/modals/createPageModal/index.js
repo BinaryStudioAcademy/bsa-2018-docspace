@@ -9,9 +9,9 @@ import { getTemplates } from './logic/constants/templates'
 import PageFactory from './logic/pageFactory'
 import { translate } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
-import './createPageModal.css'
 import * as templatesNames from './logic/constants/templatesNames'
-// import getTemplatesName from './logic/constants/templatesNames'
+import Select from 'src/components/common/select'
+import './createPageModal.css'
 
 import PropTypes from 'prop-types'
 
@@ -66,9 +66,9 @@ class CreatePageModal extends Component {
     }
   }
 
-  handleSelectSpace = (space) => {
+  handleSelectSpace = (target) => {
     this.setState({
-      selectedSpace: space
+      selectedSpace: target.value // space
     })
   }
 
@@ -136,11 +136,12 @@ class CreatePageModal extends Component {
       }
     }
 
-    return spaces.map((space, index) => (
-      <option value={JSON.stringify(space)} key={index}>
-        {space.name}
-      </option>
-    ))
+    return spaces.map(space => {
+      return {
+        value: JSON.stringify(space),
+        showValue: space.name
+      }
+    })
   }
 
    renderModalContent = () => {
@@ -151,16 +152,13 @@ class CreatePageModal extends Component {
            <span>
              {t('choose_a_space')}
            </span>
-           <select
-             onChange={({target}) => this.handleSelectSpace(target.value)}
-             defaultValue='none'
-             ref={this.selectSpaceRef}
-           >
-             <option value='none' disabled hidden>{t('choose_here')}</option>
-             {
-               this.renderSpaceSelectOptions()
-             }
-           </select>
+           <Select
+             selectValue={'none'}
+             onChange={this.handleSelectSpace}
+             options={this.renderSpaceSelectOptions()}
+             noneOption
+             reference={this.selectSpaceRef}
+           />
          </div>
          <TemplateList
            items={this.state.templates}
