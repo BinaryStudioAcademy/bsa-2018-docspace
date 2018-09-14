@@ -268,7 +268,11 @@ class Page extends Component {
                 />
               }
             </div>
-            <input type='file' id='file' ref='fileUploader' style={{display: 'none'}} onChange={this.handleChoosenFile} /> {/* For calling system dialog window and choosing file */}
+            <input
+              type='file' id='file' ref='fileUploader'
+              style={{display: 'none'}}
+              onChange={this.handleChoosenFile}
+            /> {/* For calling system dialog window and choosing file */}
           </div>
         }
       </React.Fragment>

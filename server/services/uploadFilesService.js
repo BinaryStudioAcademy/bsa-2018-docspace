@@ -9,7 +9,6 @@ module.exports = {
       .then(function (result) {
         var html = result.value // The generated HTML
         const parserDocFileDesc = JSON.parse(req.body.docfileDescription)
-        console.log(`send file`, parserDocFileDesc)
         PageRepository.create({...parserDocFileDesc, creatorId: parserDocFileDesc.userId, content: html})
           .then(page => {
             if (page.blogId) {

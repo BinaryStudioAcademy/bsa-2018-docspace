@@ -130,6 +130,17 @@ function * sendFile (action) {
     yield put(actions.sendDocFileError(e))
   }
 }
+function * sendFileBlog (action) {
+  try {
+    const newPage = yield PageService.sendFileBlog(action.payload)
+    const spaceId = action.spaceId
+    yield put(actions.sendDocFileBlogSuccess(newPage))
+    yield put(push(`/spaces/${spaceId}/blog/${newPage._id}/edit`))
+  } catch (e) {
+    console.log(e)
+    yield put(actions.sendDocFileError(e))
+  }
+}
 function * exportPageToPdf (action) {
   try {
     yield PageService.exportPageToPdf(action.payload)
@@ -197,4 +208,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
   yield takeEvery(actionTypes.COPY_PAGE_REQUEST, copyPage)
   yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
+  yield takeEvery(actionTypes.SEND_DOC_FILE_BLOG_REQUEST, sendFileBlog)
 }

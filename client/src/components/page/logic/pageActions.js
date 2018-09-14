@@ -191,3 +191,13 @@ export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spa
   type: actionTypes.MENTION_COMMENT,
   payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
 })
+export const sendDocFileBlogRequest = (page, spaceId, userId) => ({
+  type: actionTypes.SEND_DOC_FILE_BLOG_REQUEST,
+  payload: {...page, spaceId: spaceId, userId: userId},
+  spaceId: spaceId,
+  userId: userId
+})
+export const sendDocFileBlogSuccess = (newBlog) => ({
+  type: actionTypes.SEND_DOC_FILE_BLOG_SUCCESS,
+  payload: newBlog
+})
