@@ -69,7 +69,7 @@ export default class WizardModalBody extends Component {
         </form>
 
         <div className='wizard-modal-description'>
-          <h3> {t('about_0', {name: templateName})}</h3>
+          <h3> {t('about_0', {name: selectedTemplate.label})}</h3>
           <p> { selectedTemplate.description } </p>
         </div>
       </div>

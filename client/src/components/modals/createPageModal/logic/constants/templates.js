@@ -10,11 +10,13 @@ export function getTemplates () {
   return [
     {
       name: names.EMPTY_PAGE,
+      label: t('empty_page'),
       previewText: t('start_from_empty_page'),
       img: emptyPageIcon
     },
     {
       name: names.BLOG_PAGE,
+      label: t('blog_page'),
       previewText: t('share_news_and_announcements_with_your_team'),
       img: blogPageIcon
     }
