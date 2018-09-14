@@ -138,7 +138,7 @@ export const cancelPageByIdRequst = () => ({
 // SEND DOC FILE
 export const sendDocFileRequest = (fileAndSpaceId) => ({
   type: actionTypes.SEND_DOC_FILE_REQUEST,
-  payload: { spaceId: fileAndSpaceId.spaceId, file: fileAndSpaceId.file }
+  payload: fileAndSpaceId
 })
 
 export const sendDocFileSuccess = (pagefile) => ({
@@ -190,4 +190,14 @@ export const copyPageError = () => ({
 export const sendMention = (mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage) => ({
   type: actionTypes.MENTION_COMMENT,
   payload: { mentionedUsersLogin, senderCommentLogin, pageId, spaceId, BlogOrPage }
+})
+export const sendDocFileBlogRequest = (page, spaceId, userId) => ({
+  type: actionTypes.SEND_DOC_FILE_BLOG_REQUEST,
+  payload: {...page, spaceId: spaceId, userId: userId},
+  spaceId: spaceId,
+  userId: userId
+})
+export const sendDocFileBlogSuccess = (newBlog) => ({
+  type: actionTypes.SEND_DOC_FILE_BLOG_SUCCESS,
+  payload: newBlog
 })

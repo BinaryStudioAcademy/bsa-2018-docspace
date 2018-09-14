@@ -118,11 +118,27 @@ function * getPage (action) {
 
 function * sendFile (action) {
   try {
-    const sendFile = yield PageService.sendDocFile({spaceId: action.payload.spaceId, title: action.payload.file.name, content: action.payload.file})
+    const sendFile = yield PageService.sendDocFile({
+      spaceId: action.payload.spaceId,
+      userId: action.payload.userId,
+      title: action.payload.file.name,
+      content: action.payload.file
+    })
     yield put(actions.sendDocFileSuccess(sendFile))
     // Go to the editor
     yield put(push(`/spaces/${sendFile.spaceId}/pages/${sendFile._id}/edit`))
   } catch (e) {
+    yield put(actions.sendDocFileError(e))
+  }
+}
+function * sendFileBlog (action) {
+  try {
+    const newPage = yield PageService.sendFileBlog(action.payload)
+    const spaceId = action.spaceId
+    yield put(actions.sendDocFileBlogSuccess(newPage))
+    yield put(push(`/spaces/${spaceId}/blog/${newPage._id}/edit`))
+  } catch (e) {
+    console.log(e)
     yield put(actions.sendDocFileError(e))
   }
 }
@@ -193,4 +209,5 @@ export default function * selectionsSaga () {
   yield takeEvery(actionTypes.MOVE_PAGE_TO_SPACE_REQUEST, movePageToSpace)
   yield takeEvery(actionTypes.COPY_PAGE_REQUEST, copyPage)
   yield takeEvery(actionTypes.MENTION_COMMENT, mentionInComment)
+  yield takeEvery(actionTypes.SEND_DOC_FILE_BLOG_REQUEST, sendFileBlog)
 }
