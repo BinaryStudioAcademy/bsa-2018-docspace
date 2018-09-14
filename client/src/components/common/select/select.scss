@@ -21,7 +21,7 @@
   .select {
     position: relative;
     display: flex;
-    width: 10em;
+    // width: 10em;
     height: 32px;
     line-height: 3;
     background: white;
@@ -35,7 +35,7 @@
     height: 100%;
     margin: 0;
     padding: 0 0 0 .5em;
-    color: rgba(0,0,0,0);
+    color: rgba(0,0,0,1);
     text-shadow: 0 0 0 #000;
     align-items: center;
     cursor: pointer;
@@ -61,4 +61,7 @@
     -webkit-transition: .25s all ease;
     -o-transition: .25s all ease;
     transition: .25s all ease;
+  }
+  .select-option{
+    border: 1px solid black;
   }
