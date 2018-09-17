@@ -68,7 +68,7 @@ class SpaceRepository extends GeneralRepository {
     return super.getById(id)
       .populate('homePage')
       .populate('ownerId')
-      .populate('pages')
+      .populate('pages', 'title')
       .populate('categories')
       .populate({
         path: 'permissions.groups',
@@ -78,86 +78,6 @@ class SpaceRepository extends GeneralRepository {
         path: 'permissions.users'
       })
   }
-
-  // getById (id) {
-  //   return this.model.aggregate([
-  //     {
-  //       $match: { _id: ObjectId(id) }
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'pages',
-  //         localField: 'pages',
-  //         foreignField: '_id',
-  //         as: 'pages'
-  //       }
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'pages',
-  //         localField: 'homePageId',
-  //         foreignField: '_id',
-  //         as: 'homePage'
-  //       }
-  //     },
-  //     { // return single object homePage instead of array with this one object
-  //       $unwind: {
-  //         path: '$homePage',
-  //         preserveNullAndEmptyArrays: true
-  //       }
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'categories',
-  //         localField: 'categories',
-  //         foreignField: '_id',
-  //         as: 'categories'
-  //       }
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'users',
-  //         localField: 'ownerId',
-  //         foreignField: '_id',
-  //         as: 'ownerId'
-  //       }
-  //     },
-  //     {
-  //       $unwind: {
-  //         path: '$ownerId',
-  //         preserveNullAndEmptyArrays: true
-  //       }
-  //     },
-  //     {
-  //       $project: {
-  //         _id: 1,
-  //         name: 1,
-  //         key: 1,
-  //         isDeleted: 1,
-  //         ownerId: {
-  //           _id: 1,
-  //           firstName: 1,
-  //           lastName: 1,
-  //           login: 1
-  //         },
-  //         description: 1,
-  //         categories: {
-  //           _id: 1,
-  //           name: 1
-  //         },
-  //         blogId: 1,
-  //         homePage: 1,
-  //         pages: {
-  //           _id: 1,
-  //           title: 1
-  //         },
-  //         history: 1,
-  //         rights: 1,
-  //         spaceSettings: 1
-  //       }
-  //     }
-  //   ])
-  // }
 
   updateCategory (id, categoryId) {
     return super.update(id, {'$addToSet': {'categories': categoryId}})
