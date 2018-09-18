@@ -42,7 +42,7 @@ branches:
 
 deploy:
   - provider: script
-    script: bash ./deploy-production.sh
+    script: bash ./deploy-staging.sh
     skip_cleanup: true
     on:
       branch: master
