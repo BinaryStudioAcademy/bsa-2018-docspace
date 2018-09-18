@@ -7,6 +7,7 @@ import DropdownMenu from 'src/components/common/dropdownMenu'
 import CreatePageModal from 'src/components/modals/createPageModal'
 import { translate } from 'react-i18next'
 import SearchModal from 'src/components/modals/searchModal'
+import OpenNotificationsBtn from 'src/components/openNotificationsBtn'
 
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
 import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
@@ -45,12 +46,6 @@ class MinSidebar extends PureComponent {
           path: '/login'
         }
       ],
-      notifications: [
-        {
-          name: this.props.t('notifications'),
-          path: '#'
-        }
-      ],
       burger: [
         {
           name: this.props.t('administration'),
@@ -83,7 +78,7 @@ class MinSidebar extends PureComponent {
           {this.props.tabs}
         </div>
         <div className='bottom-icons'>
-          <DropdownMenu icon='fa fa-bell' type='round-button' menuItems={dropdownMenuItems.notifications} menuHeight={130} />
+          <OpenNotificationsBtn />
           <DropdownMenu icon='fa fa fa-bars' type='round-button' menuItems={dropdownMenuItems.burger} menuHeight={70} />
           <DropdownMenu icon='fa fa-user' type='round-button' menuItems={dropdownMenuItems.avatar} menuHeight={40} />
         </div>

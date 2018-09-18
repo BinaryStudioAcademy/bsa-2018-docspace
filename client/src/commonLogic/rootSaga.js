@@ -14,11 +14,13 @@ import blogSaga from 'src/components/blog/logic/blogSaga'
 import historyWatcher from 'src/commonLogic/historySaga/historySaga'
 import activitySaga from 'src/components/dashboard/main/activity/logic/activitySaga'
 import groupSaga from 'src/components/group/logic/groupSaga'
+import watcherSaga from 'src/components/page/watcherLogic/watcherSaga'
 import matchingUsersSaga from 'src/components/modals/groupDialog/logic/matchingUserSaga'
 import searchSaga from 'src/commonLogic/search/searchSaga'
 import clientsActionsExchangeSaga from 'src/sockets/clientsActionsExchangeSaga'
 import permissionsSaga from 'src/components/space/spaceSettings/permissions/logic/permissionsSaga'
 import allUsersSaga from 'src/components/dashboard/peopleBody/logic/allUsersSaga'
+import notificationsSaga from 'src/components/modals/notificationsModal/logic/saga'
 
 function * rootSaga () {
   yield all([
@@ -30,6 +32,7 @@ function * rootSaga () {
     fork(blogSaga),
     fork(activitySaga),
     fork(groupSaga),
+    fork(watcherSaga),
     fork(matchingUsersSaga),
     fork(searchSaga),
     fork(resetSaga),
@@ -37,6 +40,7 @@ function * rootSaga () {
     fork(clientsActionsExchangeSaga),
     fork(permissionsSaga),
     fork(allUsersSaga),
+    fork(notificationsSaga),
     verificationWatcher(),
     signupWatcher(),
     loginWatcher(),

@@ -22,7 +22,8 @@ const userSchema = new mongoose.Schema({
   login: { type: String, required: true, match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: { unique: true } },
   password: String,
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+  notifications: [ {type: Schema.Types.ObjectId, ref: 'Notification'} ]
 }, {
   versionKey: false
 })

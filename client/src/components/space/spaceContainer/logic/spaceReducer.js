@@ -2,6 +2,7 @@ import * as actionTypes from './spaceActionTypes'
 import { UPDATE_PAGE_SUCCESS, DELETE_PAGE_SUCCESS } from 'src/components/page/logic/pageActionTypes'
 import { REFRESH_AUTH_USER_PERMISSIONS } from 'src/components/space/spaceSettings/permissions/logic/permissionsActionsTypes'
 import { combineReducers } from 'redux'
+import * as watcherTypes from 'src/components/page/watcherLogic/watcherActionType'
 
 const initialState = {
   all: [],
@@ -104,6 +105,31 @@ function byId (state = initialState.byId, action) {
         }
       }
     }
+
+    case watcherTypes.ADD_WATCHER_SPACE_SUCCESS:
+    case watcherTypes.DELETE_WATCHER_SPACE_SUCCESS:
+      return {
+        ...state,
+        [action.payload._id]: {
+          ...state[action.payload._id],
+          isWatched: !action.payload.isWatched
+        }
+      }
+
+      // case watcherTypes.ADD_WATCHER_SPACE_SUCCESS + '(EXTERNAL)':
+      // case watcherTypes.DELETE_WATCHER_SPACE_SUCCESS+ '(EXTERNAL)':
+      // {
+      //   const { _id } = action.payload
+      //   if( state[_id]){
+      //     return {
+      //       ...state,
+      //       [_id]: {
+      //         ...state[_id],
+      //         isWatched: !action.payload.isWatched
+      //       }
+      //     }
+      //   } else return state
+      // }
 
     case REFRESH_AUTH_USER_PERMISSIONS: {
       const { spaceId, permissions } = action.payload

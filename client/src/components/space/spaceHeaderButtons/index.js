@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 import DropdownMenu from 'src/components/common/dropdownMenu'
+import WatchModal from 'src/components/modals/watchModal'
 
 import './spaceHeaderButtons.css'
 
@@ -10,7 +11,8 @@ class SpaceHeaderButtons extends Component {
     super()
 
     this.state = {
-      isMenuOpened: false
+      isMenuOpened: false,
+      isWatchModalShowed: false
     }
   }
 
@@ -22,11 +24,22 @@ class SpaceHeaderButtons extends Component {
     })
   }
 
+  onWatch = () => {
+    this.setState((state) => {
+      return {
+        isWatchModalShowed: !state.isWatchModalShowed
+      }
+    })
+  }
+
   render () {
-    const { onEdit, onWatch, children,
+    // <<<<<<< HEAD
+    //     const { onEdit, onShare, onSave, children, type, t, hideNotSpaceBtns, openWarningModal, onPdfExport, onWordExport, onWordImport, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher } = this.props
+    // =======
+    const { onEdit, children,
       type, t, hideNotSpaceBtns, openWarningModal, onPdfExport,
       onWordExport, onWordImport, openMovePageModal,
-      openCopyPageModal, renderDeleteBtn, canExport} = this.props
+      openCopyPageModal, renderDeleteBtn, manageSpaceWatcher, isWatchingSpace, isWatching, manageWatcher, canExport} = this.props
 
     const dropdownMenuItems = [
       {
@@ -53,6 +66,7 @@ class SpaceHeaderButtons extends Component {
       name: t('copy_page'),
       onClick: () => openCopyPageModal()
     })
+
     return (
       <div className='buttons-container'>
         {
@@ -61,9 +75,17 @@ class SpaceHeaderButtons extends Component {
             <i className='fas fa-pen' />
           </div>
         }
-        <div className='buttons-item' title={t('watch')}onClick={onWatch}>
+
+        <div className='buttons-item' title={t('watch')}onClick={this.onWatch}>
           <i className='fas fa-eye' />
         </div>
+        {this.state.isWatchModalShowed
+          ? <WatchModal manageWatcher={manageWatcher}
+            isWatchingSpace={isWatchingSpace}
+            isWatching={isWatching}
+            manageSpaceWatcher={manageSpaceWatcher}
+          /> : null}
+
         { !hideNotSpaceBtns &&
         <DropdownMenu
           icon='fas fa-ellipsis-h'
@@ -87,7 +109,6 @@ class SpaceHeaderButtons extends Component {
 SpaceHeaderButtons.propTypes = {
   t: PropTypes.func.isRequired,
   onEdit: PropTypes.func,
-  onWatch: PropTypes.func,
   onPdfExport: PropTypes.func,
   onWordExport: PropTypes.func,
   children: PropTypes.element,
@@ -95,6 +116,10 @@ SpaceHeaderButtons.propTypes = {
   hideNotSpaceBtns: PropTypes.bool,
   openWarningModal: PropTypes.func,
   onWordImport: PropTypes.func,
+  isWatching: PropTypes.bool,
+  manageWatcher: PropTypes.func,
+  isWatchingSpace: PropTypes.bool,
+  manageSpaceWatcher: PropTypes.func,
   openMovePageModal: PropTypes.func,
   openCopyPageModal: PropTypes.func,
   renderDeleteBtn: PropTypes.bool,
@@ -103,7 +128,6 @@ SpaceHeaderButtons.propTypes = {
 
 SpaceHeaderButtons.defaultProps = {
   onEdit: () => false,
-  onWatch: () => false,
   onPdfExport: () => false,
   onWordExport: () => false,
   onDelete: () => false,

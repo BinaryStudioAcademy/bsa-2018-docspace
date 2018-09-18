@@ -21,6 +21,7 @@ import fakeImg from 'src/resources/logo.svg'
 import Like from 'src/components/common/like'
 import './page.css'
 import '../comments//comments/comments.css'
+import { addWatcherRequest, deleteWatcherRequest, addSpaceWatcherRequest, deleteSpaceWatcherRequest } from './watcherLogic/watcherAction'
 import Select from 'src/components/common/select'
 import { openWarningModal, closeWarningModal } from 'src/components/modals/warningModal/logic/warningModalActions'
 
@@ -34,6 +35,7 @@ class Page extends Component {
     this.addNewComment = this.addNewComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.editComment = this.editComment.bind(this)
+    this.manageWatcher = this.manageWatcher.bind(this)
   }
 
   componentDidMount () {
@@ -191,6 +193,24 @@ class Page extends Component {
     this.likePage(isLiked, 'comment', comment)
   }
 
+  manageWatcher = () => {
+    const isWatching = this.props.page && this.props.page.isWatched ? this.props.page.isWatched : null
+    if (isWatching) {
+      this.props.actions.deleteWatcherRequest(this.props.page, this.props.user)
+    } else {
+      this.props.actions.addWatcherRequest(this.props.page, this.props.user)
+    }
+  }
+
+  manageSpaceWatcher = () => {
+    const isWatching = this.props.space && this.props.space.isWatched ? this.props.space.isWatched : null
+    if (isWatching) {
+      this.props.actions.deleteSpaceWatcherRequest(this.props.space, this.props.user)
+    } else {
+      this.props.actions.addSpaceWatcherRequest(this.props.space, this.props.user)
+    }
+  }
+
   render () {
     const { _id, avatar, login } = this.props.user
     const { page, t, space, isFetching } = this.props
@@ -206,6 +226,10 @@ class Page extends Component {
           onPdfExport={this.exportPageToPdf}
           onWordExport={this.exportPageToWord}
           openWarningModal={this.handleOpenWarningModal}
+          manageWatcher={this.manageWatcher}
+          manageSpaceWatcher={this.manageSpaceWatcher}
+          isWatching={page.isWatched}
+          isWatchingSpace={space.isWatched}
           openMovePageModal={this.handleOpenMovePageModal}
           openCopyPageModal={this.handleOpenCopyPageModal}
           renderDeleteBtn={space.authUserPermissions.pages.delete}
@@ -287,8 +311,9 @@ Page.propTypes = {
     content: PropTypes.string,
     spaceId: PropTypes.string,
     comments: PropTypes.array,
-    pageCreator: PropTypes.array,
-    usersLikes: PropTypes.array
+    usersLikes: PropTypes.array,
+    isWatched: PropTypes.bool,
+    pageCreator: PropTypes.array
   }),
 
   user: PropTypes.object,
@@ -354,6 +379,10 @@ function mapDispatchToProps (dispatch) {
         deleteLikeFromCommentRequest,
         putLikeOnCommentRequest,
         openWarningModal,
+        addWatcherRequest,
+        deleteWatcherRequest,
+        addSpaceWatcherRequest,
+        deleteSpaceWatcherRequest,
         sendMention,
         deletePageRequest,
         closeWarningModal,

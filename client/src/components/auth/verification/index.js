@@ -10,11 +10,14 @@ import './verification.css'
 export default (ComposedComponent) => {
   class Authentication extends React.Component {
     componentDidMount () {
-      if (this.props.user) {
-        this.props.verification.saveUserInSession(this.props.user)
-      } else {
+      if (!this.props.user) {
         this.props.verification.verificationRequest()
       }
+      // if (this.props.user) {
+      //   this.props.verification.saveUserInSession(this.props.user)
+      // } else {
+      //   this.props.verification.verificationRequest()
+      // }
     }
 
     render () {
@@ -45,7 +48,7 @@ export default (ComposedComponent) => {
       isLoggedIn: state.verification.isLoggedIn,
       loading: state.verification.requesting,
       userInSession: state.verification.user,
-      user: state.login.user
+      user: state.verification.user
     }
   }
 

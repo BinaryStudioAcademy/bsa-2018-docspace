@@ -2,7 +2,8 @@ const PageRepository = require('../repositories/PageRepository')
 const SpaceRepository = require('../repositories/SpaceRepository')
 const BlogRepository = require('../repositories/BlogRepository')
 const HistoryRepository = require('../repositories/HistoryRepository')
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 
 module.exports = {
   findAll: (req, res) => {
@@ -22,7 +23,7 @@ module.exports = {
       res.status(404)
       return res.end('Invalid id')
     }
-    let page = await PageRepository.getById(req.params.id)
+    await PageRepository.getById(req.params.id)
       .populate({
         path: 'comments',
         populate: {path: 'userId', select: 'firstName lastName login avatar'}
@@ -39,83 +40,82 @@ module.exports = {
         path: 'usersLikes',
         select: 'firstName lastName'
       })
-      .then(page => {
+      .then(async (page) => {
         if (!page) {
           return res.status(404).send({
             message: 'page not found with id ' + req.params.id
           }).end()
         }
-        return page
+        console.log(' INSIDE GET PAGE')
+        console.log(page.watchedBy)
+        const isWatched = page.watchedBy.indexOf(ObjectId(req.user._id)) !== -1
+        let resPage = {...page._doc, isWatched}
+        console.log(resPage)
+        if (req.body.version) {
+          const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
+            .populate({
+              path: 'userId',
+              select: 'firstName lastName avatar login'
+            })
+            .then(pageCurrentHistory => pageCurrentHistory)
+            .catch(err => err)
+          const oldPage = page.modifiedVersions.find(old => old.version === Number(req.body.version))
+          resPage.title = oldPage.title
+          resPage.content = oldPage.content
+          resPage.updatedAt = pageCurrentHistory[0].date
+          resPage.userModified = pageCurrentHistory[0].userId
+        }
+
+        res.json(resPage)
       })
       .catch(err => {
         console.log(err)
         return err
       })
-    if (req.body.version) {
-      const pageCurrentHistory = await HistoryRepository.getCurrentPageHistory(page._id, Number(req.body.version))
-        .populate({
-          path: 'userId',
-          select: 'firstName lastName avatar login'
+  },
+
+  add: async (req, res) => {
+    const page = await PageRepository.create(req.body, req.user._id)
+      .then(page => page)
+      .catch(err => res.status(500).send(err.message))
+    if (page.blogId) {
+      await BlogRepository.addPageToBlog(page)
+        .catch(err => {
+          console.log(err)
+          res.status(500).send(err.message)
         })
-        .then(pageCurrentHistory => pageCurrentHistory)
-        .catch(err => err)
-      const oldPage = page.modifiedVersions.filter(old => old.version === Number(req.body.version))[0]
-      page = {
-        _id: page._id,
-        comments: page.comments,
-        usersLikes: page.usersLikes,
-        isDeleted: page.isDeleted,
-        title: `${oldPage.title}`,
-        spaceId: page.spaceId,
-        createdAt: page.createdAt,
-        updatedAt: pageCurrentHistory[0].date,
-        content: oldPage.content,
-        userModified: pageCurrentHistory[0].userId
-      }
+    } else {
+      await SpaceRepository.addPageToSpace(page)
+        .catch(err => {
+          console.log(err)
+          res.status(500).send(err.message)
+        })
     }
-    res.send(page)
-  },
-
-  add: (req, res) => {
-    PageRepository.create({ ...req.body, creatorId: req.user._id })
-      .then(page => {
-        if (page.blogId) {
-          BlogRepository.addPageToBlog(page)
-            .then(() => {
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        } else {
-          SpaceRepository.addPageToSpace(page)
-            .then(() => {
-              return res.json(page)
-            })
-            .catch(err => {
-              console.log(err)
-              res.status(500).send(err.message)
-            })
-        }
-      }).catch(err => {
+    await PageRepository.addWatcher(page._id, req.user._id)
+      .catch(err => {
         console.log(err)
-        res.status(500).send({
-          message: err.message || 'Some error occurred while creating the page.'
-        })
+        res.status(500).send(err.message)
       })
+
+    return res.json({...page._doc, isWatched: true})
   },
 
-  findOneAndUpdate: (req, res) => {
+  findOneAndUpdate: async (req, res) => {
     PageRepository.update(req.params.id, req.body)
       .populate({
         path: 'comments',
         populate: {path: 'userLikes', select: 'firstName lastName avatar'}
       })
       .populate('userId', 'firstName lastName avatar')
-      .then(page => {
+      .then(async (page) => {
         console.log('after populate', page)
-        return res.send(page)
+        await PageRepository.addWatcher(page._id, req.user._id)
+          .catch(err => {
+            console.log(err)
+            res.status(500).send(err.message)
+          })
+
+        return res.json({...page._doc, isWatched: true})
       })
       .catch(err => {
         console.log(err)
@@ -133,7 +133,8 @@ module.exports = {
   addRemoveLike: (req, res) => {
     if (req.body.toAdd) {
       PageRepository.addLike(req.params.id, req.body.userId)
-        .then(page => res.send({liked: true}))
+        .then(page => PageRepository.addWatcher(req.params.id, req.body.userId)
+          .then(() => res.send({liked: true})))
         .catch(err => res.status(500).send(err))
     } else {
       PageRepository.removeLike(req.params.id, req.body.userId)
@@ -142,6 +143,22 @@ module.exports = {
           select: 'firstName lastName'
         })
         .then(page => res.send({unliked: true}))
+        .catch(err => res.status(500).send(err))
+    }
+  },
+
+  addRemoveWatcher: (req, res) => {
+    if (req.body.toAdd) {
+      PageRepository.addWatcher(req.params.id, req.body.userId)
+        .then(page => res.send({watched: true}))
+        .catch(err => res.status(500).send(err))
+    } else {
+      PageRepository.deleteWatcher(req.params.id, req.body.userId)
+        .populate({
+          path: 'userLikes',
+          select: 'firstName lastName'
+        })
+        .then(page => res.send({unwatched: true}))
         .catch(err => res.status(500).send(err))
     }
   },
@@ -163,7 +180,6 @@ module.exports = {
             } else {
               SpaceRepository.deletePageFromSpace(page.spaceId, page._id)
                 .then((space) => {
-                  console.log(space)
                   return res.json(page)
                 })
                 .catch(err => {
@@ -212,8 +228,6 @@ module.exports = {
         SpaceRepository.searchByTitle(req.params.filter)
       ])
       .then(([one, two]) => {
-        console.log(one)
-        console.log(two)
         res.send(one.concat(two))
       })
       .catch(err => {
