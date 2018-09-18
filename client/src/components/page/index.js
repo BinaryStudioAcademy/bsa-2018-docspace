@@ -38,9 +38,8 @@ class Page extends Component {
 
   componentDidMount () {
     const {page_id: pageId, version} = this.props.match.params
-    const {spaces, actions, isFetching} = this.props
+    const {actions, isFetching} = this.props
     !isFetching && actions.getPageByIdRequest(pageId, version)
-    spaces.length < 2 && actions.getSpacesRequest()
   }
 
   addNewComment (obj) {
@@ -193,8 +192,9 @@ class Page extends Component {
   }
 
   render () {
-    const { _id, avatar } = this.props.user
+    const { _id, avatar, login } = this.props.user
     const { page, t, space, isFetching } = this.props
+    console.log('LIKES---', page.usersLikes)
     const user = page.userModified ? page.userModified : page.userId
     return (
       <React.Fragment>
@@ -231,22 +231,21 @@ class Page extends Component {
               login={user ? user.login : ''}
             />
             <PageContent content={page.content} />
-            <Like t={t} user={this.props.user} likes={this.props.page.usersLikes || []} likePage={this.likeAction} />
+            <Like t={t} user={this.props.user} likes={page.usersLikes} likePage={this.likeAction} />
             <div className='comments-section'>
-              {this.props.page && this.props.page.comments && this.props.page.comments.length && this.props.page.comments[0].userId &&
-              this.props.page.comments.length
-                ? this.props.page.comments.length !== 1 ? <h2>{this.props.page.comments.length} {t('Comments')}</h2>
+              {page && page.comments
+                ? page.comments.length !== 1 ? <h2>{page.comments.length} {t('Comments')}</h2>
                   : <h2> {t('comment')}</h2>
                 : space.authUserPermissions.comments.add && <h2>{t('add_comments')}</h2>
               }
               <CommentsList
                 canDelete={space.authUserPermissions.comments.delete}
-                comments={this.props.page.comments && this.props.page.comments.length ? this.props.page.comments : []}
+                comments={page.comments}
                 deleteComment={this.deleteComment}
                 editComment={this.editComment}
                 addNewComment={this.addNewComment}
                 userId={_id}
-                pageId={this.props.page._id}
+                pageId={page._id}
                 spaceId={this.props.space._id}
                 type={'pages'}
                 sendMention={this.props.actions.sendMention}
@@ -258,10 +257,10 @@ class Page extends Component {
                 <AddComment
                   sendMention={this.props.actions.sendMention}
                   addNewComment={this.addNewComment}
-                  userLogin={this.props.user.login}
+                  userLogin={login}
                   type={'pages'}
-                  pageId={this.props.page._id}
-                  spaceId={this.props.space._id}
+                  pageId={page._id}
+                  spaceId={space._id}
                   userId={_id}
                   avatar={avatar}
                   t={t}
@@ -313,7 +312,9 @@ Page.defaultProps = {
     created: {
       date: 'it is a date! TRUST ME'
     },
+    usersLikes: [],
     content: '',
+    comments: [],
     userModified: {
       firstName: '',
       lastName: '',

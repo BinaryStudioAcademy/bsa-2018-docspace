@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {CommentActions} from 'src/components/comments/commentActions'
 import CommentAvatar from 'src/components/comments/commentAvatar'
 import PropTypes from 'prop-types'
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 import './singleComment.css'
 
-export class Comment extends Component {
+export class Comment extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {

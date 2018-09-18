@@ -63,7 +63,7 @@ module.exports = {
       page = {
         _id: page._id,
         comments: page.comments,
-        usersLikes: page.userLikes,
+        usersLikes: page.usersLikes,
         isDeleted: page.isDeleted,
         title: `${oldPage.title}`,
         spaceId: page.spaceId,
