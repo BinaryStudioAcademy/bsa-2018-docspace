@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './minSideBar.css'
@@ -12,7 +12,7 @@ import OpenNotificationsBtn from 'src/components/openNotificationsBtn'
 import whiteLogo from 'src/assets/logo-penguin-docspace.png'
 import grayLogo from 'src/assets/logo-penguin-docspace-dark.png'
 
-class MinSidebar extends Component {
+class MinSidebar extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {

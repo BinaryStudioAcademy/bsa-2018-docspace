@@ -217,7 +217,7 @@ export const pageByIdFromRoute = (state) => {
   const id = getPageIdFromRouterLocation(state.router.location)
   // console.log('SELECTOR :' ,id)
   // console.log(state.router.location)
-  return state.pages.byId[id] || {}
+  return state.pages.byId[id]
 }
 
 export const isPagesFetching = ({ pages }) => {

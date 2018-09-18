@@ -39,7 +39,7 @@ class SpaceRepository extends GeneralRepository {
   getById (id) {
     return super.getById(id)
       .populate('homePage')
-      .populate('ownerId')
+      .populate('ownerId', '-password')
       .populate('pages', 'title')
       .populate('categories')
       .populate({

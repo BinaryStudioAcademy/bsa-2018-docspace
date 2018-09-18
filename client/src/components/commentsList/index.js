@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Comment from '../comments/singleComment'
 import {getTree, convertTreeToArray} from './treeBuilder'
 import PropTypes from 'prop-types'
 
 import './commentsList.css'
-class CommentsList extends Component {
+class CommentsList extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {commentTree: this.getComments(props.comments)}

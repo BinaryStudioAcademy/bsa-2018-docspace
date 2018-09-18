@@ -1,12 +1,12 @@
 import Button from '../button'
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { translate } from 'react-i18next'
 
 import './fullSidebar.css'
 
-class FullSidebar extends Component {
+class FullSidebar extends PureComponent {
   render () {
     const { t } = this.props
     const navButtonClass = this.props.showLabels ? 'full-button' : 'minimize-button'
