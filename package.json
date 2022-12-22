@@ -32,7 +32,7 @@
         "filesaver": "^0.0.13",
         "i18next": "^11.6.0",
         "jodit-react": "^1.0.17",
-        "jsonwebtoken": "^8.3.0",
+        "jsonwebtoken": "^9.0.0",
         "mammoth": "^1.4.6",
         "mongoosastic": "^4.4.1",
         "mongoose": "^5.2.6",
